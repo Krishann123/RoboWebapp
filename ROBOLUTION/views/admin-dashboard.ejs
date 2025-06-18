@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="/images/ROBOLUTION_ICON.ico" type="image/x-icon">
+  <title>Robolution Admin Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    :root {
+      --primary-color: #00008b;
+      --primary-light: #1a1a9e;
+      --primary-dark: #000066;
+      --secondary-color: #4CAF50;
+      --secondary-hover: #45a049;
+      --text-light: #f8f9fa;
+      --text-dark: #343a40;
+      --bg-light: #ffffff;
+      --bg-dark: #212529;
+      --bg-gray: #f8f9fa;
+      --border-color: #dee2e6;
+      --sidebar-width: 250px;
+      --header-height: 70px;
+      --danger: #dc3545;
+      --warning: #ffc107;
+      --info: #17a2b8;
+      --success: #28a745;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-gray);
+      color: var(--text-dark);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Dashboard Layout */
+    .dashboard-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--primary-color);
+      color: var(--text-light);
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar.collapsed {
+      width: 70px;
+    }
+    
+    .sidebar.collapsed .sidebar-logo h1 {
+      display: none;
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .sidebar.collapsed .sidebar-header {
+      padding: 20px 10px;
+      justify-content: center;
+    }
+
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .sidebar-logo img {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+    
+    .sidebar.collapsed .sidebar-logo img {
+      margin-right: 0;
+    }
+
+    .sidebar-logo h1 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .sidebar-toggle {
+      background: none;
+      border: none;
+      color: var(--text-light);
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 4px;
+    }
+    
+    .sidebar.collapsed .sidebar-toggle {
+      position: absolute;
+      right: 10px;
+      top: 20px;
+    }
+
+    .sidebar-toggle:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar.collapsed .sidebar-toggle {
+      transform: rotate(180deg);
+    }
+    
+    .sidebar.collapsed .sidebar-text,
+    .sidebar.collapsed .sidebar-heading {
+      display: none;
+    }
+    
+    .sidebar.collapsed .sidebar-item {
+      display: flex;
+      justify-content: center;
+    }
+    
+    .sidebar.collapsed .sidebar-link {
+      padding: 12px;
+      justify-content: center;
+    }
+    
+    .sidebar.collapsed .sidebar-icon {
+      margin-right: 0;
+    }
+    
+    .sidebar.collapsed .sidebar-dropdown-toggle::after {
+      display: none;
+    }
+    
+    .sidebar.collapsed .sidebar-dropdown.active .sidebar-dropdown-menu {
+      display: none; /* Always hide dropdown when collapsed */
+    }
+
+    .sidebar-menu {
+      padding: 20px 0;
+    }
+
+    .sidebar-heading {
+      padding: 10px 20px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .sidebar-item {
+      position: relative;
+      display: block;
+    }
+
+    .sidebar-link {
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.8);
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-link:hover {
+      background-color: var(--primary-light);
+      color: white;
+    }
+
+    .sidebar-link.active {
+      background-color: var(--primary-light);
+      color: white;
+      border-left: 4px solid var(--secondary-color);
+    }
+
+    .sidebar-icon {
+      width: 20px;
+      text-align: center;
+      margin-right: 15px;
+      font-size: 16px;
+    }
+
+    .sidebar-text {
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .sidebar.collapsed .sidebar-text,
+    .sidebar.collapsed .sidebar-logo h1 {
+      display: none;
+    }
+
+    .sidebar-dropdown {
+      position: relative;
+    }
+
+    .sidebar-dropdown-menu {
+      display: none;
+      background-color: rgba(0, 0, 0, 0.1);
+      padding: 5px 0;
+    }
+
+    .sidebar-dropdown.active .sidebar-dropdown-menu {
+      display: block;
+    }
+
+    .sidebar-dropdown-link {
+      padding: 10px 10px 10px 55px;
+      display: block;
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-dropdown-link:hover {
+      color: white;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-dropdown-toggle::after {
+      content: '\f105';
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      position: absolute;
+      right: 20px;
+      top: 12px;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar-dropdown.active .sidebar-dropdown-toggle::after {
+      transform: rotate(90deg);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      transition: margin-left 0.3s ease;
+      padding: 20px;
+      position: relative;
+    }
+
+    .main-content.expanded {
+      margin-left: 70px;
+    }
+
+    /* Header */
+    .header {
+      background-color: white;
+      height: var(--header-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .header-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .user-dropdown {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .user-dropdown-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 5px;
+      background-color: transparent;
+      transition: all 0.3s;
+    }
+
+    .user-dropdown-btn:hover {
+      background-color: var(--bg-gray);
+    }
+
+    .user-avatar {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .user-role {
+      font-size: 0.8rem;
+      color: #6c757d;
+    }
+
+    .user-dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color: white;
+      border-radius: 5px;
+      padding: 5px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      min-width: 180px;
+      display: none;
+      z-index: 100;
+    }
+
+    .user-dropdown.active .user-dropdown-menu {
+      display: block;
+    }
+
+    .user-dropdown-item {
+      padding: 8px 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-dark);
+      font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+
+    .user-dropdown-item:hover {
+      background-color: var(--bg-gray);
+    }
+
+    .user-dropdown-item i {
+      font-size: 1rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    /* Content Frames */
+    .content-frame {
+      width: 100%;
+      height: calc(100vh - var(--header-height) - 40px);
+      border: none;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Dashboard Cards */
+    .dashboard-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .dashboard-card {
+      background-color: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .card-icon.blue {
+      background-color: var(--primary-color);
+    }
+
+    .card-icon.green {
+      background-color: var(--success);
+    }
+
+    .card-icon.orange {
+      background-color: var(--warning);
+    }
+
+    .card-icon.red {
+      background-color: var(--danger);
+    }
+
+    .card-title {
+      font-size: 0.9rem;
+      color: #6c757d;
+      margin-bottom: 5px;
+    }
+
+    .card-value {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .card-change {
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .card-change.positive {
+      color: var(--success);
+    }
+
+    .card-change.negative {
+      color: var(--danger);
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .action-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      text-decoration: none;
+      color: var(--text-dark);
+      transition: all 0.3s;
+    }
+
+    .action-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .action-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: var(--bg-gray);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      color: var(--primary-color);
+    }
+
+    .action-text {
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    /* Welcome Section */
+    .welcome-section {
+      background-color: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+    }
+
+    .welcome-message {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--primary-color);
+    }
+
+    .welcome-text {
+      font-size: 1rem;
+      color: #6c757d;
+      margin-bottom: 15px;
+    }
+
+    /* Registration Statistics Styles */
+    .registration-stats {
+      margin-bottom: 30px;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .stats-card {
+      background-color: white;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100px;
+    }
+
+    .stats-title {
+      font-size: 0.9rem;
+      color: #6c757d;
+      margin-bottom: 8px;
+    }
+
+    .stats-value {
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    .stats-icon {
+      position: absolute;
+      right: 15px;
+      bottom: 15px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 139, 0.1);
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .stats-icon.approved {
+      background-color: rgba(40, 167, 69, 0.1);
+      color: #28a745;
+    }
+
+    .stats-icon.pending {
+      background-color: rgba(255, 193, 7, 0.1);
+      color: #ffc107;
+    }
+
+    .stats-icon.denied {
+      background-color: rgba(220, 53, 69, 0.1);
+      color: #dc3545;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 992px) {
+      .sidebar {
+        width: 70px;
+      }
+
+      .sidebar.expanded {
+        width: var(--sidebar-width);
+      }
+
+      .sidebar .sidebar-text,
+      .sidebar .sidebar-logo h1,
+      .sidebar .sidebar-heading {
+        display: none;
+      }
+
+      .sidebar.expanded .sidebar-text,
+      .sidebar.expanded .sidebar-logo h1,
+      .sidebar.expanded .sidebar-heading {
+        display: block;
+      }
+      
+      .sidebar .sidebar-item {
+        display: flex;
+        justify-content: center;
+      }
+      
+      .sidebar .sidebar-link {
+        padding: 12px;
+        justify-content: center;
+      }
+      
+      .sidebar .sidebar-icon {
+        margin-right: 0;
+      }
+      
+      .sidebar.expanded .sidebar-item {
+        display: block;
+      }
+      
+      .sidebar.expanded .sidebar-link {
+        padding: 12px 20px;
+        justify-content: flex-start;
+      }
+      
+      .sidebar.expanded .sidebar-icon {
+        margin-right: 15px;
+      }
+
+      .main-content {
+        margin-left: 70px;
+      }
+
+      .main-content.pushed {
+        margin-left: var(--sidebar-width);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .quick-actions {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .user-info {
+        display: none;
+      }
+      
+      .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 576px) {
+      .header {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+        gap: 10px;
+      }
+
+      .quick-actions {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .stats-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Add styles for the logout section */
+    .logout-section {
+      margin-top: auto;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+    }
+    
+    .logout-link {
+      color: var(--danger-color) !important;
+    }
+    
+    .logout-link:hover {
+      background-color: rgba(220, 53, 69, 0.1) !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img src="/images/ADMIN_LOGO.png" alt="Robolution Logo">
+          <h1>Robolution</h1>
+        </div>
+        <button class="sidebar-toggle" id="sidebar-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+
+      <div class="sidebar-menu">
+        <div class="sidebar-heading">Main</div>
+        <div class="sidebar-item">
+          <a href="#dashboard" class="sidebar-link active" data-page="dashboard">
+            <i class="fas fa-tachometer-alt sidebar-icon"></i>
+            <span class="sidebar-text">Dashboard</span>
+          </a>
+        </div>
+        <div class="sidebar-item">
+          <a href="#posts" class="sidebar-link" data-page="posts">
+            <i class="fas fa-newspaper sidebar-icon"></i>
+            <span class="sidebar-text">Posts</span>
+          </a>
+        </div>
+        <div class="sidebar-item">
+          <a href="#create-post" class="sidebar-link" data-page="create-post">
+            <i class="fas fa-plus-circle sidebar-icon"></i>
+            <span class="sidebar-text">Create Post</span>
+          </a>
+        </div>
+        
+        <div class="sidebar-heading">Content</div>
+        <div class="sidebar-item">
+          <a href="#categories" class="sidebar-link" data-page="categories">
+            <i class="fas fa-layer-group sidebar-icon"></i>
+            <span class="sidebar-text">Categories</span>
+          </a>
+        </div>
+        <div class="sidebar-item">
+          <a href="#manage-categories" class="sidebar-link" data-page="manage-categories">
+            <i class="fas fa-tasks sidebar-icon"></i>
+            <span class="sidebar-text">Manage Categories</span>
+          </a>
+        </div>
+
+        <div class="sidebar-heading">Users</div>
+        <% if (user && user.role === 'superadmin') { %>
+        <div class="sidebar-item">
+          <a href="#manage-accounts" class="sidebar-link" data-page="manage-accounts">
+            <i class="fas fa-users-cog sidebar-icon"></i>
+            <span class="sidebar-text">Manage Accounts</span>
+          </a>
+        </div>
+        <% } %>
+        <div class="sidebar-item">
+          <a href="#user-profiles" class="sidebar-link" data-page="user-profiles">
+            <i class="fas fa-id-card sidebar-icon"></i>
+            <span class="sidebar-text">User Profiles</span>
+          </a>
+        </div>
+        
+        <div class="sidebar-heading">Registrations</div>
+        <div class="sidebar-item">
+          <a href="#manage-registrations" class="sidebar-link" data-page="manage-registrations">
+            <i class="fas fa-clipboard-list sidebar-icon"></i>
+            <span class="sidebar-text">Manage Registrations</span>
+          </a>
+        </div>
+
+        <div class="sidebar-item sidebar-dropdown">
+          <a href="#regional" class="sidebar-link sidebar-dropdown-toggle" data-page="regional">
+            <i class="fas fa-map-marker-alt sidebar-icon"></i>
+            <span class="sidebar-text">Regional</span>
+          </a>
+          <div class="sidebar-dropdown-menu">
+            <a href="#regional-all" class="sidebar-dropdown-link" data-region="All">All Regions</a>
+            <% if (typeof uniqueRegions !== 'undefined' && uniqueRegions.length > 0) { %>
+              <% uniqueRegions.forEach(function(region) { %>
+                <a href="#regional-<%= region.toLowerCase().replace(/\s+/g, '-') %>" class="sidebar-dropdown-link" data-region="<%= region %>"><%= region %></a>
+              <% }); %>
+            <% } else { %>
+              <!-- Optional: Message if no specific regions beyond 'All' -->
+            <% } %>
+          </div>
+        </div>
+
+        <div class="sidebar-heading">Scoring</div>
+        <div class="sidebar-item">
+          <a href="#leaderboard" class="sidebar-link" data-page="leaderboard">
+            <i class="fas fa-trophy sidebar-icon"></i>
+            <span class="sidebar-text">Competition Leaderboard</span>
+          </a>
+        </div>
+
+        <div class="sidebar-heading">System</div>
+        <% if (user && user.role === 'superadmin') { %>
+        <div class="sidebar-item">
+          <a href="#backups" class="sidebar-link" data-page="backups">
+            <i class="fas fa-database sidebar-icon"></i>
+            <span class="sidebar-text">Backups</span>
+          </a>
+        </div>
+        <% } %>
+        <div class="sidebar-item">
+          <a href="#edit-poster-video" class="sidebar-link" data-page="edit-poster-video">
+            <i class="fas fa-video sidebar-icon"></i>
+            <span class="sidebar-text">Edit Poster Video</span>
+          </a>
+        </div>
+        <div class="sidebar-item">
+          <a href="#manage-partners" class="sidebar-link" data-page="manage-partners">
+            <i class="fas fa-handshake sidebar-icon"></i>
+            <span class="sidebar-text">Manage Partners</span>
+          </a>
+        </div>
+        <div class="sidebar-item">
+          <a href="/logout" class="sidebar-link">
+            <i class="fas fa-sign-out-alt sidebar-icon"></i>
+            <span class="sidebar-text">Logout</span>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="main-content">
+      <div class="header">
+        <h1 class="header-title" id="page-title">Dashboard</h1>
+        <div class="header-actions">
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-dropdown-btn" id="user-dropdown-btn">
+              <div class="user-avatar">
+                <% if (user && user.username) { %>
+                  <%= user.username.charAt(0).toUpperCase() %>
+                <% } else { %>
+                  A
+                <% } %>
+              </div>
+              <div class="user-info">
+                <div class="user-name">
+                  <% if (user && user.username) { %>
+                    <%= user.username %>
+                  <% } else { %>
+                    Admin
+                  <% } %>
+                </div>
+                <div class="user-role">
+                  <% if (user && user.role) { %>
+                    <%= user.role %>
+                  <% } else { %>
+                    Administrator
+                  <% } %>
+                </div>
+              </div>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="user-dropdown-menu">
+              <a href="/logout" class="user-dropdown-item">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard Content -->
+      <div class="content-area" id="dashboard-content">
+        <div class="welcome-section">
+          <h2 class="welcome-message">Welcome<% if (user && user.username) { %>, <%= user.username %>!<% } else { %>!<% } %></h2>
+          <p class="welcome-text">Welcome to the Robolution Admin Dashboard. From here, you can manage all aspects of the Robolution website.</p>
+        </div>
+
+        <div class="dashboard-cards">
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Total Posts</div>
+                <div class="card-value"><%= locals.stats && locals.stats.totalPosts !== undefined ? stats.totalPosts : 'N/A' %></div>
+                <% /* <div class="card-change positive">
+                  <i class="fas fa-arrow-up"></i> 12% from last month
+                </div> */ %>
+              </div>
+              <div class="card-icon blue">
+                <i class="fas fa-newspaper"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Registrations</div>
+                <div class="card-value"><%= locals.stats && locals.stats.totalRegistrations !== undefined ? stats.totalRegistrations : 'N/A' %></div>
+                <% /* <div class="card-change positive">
+                  <i class="fas fa-arrow-up"></i> 18% from last month
+                </div> */ %>
+              </div>
+              <div class="card-icon green">
+                <i class="fas fa-user-plus"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Categories</div>
+                <div class="card-value"><%= locals.stats && locals.stats.totalCategories !== undefined ? stats.totalCategories : 'N/A' %></div>
+                <% /* <div class="card-change negative">
+                  <i class="fas fa-arrow-down"></i> 3% from last month
+                </div> */ %>
+              </div>
+              <div class="card-icon orange">
+                <i class="fas fa-layer-group"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">User Accounts</div>
+                <div class="card-value"><%= locals.stats && locals.stats.totalUserAccounts !== undefined ? stats.totalUserAccounts : 'N/A' %></div>
+                <% /* <div class="card-change positive">
+                  <i class="fas fa-arrow-up"></i> 5% from last month
+                </div> */ %>
+              </div>
+              <div class="card-icon red">
+                <i class="fas fa-users"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Registration Statistics Section -->
+        <h3 style="margin: 30px 0 15px 0;">Registration Statistics</h3>
+        <div class="registration-stats">
+          <div class="stats-row">
+            <div class="stats-card">
+              <div class="stats-title">Today's Registrations</div>
+              <div class="stats-value"><%= locals.stats && locals.stats.todayRegistrations !== undefined ? stats.todayRegistrations : '0' %></div>
+              <div class="stats-icon">
+                <i class="fas fa-calendar-day"></i>
+              </div>
+            </div>
+            
+            <div class="stats-card">
+              <div class="stats-title">Verified</div>
+              <div class="stats-value"><%= locals.stats && locals.stats.verifiedRegistrations !== undefined ? stats.verifiedRegistrations : '0' %></div>
+              <div class="stats-icon approved">
+                <i class="fas fa-check-circle"></i>
+              </div>
+            </div>
+            
+            <div class="stats-card">
+              <div class="stats-title">Unverified</div>
+              <div class="stats-value"><%= locals.stats && locals.stats.unverifiedRegistrations !== undefined ? stats.unverifiedRegistrations : '0' %></div>
+              <div class="stats-icon pending">
+                <i class="fas fa-clock"></i>
+              </div>
+            </div>
+            
+            <div class="stats-card">
+              <div class="stats-title">Denied</div>
+              <div class="stats-value"><%= locals.stats && locals.stats.deniedRegistrations !== undefined ? stats.deniedRegistrations : '0' %></div>
+              <div class="stats-icon denied">
+                <i class="fas fa-times-circle"></i>
+              </div>
+            </div>
+          </div>
+          
+          <div class="stats-row">
+            <div class="stats-card">
+              <div class="stats-title">Schools/Organizations</div>
+              <div class="stats-value"><%= locals.stats && locals.stats.uniqueSchools !== undefined ? stats.uniqueSchools : '0' %></div>
+              <div class="stats-icon">
+                <i class="fas fa-school"></i>
+              </div>
+            </div>
+            
+            <div class="stats-card">
+              <div class="stats-title">Seminar Only</div>
+              <div class="stats-value"><%= locals.stats && locals.stats.seminarOnly !== undefined ? stats.seminarOnly : '0' %></div>
+              <div class="stats-icon">
+                <i class="fas fa-chalkboard-teacher"></i>
+              </div>
+            </div>
+            
+            <div class="stats-card">
+              <div class="stats-title">Competition Only</div>
+              <div class="stats-value"><%= locals.stats && locals.stats.competitionOnly !== undefined ? stats.competitionOnly : '0' %></div>
+              <div class="stats-icon">
+                <i class="fas fa-trophy"></i>
+              </div>
+            </div>
+            
+            <div class="stats-card">
+              <div class="stats-title">Both</div>
+              <div class="stats-value"><%= locals.stats && locals.stats.seminarAndCompetition !== undefined ? stats.seminarAndCompetition : '0' %></div>
+              <div class="stats-icon">
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="stats-row">
+            <div class="stats-card">
+              <div class="stats-title">Student Participants</div>
+              <div class="stats-value"><%= locals.stats && locals.stats.studentRegistrations !== undefined ? stats.studentRegistrations : '0' %></div>
+              <div class="stats-icon">
+                <i class="fas fa-user-graduate"></i>
+              </div>
+            </div>
+            
+            <div class="stats-card">
+              <div class="stats-title">Professional Participants</div>
+              <div class="stats-value"><%= locals.stats && locals.stats.professionalRegistrations !== undefined ? stats.professionalRegistrations : '0' %></div>
+              <div class="stats-icon">
+                <i class="fas fa-briefcase"></i>
+              </div>
+            </div>
+            
+            <div class="stats-card">
+              <div class="stats-title">Team Registrations</div>
+              <div class="stats-value"><%= locals.stats && locals.stats.teamRegistrations !== undefined ? stats.teamRegistrations : '0' %></div>
+              <div class="stats-icon">
+                <i class="fas fa-users"></i>
+              </div>
+            </div>
+            
+            <div class="stats-card">
+              <div class="stats-title">College/Post-Grad</div>
+              <div class="stats-value"><%= locals.stats && locals.stats.collegeRegistrations !== undefined ? stats.collegeRegistrations : '0' %></div>
+              <div class="stats-icon">
+                <i class="fas fa-university"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Registration Statistics Section -->
+
+        <h3 style="margin-bottom: 15px;">Quick Actions</h3>
+        <div class="quick-actions">
+          <a href="#create-post" class="action-item" data-page="create-post">
+            <div class="action-icon">
+              <i class="fas fa-plus"></i>
+            </div>
+            <div class="action-text">Create Post</div>
+          </a>
+          <a href="#manage-registrations" class="action-item" data-page="manage-registrations">
+            <div class="action-icon">
+              <i class="fas fa-clipboard-list"></i>
+            </div>
+            <div class="action-text">Registrations</div>
+          </a>
+          <% if (user && user.role === 'superadmin') { %>
+          <a href="#manage-accounts" class="action-item" data-page="manage-accounts">
+            <div class="action-icon">
+              <i class="fas fa-users-cog"></i>
+            </div>
+            <div class="action-text">Accounts</div>
+          </a>
+          <% } %>
+          <a href="#categories" class="action-item" data-page="categories">
+            <div class="action-icon">
+              <i class="fas fa-layer-group"></i>
+            </div>
+            <div class="action-text">Categories</div>
+          </a>
+          <% if (user && user.role === 'superadmin') { %>
+          <a href="#backups" class="action-item" data-page="backups">
+            <div class="action-icon">
+              <i class="fas fa-database"></i>
+            </div>
+            <div class="action-text">Backups</div>
+          </a>
+          <% } %>
+          <a href="#manage-partners" class="action-item" data-page="manage-partners">
+            <div class="action-icon">
+              <i class="fas fa-handshake"></i>
+            </div>
+            <div class="action-text">Partners</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Content iFrame (Will load other pages) -->
+      <iframe id="content-frame" class="content-frame" style="display: none;" frameborder="0"></iframe>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const sidebar = document.getElementById('sidebar');
+      const sidebarToggle = document.getElementById('sidebar-toggle');
+      const mainContent = document.getElementById('main-content');
+      const userDropdownBtn = document.getElementById('user-dropdown-btn');
+      const userDropdown = document.getElementById('user-dropdown');
+      const contentFrame = document.getElementById('content-frame');
+      const dashboardContent = document.getElementById('dashboard-content');
+      const pageTitle = document.getElementById('page-title');
+      const sidebarLinks = document.querySelectorAll('.sidebar-link:not(.sidebar-dropdown-toggle)');
+      const sidebarDropdownToggles = document.querySelectorAll('.sidebar-dropdown-toggle');
+      const sidebarDropdownLinks = document.querySelectorAll('.sidebar-dropdown-link');
+      const quickActionLinks = document.querySelectorAll('.action-item');
+
+      // Toggle sidebar
+      sidebarToggle.addEventListener('click', function() {
+        sidebar.classList.toggle('collapsed');
+        mainContent.classList.toggle('expanded');
+        
+        // Update the toggle icon based on sidebar state
+        const toggleIcon = this.querySelector('i');
+        if (sidebar.classList.contains('collapsed')) {
+          toggleIcon.classList.remove('fa-bars');
+          toggleIcon.classList.add('fa-chevron-right');
+        } else {
+          toggleIcon.classList.remove('fa-chevron-right');
+          toggleIcon.classList.add('fa-bars');
+        }
+      });
+
+      // Toggle user dropdown
+      userDropdownBtn.addEventListener('click', function() {
+        userDropdown.classList.toggle('active');
+      });
+
+      // Close user dropdown when clicking outside
+      document.addEventListener('click', function(event) {
+        if (!userDropdown.contains(event.target)) {
+          userDropdown.classList.remove('active');
+        }
+      });
+
+      // Toggle sidebar dropdown menus (only when sidebar is not collapsed)
+      sidebarDropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (!sidebar.classList.contains('collapsed')) {
+            const parent = this.parentElement;
+            parent.classList.toggle('active');
+          } else {
+            // When sidebar is collapsed, clicking any dropdown item should expand the sidebar
+            sidebar.classList.remove('collapsed');
+            mainContent.classList.remove('expanded');
+            
+            // Update the toggle icon
+            const toggleIcon = sidebarToggle.querySelector('i');
+            toggleIcon.classList.remove('fa-chevron-right');
+            toggleIcon.classList.add('fa-bars');
+            
+            // After expanding, open the dropdown
+            setTimeout(() => {
+              const parent = this.parentElement;
+              parent.classList.add('active');
+            }, 300);
+          }
+        });
+      });
+
+      // Handle sidebar link clicks
+      function handlePageNavigation(pageName, event) {
+        if (event) event.preventDefault();
+
+        // Update active link
+        sidebarLinks.forEach(link => link.classList.remove('active'));
+        sidebarDropdownLinks.forEach(link => link.classList.remove('active'));
+        
+        if (event && event.currentTarget) {
+          event.currentTarget.classList.add('active');
+        }
+
+        // Update page title
+        pageTitle.textContent = pageName.charAt(0).toUpperCase() + pageName.slice(1).replace(/-/g, ' ');
+
+        // Handle special cases
+        if (pageName === 'dashboard') {
+          contentFrame.style.display = 'none';
+          dashboardContent.style.display = 'block';
+          return;
+        }
+
+        // For regional pages, we need the region parameter
+        let url;
+        if (pageName === 'regional' && event && event.currentTarget.dataset.region) {
+          const region = event.currentTarget.dataset.region;
+          url = `/admin-regional?region=${encodeURIComponent(region)}&dashboard=true`;
+          pageTitle.textContent = `${region} Posts`;
+        } else {
+          // Map page names to URLs
+          const pageUrls = {
+            'posts': '/index',
+            'create-post': '/create-post',
+            'categories': '/categories',
+            'manage-categories': '/manage-categories',
+            'manage-accounts': '/manage-accounts',
+            'user-profiles': '/admin/user-profiles',
+            'manage-registrations': '/manage-registrations',
+            'backups': '/manage-backups',
+            'edit-poster-video': '/admin/edit-poster-video',
+            'leaderboard': '/admin/leaderboard',
+            'manage-partners': '/admin/manage-partners'
+          };
+          
+          url = pageUrls[pageName] || `/${pageName}`;
+          
+          // Add dashboard parameter to all URLs
+          url += (url.includes('?') ? '&' : '?') + 'dashboard=true';
+        }
+
+        // Show iframe and load content
+        dashboardContent.style.display = 'none';
+        contentFrame.style.display = 'block';
+        contentFrame.src = url;
+
+        // On mobile, collapse sidebar after selection
+        if (window.innerWidth < 992) {
+          sidebar.classList.add('collapsed');
+          mainContent.classList.add('expanded');
+          
+          // Update the toggle icon
+          const toggleIcon = sidebarToggle.querySelector('i');
+          if (toggleIcon) {
+            toggleIcon.classList.remove('fa-bars');
+            toggleIcon.classList.add('fa-expand-alt');
+          }
+        }
+      }
+
+      // Assign click handlers to sidebar links
+      sidebarLinks.forEach(link => {
+        if (!link.classList.contains('sidebar-dropdown-toggle')) {
+          link.addEventListener('click', function(e) {
+            const page = this.dataset.page;
+            if (page) {
+              handlePageNavigation(page, e);
+            }
+          });
+        }
+      });
+
+      // Assign click handlers to dropdown links
+      sidebarDropdownLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const page = 'regional';
+          handlePageNavigation(page, e);
+        });
+      });
+
+      // Assign click handlers to quick action links
+      quickActionLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const page = this.dataset.page;
+          if (page) {
+            // Find and activate the corresponding sidebar link
+            const sidebarLink = document.querySelector(`.sidebar-link[data-page="${page}"]`);
+            if (sidebarLink) {
+              sidebarLink.click();
+            } else {
+              handlePageNavigation(page, e);
+            }
+          }
+        });
+      });
+
+      // Handle hash navigation
+      function handleHashChange() {
+        const hash = window.location.hash.substring(1);
+        if (hash && hash !== 'dashboard') {
+          // Find and activate the corresponding sidebar link
+          const sidebarLink = document.querySelector(`.sidebar-link[data-page="${hash}"]`);
+          if (sidebarLink) {
+            sidebarLink.click();
+          } else {
+            handlePageNavigation(hash);
+          }
+        } else {
+          // Default to dashboard
+          handlePageNavigation('dashboard');
+        }
+      }
+
+      // Check hash on page load
+      handleHashChange();
+
+      // Listen for hash changes
+      window.addEventListener('hashchange', handleHashChange);
+    });
+  </script>
+</body>
+</html> 

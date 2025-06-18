@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Event Categories | Robolution</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/carousel.css">
+  <script src="/js/script.js" defer></script>
+  <script src="/js/carousel.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    /* Dropdown styles */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-btn {
+      cursor: pointer;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+      border-radius: 4px;
+    }
+
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+<div class="content-wrapper">
+
+
+  <div class="video-section">
+    <video src="/images/Robolution2025.mp4" loop muted autoplay playsinline></video>
+  </div>
+
+  <main class="categories-main">
+    <div class="carousel-container">
+      <div class="carousel-title">Robolution Events 2025</div>
+      <div id="carouselEventTitle" class="carousel-event-title-glitch"></div>
+      <div class="carousel">
+        <% if (categories.length === 0) { %>
+          <div style="width:100%; display:flex; justify-content:center; align-items:center;">
+            <span class="glitch-text">No Available Categories Yet</span>
+          </div>
+        <% } else { %>
+          <button class="carousel-arrow left" id="carouselLeft">&#8592;</button>
+          <% categories.forEach(function(category, idx) { %>
+            <div class="carousel-card"
+                 data-index="<%= idx %>"
+                 data-title="<%= category.title %>">
+              <div class="card-image-bg" style="background-image: url('<%= category.imageUrl ? category.imageUrl : "/images/default-event.jpg" %>');"></div>
+              <img src="<%= category.imageUrl || '/images/default-event.jpg' %>" alt="<%= category.title %>">
+              <div class="carousel-card-content">
+                <div class="carousel-card-desc"><%= category.description %></div>
+                <a href="/categories/<%= category._id %>" class="carousel-card-btn">Details →</a>
+              </div>
+            </div>
+          <% }); %>
+          <button class="carousel-arrow right" id="carouselRight">&#8594;</button>
+        <% } %>
+      </div>
+    </div>
+  </main>
+</div>
+<a href="#" class="back-to-top" id="backToTop">↑</a>
+</body>
+</html>

@@ -1,0 +1,103 @@
+---
+import { fetchPageContent } from "../db";
+const data = await fetchPageContent("Home");
+const newsContent = data.newsContent;
+const newsData = await fetchPageContent("News");
+const cards = newsData["latest-news"];
+---
+
+<style>
+    @keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .news-animate {
+        opacity: 0;
+    }
+    .news-animate.visible {
+        opacity: 1;
+        animation: fadeInUp 0.8s cubic-bezier(0.4, 2, 0.6, 1) forwards;
+    }
+</style>
+
+<script type="module" is:inline>
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        },
+        { threshold: 0.2 }
+    );
+
+    document.addEventListener("DOMContentLoaded", () => {
+        document
+            .querySelectorAll(".news-animate")
+            .forEach((el) => observer.observe(el));
+    });
+</script>
+
+<section class="bg-white p-5 md:px-16 lg:px-24">
+    <div class="text-center mb-5">
+        <h2
+            class="font-bold text-[#212529] text-5xl lg:text-[56px] font-bebas tracking-wider"
+        >
+            {newsContent.sectionTitle}
+        </h2>
+        <a
+            href={newsContent.moreNewsLink.href}
+            class="text-[clamp(1rem,2vw,1.125rem)] text-blue-600 hover:underline mt-2 inline-block"
+        >
+            {newsContent.moreNewsLink.text}
+        </a>
+    </div>
+
+    <div class="mx-auto px-5 py-5">
+        <div
+            class="flex flex-wrap lg:flex-row justify-center items-stretch gap-10"
+        >
+            {
+                cards.map((cardWrapper) => {
+                    const key = Object.keys(cardWrapper)[0];
+                    const card = cardWrapper;
+                    return (
+                        <a
+                            href={card.NewsCard.link}
+                            target="_blank"
+                            class="w-[90vw] h-auto sm:max-w-[400px] md:w-[350px] news-animate"
+                            key={key}
+                        >
+                            <div class="bg-white w-full lg:w-full h-fit lg:h-full rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow hover:scale-[1.02] duration-200 flex flex-col min-h-[400px] sm:min-h-[420px] md:min-h-[450px]">
+                                <img
+                                    src={card.NewsCard.image}
+                                    alt={card.NewsCard.alt}
+                                    class="w-full h-60 object-cover"
+                                />
+                                <div class="p-4 sm:p-5 md:p-6 flex flex-col flex-1">
+                                    <p class="text-xs sm:text-sm md:text-base text-gray-500 mb-1">
+                                        {card.NewsCard.date}
+                                    </p>
+                                    <h3 class="font-semibold text-gray-900 mb-4 text-sm sm:text-base md:text-lg">
+                                        {card.NewsCard.title}
+                                    </h3>
+                                    <p class="text-sm sm:text-base md:text-[1rem] text-gray-700 flex-1">
+                                        {card.NewsCard.description}
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    );
+                })
+            }
+        </div>
+    </div>
+</section>

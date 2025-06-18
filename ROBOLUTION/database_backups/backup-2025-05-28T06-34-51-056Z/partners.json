@@ -1,0 +1,122 @@
+[
+  {
+    "_id": "6835f1c9c89af2f7a745b05d",
+    "name": "Mapua University",
+    "type": "regular",
+    "url": "https://www.mapua.edu.ph/pages/about-mapua/the-university/the-logo",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748365767/partners/jq0rcnupvvpzdcg6hoxa.png",
+    "cloudinaryId": "partners/jq0rcnupvvpzdcg6hoxa",
+    "createdAt": {
+      "$date": "2025-05-27T17:09:29.563Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "6835f212c89af2f7a745b060",
+    "name": "De Lasalle University Manila",
+    "type": "regular",
+    "url": "https://www.dlsu.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748365840/partners/cvnpukara4ejrveana6v.png",
+    "cloudinaryId": "partners/cvnpukara4ejrveana6v",
+    "createdAt": {
+      "$date": "2025-05-27T17:10:42.530Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "6835ff2d3cd5e2c933f7905b",
+    "name": "Xavier University Ateneo De Cagayan",
+    "type": "regular",
+    "url": "https://www.xu.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748369197/partners/kycnniqbujwdiziqcq3i.png",
+    "cloudinaryId": "partners/kycnniqbujwdiziqcq3i",
+    "createdAt": {
+      "$date": "2025-05-27T18:06:37.842Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "6835ff7b3cd5e2c933f7905f",
+    "name": "Saint Louis University",
+    "type": "regular",
+    "url": "https://www.slu.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748369275/partners/grlbiz6xvi7bqu2fio4h.png",
+    "cloudinaryId": "partners/grlbiz6xvi7bqu2fio4h",
+    "createdAt": {
+      "$date": "2025-05-27T18:07:55.766Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "6835ffbf3cd5e2c933f79062",
+    "name": "Adamson University",
+    "type": "regular",
+    "url": "https://www.adamson.edu.ph/2018/",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748369342/partners/are79di6gm6uk95rg94a.jpg",
+    "cloudinaryId": "partners/are79di6gm6uk95rg94a",
+    "createdAt": {
+      "$date": "2025-05-27T18:09:03.051Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "6835fffc3cd5e2c933f79066",
+    "name": "Technological University Of the Philippines",
+    "type": "regular",
+    "url": "https://www.tup.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748369403/partners/iqhjd9quo5muc0z5s43r.png",
+    "cloudinaryId": "partners/iqhjd9quo5muc0z5s43r",
+    "createdAt": {
+      "$date": "2025-05-27T18:10:04.179Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "683600523cd5e2c933f79069",
+    "name": "AMA University Colleges",
+    "type": "regular",
+    "url": "https://ama.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748369490/partners/rviiglutmveijzx1z46z.jpg",
+    "cloudinaryId": "partners/rviiglutmveijzx1z46z",
+    "createdAt": {
+      "$date": "2025-05-27T18:11:30.806Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "683602063cd5e2c933f79073",
+    "name": "Polytechnic University Of The Philippines",
+    "type": "regular",
+    "url": "https://www.pup.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748369926/partners/tentknwzgvsotpotarru.png",
+    "cloudinaryId": "partners/tentknwzgvsotpotarru",
+    "createdAt": {
+      "$date": "2025-05-27T18:18:46.920Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "683602593cd5e2c933f79076",
+    "name": "DR. Yanga's Colleges Inc.",
+    "type": "regular",
+    "url": "https://dyci.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748370008/partners/ymrs9azeiec0fa1ahbpq.webp",
+    "cloudinaryId": "partners/ymrs9azeiec0fa1ahbpq",
+    "createdAt": {
+      "$date": "2025-05-27T18:20:09.114Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "683602903cd5e2c933f79079",
+    "name": "Don Honorio Ventura State University",
+    "type": "regular",
+    "url": "https://dhvsu.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748370063/partners/pvsckee5qhngx54dx05u.png",
+    "cloudinaryId": "partners/pvsckee5qhngx54dx05u",
+    "createdAt": {
+      "$date": "2025-05-27T18:21:04.296Z"
+    },
+    "__v": 0
+  }
+]

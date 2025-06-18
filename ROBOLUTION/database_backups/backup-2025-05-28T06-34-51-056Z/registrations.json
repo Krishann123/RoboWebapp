@@ -1,0 +1,105 @@
+[
+  {
+    "_id": "682a1a74a50069c61474d407",
+    "userId": "6829de73c7ed7c0f66f19fe6",
+    "fullname": "Carl krishann J Millares",
+    "teamMembers": "",
+    "category": "College/Post-Graduate/Industry",
+    "school": "Umak",
+    "address": "Test address",
+    "email": "dastallaa1018@gmail.com",
+    "competition": [
+      "E-ROBOT v2 - Erovouika Line following Intermediate"
+    ],
+    "workshop": "SEMINAR",
+    "other_competition": "",
+    "other_workshop": "",
+    "code": "",
+    "paymentProofUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1747589747/robolution/payments/rakw0eujhwynjf62wd7j.jpg",
+    "payment_details": "12345",
+    "verified": false,
+    "registeredAt": "2025-05-18T17:35:48.415Z",
+    "__v": 0,
+    "denied": true,
+    "deniedAt": "2025-05-18T18:04:36.007Z",
+    "deniedBy": "Admin_account",
+    "deniedMessage": "Test to see what the deny text looks like",
+    "deniedReason": "Other"
+  },
+  {
+    "_id": "6821a9e5f6b6e42c2c6b3e70",
+    "fullname": "Sir Cahrlos Porquez",
+    "teamMembers": "",
+    "category": "College/Post-Graduate/Industry",
+    "school": "umak",
+    "address": "85.Prosales St",
+    "email": "sirporquez@gmail.com",
+    "competition": [
+      "E-ROBOT-COLLEGE"
+    ],
+    "workshop": "SEMINAR-ROBOTICS",
+    "other_competition": "",
+    "other_workshop": "",
+    "code": "",
+    "paymentProofUrl": "/uploads/1747036644945.jpg",
+    "payment_details": "10000000000",
+    "registeredAt": "2025-05-12T07:57:25.074Z",
+    "__v": 0,
+    "verified": false,
+    "verifiedAt": {
+      "$date": "2025-05-26T13:26:48.043Z"
+    },
+    "verifiedBy": "testadmin3",
+    "denied": true,
+    "deniedAt": {
+      "$date": "2025-05-26T13:26:56.478Z"
+    },
+    "deniedBy": "testadmin3",
+    "deniedMessage": "",
+    "deniedReason": "Invalid payment receipt"
+  },
+  {
+    "_id": "6821aa36f6b6e42c2c6b3e72",
+    "fullname": "Sir Cahrlos Porquez",
+    "teamMembers": "",
+    "category": "College/Post-Graduate/Industry",
+    "school": "umak",
+    "address": "85.Prosales St",
+    "email": "sirporquez@gmail.com",
+    "competition": [
+      "E-ROBOT-COLLEGE"
+    ],
+    "workshop": "SEMINAR-ROBOTICS",
+    "other_competition": "",
+    "other_workshop": "",
+    "code": "",
+    "paymentProofUrl": "/uploads/1747036726641.jpg",
+    "payment_details": "10000000000",
+    "registeredAt": "2025-05-12T07:58:46.643Z",
+    "__v": 0,
+    "verified": true,
+    "verifiedAt": "2025-05-18T13:24:27.899Z",
+    "verifiedBy": "Admin_account"
+  },
+  {
+    "_id": "6826192b46966d99fd40e947",
+    "fullname": "Carl krishann J Millares",
+    "teamMembers": "",
+    "category": "College/Post-Graduate/Industry",
+    "school": "Umak",
+    "address": "taga drugsmarinas cavite",
+    "email": "krishannmillares@gmail.com",
+    "competition": [],
+    "workshop": "SEMINAR",
+    "other_competition": "",
+    "other_workshop": "",
+    "code": "1234",
+    "paymentProofUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1747327275/robolution/payments/frquuqtj33mdykovnuvk.png",
+    "payment_details": "12345",
+    "registeredAt": "2025-05-15T16:41:15.752Z",
+    "__v": 0,
+    "verified": true,
+    "verifiedAt": "2025-05-18T12:46:52.449Z",
+    "verifiedBy": "testadmin3"
+  }
+]

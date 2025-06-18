@@ -1,0 +1,34 @@
+---
+import Jumbotron from "../components/Home/Jumbotron.astro";
+import Layout from "../layouts/Layout.astro";
+import Join from "../components/Home/Joinrobo.astro";
+import Package from "../components/Home/Package.astro";
+import Robolution from "@/components/Home/Robolution.astro";
+import Highlights from "@/components/Home/Highlights.astro";
+import FrequentlyAsk from "@/components/Home/FrequentlyAsk.astro";
+import Partners from "@/components/Home/Partners";
+import NewsAndUpdate from "@/components/Home/NewsAndUpdate.astro";
+---
+
+<Layout title="Erovoutika Dubai - Home">
+    <!-- <Hero/> -->
+    <Jumbotron />
+    <Robolution />
+    <Package />
+    <Highlights />
+    <Join />
+    <!-- <Admin /> -->
+    <NewsAndUpdate />
+    <FrequentlyAsk />
+    <Partners />
+</Layout>
+
+<style>
+    #background {
+        background-image: url("/international/homepage.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        background-color: transparent;
+    }
+</style>

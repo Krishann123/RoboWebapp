@@ -1,0 +1,622 @@
+<div class="scoresheet-container">
+    <!-- Header Information -->
+    <div class="header-info">
+        <div class="form-group">
+            <label for="eventInfo">Event Name/ID: <span class="required">*</span></label>
+            <input type="text" id="eventInfo" name="eventInfo" required value="<%= locals.score ? score.eventInfo : '' %>">
+        </div>
+        <div class="form-group">
+            <label for="judgeInfo">Judge Name/ID:</label>
+            <input type="text" id="judgeInfo" name="judgeInfo" value="<%= user.username %>" readonly>
+        </div>
+    </div>
+    
+    <div class="header-info contestant-info">
+        <div class="form-group contestant-type">
+            <label>Contestant Type: <span class="required">*</span></label>
+            <div class="radio-group">
+                <input type="radio" id="team" name="contestantType" value="team" <%= (!locals.score || locals.score.contestantType === 'team') ? 'checked' : '' %>>
+                <label for="team">Team</label>
+                <input type="radio" id="individual" name="contestantType" value="individual" <%= (locals.score && locals.score.contestantType === 'individual') ? 'checked' : '' %>>
+                <label for="individual">Individual</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="contestantName" id="contestantNameLabel"><%= (locals.score && locals.score.contestantType === 'individual') ? 'Contestant Name: ' : 'Team Name: ' %><span class="required">*</span></label>
+            <input type="text" id="contestantName" name="contestantName" required value="<%= locals.score ? score.contestantName : '' %>">
+        </div>
+    </div>
+
+    <% if (locals.score) { %>
+    <div class="edit-mode-header">
+        <p>Editing score for <strong><%= score.contestantName %></strong></p>
+    </div>
+    <% } %>
+
+    <h1>Robotics Competition Scoring Rubric (Total: 100 Points)</h1>
+    
+    <form id="scoringForm">
+        <!-- Hidden field for score ID when editing -->
+        <% if (locals.score) { %>
+        <input type="hidden" id="scoreId" name="scoreId" value="<%= score._id %>">
+        <% } %>
+        
+        <table class="scoring-table">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Criteria</th>
+                    <th>Max Points</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Design and Engineering -->
+                <tr>
+                    <td rowspan="2">1. Design and Engineering</td>
+                    <td>Structural integrity and build quality</td>
+                    <td>20</td>
+                    <td><input type="number" name="design_score" min="0" max="20" required oninput="enforceMaxScore(this, 20)" value="<%= locals.score ? score.scores.design_score : '' %>"></td>
+                </tr>
+                <tr>
+                    <td>Creativity and innovation</td>
+                    <td colspan="2"></td>
+                </tr>
+
+                <!-- Programming and Functionality -->
+                <tr>
+                    <td rowspan="3">2. Programming and Functionality</td>
+                    <td>Efficient and clean coding</td>
+                    <td>20</td>
+                    <td><input type="number" name="programming_score" min="0" max="20" required oninput="enforceMaxScore(this, 20)" value="<%= locals.score ? score.scores.programming_score : '' %>"></td>
+                </tr>
+                <tr>
+                    <td>Use of sensors</td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <td>Level of autonomy</td>
+                    <td colspan="2"></td>
+                </tr>
+
+                <!-- Performance & Task Execution -->
+                <tr>
+                    <td rowspan="3">3. Performance & Task Execution</td>
+                    <td>Accuracy in completing tasks</td>
+                    <td>25</td>
+                    <td><input type="number" name="performance_score" min="0" max="25" required oninput="enforceMaxScore(this, 25)" value="<%= locals.score ? score.scores.performance_score : '' %>"></td>
+                </tr>
+                <tr>
+                    <td>Speed</td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <td>Reliability/consistency</td>
+                    <td colspan="2"></td>
+                </tr>
+
+                <!-- Presentation & Documentation -->
+                <tr>
+                    <td rowspan="3">4. Presentation & Documentation</td>
+                    <td>Team explanation and clarity</td>
+                    <td>15</td>
+                    <td><input type="number" name="presentation_score" min="0" max="15" required oninput="enforceMaxScore(this, 15)" value="<%= locals.score ? score.scores.presentation_score : '' %>"></td>
+                </tr>
+                <tr>
+                    <td>Technical understanding</td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <td>Logbook</td>
+                    <td colspan="2"></td>
+                </tr>
+
+                <!-- Teamwork and Communication -->
+                <tr>
+                    <td rowspan="2">5. Teamwork and Communication</td>
+                    <td>Collaboration and role sharing</td>
+                    <td>10</td>
+                    <td><input type="number" name="teamwork_score" min="0" max="10" required oninput="enforceMaxScore(this, 10)" value="<%= locals.score ? score.scores.teamwork_score : '' %>"></td>
+                </tr>
+                <tr>
+                    <td>Sportsmanship</td>
+                    <td colspan="2"></td>
+                </tr>
+
+                <!-- Aesthetics and Usability -->
+                <tr>
+                    <td rowspan="2">6. Aesthetics and Usability</td>
+                    <td>Design appeal</td>
+                    <td>5</td>
+                    <td><input type="number" name="aesthetics_score" min="0" max="5" required oninput="enforceMaxScore(this, 5)" value="<%= locals.score ? score.scores.aesthetics_score : '' %>"></td>
+                </tr>
+                <tr>
+                    <td>Ease of use (UI, controls, etc) <em>(optional)</em></td>
+                    <td colspan="2"></td>
+                </tr>
+
+                <!-- Bonus/Innovation Points -->
+                <tr>
+                    <td>7. Bonus/Innovation Points</td>
+                    <td>Unique features or problem-solving approaches <em>(optional)</em></td>
+                    <td>5</td>
+                    <td><input type="number" name="bonus_score" min="0" max="5" required oninput="enforceMaxScore(this, 5)" value="<%= locals.score ? score.scores.bonus_score : '' %>"></td>
+                </tr>
+
+                <!-- Total Score -->
+                <tr class="total-row">
+                    <td colspan="2"><strong>Total Score</strong></td>
+                    <td>100</td>
+                    <td><input type="number" id="totalScore" readonly></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Comments Section -->
+        <div class="comments-section">
+            <label for="comments">Additional Comments:</label>
+            <textarea id="comments" name="comments" rows="4"><%= locals.score ? score.comments : '' %></textarea>
+        </div>
+
+        <div class="button-group">
+            <button type="button" class="back-btn" onclick="window.location.href='/home'">Back to Dashboard</button>
+            <button type="submit" class="submit-btn">Submit Scores</button>
+            <button type="button" class="tally-btn" onclick="window.location.href='/scoresheet/tally'">View Leaderboard</button>
+        </div>
+    </form>
+</div>
+
+<style>
+.scoresheet-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 30px;
+    background: white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+.header-info {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 6px;
+}
+
+.form-group {
+    flex: 1;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+    border-color: #000080;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 0, 128, 0.2);
+}
+
+h1 {
+    color: #000080;
+    margin-bottom: 30px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.scoring-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.scoring-table th {
+    background-color: #000080;
+    color: white;
+    padding: 12px;
+    font-weight: 500;
+}
+
+.scoring-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.scoring-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.scoring-table input[type="number"] {
+    width: 70px;
+    padding: 8px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.total-row {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.total-row td {
+    border-top: 2px solid #000080;
+}
+
+.comments-section {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 6px;
+    margin-bottom: 30px;
+}
+
+.comments-section textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    resize: vertical;
+    min-height: 100px;
+}
+
+.submit-btn {
+    padding: 12px 30px;
+    background-color: #000080;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s;
+    display: block;
+    margin: 0 auto;
+}
+
+.submit-btn:hover {
+    background-color: #000066;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Add alternating row colors */
+.scoring-table tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+/* Add a subtle navy tint to focused elements */
+input:focus, textarea:focus {
+    border-color: #000080;
+    box-shadow: 0 0 0 2px rgba(0, 0, 128, 0.1);
+}
+
+.button-group {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.back-btn {
+    padding: 12px 30px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s;
+}
+
+.back-btn:hover {
+    background-color: #5a6268;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.tally-btn {
+    padding: 12px 30px;
+    background-color: #17a2b8;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s;
+}
+
+.tally-btn:hover {
+    background-color: #138496;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+input[readonly] {
+    background-color: #f8f9fa;
+    cursor: not-allowed;
+}
+
+/* Radio button styling */
+.radio-group {
+    display: flex;
+    gap: 20px;
+    margin-top: 5px;
+}
+
+.radio-group input[type="radio"] {
+    margin-right: 5px;
+}
+
+.contestant-type {
+    flex: 1;
+}
+
+.contestant-info {
+    background-color: #f0f5ff;
+}
+
+.required {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.error-input {
+    border-color: #e74c3c !important;
+    background-color: #fff0f0 !important;
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    display: none;
+}
+
+.edit-mode-header {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.edit-mode-header p {
+    margin: 0;
+}
+
+.button-group button, 
+.button-group .back-btn, 
+.button-group .submit-btn, 
+.button-group .tally-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 5px; /* Add some margin between buttons */
+}
+
+.back-btn {
+    background-color: #6c757d; /* Standard grey */
+    color: white;
+}
+
+.back-btn:hover {
+    background-color: #5a6268;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.submit-btn {
+    background-color: #28a745; /* Green */
+    color: white;
+}
+
+.submit-btn:hover {
+    background-color: #218838;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.tally-btn {
+    background-color: #007bff; /* Blue */
+    color: white;
+}
+
+.tally-btn:hover {
+    background-color: #0056b3;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* Adjustments for button group to ensure proper spacing */
+.button-group {
+    display: flex;
+    justify-content: center; /* Center buttons */
+    gap: 15px; /* Add space between buttons using gap */
+    margin-top: 30px;
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+}
+</style>
+
+<script>
+// Function to enforce maximum score values
+function enforceMaxScore(input, max) {
+    const value = parseInt(input.value);
+    if (value > max) {
+        input.value = max;
+        input.classList.add('error-input');
+        setTimeout(() => {
+            input.classList.remove('error-input');
+        }, 1000);
+    } else if (value < 0) {
+        input.value = 0;
+    }
+}
+
+// Handle contestant type selection - update label
+document.querySelectorAll('input[name="contestantType"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+        const label = document.getElementById('contestantNameLabel');
+        if (this.value === 'team') {
+            label.textContent = 'Team Name:';
+        } else {
+            label.textContent = 'Contestant Name:';
+        }
+    });
+});
+
+document.getElementById('scoringForm').addEventListener('input', function() {
+    const inputs = document.querySelectorAll('input[type="number"]:not(#totalScore)');
+    let total = 0;
+    inputs.forEach(input => {
+        total += Number(input.value) || 0;
+    });
+    document.getElementById('totalScore').value = total;
+});
+
+document.getElementById('scoringForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    // Validate required fields
+    const eventInfo = document.getElementById('eventInfo').value.trim();
+    const contestantName = document.getElementById('contestantName').value.trim();
+    
+    if (!eventInfo) {
+        alert('Please enter the Event Name/ID');
+        document.getElementById('eventInfo').focus();
+        return;
+    }
+    
+    if (!contestantName) {
+        alert('Please enter the ' + document.getElementById('contestantNameLabel').textContent.replace(':', '').trim());
+        document.getElementById('contestantName').focus();
+        return;
+    }
+    
+    // Check if any score is higher than its maximum
+    const scoreInputs = [
+        { name: 'design_score', max: 20 },
+        { name: 'programming_score', max: 20 },
+        { name: 'performance_score', max: 25 },
+        { name: 'presentation_score', max: 15 },
+        { name: 'teamwork_score', max: 10 },
+        { name: 'aesthetics_score', max: 5 },
+        { name: 'bonus_score', max: 5 }
+    ];
+    
+    for (const { name, max } of scoreInputs) {
+        const input = document.querySelector(`input[name="${name}"]`);
+        const value = parseInt(input.value);
+        if (isNaN(value)) {
+            alert(`Please enter a valid score for ${name.replace('_score', '')}`);
+            input.focus();
+            return;
+        }
+        if (value > max) {
+            alert(`${name.replace('_score', ' score')} cannot be more than ${max} points`);
+            input.value = max;
+            input.focus();
+            return;
+        }
+    }
+    
+    const formData = {
+        eventInfo: eventInfo,
+        judgeInfo: document.getElementById('judgeInfo').value,
+        contestantType: document.querySelector('input[name="contestantType"]:checked').value,
+        contestantName: contestantName,
+        scores: {
+            design_score: parseInt(document.querySelector('input[name="design_score"]').value),
+            programming_score: parseInt(document.querySelector('input[name="programming_score"]').value),
+            performance_score: parseInt(document.querySelector('input[name="performance_score"]').value),
+            presentation_score: parseInt(document.querySelector('input[name="presentation_score"]').value),
+            teamwork_score: parseInt(document.querySelector('input[name="teamwork_score"]').value),
+            aesthetics_score: parseInt(document.querySelector('input[name="aesthetics_score"]').value),
+            bonus_score: parseInt(document.querySelector('input[name="bonus_score"]').value)
+        },
+        totalScore: parseInt(document.getElementById('totalScore').value),
+        comments: document.getElementById('comments').value
+    };
+
+    try {
+        // Check if we're editing an existing score
+        const scoreId = document.getElementById('scoreId')?.value;
+        let response;
+        
+        if (scoreId) {
+            // Update existing score
+            response = await fetch(`/api/scores/${scoreId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+            
+            if (response.ok) {
+                alert('Score updated successfully!');
+                // Redirect to the leaderboard
+                window.location.href = '/scoresheet/tally';
+            } else {
+                throw new Error('Failed to update score');
+            }
+        } else {
+            // Submit new score
+            response = await fetch('/api/scores', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (response.ok) {
+                alert('Score submitted successfully!');
+                // Clear the form
+                this.reset();
+                document.getElementById('totalScore').value = '';
+            } else {
+                const error = await response.json();
+                alert('Error submitting score: ' + (error.message || 'Unknown error'));
+            }
+        }
+    } catch (error) {
+        console.error('Error with score operation:', error);
+        alert('Error: ' + (error.message || 'Unknown error occurred'));
+    }
+});
+
+// Add input validation
+document.querySelectorAll('input[type="number"]').forEach(input => {
+    if (input.id !== 'totalScore') {
+        input.addEventListener('input', function() {
+            const value = parseInt(this.value);
+            const max = parseInt(this.max);
+            if (value > max) {
+                this.value = max;
+            } else if (value < 0) {
+                this.value = 0;
+            }
+        });
+    }
+});
+</script>
+

@@ -1,0 +1,10 @@
+{
+  "ignore": [
+    "database_backups/*",
+    "public/uploads/*",
+    "*.json",
+    "node_modules/*"
+  ],
+  "delay": "1000",
+  "verbose": true
+} 

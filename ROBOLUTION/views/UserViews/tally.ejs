@@ -1,0 +1,638 @@
+<div class="tally-container">
+    <h1>Competition Leaderboard</h1>
+    
+    <!-- Navigation Tabs -->
+    <div class="tally-tabs">
+        <button class="tab-button active" data-target="teams">Teams</button>
+        <button class="tab-button" data-target="individuals">Individuals</button>
+    </div>
+    
+    <!-- Teams Section -->
+    <div class="tab-content" id="teams-content">
+        <div class="section-header">
+            <h2>Teams Rankings</h2>
+            <div class="filter-controls">
+                <select id="team-event-filter">
+                    <option value="all">All Events</option>
+                    <!-- Event options will be populated dynamically -->
+                </select>
+            </div>
+        </div>
+        
+        <table class="tally-table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Team Name</th>
+                    <th>Event</th>
+                    <th>Score</th>
+                    <th>Judge</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="teams-tbody">
+                <!-- Team data will be populated dynamically -->
+            </tbody>
+        </table>
+        <div class="no-data" id="no-teams" style="display: none;">
+            <p>No team scores available</p>
+        </div>
+    </div>
+    
+    <!-- Individuals Section -->
+    <div class="tab-content" id="individuals-content" style="display: none;">
+        <div class="section-header">
+            <h2>Individual Rankings</h2>
+            <div class="filter-controls">
+                <select id="individual-event-filter">
+                    <option value="all">All Events</option>
+                    <!-- Event options will be populated dynamically -->
+                </select>
+            </div>
+        </div>
+        
+        <table class="tally-table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Contestant Name</th>
+                    <th>Event</th>
+                    <th>Score</th>
+                    <th>Judge</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="individuals-tbody">
+                <!-- Individual data will be populated dynamically -->
+            </tbody>
+        </table>
+        <div class="no-data" id="no-individuals" style="display: none;">
+            <p>No individual scores available</p>
+        </div>
+    </div>
+    
+    <div class="button-group">
+        <button class="back-btn" onclick="window.location.href='/scoresheet'">Back to Scoresheet</button>
+    </div>
+</div>
+
+<style>
+.tally-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 30px;
+    background: white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+h1 {
+    color: #000080;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+.tally-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.tab-button {
+    padding: 12px 30px;
+    background-color: #f8f9fa;
+    color: #000080;
+    border: 1px solid #dee2e6;
+    border-bottom: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s;
+    border-radius: 8px 8px 0 0;
+    margin: 0 5px;
+}
+
+.tab-button.active {
+    background-color: #000080;
+    color: white;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #000080;
+    margin: 0;
+}
+
+.filter-controls select {
+    padding: 8px 15px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.tally-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+.tally-table th {
+    background-color: #000080;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+.tally-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.tally-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-btn, .delete-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.edit-btn {
+    background-color: #f39c12;
+}
+
+.delete-btn {
+    background-color: #e74c3c;
+}
+
+.edit-btn:hover {
+    background-color: #e67e22;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+}
+
+.no-data {
+    text-align: center;
+    padding: 30px;
+    font-style: italic;
+    color: #6c757d;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.back-btn {
+    padding: 12px 30px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s;
+}
+
+.back-btn:hover {
+    background-color: #5a6268;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Add rank styling */
+.rank-1, .rank-2, .rank-3 {
+    font-weight: bold;
+}
+
+.rank-1 {
+    color: #FFD700; /* Gold */
+}
+
+.rank-2 {
+    color: #C0C0C0; /* Silver */
+}
+
+.rank-3 {
+    color: #CD7F32; /* Bronze */
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', async function() {
+    console.log('Tally page loaded, fetching scores...');
+    
+    // Highlight that we need to fetch data first
+    document.getElementById('teams-tbody').innerHTML = '<tr><td colspan="7" style="text-align: center;">Loading scores...</td></tr>';
+    document.getElementById('individuals-tbody').innerHTML = '<tr><td colspan="7" style="text-align: center;">Loading scores...</td></tr>';
+    
+    // Fetch all scores from the API
+    try {
+        // Use ?_t parameter to avoid caching
+        const response = await fetch(`/api/scores/all?_t=${new Date().getTime()}`);
+        console.log('API response status:', response.status);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('API response data received');
+        
+        if (data && data.scores && Array.isArray(data.scores)) {
+            console.log(`Received ${data.scores.length} scores from API`);
+            // Process the scores
+            processScores(data.scores);
+        } else {
+            console.error('Invalid data format or no scores returned', data);
+            // Handle no data
+            document.getElementById('no-teams').style.display = 'block';
+            document.getElementById('no-individuals').style.display = 'block';
+            document.getElementById('teams-tbody').innerHTML = '';
+            document.getElementById('individuals-tbody').innerHTML = '';
+        }
+    } catch (error) {
+        console.error('Error fetching scores:', error);
+        // Show error message to user
+        document.getElementById('teams-tbody').innerHTML = `<tr><td colspan="7" style="text-align: center; color: red;">Error loading scores: ${error.message}</td></tr>`;
+        document.getElementById('individuals-tbody').innerHTML = `<tr><td colspan="7" style="text-align: center; color: red;">Error loading scores: ${error.message}</td></tr>`;
+    }
+    
+    // Tab switching functionality
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.addEventListener('click', function() {
+            // Deactivate all buttons
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            
+            // Hide all content
+            document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
+            
+            // Activate clicked button
+            this.classList.add('active');
+            
+            // Show selected content
+            const targetId = this.getAttribute('data-target') + '-content';
+            document.getElementById(targetId).style.display = 'block';
+        });
+    });
+    
+    // Event filter change handlers
+    document.getElementById('team-event-filter').addEventListener('change', filterTeamScores);
+    document.getElementById('individual-event-filter').addEventListener('change', filterIndividualScores);
+    
+    // Try to restore filters after data is loaded
+    setTimeout(restoreFilters, 1000);
+});
+
+// Process scores data
+function processScores(scores) {
+    console.log('Processing scores...');
+    
+    if (!Array.isArray(scores)) {
+        console.error('scores parameter is not an array:', scores);
+        return;
+    }
+    
+    // Separate scores into teams and individuals
+    const teamScores = scores.filter(score => score && score.contestantType === 'team');
+    const individualScores = scores.filter(score => score && score.contestantType === 'individual');
+    
+    console.log(`Found ${teamScores.length} team scores and ${individualScores.length} individual scores`);
+    
+    // Generate event filter options
+    const events = [...new Set(scores.filter(s => s && s.eventInfo).map(score => score.eventInfo))];
+    console.log('Unique events found:', events);
+    
+    populateEventFilters(events);
+    
+    // Sort by total score (descending)
+    teamScores.sort((a, b) => (b.totalScore || 0) - (a.totalScore || 0));
+    individualScores.sort((a, b) => (b.totalScore || 0) - (a.totalScore || 0));
+    
+    // Populate tables
+    populateTable('teams-tbody', teamScores);
+    populateTable('individuals-tbody', individualScores);
+    
+    // Show/hide no data messages
+    document.getElementById('no-teams').style.display = teamScores.length === 0 ? 'block' : 'none';
+    document.getElementById('no-individuals').style.display = individualScores.length === 0 ? 'block' : 'none';
+}
+
+// Populate event filter dropdowns
+function populateEventFilters(events) {
+    console.log('Populating event filters with events:', events);
+    
+    const teamFilter = document.getElementById('team-event-filter');
+    const individualFilter = document.getElementById('individual-event-filter');
+    
+    if (!teamFilter || !individualFilter) {
+        console.error('Event filter elements not found');
+        return;
+    }
+    
+    // Store current selected values
+    const currentTeamFilterValue = teamFilter.value;
+    const currentIndividualFilterValue = individualFilter.value;
+
+    // Clear all existing options
+    teamFilter.innerHTML = '';
+    individualFilter.innerHTML = '';
+    
+    // Add "All Events" option first
+    const allEventsOption = document.createElement('option');
+    allEventsOption.value = 'all'; // Use 'all' as the value for clarity
+    allEventsOption.textContent = 'All Events';
+    teamFilter.appendChild(allEventsOption.cloneNode(true));
+    individualFilter.appendChild(allEventsOption.cloneNode(true));
+    
+    // Add unique events from scores
+    const uniqueEvents = [...new Set(events.filter(event => event && event.trim() !== ''))]; // Filter out empty/null events
+    
+    uniqueEvents.forEach(event => {
+        const option = document.createElement('option');
+        option.value = event;
+        option.textContent = event;
+        teamFilter.appendChild(option.cloneNode(true));
+        individualFilter.appendChild(option.cloneNode(true));
+        console.log(`Added event option: ${event}`);
+    });
+
+    // Restore previously selected value if possible, otherwise default to "All Events"
+    teamFilter.value = uniqueEvents.includes(currentTeamFilterValue) ? currentTeamFilterValue : 'all';
+    individualFilter.value = uniqueEvents.includes(currentIndividualFilterValue) ? currentIndividualFilterValue : 'all';
+}
+
+// Populate table with scores data
+function populateTable(tableId, scores) {
+    console.log(`Populating table ${tableId} with ${scores.length} scores`);
+    
+    const tbody = document.getElementById(tableId);
+    if (!tbody) {
+        console.error(`Table body element with ID ${tableId} not found`);
+        return;
+    }
+    
+    tbody.innerHTML = '';
+    
+    if (scores.length === 0) {
+        console.log(`No scores to display in ${tableId}`);
+        return;
+    }
+    
+    scores.forEach((score, index) => {
+        try {
+            const row = document.createElement('tr');
+            
+            // Add rank with special styling for top 3
+            const rankCell = document.createElement('td');
+            rankCell.textContent = index + 1;
+            if (index < 3) {
+                rankCell.classList.add(`rank-${index + 1}`);
+            }
+            row.appendChild(rankCell);
+            
+            // Add name
+            const nameCell = document.createElement('td');
+            nameCell.textContent = score.contestantName || 'Unnamed';
+            row.appendChild(nameCell);
+            
+            // Add event
+            const eventCell = document.createElement('td');
+            eventCell.textContent = score.eventInfo || 'No event';
+            row.appendChild(eventCell);
+            
+            // Add score
+            const scoreCell = document.createElement('td');
+            scoreCell.textContent = score.totalScore || '0';
+            row.appendChild(scoreCell);
+            
+            // Add judge
+            const judgeCell = document.createElement('td');
+            judgeCell.textContent = score.judgeInfo || 'Unknown';
+            row.appendChild(judgeCell);
+            
+            // Add date
+            const dateCell = document.createElement('td');
+            if (score.submittedAt) {
+                dateCell.textContent = new Date(score.submittedAt).toLocaleDateString();
+            } else {
+                dateCell.textContent = 'Unknown date';
+            }
+            row.appendChild(dateCell);
+            
+            // Add action buttons
+            const actionsCell = document.createElement('td');
+            const actionButtons = document.createElement('div');
+            actionButtons.className = 'action-buttons';
+            
+            // Edit button
+            const editBtn = document.createElement('button');
+            editBtn.className = 'edit-btn';
+            editBtn.textContent = 'Edit';
+            editBtn.onclick = function() {
+                editScore(score._id);
+            };
+            actionButtons.appendChild(editBtn);
+            
+            // Delete button
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-btn';
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.onclick = function(event) {
+                deleteScore(score._id, tableId);
+            };
+            actionButtons.appendChild(deleteBtn);
+            
+            actionsCell.appendChild(actionButtons);
+            row.appendChild(actionsCell);
+            
+            tbody.appendChild(row);
+        } catch (error) {
+            console.error(`Error processing score at index ${index}:`, error);
+            console.error('Problem score data:', score);
+        }
+    });
+    
+    console.log(`Successfully populated table ${tableId}`);
+}
+
+// Filter team scores by selected event
+function filterTeamScores() {
+    const selectedEvent = document.getElementById('team-event-filter').value;
+    filterScores('teams-tbody', 'team', selectedEvent);
+}
+
+// Filter individual scores by selected event
+function filterIndividualScores() {
+    const selectedEvent = document.getElementById('individual-event-filter').value;
+    filterScores('individuals-tbody', 'individual', selectedEvent);
+}
+
+// Filter scores by type and event
+async function filterScores(tableId, type, event) {
+    try {
+        let url = `/api/scores/filter?type=${type}`;
+        if (event) {
+            url += `&event=${encodeURIComponent(event)}`;
+        }
+        
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        if (data && data.scores) {
+            // Sort and display filtered scores
+            data.scores.sort((a, b) => b.totalScore - a.totalScore);
+            populateTable(tableId, data.scores);
+            
+            // Show/hide no data message
+            const noDataId = type === 'team' ? 'no-teams' : 'no-individuals';
+            document.getElementById(noDataId).style.display = data.scores.length === 0 ? 'block' : 'none';
+        }
+    } catch (error) {
+        console.error('Error filtering scores:', error);
+        alert('Error filtering scores. Please try again later.');
+    }
+}
+
+// Delete a score
+async function deleteScore(scoreId, tableId) {
+    console.log(`Attempting to delete score ID: ${scoreId}`);
+    
+    if (!confirm("Are you sure you want to delete this score? This action cannot be undone.")) {
+        return;
+    }
+    
+    try {
+        // Show loading state
+        const loadingElement = document.createElement('span');
+        loadingElement.className = 'delete-loading';
+        loadingElement.textContent = ' Deleting...';
+        event.target.appendChild(loadingElement);
+        event.target.disabled = true;
+        
+        const response = await fetch(`/api/scores/${scoreId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        console.log(`Delete response status: ${response.status}`);
+        
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+        }
+        
+        // Success - refresh the page
+        alert('Score deleted successfully!');
+        window.location.reload();
+    } catch (error) {
+        console.error('Error deleting score:', error);
+        alert(`Failed to delete score: ${error.message}. Please try again later.`);
+        
+        // Remove loading state
+        const loadingElement = event.target.querySelector('.delete-loading');
+        if (loadingElement) {
+            event.target.removeChild(loadingElement);
+        }
+        event.target.disabled = false;
+    }
+}
+
+// Edit functionality
+function editScore(id) {
+    console.log(`Editing score with ID: ${id}`);
+    // Redirect to edit page with score ID
+    window.location.href = `/scoresheet/edit/${id}`;
+}
+
+// Add this function to store filters in session storage
+function saveFilters() {
+    const teamEvent = document.getElementById('team-event-filter').value;
+    const individualEvent = document.getElementById('individual-event-filter').value;
+    const activeTab = document.querySelector('.tab-button.active').getAttribute('data-target');
+    
+    sessionStorage.setItem('leaderboard-team-event', teamEvent);
+    sessionStorage.setItem('leaderboard-individual-event', individualEvent);
+    sessionStorage.setItem('leaderboard-active-tab', activeTab);
+}
+
+// Add this function to restore filters from session storage
+function restoreFilters() {
+    const teamEvent = sessionStorage.getItem('leaderboard-team-event');
+    const individualEvent = sessionStorage.getItem('leaderboard-individual-event');
+    const activeTab = sessionStorage.getItem('leaderboard-active-tab');
+    
+    if (teamEvent) {
+        const teamFilter = document.getElementById('team-event-filter');
+        if (teamFilter) {
+            // Wait for options to be populated
+            setTimeout(() => {
+                teamFilter.value = teamEvent;
+                filterTeamScores();
+            }, 500);
+        }
+    }
+    
+    if (individualEvent) {
+        const individualFilter = document.getElementById('individual-event-filter');
+        if (individualFilter) {
+            // Wait for options to be populated
+            setTimeout(() => {
+                individualFilter.value = individualEvent;
+                filterIndividualScores();
+            }, 500);
+        }
+    }
+    
+    if (activeTab) {
+        const tabButton = document.querySelector(`.tab-button[data-target="${activeTab}"]`);
+        if (tabButton) {
+            tabButton.click();
+        }
+    }
+}
+
+// Add listeners to save filters on change
+document.addEventListener('DOMContentLoaded', function() {
+    // Add other event listeners
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.addEventListener('click', saveFilters);
+    });
+    
+    document.getElementById('team-event-filter').addEventListener('change', function() {
+        filterTeamScores();
+        saveFilters();
+    });
+    
+    document.getElementById('individual-event-filter').addEventListener('change', function() {
+        filterIndividualScores();
+        saveFilters();
+    });
+    
+    // Try to restore filters
+    restoreFilters();
+});
+</script> 

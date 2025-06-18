@@ -1,0 +1,46 @@
+[
+  {
+    "_id": "6835b3d7218e794abde9902c",
+    "eventInfo": "TEST EVENT",
+    "judgeInfo": "Krishann_user2",
+    "contestantType": "team",
+    "contestantName": "TEST TEAM NAME",
+    "scores": {
+      "design_score": 15,
+      "programming_score": 15,
+      "performance_score": 25,
+      "presentation_score": 15,
+      "teamwork_score": 10,
+      "aesthetics_score": 5,
+      "bonus_score": 5
+    },
+    "totalScore": 90,
+    "comments": "",
+    "submittedAt": {
+      "$date": "2025-05-27T12:45:11.095Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "6835cafff2ba3698160374ca",
+    "eventInfo": "TESTINDIVEVENT",
+    "judgeInfo": "Krishann_user2",
+    "contestantType": "individual",
+    "contestantName": "TEST CONTESTANT NAME",
+    "scores": {
+      "design_score": 2,
+      "programming_score": 20,
+      "performance_score": 25,
+      "presentation_score": 15,
+      "teamwork_score": 10,
+      "aesthetics_score": 5,
+      "bonus_score": 5
+    },
+    "totalScore": 82,
+    "comments": "test",
+    "submittedAt": {
+      "$date": "2025-05-27T14:23:59.224Z"
+    },
+    "__v": 0
+  }
+]

@@ -1,0 +1,574 @@
+<div class="tally-container">
+    <h1>Competition Leaderboard (Admin View)</h1>
+    
+    <!-- Navigation Tabs -->
+    <div class="tally-tabs">
+        <button class="tab-button active" data-target="teams">Teams</button>
+        <button class="tab-button" data-target="individuals">Individuals</button>
+    </div>
+    
+    <!-- Teams Section -->
+    <div class="tab-content" id="teams-content">
+        <div class="section-header">
+            <h2>Teams Rankings</h2>
+            <div class="filter-controls">
+                <select id="team-event-filter">
+                    <option value="all">All Events</option>
+                    <!-- Event options will be populated dynamically -->
+                </select>
+            </div>
+        </div>
+        
+        <table class="tally-table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Team Name</th>
+                    <th>Event</th>
+                    <th>Score</th>
+                    <th>Judge</th>
+                    <th>Date</th>
+                    <!-- Removed Actions Column -->
+                </tr>
+            </thead>
+            <tbody id="teams-tbody">
+                <!-- Team data will be populated dynamically -->
+            </tbody>
+        </table>
+        <div class="no-data" id="no-teams" style="display: none;">
+            <p>No team scores available</p>
+        </div>
+    </div>
+    
+    <!-- Individuals Section -->
+    <div class="tab-content" id="individuals-content" style="display: none;">
+        <div class="section-header">
+            <h2>Individual Rankings</h2>
+            <div class="filter-controls">
+                <select id="individual-event-filter">
+                    <option value="all">All Events</option>
+                    <!-- Event options will be populated dynamically -->
+                </select>
+            </div>
+        </div>
+        
+        <table class="tally-table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Contestant Name</th>
+                    <th>Event</th>
+                    <th>Score</th>
+                    <th>Judge</th>
+                    <th>Date</th>
+                    <!-- Removed Actions Column -->
+                </tr>
+            </thead>
+            <tbody id="individuals-tbody">
+                <!-- Individual data will be populated dynamically -->
+            </tbody>
+        </table>
+        <div class="no-data" id="no-individuals" style="display: none;">
+            <p>No individual scores available</p>
+        </div>
+    </div>
+    
+    <div class="button-group">
+        <!-- Removed "Back to Scoresheet" button, admins likely go back to main admin dash -->
+        <!-- <button class="back-btn" onclick="window.location.href='/admin-dashboard'">Back to Admin Dashboard</button> -->
+        <!-- Or simply remove it if the main dashboard navigation is sufficient -->
+    </div>
+</div>
+
+<style>
+.tally-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 30px;
+    background: white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    /* Ensure it fits within the admin dashboard iframe if used there */
+    height: calc(100vh - 100px); /* Adjust as needed */
+    overflow-y: auto;
+}
+
+h1 {
+    color: #000080;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+.tally-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.tab-button {
+    padding: 12px 30px;
+    background-color: #f8f9fa;
+    color: #000080;
+    border: 1px solid #dee2e6;
+    border-bottom: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s;
+    border-radius: 8px 8px 0 0;
+    margin: 0 5px;
+}
+
+.tab-button.active {
+    background-color: #000080;
+    color: white;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #000080;
+    margin: 0;
+}
+
+.filter-controls select {
+    padding: 8px 15px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.tally-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+.tally-table th {
+    background-color: #000080;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+.tally-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.tally-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Action buttons styling removed as buttons are removed */
+
+.no-data {
+    text-align: center;
+    padding: 30px;
+    font-style: italic;
+    color: #6c757d;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.back-btn {
+    padding: 12px 30px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s;
+}
+
+.back-btn:hover {
+    background-color: #5a6268;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Add rank styling */
+.rank-1, .rank-2, .rank-3 {
+    font-weight: bold;
+}
+
+.rank-1 {
+    color: #FFD700; /* Gold */
+}
+
+.rank-2 {
+    color: #C0C0C0; /* Silver */
+}
+
+.rank-3 {
+    color: #CD7F32; /* Bronze */
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', async function() {
+    console.log('[ADMIN LEADERBOARD] Page loaded, fetching scores...'); // Admin-specific log
+    
+    // Adjust colspan for admin view (6 columns, no Actions)
+    document.getElementById('teams-tbody').innerHTML = '<tr><td colspan="6" style="text-align: center;">Loading scores...</td></tr>';
+    document.getElementById('individuals-tbody').innerHTML = '<tr><td colspan="6" style="text-align: center;">Loading scores...</td></tr>';
+    
+    try {
+        const response = await fetch(`/api/scores/all?_t=${new Date().getTime()}`);
+        console.log('[ADMIN LEADERBOARD] API /api/scores/all response status:', response.status); // Admin-specific log
+        
+        if (!response.ok) {
+            // Log the response text for more details on a 403 or other error
+            const errorText = await response.text();
+            console.error('[ADMIN LEADERBOARD] API /api/scores/all error response text:', errorText);
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('[ADMIN LEADERBOARD] API /api/scores/all response data received'); // Admin-specific log
+        
+        if (data && data.scores && Array.isArray(data.scores)) {
+            console.log(`[ADMIN LEADERBOARD] Received ${data.scores.length} scores from API`); // Admin-specific log
+            processScores(data.scores);
+        } else {
+            console.error('[ADMIN LEADERBOARD] Invalid data format or no scores returned from /api/scores/all', data); // Admin-specific log
+            document.getElementById('no-teams').style.display = 'block';
+            document.getElementById('no-individuals').style.display = 'block';
+            document.getElementById('teams-tbody').innerHTML = ''; // Clear loading message
+            document.getElementById('individuals-tbody').innerHTML = ''; // Clear loading message
+        }
+    } catch (error) {
+        console.error('[ADMIN LEADERBOARD] Error fetching scores from /api/scores/all:', error); // Admin-specific log
+        // Adjust colspan for admin view
+        document.getElementById('teams-tbody').innerHTML = `<tr><td colspan="6" style="text-align: center; color: red;">Error loading scores: ${error.message}</td></tr>`;
+        document.getElementById('individuals-tbody').innerHTML = `<tr><td colspan="6" style="text-align: center; color: red;">Error loading scores: ${error.message}</td></tr>`;
+    }
+    
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.addEventListener('click', function() {
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
+            this.classList.add('active');
+            const targetId = this.getAttribute('data-target') + '-content';
+            document.getElementById(targetId).style.display = 'block';
+            // Save filters when tab changes for admin
+            saveFilters(); 
+        });
+    });
+    
+    document.getElementById('team-event-filter').addEventListener('change', filterTeamScores);
+    document.getElementById('individual-event-filter').addEventListener('change', filterIndividualScores);
+    
+    // Restore filters with a slight delay to ensure options might be populated if initial load was quick
+    setTimeout(restoreFilters, 500); 
+});
+
+function processScores(scores) {
+    console.log('[ADMIN LEADERBOARD] Processing scores. Number of scores received:', scores ? scores.length : 'null/undefined');
+    
+    if (!Array.isArray(scores)) {
+        console.error('[ADMIN LEADERBOARD] scores parameter is not an array:', scores);
+        const errorMsg = 'Error: Score data is not in the expected format.';
+        // Adjust colspan for admin view
+        document.getElementById('teams-tbody').innerHTML = `<tr><td colspan="6" style="text-align: center; color: red;">${errorMsg}</td></tr>`;
+        document.getElementById('individuals-tbody').innerHTML = `<tr><td colspan="6" style="text-align: center; color: red;">${errorMsg}</td></tr>`;
+        return;
+    }
+    
+    if (scores.length > 0) {
+        console.log('[ADMIN LEADERBOARD] Sample of first 5 scores received for processing:', JSON.stringify(scores.slice(0, 5).map(s => ({eventInfo: s.eventInfo, contestantName: s.contestantName, contestantType: s.contestantType})), null, 2));
+    }
+
+    const teamScores = scores.filter(score => score && score.contestantType === 'team');
+    const individualScores = scores.filter(score => score && score.contestantType === 'individual');
+    console.log(`[ADMIN LEADERBOARD] Found ${teamScores.length} team scores and ${individualScores.length} individual scores`);
+    
+    const allEventInfoValues = scores.map(score => score.eventInfo);
+    console.log('[ADMIN LEADERBOARD] All eventInfo values from scores (before creating Set):', JSON.stringify(allEventInfoValues));
+
+    const events = [...new Set(scores.filter(s => s && s.eventInfo && String(s.eventInfo).trim() !== '').map(score => String(score.eventInfo).trim()))];
+    console.log('[ADMIN LEADERBOARD] Unique, non-empty events extracted for dropdown:', JSON.stringify(events));
+    
+    populateEventFilters(events);
+    
+    teamScores.sort((a, b) => (b.totalScore || 0) - (a.totalScore || 0));
+    individualScores.sort((a, b) => (b.totalScore || 0) - (a.totalScore || 0));
+    
+    populateTable('teams-tbody', teamScores);
+    populateTable('individuals-tbody', individualScores);
+    
+    document.getElementById('no-teams').style.display = teamScores.length === 0 ? 'block' : 'none';
+    document.getElementById('no-individuals').style.display = individualScores.length === 0 ? 'block' : 'none';
+}
+
+function populateEventFilters(events) {
+    console.log('[ADMIN LEADERBOARD] Populating event filters with events array:', JSON.stringify(events));
+    
+    const teamFilter = document.getElementById('team-event-filter');
+    const individualFilter = document.getElementById('individual-event-filter');
+    
+    if (!teamFilter || !individualFilter) {
+        console.error('[ADMIN LEADERBOARD] Event filter dropdown elements not found.');
+        return;
+    }
+    
+    const currentTeamFilterValue = teamFilter.value;
+    const currentIndividualFilterValue = individualFilter.value;
+
+    teamFilter.innerHTML = '';
+    individualFilter.innerHTML = '';
+    
+    const allEventsOption = document.createElement('option');
+    allEventsOption.value = 'all';
+    allEventsOption.textContent = 'All Events';
+    teamFilter.appendChild(allEventsOption.cloneNode(true));
+    individualFilter.appendChild(allEventsOption.cloneNode(true));
+    
+    // Ensure events is an array before using Set and forEach
+    const uniqueEventsForOptions = Array.isArray(events) ? [...new Set(events.filter(event => event && String(event).trim() !== ''))] : [];
+    console.log('[ADMIN LEADERBOARD] Unique events being added to dropdown options:', JSON.stringify(uniqueEventsForOptions));
+
+    uniqueEventsForOptions.forEach(event => {
+        const option = document.createElement('option');
+        option.value = event;
+        option.textContent = event;
+        teamFilter.appendChild(option.cloneNode(true));
+        individualFilter.appendChild(option.cloneNode(true));
+        console.log(`[ADMIN LEADERBOARD] Added event option to dropdown: ${event}`);
+    });
+
+    if (uniqueEventsForOptions.length === 0) {
+        console.warn('[ADMIN LEADERBOARD] No unique, non-empty events found to populate dropdown. Only "All Events" will be shown.');
+    }
+
+    teamFilter.value = uniqueEventsForOptions.includes(currentTeamFilterValue) ? currentTeamFilterValue : 'all';
+    individualFilter.value = uniqueEventsForOptions.includes(currentIndividualFilterValue) ? currentIndividualFilterValue : 'all';
+}
+
+function populateTable(tableId, scores) {
+    console.log(`[ADMIN LEADERBOARD] Populating table ${tableId} with ${scores.length} scores`);
+    const tbody = document.getElementById(tableId);
+    if (!tbody) {
+        console.error(`[ADMIN LEADERBOARD] Table body element with ID ${tableId} not found`);
+        return;
+    }
+    tbody.innerHTML = '';
+    if (scores.length === 0) {
+        // console.log(`[ADMIN LEADERBOARD] No scores to display in ${tableId}`); // Covered by no-data div
+        return;
+    }
+    scores.forEach((score, index) => {
+        try {
+            const row = document.createElement('tr');
+            const rankCell = document.createElement('td');
+            rankCell.textContent = index + 1;
+            if (index < 3) rankCell.classList.add(`rank-${index + 1}`);
+            row.appendChild(rankCell);
+            
+            const nameCell = document.createElement('td');
+            nameCell.textContent = score.contestantName || 'Unnamed';
+            row.appendChild(nameCell);
+            
+            const eventCell = document.createElement('td');
+            eventCell.textContent = score.eventInfo || 'No event';
+            row.appendChild(eventCell);
+            
+            const scoreCell = document.createElement('td');
+            scoreCell.textContent = score.totalScore || '0';
+            row.appendChild(scoreCell);
+            
+            const judgeCell = document.createElement('td');
+            judgeCell.textContent = score.judgeInfo || 'Unknown';
+            row.appendChild(judgeCell);
+            
+            const dateCell = document.createElement('td');
+            dateCell.textContent = score.submittedAt ? new Date(score.submittedAt).toLocaleDateString() : 'Unknown date';
+            row.appendChild(dateCell);
+            
+            // NO ACTION BUTTONS FOR ADMIN VIEW
+            
+            tbody.appendChild(row);
+        } catch (error) {
+            console.error(`[ADMIN LEADERBOARD] Error processing score for table at index ${index}:`, error, 'Score data:', score);
+        }
+    });
+    // console.log(`[ADMIN LEADERBOARD] Successfully populated table ${tableId}`);
+}
+
+function filterTeamScores() {
+    const selectedEvent = document.getElementById('team-event-filter').value;
+    console.log(`[ADMIN LEADERBOARD] Team event filter changed to: ${selectedEvent}`);
+    filterScores('teams-tbody', 'team', selectedEvent);
+    saveFilters(); // Save filter on change
+}
+
+function filterIndividualScores() {
+    const selectedEvent = document.getElementById('individual-event-filter').value;
+    console.log(`[ADMIN LEADERBOARD] Individual event filter changed to: ${selectedEvent}`);
+    filterScores('individuals-tbody', 'individual', selectedEvent);
+    saveFilters(); // Save filter on change
+}
+
+async function filterScores(tableId, type, event) {
+    console.log(`[ADMIN LEADERBOARD] Filtering scores for table: ${tableId}, type: ${type}, event: ${event}`);
+    try {
+        let url = `/api/scores/filter?type=${type}`;
+        // Only add event parameter if it's provided and not 'all'
+        if (event && event.toLowerCase() !== 'all') {
+            url += `&event=${encodeURIComponent(event)}`;
+        }
+        
+        console.log(`[ADMIN LEADERBOARD] Fetching filtered scores with URL: ${url}`);
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error(`[ADMIN LEADERBOARD] API /api/scores/filter error response text for URL ${url}:`, errorText);
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (data && data.scores && Array.isArray(data.scores)) {
+            console.log(`[ADMIN LEADERBOARD] Received ${data.scores.length} filtered scores for ${type} - ${event}`);
+            data.scores.sort((a, b) => (b.totalScore || 0) - (a.totalScore || 0));
+            populateTable(tableId, data.scores);
+            const noDataId = type === 'team' ? 'no-teams' : 'no-individuals';
+            document.getElementById(noDataId).style.display = data.scores.length === 0 ? 'block' : 'none';
+        } else {
+            console.error(`[ADMIN LEADERBOARD] Invalid data format or no scores returned from filter API for ${type} - ${event}`, data);
+             document.getElementById(tableId).innerHTML = `<tr><td colspan="6" style="text-align: center; color: red;">No scores found for this filter.</td></tr>`;
+        }
+    } catch (error) {
+        console.error(`[ADMIN LEADERBOARD] Error in filterScores for ${type} - ${event}:`, error);
+        // Adjust colspan for admin view
+        document.getElementById(tableId).innerHTML = `<tr><td colspan="6" style="text-align: center; color: red;">Error filtering scores: ${error.message}</td></tr>`;
+    }
+}
+
+// Admin-specific session storage keys
+const ADMIN_LEADERBOARD_TEAM_EVENT_KEY = 'admin-leaderboard-team-event';
+const ADMIN_LEADERBOARD_INDIVIDUAL_EVENT_KEY = 'admin-leaderboard-individual-event';
+const ADMIN_LEADERBOARD_ACTIVE_TAB_KEY = 'admin-leaderboard-active-tab';
+
+function saveFilters() {
+    const teamEvent = document.getElementById('team-event-filter').value;
+    const individualEvent = document.getElementById('individual-event-filter').value;
+    const activeTabButton = document.querySelector('.tab-button.active');
+    const activeTab = activeTabButton ? activeTabButton.getAttribute('data-target') : 'teams'; // Default to 'teams'
+    
+    sessionStorage.setItem(ADMIN_LEADERBOARD_TEAM_EVENT_KEY, teamEvent);
+    sessionStorage.setItem(ADMIN_LEADERBOARD_INDIVIDUAL_EVENT_KEY, individualEvent);
+    sessionStorage.setItem(ADMIN_LEADERBOARD_ACTIVE_TAB_KEY, activeTab);
+    console.log(`[ADMIN LEADERBOARD] Filters saved - Team: ${teamEvent}, Individual: ${individualEvent}, Tab: ${activeTab}`);
+}
+
+function restoreFilters() {
+    console.log('[ADMIN LEADERBOARD] Attempting to restore filters...');
+    const teamEvent = sessionStorage.getItem(ADMIN_LEADERBOARD_TEAM_EVENT_KEY);
+    const individualEvent = sessionStorage.getItem(ADMIN_LEADERBOARD_INDIVIDUAL_EVENT_KEY);
+    const activeTab = sessionStorage.getItem(ADMIN_LEADERBOARD_ACTIVE_TAB_KEY);
+    
+    console.log(`[ADMIN LEADERBOARD] Restored from session - Team: ${teamEvent}, Individual: ${individualEvent}, Tab: ${activeTab}`);
+
+    let filtersApplied = false;
+
+    if (teamEvent) {
+        const teamFilter = document.getElementById('team-event-filter');
+        if (teamFilter && teamFilter.options.length > 1) { // Check if options are populated
+             // Check if the saved event exists in the dropdown
+            let optionExists = false;
+            for(let i=0; i < teamFilter.options.length; i++) {
+                if(teamFilter.options[i].value === teamEvent) {
+                    optionExists = true;
+                    break;
+                }
+            }
+            if(optionExists) {
+                teamFilter.value = teamEvent;
+                console.log(`[ADMIN LEADERBOARD] Restored team filter to: ${teamEvent}`);
+                // filterTeamScores(); // Let tab restoration trigger filter if needed
+                filtersApplied = true;
+            } else {
+                 console.log(`[ADMIN LEADERBOARD] Team event "${teamEvent}" not found in dropdown, defaulting to 'all'.`);
+                 teamFilter.value = 'all';
+            }
+        } else {
+            console.log('[ADMIN LEADERBOARD] Team filter or its options not ready for restoration yet.');
+        }
+    }
+    
+    if (individualEvent) {
+        const individualFilter = document.getElementById('individual-event-filter');
+        if (individualFilter && individualFilter.options.length > 1) { // Check if options are populated
+            let optionExists = false;
+            for(let i=0; i < individualFilter.options.length; i++) {
+                if(individualFilter.options[i].value === individualEvent) {
+                    optionExists = true;
+                    break;
+                }
+            }
+            if(optionExists) {
+                individualFilter.value = individualEvent;
+                console.log(`[ADMIN LEADERBOARD] Restored individual filter to: ${individualEvent}`);
+                // filterIndividualScores(); // Let tab restoration trigger filter if needed
+                filtersApplied = true;
+            } else {
+                console.log(`[ADMIN LEADERBOARD] Individual event "${individualEvent}" not found in dropdown, defaulting to 'all'.`);
+                individualFilter.value = 'all';
+            }
+        } else {
+            console.log('[ADMIN LEADERBOARD] Individual filter or its options not ready for restoration yet.');
+        }
+    }
+    
+    if (activeTab) {
+        const tabButton = document.querySelector(`.tab-button[data-target="${activeTab}"]`);
+        if (tabButton) {
+            console.log(`[ADMIN LEADERBOARD] Restoring active tab to: ${activeTab}`);
+            // Deactivate all first then activate the target. Avoids double 'active' class if already correct.
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
+            tabButton.classList.add('active');
+            const targetId = tabButton.getAttribute('data-target') + '-content';
+            document.getElementById(targetId).style.display = 'block';
+            
+            // Now trigger the filter for the restored active tab if its filter value isn't 'all'
+            if (activeTab === 'teams' && teamFilter.value !== 'all') {
+                filterTeamScores();
+            } else if (activeTab === 'individuals' && individualFilter.value !== 'all') {
+                filterIndividualScores();
+            } else if (!filtersApplied && (teamFilter.value === 'all' || individualFilter.value === 'all')) {
+                // If no specific event was restored, but a tab was, ensure 'all' is filtered for that tab
+                if (activeTab === 'teams') filterTeamScores();
+                else if (activeTab === 'individuals') filterIndividualScores();
+            }
+
+        } else {
+             console.log(`[ADMIN LEADERBOARD] Tab button for target "${activeTab}" not found.`);
+        }
+    } else if (!filtersApplied) {
+        // If no tab was restored and no specific event filters applied, filter the default active tab for 'all'
+        const defaultActiveTabButton = document.querySelector('.tab-button.active');
+        if (defaultActiveTabButton) {
+            const defaultActiveTarget = defaultActiveTabButton.getAttribute('data-target');
+            if (defaultActiveTarget === 'teams') filterTeamScores(); // Will filter 'all' by default
+            else if (defaultActiveTarget === 'individuals') filterIndividualScores(); // Will filter 'all' by default
+        }
+    }
+     console.log('[ADMIN LEADERBOARD] Filter restoration process complete.');
+}
+
+// Ensure DOMContentLoaded listeners are correctly managed if this script replaces an old one.
+// The primary DOMContentLoaded listener is at the top of this script.
+</script> 

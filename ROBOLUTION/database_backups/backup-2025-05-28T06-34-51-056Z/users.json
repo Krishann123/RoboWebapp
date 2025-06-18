@@ -1,0 +1,162 @@
+[
+  {
+    "_id": "6821ad5ae4a440b8e7951ece",
+    "fullName": "Sir Cahrlos",
+    "username": "syeshayde",
+    "email": "sirporquez@gmail.com",
+    "password": "$2b$10$DNhd0Btr8wfiv3TXJWEDWOPWRRw3/p3PhBF/1vARwC6EIeAUrJ3HG",
+    "createdAt": "2025-05-12T08:12:10.357Z",
+    "__v": 0
+  },
+  {
+    "_id": "682a3ea6617a35539f81dbc3",
+    "fullName": "Carl Krishann J MIllares",
+    "username": "TESTACCOUNT",
+    "email": "krishanncfacc@gmail.com",
+    "password": "$2b$10$DLAASiqCikPYcb3TFqjhTOR7jhf54l24hgM3l2bhYefsI.CzwsbPi",
+    "profilePicture": "",
+    "twoFactorSecret": null,
+    "twoFactorEnabled": false,
+    "backupCodes": [],
+    "createdAt": "2025-05-18T20:10:15.060Z",
+    "__v": 1
+  },
+  {
+    "_id": "6826142fc1b18ea33eb46bc1",
+    "fullName": "Sir Cahrlos",
+    "username": "dire",
+    "email": "maicahvienne@gmail.com",
+    "password": "$2b$10$xAuhqV/Gnedc5mfy4KVRO.L4LEVYGLSQLjNTLcUUhgPLVZVB.c1Am",
+    "twoFactorSecret": "JZ4UK6SSMFUEKI2LGBIESVJYK5XUWMSL",
+    "twoFactorEnabled": true,
+    "backupCodes": [
+      "X75NFK",
+      "NNAHE3",
+      "H6SLCV",
+      "P8JFPQ",
+      "S3F81B",
+      "G9BUEB",
+      "NQQVMO",
+      "LUG6TQ"
+    ],
+    "createdAt": "2025-05-15T16:19:59.684Z",
+    "__v": 0,
+    "profilePicture": "https://res.cloudinary.com/dji4cktex/image/upload/v1747745481/robolution/profiles/cwb5z2sidnkbjbz5cpsy.jpg",
+    "role": "judge",
+    "updatedAt": {
+      "$date": "2025-05-26T14:47:17.072Z"
+    }
+  },
+  {
+    "_id": "683470960a96b4485903d25d",
+    "fullName": "Sir Cahrlos",
+    "username": "sye",
+    "email": "sporquez.k12042563@umak.edu.ph",
+    "password": "$2b$10$fz6OhqzZ5kMmGRzJlZbvv./iUhM32rG/XKDsTFVl3oFtQdYOo3c0a",
+    "profilePicture": "",
+    "twoFactorSecret": "MQZGO6CPNZDGY7JSNBHGMS3IOUYSY22B",
+    "twoFactorEnabled": true,
+    "backupCodes": [
+      "5I5FNB",
+      "0YW9LZ",
+      "U9GIA9",
+      "9QA5QE",
+      "WC7519",
+      "HMQ1D6",
+      "FKHRA4",
+      "5SP5I8"
+    ],
+    "createdAt": {
+      "$date": "2025-05-26T13:45:58.521Z"
+    },
+    "__v": 0,
+    "role": "judge",
+    "updatedAt": {
+      "$date": "2025-05-26T13:54:22.768Z"
+    }
+  },
+  {
+    "_id": "6835af61b524723ca8a433af",
+    "fullName": "Krishann_user2",
+    "username": "Krishann_user2",
+    "email": "dastallaa1018@gmail.com",
+    "password": "$2b$10$.sp..3xENHOKlrsuvQdAB.oXJKf/pciKSuXInPNiAMUyr0kHuzA66",
+    "school": "",
+    "profilePicture": "https://res.cloudinary.com/dji4cktex/image/upload/v1748413231/robolution/profiles/frztae5bldnbnxmkjkdn.jpg",
+    "address": "",
+    "createdAt": {
+      "$date": "2025-05-18T13:19:47.330Z"
+    },
+    "twoFactorSecret": "IIWHWMLIMNDXIOJ6FBOWG2LUMURXQV3P",
+    "twoFactorEnabled": true,
+    "backupCodes": [
+      "AANHXY",
+      "DJQP4A",
+      "8R2OYZ",
+      "YU9945",
+      "95TDEP",
+      "8Q0FPG",
+      "ZFXZDW",
+      "38QYF6"
+    ],
+    "__v": 1,
+    "role": "judge",
+    "updatedAt": {
+      "$date": "2025-05-28T05:23:52.716Z"
+    }
+  },
+  {
+    "_id": "6830a8b3879b10d84a4087b4",
+    "fullName": "TESTACCOUNT2",
+    "username": "TESTACCOUNT2",
+    "email": "testaccount2@robolution.default",
+    "password": "$2b$10$ZDg32e2bHkfWz8Q3c8HwLucVSrG5vZ408Q3xjA10ZbceISQC5PcC6",
+    "school": "",
+    "profilePicture": null,
+    "address": "",
+    "createdAt": "2025-05-20T12:16:51.095Z",
+    "twoFactorSecret": "JRBDE5CAGU4VEOSUNNQTEUTXM5HFA7LW",
+    "twoFactorEnabled": true,
+    "backupCodes": [
+      "QLFTNG",
+      "CN7V27",
+      "0NWIWY",
+      "9CLRUK",
+      "5KCQQL",
+      "9BSHV7",
+      "WFBJ7H",
+      "NFZ6GT"
+    ],
+    "__v": 1
+  },
+  {
+    "_id": "68369820ae58ae54d334a82e",
+    "fullName": "Krishann_user",
+    "username": "Krishann_user",
+    "email": "krishannmillares@gmail.com",
+    "password": "$2b$10$.8gVtXPDtHCDXU1QH5qsb.CJfEsXj95FeM34DORiMfNyX2wLbjoQu",
+    "school": "",
+    "profilePicture": "https://res.cloudinary.com/dji4cktex/image/upload/v1748412976/robolution/profiles/kta2majyzoswv8srvubs.jpg",
+    "address": "",
+    "createdAt": {
+      "$date": "2025-05-18T13:10:53.471Z"
+    },
+    "twoFactorSecret": "ENTUWQJTGU2W2XJSORLSKI2UJB4G2Q3X",
+    "twoFactorEnabled": true,
+    "backupCodes": [
+      "EL5VVZ",
+      "0MIEBV",
+      "CVHDXH",
+      "SU1SNT",
+      "VQ405D",
+      "BG8S34",
+      "U8QVXL",
+      "JMM9W8"
+    ],
+    "__v": 1,
+    "birthDate": {
+      "month": 10,
+      "year": 2003
+    }
+  }
+]

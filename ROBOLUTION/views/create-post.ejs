@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Post | Robolution</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <script src="/js/script.js" defer></script>
+  <script src="/js/mobile.js" defer></script>
+  <style>
+    /* Set background to white */
+    body, main {
+      background-color: #ffffff;
+      background-image: none;
+    }
+    
+    /* Add dropdown styles */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+  
+    .dropdown-btn {
+      cursor: pointer;
+    }
+  
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+  
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+    }
+  
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+  
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+  
+    /* Form styling */
+    .main-create {
+      padding: 120px 20px 40px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+  
+    .page-title {
+      color: #00008b;
+      margin-bottom: 30px;
+      text-align: center;
+      font-size: 2.2rem;
+    }
+  
+    .create-post-form {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+    }
+  
+    .form-group {
+      margin-bottom: 20px;
+    }
+  
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #444;
+    }
+  
+    .form-control {
+      width: 100%;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+  
+    .form-control:focus {
+      border-color: #00008b;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0, 0, 139, 0.1);
+    }
+  
+    textarea.form-control {
+      min-height: 150px;
+      resize: vertical;
+    }
+  
+    .btn-submit {
+      background-color: #00008b;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: background-color 0.3s;
+      margin-top: 10px;
+    }
+  
+    .btn-submit:hover {
+      background-color: #000066;
+    }
+  
+    .preview-container {
+      margin-top: 15px;
+    }
+  
+    .image-preview {
+      max-width: 100%;
+      max-height: 300px;
+      display: none;
+      margin-top: 10px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+  
+    /* Checkbox styling */
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+      gap: 10px;
+    }
+  
+    .checkbox-group label {
+      margin-bottom: 0;
+      font-weight: normal;
+    }
+  
+    .checkbox-group input[type="checkbox"] {
+      width: auto;
+      margin-right: 10px;
+    }
+  
+    /* Region select styling */
+    .select-group {
+      margin-bottom: 20px;
+    }
+  
+    .select-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #444;
+    }
+  
+    .select-control {
+      width: 100%;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+      background-color: white;
+    }
+  
+    .select-control:focus {
+      border-color: #00008b;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0, 0, 139, 0.1);
+    }
+  
+    .date-input-container {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+  
+    /* Style for the hidden element if checkbox is checked */
+    #customDateInput {
+      margin-top: 15px;
+    }
+  
+    @media (max-width: 768px) {
+      .main-create {
+        padding-top: 80px;
+      }
+  
+      .page-title {
+        font-size: 1.8rem;
+      }
+  
+      .create-post-form {
+        padding: 20px;
+      }
+  
+      .btn-submit {
+        width: 100%;
+      }
+    }
+  </style>
+  
+  <% if (locals.dashboard) { %>
+  <style>
+    /* Dashboard specific styles */
+    body {
+      padding: 0;
+      margin: 0;
+    }
+    
+    .content-wrapper {
+      padding-top: 0;
+    }
+    
+    /* Hide elements when in dashboard */
+    header, footer, .video-section, .back-to-top {
+      display: none !important;
+    }
+    
+    main {
+      padding-top: 20px !important;
+    }
+  </style>
+  <% } %>
+</head>
+<body>
+<div class="content-wrapper">
+
+  <% if (!locals.dashboard) { %>
+  <header>
+    <div class="header-content">
+      <img src="/images/LOGO.webp" alt="Robolution Logo" class="logo">
+      <nav class="header-nav">
+        <a href="/create-post" class="nav-button create-post-button">Create Post</a>
+        <a href="/index" class="nav-button">News</a>
+        <a href="/categories" class="nav-button">Categories</a>
+        <a href="/manage-categories" class="nav-button">Manage Categories</a>
+        <a href="/manage-registrations" class="nav-button">Manage Registration</a>
+        <a href="/manage-accounts" class="nav-button">Accounts</a>
+        <a href="/admin/user-profiles" class="nav-button">User Profiles</a>
+        <% if (user && user.role === 'superadmin') { %>
+        <a href="/manage-backups" class="nav-button">Backups</a>
+        <% } %>
+        <div class="dropdown">
+          <button class="nav-button dropdown-btn">Regional</button>
+          <div class="dropdown-content">
+            <a href="/admin-regional?region=All">All Regions</a>
+            <% if (typeof uniqueRegions !== 'undefined' && uniqueRegions.length > 0) { %>
+              <% uniqueRegions.forEach(function(region) { %>
+                <a href="/admin-regional?region=<%= region %>"><%= region %></a>
+              <% }); %>
+            <% } else { %>
+              <div class="dropdown-empty">No regional posts available</div>
+            <% } %>
+          </div>
+        </div>
+        <a href="/logout" class="nav-button logout-button">Logout</a>
+      </nav>
+    </div>
+  </header>
+  <% } %>
+
+  <main class="main-create">
+    <section>
+      <h2>Create a New Post</h2>
+
+      <% if (locals.flashMessages && flashMessages.success && flashMessages.success.length > 0) { %>
+        <div class="alert alert-success" style="background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 15px; margin-bottom: 20px; border-radius: 4px;">
+          <% flashMessages.success.forEach(function(message) { %>
+            <p><%= message %></p>
+          <% }); %>
+        </div>
+      <% } %>
+      <% if (locals.flashMessages && flashMessages.error && flashMessages.error.length > 0) { %>
+        <div class="alert alert-danger" style="background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 15px; margin-bottom: 20px; border-radius: 4px;">
+          <% flashMessages.error.forEach(function(message) { %>
+            <p><%= message %></p>
+          <% }); %>
+        </div>
+      <% } %>
+
+      <form action="/posts<%= locals.dashboard ? '?dashboard=true' : '' %>" method="POST" enctype="multipart/form-data" class="post-form">
+        <input type="text" name="title" placeholder="Post Title" required><br>
+        <textarea name="content" placeholder="Write your content here..." required></textarea><br>
+        <input type="text" name="author" placeholder="Author Name" required><br>
+        <input type="file" name="image" accept="image/*" id="imageUpload"><br>
+        <span id="imageError" style="color: red; font-size: 0.9em;"></span><br>
+        
+        <div class="region-section">
+          <h3>Post Region</h3>
+          <div class="form-group">
+            <label for="region">Select the region this post applies to:</label>
+            <select name="region" id="region">
+              <option value="All">All Regions</option>
+              <option value="Region I">Region I (Ilocos Region)</option>
+              <option value="Region II">Region II (Cagayan Valley)</option>
+              <option value="Region III">Region III (Central Luzon)</option>
+              <option value="Region IV-A">Region IV-A (CALABARZON)</option>
+              <option value="Region IV-B">Region IV-B (MIMAROPA)</option>
+              <option value="Region V">Region V (Bicol Region)</option>
+              <option value="Region VI">Region VI (Western Visayas)</option>
+              <option value="Region VII">Region VII (Central Visayas)</option>
+              <option value="Region VIII">Region VIII (Eastern Visayas)</option>
+              <option value="Region IX">Region IX (Zamboanga Peninsula)</option>
+              <option value="Region X">Region X (Northern Mindanao)</option>
+              <option value="Region XI">Region XI (Davao Region)</option>
+              <option value="Region XII">Region XII (SOCCSKSARGEN)</option>
+              <option value="Region XIII">Region XIII (Caraga)</option>
+              <option value="NCR">National Capital Region (NCR)</option>
+              <option value="CAR">Cordillera Administrative Region (CAR)</option>
+              <option value="BARMM">Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)</option>
+            </select>
+            <p class="note" style="font-size: 0.8rem; color: #666; margin-top: 5px;">
+              Select "All Regions" if the post is relevant to all regions, or choose a specific region.
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <label for="useCurrentDate">Use Current Date:</label>
+          <input type="checkbox" id="useCurrentDate" name="useCurrentDate">
+        </div><br>
+
+        <div id="customDateInput" style="display: block;">
+          <label for="date">Custom Date:</label>
+          <input type="date" id="date" name="date" >
+        </div><br>
+
+        <input type="submit" value="Submit" class="submit-btn" id="submitPostBtn">
+        <span id="loadingMessage" style="margin-left: 10px; display: none;">Processing... please wait.</span>
+      </form>
+
+      <br>
+      <a href="/index"><button class="back-btn">← Go Back</button></a>
+    </section>
+  </main>
+
+  <% if (!locals.dashboard) { %>
+  <footer class="fixed-footer">
+    <div class="footer-content">
+      <div class="footer-left">
+        <p>Powered by Erovoutika</p>
+      </div>
+      <div class="footer-right">
+        <p>Unit 703, PARC HOUSE II, Epifanio de los Santos Ave, Makati, 1212 Metro Manila</p>
+        <p><strong>Contact us via:</strong> 0974 423 1557 || erovoutika@gmail.com</p>
+        <div class="social-icons">
+          <a href="https://www.facebook.com/erovoutika" target="_blank" class="social-icon">f</a>
+          <a href="https://www.erovoutika.ph" target="_blank" class="social-icon">↗</a>
+          <a href="https://www.linkedin.com/company/erovoutika/" target="_blank" class="social-icon">in</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <% } %>
+</div>
+
+<script>
+  // Add dropdown functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.dropdown');
+    
+    dropdowns.forEach(dropdown => {
+      const btn = dropdown.querySelector('.dropdown-btn');
+      const content = dropdown.querySelector('.dropdown-content');
+      
+      // Show dropdown on hover
+      dropdown.addEventListener('mouseenter', () => {
+        content.style.display = 'block';
+      });
+      
+      // Hide dropdown when mouse leaves
+      dropdown.addEventListener('mouseleave', () => {
+        content.style.display = 'none';
+      });
+    });
+
+    // Your existing date input JavaScript
+    const useCurrentDateCheckbox = document.getElementById('useCurrentDate');
+    const customDateInput = document.getElementById('customDateInput');
+    const dateInput = document.getElementById('date');
+
+    useCurrentDateCheckbox.addEventListener('change', function() {
+      if (this.checked) {
+        customDateInput.style.display = 'none';
+        dateInput.disabled = true;
+      } else {
+        customDateInput.style.display = 'block';
+        dateInput.disabled = false;
+      }
+    });
+
+    // Image file size validation
+    const imageUploadInput = document.getElementById('imageUpload');
+    const imageErrorSpan = document.getElementById('imageError');
+    const maxFileSize = 5 * 1024 * 1024; // 5MB (matches server-side limit)
+    const postForm = document.querySelector('.post-form');
+    const submitPostBtn = document.getElementById('submitPostBtn');
+    const loadingMessage = document.getElementById('loadingMessage');
+
+    if (imageUploadInput) {
+      imageUploadInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+          if (file.size > maxFileSize) {
+            imageErrorSpan.textContent = 'File is too large. Maximum size is 5MB.';
+            event.target.value = ''; // Clear the selected file
+          } else {
+            imageErrorSpan.textContent = ''; // Clear any previous error message
+          }
+        }
+      });
+    }
+
+    if (postForm && submitPostBtn && loadingMessage) {
+      postForm.addEventListener('submit', function() {
+        // Check if file size validation failed (error message is visible)
+        if (imageErrorSpan.textContent !== '') {
+          // If there's an image error, prevent form submission
+          // The error message is already displayed by the image validation logic
+          event.preventDefault(); 
+          return;
+        }
+        submitPostBtn.disabled = true;
+        submitPostBtn.value = 'Submitting...';
+        loadingMessage.style.display = 'inline';
+      });
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+---
+const { image, title, date, description, subtitle } = Astro.props;
+---
+
+<div
+    class="cursor-pointer hover:opacity-80 transition bg-white p-6 shadow-md rounded-lg"
+    onclick="showCard(this)"
+>
+    <img
+        src={image}
+        alt={title}
+        class="w-full h-48 object-cover rounded-md mb-4"
+    />
+    <h2 class="text-2xl font-bold text-center">{title}</h2>
+    <h3 class="text-sm text-gray-500 mb-2">{date}</h3>
+    <p class="text-gray-700">{subtitle}</p>
+    <h3 class="text-sm text-gray-500 mb-2">{description}</h3>
+
+    <template class="detail-template">
+        <div
+            class="min-h-screen flex items-center justify-center p-8 bg-gray-100"
+        >
+            <article
+                class="max-w-xl bg-white rounded-lg p-6 shadow-md text-center"
+            >
+                <img
+                    src={image}
+                    alt={title}
+                    class="w-full h-64 object-cover rounded-md mb-4"
+                />
+                <h1 class="text-3xl font-bold mb-2">{title}</h1>
+                <h2 class="text-lg text-gray-600 mb-4">{date}</h2>
+                <p class="text-gray-700 leading-relaxed">{subtitle}</p>
+                <h2 class="text-lg text-gray-600 mb-4">{description}</h2>
+            </article>
+        </div>
+    </template>
+</div>
+
+<script is:inline>
+    function showCard(card) {
+        const tpl = card.querySelector(".detail-template");
+        if (!tpl) return;
+        document.body.innerHTML = tpl.innerHTML;
+    }
+</script>

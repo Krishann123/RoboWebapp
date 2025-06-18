@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="/images/ROBOLUTION_ICON.ico" type="image/x-icon">
+  <meta name="description" content="Erovoutika is a leading provider of innovative robotics and automation solutions for businesses worldwide. Our expert team of engineers and designers create ...">
+  <title>Robolution Blog</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <script src="/js/script.js" defer></script>
+  <script src="/js/mobile.js" defer></script>
+  <!-- Add Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    /* Background color change */
+    body, main {
+      background-color: #ffffff;
+      background-image: none;
+    }
+    
+    /* Post grid styling */
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      padding: 30px 20px;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+    
+    /* Initial button visibility */
+    .login-button, .signup-button {
+      display: inline-block;
+    }
+    
+    .logout-button {
+      display: none;
+    }
+    
+    /* Sign-up button styles */
+    .signup-button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+    }
+    
+    .signup-button:hover {
+      background-color: #45a049;
+    }
+    
+    /* Logout button styles */
+    .logout-button {
+      background-color: #f44336;
+      color: white;
+      border: none;
+    }
+    
+    .logout-button:hover {
+      background-color: #d32f2f;
+    }
+    
+    /* Updated card styling */
+    .post-card {
+      position: relative;
+      height: 380px;
+      background: transparent;
+      padding: 0;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: block;
+      width: 100%;
+    }
+    
+    .post-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Image styling */
+    .post-img {
+      width: 100%;
+      height: 100%;
+      object-fit: fit;
+      border-radius: 0;
+      margin: 0;
+      transition: filter 0.3s ease;
+    }
+    
+    /* Hover effect */
+    .post-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      padding: 20px;
+      box-sizing: border-box;
+      color: white !important;
+      text-align: center;
+    }
+    
+    .post-card:hover .post-img {
+      filter: blur(3px) brightness(0.7);
+    }
+    
+    .post-card:hover .post-overlay {
+      opacity: 1;
+    }
+    
+    .post-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: white !important;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    
+    .post-date {
+      font-size: 0.9rem;
+      color: white !important;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    }
+    
+    /* Trending posts section */
+    .trending-section {
+      max-width: 1440px;
+      margin: 0 auto 40px;
+      padding: 0 20px;
+    }
+    
+    .trending-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    
+    .trending-title {
+      font-size: 1.8rem;
+      color: #00008b;
+      margin-bottom: 0;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    
+    .trending-title i {
+      margin-right: 10px;
+      color: #ff4500;
+    }
+    
+    .trending-filters {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .trending-filter-btn {
+      background-color: #f0f0f0;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 18px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+    
+    .trending-filter-btn:hover {
+      background-color: #e0e0e0;
+    }
+    
+    .trending-filter-btn.active {
+      background-color: #00008b;
+      color: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    
+    .trending-slider-container {
+      position: relative;
+      overflow: hidden;
+      padding: 10px 0;
+    }
+    
+    .trending-slider {
+      display: flex;
+      transition: transform 0.5s ease;
+      position: relative;
+      width: 100%;
+    }
+    
+    .trending-timeframe-container {
+      display: none; /* Start hidden, will be made visible with JS */
+      flex-wrap: nowrap; /* Don't wrap items - needed for slider */
+      gap: 20px;
+      width: 100%;
+      min-width: 100%;
+      transition: transform 0.5s ease; /* Smooth animation */
+    }
+    
+    /* Active timeframe container */
+    .trending-timeframe-container.active {
+      display: flex;
+    }
+    
+    .trending-post {
+      flex: 0 0 calc(33.333% - 14px);
+      min-width: calc(33.333% - 14px);
+      height: 380px;
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .trending-post:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .trending-post img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: filter 0.3s ease;
+    }
+    
+    .trending-post-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    
+    .trending-post:hover img {
+      filter: blur(3px) brightness(0.7);
+    }
+    
+    .trending-post:hover .trending-post-overlay {
+      opacity: 1;
+    }
+    
+    .trending-post-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: white;
+      text-align: center;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    
+    .trending-post-info {
+      font-size: 0.9rem;
+      color: white;
+      text-align: center;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-top: 10px;
+    }
+    
+    .trending-post-info i {
+      margin-right: 5px;
+    }
+    
+    .slider-controls {
+      display: flex;
+      justify-content: space-between;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      z-index: 5;
+      pointer-events: none;
+      padding: 0 10px;
+    }
+    
+    .slider-arrow {
+      width: 50px;
+      height: 50px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+      pointer-events: auto;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    .slider-arrow:hover {
+      background: rgba(0, 0, 0, 0.8);
+      transform: scale(1.1);
+    }
+    
+    /* Year section styling */
+    .year-section {
+      margin-bottom: 40px;
+    }
+    
+    .collapsible {
+      background-color: #00008b;
+      padding: 15px 20px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      border: none;
+      width: 100%;
+      text-align: left;
+    }
+    
+    .collapsible:hover {
+      background-color: #146cb1;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    }
+    
+    .collapsible:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .collapsible::after {
+      content: "▼";
+      color: white;
+      font-size: 14px;
+      margin-left: 10px;
+      transition: transform 0.3s ease;
+    }
+    
+    .collapsible.active::after {
+      transform: rotate(180deg);
+    }
+    
+    .collapsible:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(10, 61, 98, 0.3), 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Header styling */
+    .posts-header h2 {
+      color: #00008b;
+      text-shadow: none;
+    }
+    
+    .sort-form label {
+      color: #00008b;
+      text-shadow: none;
+    }
+    
+    /* Dropdown styles */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .dropdown-btn {
+      cursor: pointer;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 220px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+      border-radius: 4px;
+      padding: 8px 0;
+    }
+    
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+      transition: background-color 0.2s ease;
+    }
+    
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+    
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    
+    .dropdown-empty {
+      padding: 12px 16px;
+      color: #666;
+      font-style: italic;
+      text-align: center;
+    }
+    
+    /* Responsive grid adjustments */
+    @media (max-width: 1400px) {
+      .posts-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 1100px;
+      }
+      
+      .post-card {
+        height: 360px;
+      }
+      
+      .trending-post {
+        flex: 0 0 calc(50% - 10px);
+        min-width: calc(50% - 10px);
+      }
+    }
+    
+    @media (max-width: 900px) {
+      .posts-grid {
+        grid-template-columns: 1fr;
+        max-width: 600px;
+        gap: 35px;
+      }
+      
+      .post-card {
+        height: 400px;
+      }
+      
+      .trending-post {
+        flex: 0 0 calc(100%);
+        min-width: calc(100%);
+      }
+      
+      .trending-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+    
+    @media (max-width: 640px) {
+      .post-card {
+        height: 320px;
+      }
+      
+      .trending-post {
+        height: 320px;
+      }
+    }
+    
+    /* Mobile specific styles */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        padding: 10px 5px;
+      }
+      
+      .logo {
+        max-width: 150px;
+        margin-bottom: 10px;
+      }
+      
+      .header-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+      }
+      
+      .nav-button {
+        padding: 6px 10px;
+        font-size: 0.9rem;
+        margin: 2px;
+      }
+      
+      /* This is a custom override just for this page */
+      .video-section {
+        height: auto;
+        margin-top: 60px;
+      }
+      
+      .NandU-banner {
+        max-width: 90%;
+      }
+      
+      .posts-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 15px;
+      }
+      
+      .posts-header h2 {
+        margin-bottom: 15px;
+        font-size: 1.5rem;
+      }
+      
+      .sort-form {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      
+      .sort-form label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      
+      .sort-form select {
+        width: 100%;
+        padding: 8px;
+      }
+      
+      .year-section {
+        margin-bottom: 25px;
+      }
+      
+      .collapsible {
+        padding: 12px 15px;
+        font-size: 1.3rem;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+        padding: 15px 10px;
+        text-align: center;
+      }
+      
+      .footer-left, .footer-right {
+        width: 100%;
+        text-align: center;
+      }
+      
+      .footer-right {
+        margin-top: 15px;
+      }
+      
+      .footer-right p {
+        font-size: 0.9rem;
+        margin: 5px 0;
+      }
+      
+      .social-icons {
+        justify-content: center;
+        margin-top: 10px;
+      }
+      
+      .trending-title {
+        font-size: 1.5rem;
+      }
+      
+      .slider-arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .post-title {
+        font-size: 1.3rem;
+      }
+      
+      .nav-button {
+        padding: 5px 8px;
+        font-size: 0.8rem;
+      }
+      
+      .collapsible {
+        font-size: 1.1rem;
+        padding: 10px 12px;
+      }
+      
+      .posts-header h2 {
+        font-size: 1.3rem;
+      }
+      
+      .video-section {
+        height: auto;
+        margin-top: 55px;
+      }
+      
+      .trending-title {
+        font-size: 1.3rem;
+      }
+      
+      .trending-post-title {
+        font-size: 1.3rem;
+      }
+      
+      .slider-arrow {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+      }
+    }
+    
+    /* Partners Section Styles */
+    .partners-section {
+      padding: 30px 20px;
+      margin-bottom: 30px;
+      background-color: #f8f9fa;
+      border-top: 1px solid #dee2e6;
+    }
+    
+    .partners-section.international {
+      background-color: #f0f0f0;
+      margin-bottom: 0;
+      padding-bottom: 150px;
+    }
+    
+    .partners-title {
+      color: #00008b;
+      font-size: 1.8rem;
+      text-align: center;
+      margin-bottom: 25px;
+      position: relative;
+    }
+    
+    .partners-title:after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      background-color: #00008b;
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+    
+    .partners-carousel-container {
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .partners-carousel {
+      display: flex;
+      gap: 30px;
+      padding: 10px 0;
+      transition: transform 0.5s ease-in-out;
+    }
+    
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 10;
+      transition: background-color 0.3s ease;
+    }
+    
+    .carousel-arrow:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+    
+    .carousel-arrow.prev {
+      left: 10px;
+    }
+    
+    .carousel-arrow.next {
+      right: 10px;
+    }
+    
+    .partner-item {
+      flex-shrink: 0;
+      width: 180px;
+      height: 120px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .partner-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    }
+    
+    .partner-logo {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    
+    .partner-placeholder {
+      color: #aaa;
+      font-size: 0.9rem;
+      text-align: center;
+      font-style: italic;
+    }
+  </style>
+  
+</head>
+
+<body>
+<div class="content-wrapper">
+
+  <header>
+    <div class="header-content">
+      <img src="/images/LOGO.webp" alt="Robolution Logo" class="logo">
+      <!-- Mobile menu toggle will be added by JavaScript on small screens -->
+      <nav class="header-nav">
+        <a href="/home" class="nav-button">Home</a>
+        <a href="/user-categories" class="nav-button">Categories</a>
+        <% if (user && user.role === 'judge') { %>
+          <a href="/scoresheet" class="nav-button">Scoresheet</a>
+        <% } %>
+        <a href="/international" class="nav-button">International</a>
+        <div class="dropdown">
+          <button class="nav-button dropdown-btn">Regional</button>
+          <div class="dropdown-content">
+            <a href="/regional?region=All">All Regions</a>
+            <% 
+            // Get unique regions with posts
+            let regions = [];
+            posts.forEach(post => {
+              if (post.region && post.region !== 'All' && !regions.includes(post.region)) {
+                regions.push(post.region);
+              }
+            });
+            
+            // Sort regions alphabetically
+            regions.sort();
+            
+            if(regions.length > 0) { 
+              // Display regions with posts
+              regions.forEach(region => { %>
+                <a href="/regional?region=<%= region %>"><%= region %></a>
+              <% });
+            } else { %>
+              <div class="dropdown-empty">No regional posts available</div>
+            <% } %>
+          </div>
+        </div>
+        <a href="/registration" class="nav-button registration-button">Registration</a>
+        <a href="/login" class="nav-button login-button">Login</a>
+        <a href="/signup" class="nav-button signup-button">Sign Up</a>
+        <a href="/profile" class="nav-button profile-button" style="display: none;">
+          <i class="fas fa-user-circle"></i> Profile
+        </a>
+        <a href="/logout" class="nav-button logout-button">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="video-section">
+    <video src="/images/Robolution2025.mp4" loop muted autoplay playsinline></video>
+  </div>
+
+  <main>
+
+    <div class="NandU">
+      <img src="/images/News and Updates.png" alt="News and Updates" class="NandU-banner">
+    </div>
+
+    <!-- Trending Posts Section -->
+    <section class="trending-section">
+      <div class="trending-header">
+        <h2 class="trending-title"><i class="fas fa-fire"></i> Trending Posts</h2>
+        <div class="trending-filters">
+          <button class="trending-filter-btn" data-timeframe="weekly">This Week</button>
+          <button class="trending-filter-btn active" data-timeframe="monthly">This Month</button>
+          <button class="trending-filter-btn" data-timeframe="alltime">All Time</button>
+        </div>
+      </div>
+      
+      <div class="trending-slider-container">
+        <div class="trending-slider" id="trendingSlider">
+          <% 
+            // Define time periods
+            const oneWeekAgo = new Date();
+            oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+            
+            const oneMonthAgo = new Date();
+            oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+            
+            // Debug info - check if posts have upvotes field
+            console.log('Total posts available:', posts.length);
+            if (posts.length > 0) {
+              console.log('Sample post upvotes field:', posts[0].upvotes ? `${posts[0].upvotes.length} upvotes` : 'no upvotes field');
+            }
+            
+            // Make a separate array to avoid modifying the original posts
+            let weeklyPosts = [...posts].filter(post => new Date(post.createdAt) >= oneWeekAgo);
+            let monthlyPosts = [...posts].filter(post => new Date(post.createdAt) >= oneMonthAgo);
+            let alltimePosts = [...posts]; // No date filter
+            
+            // Function to sort posts by upvotes
+            const sortByUpvotes = (postArray) => {
+              return postArray.sort((a, b) => {
+                // Get upvote count - handle different data structures
+                let aUpvotes = 0;
+                let bUpvotes = 0;
+                
+                // Handle mongoose documents or plain objects
+                if (a.upvotes) {
+                  if (typeof a.upvotes === 'function') {
+                    // Mongoose document with length method
+                    aUpvotes = a.upvotes.length;
+                  } else if (Array.isArray(a.upvotes)) {
+                    // Plain array
+                    aUpvotes = a.upvotes.length;
+                  } else if (typeof a.upvotes === 'object' && a.upvotes.length !== undefined) {
+                    // Array-like object
+                    aUpvotes = a.upvotes.length;
+                  }
+                }
+                
+                if (b.upvotes) {
+                  if (typeof b.upvotes === 'function') {
+                    // Mongoose document with length method
+                    bUpvotes = b.upvotes.length;
+                  } else if (Array.isArray(b.upvotes)) {
+                    // Plain array
+                    bUpvotes = b.upvotes.length;
+                  } else if (typeof b.upvotes === 'object' && b.upvotes.length !== undefined) {
+                    // Array-like object
+                    bUpvotes = b.upvotes.length;
+                  }
+                }
+                
+                // Primary sort by upvote count, secondary sort by date if equal upvotes
+                if (bUpvotes !== aUpvotes) {
+                  return bUpvotes - aUpvotes; // Sort by upvote count descending
+                } else {
+                  // If equal upvotes, sort by date (newest first)
+                  return new Date(b.createdAt) - new Date(a.createdAt);
+                }
+              }).slice(0, 15); // Limit to 15 posts
+            };
+            
+            // Sort all arrays by upvotes
+            weeklyPosts = sortByUpvotes(weeklyPosts);
+            monthlyPosts = sortByUpvotes(monthlyPosts);
+            alltimePosts = sortByUpvotes(alltimePosts);
+            
+            // Default to monthly posts
+            let trendingPosts = monthlyPosts;
+            
+            // Debug totals
+            console.log('Weekly trending posts:', weeklyPosts.length);
+            console.log('Monthly trending posts:', monthlyPosts.length);
+            console.log('All-time trending posts:', alltimePosts.length);
+          %>
+          
+          <!-- Weekly Posts Container (hidden by default) -->
+          <div class="trending-timeframe-container" id="weekly-container">
+            <% if (weeklyPosts.length > 0) { %>
+              <% weeklyPosts.forEach(post => { %>
+                <a href="/post/<%= post._id %>" class="trending-post">
+                  <img src="<%= post.imageUrl %>" alt="<%= post.title %>">
+                  <div class="trending-post-overlay">
+                    <h3 class="trending-post-title"><%= post.title %></h3>
+                    <div class="trending-post-info">
+                      <span><i class="far fa-calendar-alt"></i> <%= new Date(post.createdAt).toLocaleString('en-PH', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        timeZone: 'Asia/Manila'
+                      }) %></span>
+                      <span><i class="fas fa-arrow-up"></i> <%= post.upvotes ? post.upvotes.length : 0 %> upvotes</span>
+                    </div>
+                  </div>
+                </a>
+              <% }) %>
+            <% } else { %>
+              <div style="padding: 30px; text-align: center; width: 100%;">
+                <p>No trending posts from this week.</p>
+              </div>
+            <% } %>
+          </div>
+          
+          <!-- Monthly Posts Container (shown by default) -->
+          <div class="trending-timeframe-container active" id="monthly-container">
+            <% if (monthlyPosts.length > 0) { %>
+              <% monthlyPosts.forEach(post => { %>
+                <a href="/post/<%= post._id %>" class="trending-post">
+                  <img src="<%= post.imageUrl %>" alt="<%= post.title %>">
+                  <div class="trending-post-overlay">
+                    <h3 class="trending-post-title"><%= post.title %></h3>
+                    <div class="trending-post-info">
+                      <span><i class="far fa-calendar-alt"></i> <%= new Date(post.createdAt).toLocaleString('en-PH', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        timeZone: 'Asia/Manila'
+                      }) %></span>
+                      <span><i class="fas fa-arrow-up"></i> <%= post.upvotes ? post.upvotes.length : 0 %> upvotes</span>
+                    </div>
+                  </div>
+                </a>
+              <% }) %>
+            <% } else { %>
+              <div style="padding: 30px; text-align: center; width: 100%;">
+                <p>No trending posts from this month.</p>
+              </div>
+            <% } %>
+          </div>
+          
+          <!-- All Time Posts Container (hidden by default) -->
+          <div class="trending-timeframe-container" id="alltime-container">
+            <% if (alltimePosts.length > 0) { %>
+              <% alltimePosts.forEach(post => { %>
+                <a href="/post/<%= post._id %>" class="trending-post">
+                  <img src="<%= post.imageUrl %>" alt="<%= post.title %>">
+                  <div class="trending-post-overlay">
+                    <h3 class="trending-post-title"><%= post.title %></h3>
+                    <div class="trending-post-info">
+                      <span><i class="far fa-calendar-alt"></i> <%= new Date(post.createdAt).toLocaleString('en-PH', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        timeZone: 'Asia/Manila'
+                      }) %></span>
+                      <span><i class="fas fa-arrow-up"></i> <%= post.upvotes ? post.upvotes.length : 0 %> upvotes</span>
+                    </div>
+                  </div>
+                </a>
+              <% }) %>
+            <% } else { %>
+              <div style="padding: 30px; text-align: center; width: 100%;">
+                <p>No trending posts available.</p>
+              </div>
+            <% } %>
+          </div>
+        </div>
+        
+        <div class="slider-controls">
+          <div class="slider-arrow slider-prev" id="sliderPrev">
+            <i class="fas fa-chevron-left"></i>
+          </div>
+          <div class="slider-arrow slider-next" id="sliderNext">
+            <i class="fas fa-chevron-right"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="posts-header">
+      <h2>Posts by Year</h2>
+      <form method="GET" action="/home" class="sort-form">
+        <label for="sort">Sort by:</label>
+        <select name="sort" id="sort" onchange="this.form.submit()">
+          <option value="desc" <%= locals.sort === 'desc' ? 'selected' : '' %>>Newest to Oldest</option>
+          <option value="asc" <%= locals.sort === 'asc' ? 'selected' : '' %>>Oldest to Newest</option>
+        </select>
+      </form>
+    </div>
+
+    <% let years = {}; %>
+    <% posts.forEach(post => { %>
+      <% const year = new Date(post.createdAt).getFullYear(); %>
+      <% if (!years[year]) years[year] = []; %>
+      <% years[year].push(post); %>
+    <% }); %>
+
+    <% Object.keys(years).sort((a, b) => { %>
+      <% return sort === 'asc' ? a - b : b - a; %>
+    <% }).forEach(year => { %>
+      <div class="year-section">
+        <button class="collapsible"><%= year %> <span class="arrow">▼</span></button>
+        <div class="posts-grid" style="display: none;">
+          <% years[year].forEach(post => { %>
+            <a href="/post/<%= post._id %>" class="post-card">
+              <img src="<%= post.imageUrl %>" alt="<%= post.title %>" class="post-img">
+              <div class="post-overlay">
+                <h3 class="post-title" style="color: #ffffff !important;"><%= post.title %></h3>
+                <p class="post-date" style="color: #ffffff !important;"><%= new Date(post.createdAt).toLocaleString('en-PH', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric',
+                  timeZone: 'Asia/Manila'
+                }) %></p>
+              </div>
+            </a>
+          <% }) %>
+        </div>
+      </div>
+    <% }) %>
+
+  </main>
+
+  <!-- Partners Sections -->
+  <section class="partners-section">
+    <h2 class="partners-title">PARTNERS</h2>
+    <div class="partners-carousel-container">
+      <button class="carousel-arrow prev"><i class="fas fa-chevron-left"></i></button>
+      <div class="partners-carousel regular-partners-carousel">
+        <% /* Placeholders or initial structure if needed, JS will populate */ %>
+      </div>
+      <button class="carousel-arrow next"><i class="fas fa-chevron-right"></i></button>
+    </div>
+  </section>
+
+  <section class="partners-section international">
+    <h2 class="partners-title">INTERNATIONAL PARTNERS</h2>
+    <div class="partners-carousel-container">
+      <button class="carousel-arrow prev"><i class="fas fa-chevron-left"></i></button>
+      <div class="partners-carousel international-partners-carousel">
+        <% /* Placeholders or initial structure if needed, JS will populate */ %>
+      </div>
+      <button class="carousel-arrow next"><i class="fas fa-chevron-right"></i></button>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-left">
+        <p>Powered by Erovoutika</p>
+      </div>
+
+      <footer class="fixed-footer">
+        <div class="footer-content">
+          <div class="footer-left">
+            <p>Powered by Erovoutika</p>
+          </div>
+
+          <div class="footer-right">
+            <p>Unit 703, PARC HOUSE II, Epifanio de los Santos Ave, Makati, 1212 Metro Manila</p>
+            <p><strong>Contact us via:</strong> 0974 423 1557 || erovoutika@gmail.com</p>
+            <div class="social-icons">
+              <a href="https://www.facebook.com/erovoutika" target="_blank" class="social-icon">f</a>
+              <a href="https://www.erovoutika.ph" target="_blank" class="social-icon">↗</a>
+              <a href="https://www.linkedin.com/company/erovoutika/" target="_blank" class="social-icon">in</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </footer>
+</div>
+
+<a href="#" class="back-to-top" id="backToTop">↑</a>
+
+<script id="partners-json-data" type="application/json">
+  <%- JSON.stringify(locals.partners || []) %>
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    let partnersDataFromServer = [];
+    const partnersDataScriptTag = document.getElementById('partners-json-data');
+    if (partnersDataScriptTag) {
+      try {
+        partnersDataFromServer = JSON.parse(partnersDataScriptTag.textContent);
+      } catch (e) {
+        console.error('Error parsing partners data from script tag:', e);
+        partnersDataFromServer = []; // Fallback to empty array on error
+      }
+    }
+    console.log('Partners data received and parsed from script tag in home.ejs:', partnersDataFromServer);
+    
+    const currentUser = <%- typeof user !== 'undefined' && user ? JSON.stringify(user) : 'null' %>;
+
+    function checkLoginStatus() {
+      const loginButton = document.querySelector('.login-button');
+      const signupButton = document.querySelector('.signup-button');
+      const logoutButton = document.querySelector('.logout-button');
+      const profileButton = document.querySelector('.profile-button');
+
+      if (currentUser) { // User is logged in
+        if (loginButton) loginButton.style.display = 'none';
+        if (signupButton) signupButton.style.display = 'none';
+        if (logoutButton) logoutButton.style.display = 'inline-block';
+        if (profileButton) profileButton.style.display = 'inline-block';
+      } else { // User is not logged in
+        if (loginButton) loginButton.style.display = 'inline-block';
+        if (signupButton) signupButton.style.display = 'inline-block';
+        if (logoutButton) logoutButton.style.display = 'none';
+        if (profileButton) profileButton.style.display = 'none';
+      }
+    }
+
+    checkLoginStatus(); // Call the function to set initial button states
+
+    // ... (Make sure the rest of your DOMContentLoaded script is here, including the 
+    // profileButton handler, and the Carousel Logic with initializeNewCarousel)
+
+    // Ensure the Collapsible sections script is also here if it was accidentally removed before
+    const collapsibles = document.querySelectorAll('.collapsible');
+    collapsibles.forEach(function(button) {
+      button.addEventListener('click', function() {
+        this.classList.toggle('active');
+        const content = this.nextElementSibling;
+        if (content.style.display === 'grid' || content.style.display === 'block') {
+          content.style.display = 'none';
+        } else {
+          content.style.display = 'grid';
+        }
+      });
+      if (button === collapsibles[0] && collapsibles.length > 0) { // Check length
+        button.classList.add('active');
+        const content = button.nextElementSibling;
+        if (content) content.style.display = 'grid';
+      }
+    });
+
+    // Ensure Trending posts slider functionality script is here
+    // const slider = document.getElementById('trendingSlider');
+    // const prevBtn = document.getElementById('sliderPrev');
+    // const nextBtn = document.getElementById('sliderNext');
+    // if (slider && prevBtn && nextBtn) {
+    //   // (The full trending slider logic needs to be here)
+    //   // This is a placeholder for brevity, assuming it was present and working
+    //   console.log("Trending slider script would be initialized here.");
+    // }
+
+    // Trending Posts Filter and Slider Logic
+    const filterButtons = document.querySelectorAll('.trending-filter-btn');
+    const timeframeContainers = document.querySelectorAll('.trending-timeframe-container');
+    // const trendingSliderElement = document.getElementById('trendingSlider'); // Parent of timeframeContainers, not directly transformed
+    const sliderPrevBtn = document.getElementById('sliderPrev');
+    const sliderNextBtn = document.getElementById('sliderNext');
+
+    let currentTrendingItems = [];
+    let currentTrendingIndex = 0;
+    let trendingItemWidth = 0;
+    let visibleTrendingItems = 0; // How many items fit in the container view
+
+    function calculateTrendingItemLayout(activeContainer) {
+        if (!activeContainer) {
+            if(sliderPrevBtn) sliderPrevBtn.style.display = 'none';
+            if(sliderNextBtn) sliderNextBtn.style.display = 'none';
+            return false;
+        }
+        currentTrendingItems = Array.from(activeContainer.querySelectorAll('.trending-post'));
+        
+        if (currentTrendingItems.length === 0) {
+            if(sliderPrevBtn) sliderPrevBtn.style.display = 'none';
+            if(sliderNextBtn) sliderNextBtn.style.display = 'none';
+            return false;
+        }
+
+        const firstItem = currentTrendingItems[0];
+        const containerGap = parseInt(getComputedStyle(activeContainer).gap || '0', 10);
+        // offsetWidth includes padding, border. Add gap for total space per item.
+        trendingItemWidth = firstItem.offsetWidth + containerGap; 
+
+        if (trendingItemWidth <= containerGap && activeContainer.offsetWidth > 0) { // Basic sanity check if offsetWidth is valid
+            console.warn('Trending item width seems incorrect, using fallback.');
+            // Fallback: if we expect roughly 3 items, take a third of container width.
+            // This might happen if items are display:none initially or other layout issues.
+             trendingItemWidth = (activeContainer.offsetWidth / 3); 
+        } else if (trendingItemWidth <= containerGap && activeContainer.offsetWidth === 0) {
+            console.warn('Active container width is 0, cannot calculate item layout.');
+            if(sliderPrevBtn) sliderPrevBtn.style.display = 'none';
+            if(sliderNextBtn) sliderNextBtn.style.display = 'none';
+            return false;
+        }
+        
+        visibleTrendingItems = Math.floor(activeContainer.offsetWidth / trendingItemWidth);
+        if (visibleTrendingItems === 0 && currentTrendingItems.length > 0 && activeContainer.offsetWidth > 0) {
+            // If calculation results in 0 visible items but there are items and container has width,
+            // it implies itemWidth is greater than containerWidth. Show 1 item.
+            visibleTrendingItems = 1;
+        }
+        
+        const canScroll = currentTrendingItems.length > visibleTrendingItems;
+        if(sliderPrevBtn) sliderPrevBtn.style.display = canScroll ? 'flex' : 'none';
+        if(sliderNextBtn) sliderNextBtn.style.display = canScroll ? 'flex' : 'none';
+        return canScroll;
+    }
+
+    function updateTrendingSliderView(activeContainer) {
+        if (!activeContainer || currentTrendingItems.length === 0 || trendingItemWidth === 0 || visibleTrendingItems === 0) {
+            if (activeContainer) activeContainer.style.transform = 'translateX(0px)'; // Reset if no items/view
+            return;
+        }
+        
+        const maxIndex = Math.max(0, currentTrendingItems.length - visibleTrendingItems);
+        currentTrendingIndex = Math.max(0, Math.min(currentTrendingIndex, maxIndex));
+
+        const translateX = -currentTrendingIndex * trendingItemWidth;
+        activeContainer.style.transform = `translateX(${translateX}px)`;
+    }
+
+    function setupTrendingSlider(activeContainer) {
+        if (!activeContainer) {
+            console.warn("No active container to set up trending slider.");
+            if(sliderPrevBtn) sliderPrevBtn.style.display = 'none';
+            if(sliderNextBtn) sliderNextBtn.style.display = 'none';
+            return;
+        }
+        currentTrendingIndex = 0; // Reset index
+        activeContainer.style.transform = 'translateX(0px)'; // Reset scroll position
+
+        // Delay slightly for layout calculation if container was just made visible
+        setTimeout(() => {
+            if (calculateTrendingItemLayout(activeContainer)) {
+                updateTrendingSliderView(activeContainer);
+            } else {
+                 // If not scrollable, ensure view is reset (e.g. if it became unscrollable after resize)
+                updateTrendingSliderView(activeContainer);
+            }
+        }, 50); // Small delay for DOM to update display properties
+    }
+
+    if (filterButtons.length > 0 && timeframeContainers.length > 0) {
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+
+                const timeframe = this.dataset.timeframe;
+                let newActiveContainer = null;
+                timeframeContainers.forEach(container => {
+                    container.classList.remove('active');
+                    if (container.id === `${timeframe}-container`) {
+                        container.classList.add('active');
+                        newActiveContainer = container;
+                    }
+                });
+                
+                if (newActiveContainer) {
+                    setupTrendingSlider(newActiveContainer);
+                } else {
+                    console.error(`Container for timeframe '${timeframe}' not found.`);
+                    if(sliderPrevBtn) sliderPrevBtn.style.display = 'none';
+                    if(sliderNextBtn) sliderNextBtn.style.display = 'none';
+                }
+            });
+        });
+    }
+
+    if (sliderPrevBtn && sliderNextBtn) {
+        sliderPrevBtn.addEventListener('click', () => {
+            const activeContainer = document.querySelector('.trending-timeframe-container.active');
+            if (!activeContainer || currentTrendingItems.length === 0) return;
+            
+            if (currentTrendingIndex > 0) {
+                currentTrendingIndex--;
+                updateTrendingSliderView(activeContainer);
+            }
+        });
+
+        sliderNextBtn.addEventListener('click', () => {
+            const activeContainer = document.querySelector('.trending-timeframe-container.active');
+            if (!activeContainer || currentTrendingItems.length === 0 || visibleTrendingItems === 0) return;
+
+            const maxIndex = Math.max(0, currentTrendingItems.length - visibleTrendingItems);
+            if (currentTrendingIndex < maxIndex) {
+                currentTrendingIndex++;
+                updateTrendingSliderView(activeContainer);
+            }
+        });
+    }
+    
+    const initialActiveContainer = document.querySelector('.trending-timeframe-container.active');
+    if (initialActiveContainer) {
+        setupTrendingSlider(initialActiveContainer);
+    } else {
+        const monthlyContainer = document.getElementById('monthly-container');
+        if (monthlyContainer && filterButtons.length > 0) {
+            const monthlyButton = document.querySelector('.trending-filter-btn[data-timeframe="monthly"]');
+            if (monthlyButton) {
+                 filterButtons.forEach(btn => btn.classList.remove('active'));
+                 monthlyButton.classList.add('active');
+            }
+            timeframeContainers.forEach(tc => tc.classList.remove('active'));
+            monthlyContainer.classList.add('active');
+            setupTrendingSlider(monthlyContainer);
+        } else if (timeframeContainers.length > 0 && filterButtons.length > 0) {
+             // Fallback to the first available if monthly isn't there or no buttons somehow
+             const firstContainer = timeframeContainers[0];
+             firstContainer.classList.add('active');
+             const firstButtonTimeframe = firstContainer.id.replace('-container', '');
+             const firstButton = document.querySelector(`.trending-filter-btn[data-timeframe="${firstButtonTimeframe}"]`);
+             if (firstButton) {
+                 filterButtons.forEach(btn => btn.classList.remove('active'));
+                 firstButton.classList.add('active');
+             }
+             setupTrendingSlider(firstContainer);
+        }
+    }
+    
+    window.addEventListener('resize', () => {
+        const activeContainer = document.querySelector('.trending-timeframe-container.active');
+        if (activeContainer) {
+            // Recalculate layout and update view. currentTrendingIndex is preserved unless it becomes out of bounds.
+            setupTrendingSlider(activeContainer); // setup handles recalculation and view update
+        }
+    });
+
+    // Ensure Back-to-top button script is here
+    const backToTopButton = document.getElementById('backToTop');
+    if (backToTopButton) {
+      window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+          backToTopButton.classList.add('show');
+        } else {
+          backToTopButton.classList.remove('show');
+        }
+      });
+      backToTopButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    // New Carousel Logic (from previous step, ensure it's correctly placed)
+    function initializeNewCarousel(carouselWrapperElement, partnerDataArray, carouselIdSuffix) {
+      const carouselElement = carouselWrapperElement.querySelector('.partners-carousel');
+      const prevButton = carouselWrapperElement.querySelector('.carousel-arrow.prev');
+      const nextButton = carouselWrapperElement.querySelector('.carousel-arrow.next');
+
+      if (!carouselElement || !prevButton || !nextButton) {
+          console.error(`Carousel components not found for ${carouselIdSuffix}`);
+          return;
+      }
+
+      carouselElement.innerHTML = ''; // Clear existing items/placeholders
+
+      if (!partnerDataArray || partnerDataArray.length === 0) {
+          carouselElement.innerHTML = '<div class="partner-item" style="width: 100%; text-align:center;"><div class="partner-placeholder">No partners to display</div></div>';
+          prevButton.style.display = 'none';
+          nextButton.style.display = 'none';
+          return;
+      }
+
+      partnerDataArray.forEach(partner => {
+          const itemDiv = document.createElement('div');
+          itemDiv.classList.add('partner-item');
+          itemDiv.innerHTML = `<a href="${partner.url || '#'}" target="_blank"><img src="${partner.imageUrl}" alt="${partner.name}" class="partner-logo"></a>`;
+          carouselElement.appendChild(itemDiv);
+      });
+
+      const items = Array.from(carouselElement.children);
+      const totalOriginalItems = items.length;
+      let itemWidth = 0;
+      let currentIndex = 0; 
+      let autoScrollInterval;
+      const AUTO_SCROLL_DELAY = 1500;
+
+      function calculateItemWidthAndClone() {
+          if (items.length === 0) return false;
+          const firstItem = items[0];
+          const itemStyle = getComputedStyle(firstItem);
+          const flexGap = parseInt(getComputedStyle(carouselElement).gap || '0', 10);
+          itemWidth = firstItem.getBoundingClientRect().width + flexGap;
+          
+          if (itemWidth <= flexGap ) {
+               console.warn(`Item width for ${carouselIdSuffix} is too small or zero (${itemWidth}px), using default 210px. Check item CSS.`);
+               itemWidth = 180 + 30; 
+          }
+
+          const visibleItems = Math.floor(carouselElement.offsetWidth / itemWidth);
+
+          const clones = carouselElement.querySelectorAll('.clone');
+          clones.forEach(clone => clone.remove());
+
+          if (totalOriginalItems > 0 && totalOriginalItems > visibleItems) { 
+              items.forEach(item => {
+                  const clone = item.cloneNode(true);
+                  clone.classList.add('clone', 'suffix-clone');
+                  carouselElement.appendChild(clone);
+              });
+              carouselElement.style.transition = 'none';
+              carouselElement.style.transform = `translateX(0px)`;
+              currentIndex = 0;
+          } else {
+               carouselElement.style.transform = 'translateX(0px)';
+          }
+          return totalOriginalItems > 0 && totalOriginalItems > visibleItems;
+      }
+
+      function updateCarousel(isNavigating = false) {
+          if (itemWidth === 0) return;
+
+          let targetTranslateX = -(currentIndex * itemWidth);
+          carouselElement.style.transition = isNavigating ? 'transform 0.7s ease-in-out' : 'none';
+          carouselElement.style.transform = `translateX(${targetTranslateX}px)`;
+
+          if (isNavigating) {
+              carouselElement.addEventListener('transitionend', () => {
+                  if (currentIndex >= totalOriginalItems) {
+                      carouselElement.style.transition = 'none';
+                      currentIndex = 0;
+                      carouselElement.style.transform = `translateX(0px)`;
+                  }
+              }, { once: true });
+          }
+      }
+
+      function navigate(direction) {
+          if (itemWidth === 0 && !calculateItemWidthAndClone()) return;
+
+          currentIndex += direction;
+
+          if (direction === 1 && currentIndex >= totalOriginalItems) {
+              // Will be handled by transitionend
+          } else if (direction === -1 && currentIndex < 0) {
+              carouselElement.style.transition = 'none';
+              currentIndex = totalOriginalItems -1;
+              carouselElement.style.transform = `translateX(${-( (totalOriginalItems-1) * itemWidth)}px)`;
+          }
+          updateCarousel(true);
+      }
+
+      function startAutoScroll() {
+          stopAutoScroll();
+          if (itemWidth === 0 && !calculateItemWidthAndClone()) return;
+          if (! (totalOriginalItems > 0 && totalOriginalItems > (Math.floor(carouselElement.offsetWidth / itemWidth) || 1) ) ) return; // Check if scrollable
+
+          autoScrollInterval = setInterval(() => {
+              navigate(1);
+          }, AUTO_SCROLL_DELAY);
+      }
+
+      function stopAutoScroll() {
+          clearInterval(autoScrollInterval);
+      }
+
+      prevButton.onclick = () => { stopAutoScroll(); navigate(-1); };
+      nextButton.onclick = () => { stopAutoScroll(); navigate(1); };
+      carouselWrapperElement.onmouseenter = stopAutoScroll;
+      carouselWrapperElement.onmouseleave = startAutoScroll;
+
+      setTimeout(() => {
+          const canScroll = calculateItemWidthAndClone();
+          if(canScroll) {
+               startAutoScroll();
+          }
+          const displayArrows = items.length > 0 && canScroll;
+          prevButton.style.display = displayArrows ? 'block' : 'none';
+          nextButton.style.display = displayArrows ? 'block' : 'none';
+      }, 150); 
+      
+      window.addEventListener('resize', () => {
+          stopAutoScroll();
+          const canScroll = calculateItemWidthAndClone();
+          if(canScroll) {
+               startAutoScroll();
+          }
+          const displayArrows = items.length > 0 && canScroll;
+          prevButton.style.display = displayArrows ? 'block' : 'none';
+          nextButton.style.display = displayArrows ? 'block' : 'none';
+      });
+  }
+
+  // Initialize Regular Partners Carousel
+  const regularCarouselWrapper = document.querySelector('.partners-carousel-container:not(.international)');
+  if (regularCarouselWrapper) {
+     const regularPartnerData = partnersDataFromServer.filter(p => p.type === 'regular');
+     console.log("Regular Partner Data for Carousel:", regularPartnerData);
+     initializeNewCarousel(regularCarouselWrapper, regularPartnerData, 'Regular');
+  } else {
+     console.error("Regular partners carousel wrapper element not found");
+  }
+
+  // Initialize International Partners Carousel
+  const internationalCarouselWrapper = document.querySelector('.partners-section.international .partners-carousel-container');
+  if (internationalCarouselWrapper) {
+     const internationalPartnerData = partnersDataFromServer.filter(p => p.type === 'international');
+     console.log("International Partner Data for Carousel:", internationalPartnerData);
+     initializeNewCarousel(internationalCarouselWrapper, internationalPartnerData, 'International');
+  } else {
+     console.error("International partners carousel wrapper element not found");
+  }
+});
+</script>
+</body>
+
+</html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Post | Robolution</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    /* Dropdown styles */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .dropdown-btn {
+      cursor: pointer;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 220px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+      border-radius: 4px;
+      padding: 8px 0;
+    }
+    
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+      transition: background-color 0.2s ease;
+    }
+    
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+    
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    
+    .dropdown-empty {
+      padding: 12px 16px;
+      color: #666;
+      font-style: italic;
+    }
+
+    /* Header nav styles */
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-button {
+      padding: 8px 16px;
+      border-radius: 4px;
+      text-decoration: none;
+      color: white;
+      background-color: rgba(255, 255, 255, 0.1);
+      transition: background-color 0.2s;
+    }
+
+    .nav-button:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .create-post-button {
+      background-color: #4CAF50;
+    }
+
+    .create-post-button:hover {
+      background-color: #45a049;
+    }
+
+    .logout-button {
+      background-color: #f44336;
+    }
+
+    .logout-button:hover {
+      background-color: #da190b;
+    }
+
+    .comments-section {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+    }
+
+    .comments-section h3 {
+      color: #00008b;
+      margin-bottom: 15px;
+    }
+
+    .comment-item {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 15px;
+      margin-bottom: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .comment-author {
+      font-size: 1.1em;
+      margin-bottom: 5px;
+      color: #333;
+    }
+    
+    .comment-text {
+      font-size: 1em;
+      color: #555;
+      margin-bottom: 8px;
+      white-space: pre-wrap; /* Preserve line breaks */
+    }
+
+    .comment-date {
+      font-size: 0.8em;
+      color: #777;
+      margin-bottom: 10px;
+    }
+
+    .delete-comment-btn {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9em;
+      margin-top: 5px;
+      transition: background-color 0.2s;
+      display: inline-block;
+      text-align: center;
+      user-select: none;
+      font-weight: bold;
+      width: auto;
+      min-width: 120px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .delete-comment-btn:hover {
+      background-color: #d32f2f;
+    }
+    
+    .delete-comment-btn:active {
+      background-color: #b71c1c;
+      transform: translateY(1px);
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Handle image upload
+      const uploadContainer = document.getElementById('uploadContainer');
+      const imageUpload = document.getElementById('imageUpload');
+      const uploadPreview = document.getElementById('uploadPreview');
+      const currentImageUrl = document.getElementById('currentImageUrl');
+
+      if (uploadContainer && imageUpload && uploadPreview) {
+        setupImageUpload(uploadContainer, imageUpload, uploadPreview);
+      }
+      
+      function setupImageUpload(container, input, preview) {
+        container.addEventListener('click', () => input.click());
+
+        container.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          container.classList.add('dragover');
+        });
+
+        container.addEventListener('dragleave', () => {
+          container.classList.remove('dragover');
+        });
+
+        container.addEventListener('drop', (e) => {
+          e.preventDefault();
+          container.classList.remove('dragover');
+          if (e.dataTransfer.files.length) {
+            input.files = e.dataTransfer.files;
+            showPreview(e.dataTransfer.files[0], preview);
+          }
+        });
+
+        input.addEventListener('change', function() {
+          if (this.files && this.files[0]) {
+            showPreview(this.files[0], preview);
+          }
+        });
+      }
+
+      function showPreview(file, previewElement) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          previewElement.innerHTML = `<div class="image-preview-container"><img src="${e.target.result}" style="max-width:100%;max-height:120px;border-radius:8px;"><button type="button" class="delete-image-btn" onclick="removePreview()">✕</button></div>`;
+        };
+        reader.readAsDataURL(file);
+      }
+
+      // Handle date checkbox
+      const useCurrentDateCheckbox = document.getElementById('useCurrentDate');
+      const customDateInput = document.getElementById('customDateInput');
+      
+      if (useCurrentDateCheckbox && customDateInput) {
+        useCurrentDateCheckbox.addEventListener('change', function() {
+          customDateInput.style.display = this.checked ? 'none' : 'block';
+        });
+      }
+
+      // Handle dropdowns
+      const dropdowns = document.querySelectorAll('.dropdown');
+      dropdowns.forEach(dropdown => {
+        const btn = dropdown.querySelector('.dropdown-btn');
+        const content = dropdown.querySelector('.dropdown-content');
+        
+        // Show dropdown on hover
+        dropdown.addEventListener('mouseenter', () => {
+          content.style.display = 'block';
+        });
+        
+        // Hide dropdown when mouse leaves
+        dropdown.addEventListener('mouseleave', () => {
+          content.style.display = 'none';
+        });
+      });
+
+      // Handle comment deletion
+      console.log("Setting up comment delete handlers");
+      document.querySelectorAll('.delete-comment-btn').forEach(button => {
+        console.log("Found delete button for comment:", button.dataset.commentId);
+        button.addEventListener('click', function(e) {
+          deleteComment(this.dataset.commentId);
+        });
+      });
+    });
+
+    // Function to delete a comment
+    function deleteComment(commentId) {
+      console.log("Delete function called for comment ID:", commentId);
+      if (confirm('Are you sure you want to delete this comment? This action cannot be undone.')) {
+        console.log("Deletion confirmed, sending delete request to server");
+        fetch(`/api/comments/${commentId}`, {
+          method: 'DELETE',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => {
+          console.log("Server response status:", response.status);
+          return response.json();
+        })
+        .then(data => {
+          console.log("Response data:", data);
+          if (data.success) {
+            console.log("Comment deleted successfully");
+            const commentElement = document.getElementById(`comment-${commentId}`);
+            if (commentElement) {
+              commentElement.remove();
+              // Show a success message
+              alert('Comment deleted successfully.');
+                
+              // Check if there are any comments left
+              const commentsContainer = document.getElementById('commentsListContainer');
+              if (commentsContainer && commentsContainer.children.length === 0) {
+                const commentsSection = document.querySelector('.comments-section');
+                if (commentsSection) {
+                  commentsSection.innerHTML = '<h3>Comments</h3><p>No comments yet for this post.</p>';
+                }
+              }
+            }
+          } else {
+            console.error("Comment deletion failed:", data.message);
+            alert('Error deleting comment: ' + (data.message || 'Unknown error'));
+          }
+        })
+        .catch(error => {
+          console.error('Error during fetch operation:', error);
+          alert('Failed to delete comment. Please try again.');
+        });
+      }
+    }
+
+    // Function to remove image preview
+    function removePreview() {
+      const uploadPreview = document.getElementById('uploadPreview');
+      const fileInput = document.getElementById('imageUpload');
+      const postId = document.getElementById('postId').value;
+      const currentImageUrl = document.getElementById('currentImageUrl').value;
+      
+      if (!confirm('Are you sure you want to remove this image?')) {
+        return;
+      }
+      
+      fetch(`/posts/${postId}/delete-image`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ imageUrl: currentImageUrl })
+      })
+      .then(response => response.json())
+      .then(result => {
+        if (result.success) {
+          uploadPreview.innerHTML = 'Drag & Drop or Click to Add Photo';
+          document.getElementById('currentImageUrl').value = '/images/default-post.jpg';
+          if (fileInput) {
+            fileInput.value = '';
+          }
+        } else {
+          alert(result.error || 'Failed to delete image');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error deleting image');
+      });
+    }
+  </script>
+</head>
+<body>
+<div class="content-wrapper <%= locals.dashboard ? 'dashboard-view' : '' %>">
+  <main class="main-create <%= locals.dashboard ? 'dashboard-main-content' : '' %>">
+    <section>
+      <h2>Edit Post</h2>
+      <input type="hidden" id="postId" value="<%= post._id %>">
+      
+      <form action="/edit-post/<%= post._id %>" method="POST" enctype="multipart/form-data" class="post-form">
+        <input type="text" name="title" value="<%= post.title %>" required><br>
+        <textarea name="content" required><%= post.content %></textarea><br>
+        <input type="text" name="author" value="<%= post.author %>" required><br>
+        
+        <div class="form-group">
+          <label for="region">Region:</label>
+          <select name="region" id="region">
+            <option value="All" <%= post.region === 'All' ? 'selected' : '' %>>All Regions</option>
+            <option value="Region I" <%= post.region === 'Region I' ? 'selected' : '' %>>Region I (Ilocos Region)</option>
+            <option value="Region II" <%= post.region === 'Region II' ? 'selected' : '' %>>Region II (Cagayan Valley)</option>
+            <option value="Region III" <%= post.region === 'Region III' ? 'selected' : '' %>>Region III (Central Luzon)</option>
+            <option value="Region IV-A" <%= post.region === 'Region IV-A' ? 'selected' : '' %>>Region IV-A (CALABARZON)</option>
+            <option value="Region IV-B" <%= post.region === 'Region IV-B' ? 'selected' : '' %>>Region IV-B (MIMAROPA)</option>
+            <option value="Region V" <%= post.region === 'Region V' ? 'selected' : '' %>>Region V (Bicol Region)</option>
+            <option value="Region VI" <%= post.region === 'Region VI' ? 'selected' : '' %>>Region VI (Western Visayas)</option>
+            <option value="Region VII" <%= post.region === 'Region VII' ? 'selected' : '' %>>Region VII (Central Visayas)</option>
+            <option value="Region VIII" <%= post.region === 'Region VIII' ? 'selected' : '' %>>Region VIII (Eastern Visayas)</option>
+            <option value="Region IX" <%= post.region === 'Region IX' ? 'selected' : '' %>>Region IX (Zamboanga Peninsula)</option>
+            <option value="Region X" <%= post.region === 'Region X' ? 'selected' : '' %>>Region X (Northern Mindanao)</option>
+            <option value="Region XI" <%= post.region === 'Region XI' ? 'selected' : '' %>>Region XI (Davao Region)</option>
+            <option value="Region XII" <%= post.region === 'Region XII' ? 'selected' : '' %>>Region XII (SOCCSKSARGEN)</option>
+            <option value="Region XIII" <%= post.region === 'Region XIII' ? 'selected' : '' %>>Region XIII (Caraga)</option>
+            <option value="NCR" <%= post.region === 'NCR' ? 'selected' : '' %>>National Capital Region (NCR)</option>
+            <option value="CAR" <%= post.region === 'CAR' ? 'selected' : '' %>>Cordillera Administrative Region (CAR)</option>
+            <option value="BARMM" <%= post.region === 'BARMM' ? 'selected' : '' %>>Bangsamoro Autonomous Region in Muslim Mindanao (BARMM)</option>
+          </select>
+        </div><br>
+        
+        <div class="upload-container" id="uploadContainer">
+          <input type="file" name="image" id="imageUpload" accept="image/*" style="display:none;">
+          <input type="hidden" name="currentImageUrl" id="currentImageUrl" value="<%= post.imageUrl %>">
+          <div id="uploadPreview" class="upload-preview">
+            <% if (post.imageUrl) { %>
+              <div class="image-preview-container">
+                <img src="<%= post.imageUrl %>" alt="<%= post.title %>">
+                <button type="button" class="delete-image-btn" onclick="removePreview()">✕</button>
+              </div>
+            <% } else { %>
+              Drag & Drop or Click to Add Photo
+            <% } %>
+          </div>
+        </div>
+        <br>
+
+        <div>
+          <label for="useCurrentDate">Use Current Date:</label>
+          <input type="checkbox" id="useCurrentDate" name="useCurrentDate">
+        </div><br>
+
+        <div id="customDateInput" style="display: block;">
+          <label for="date">Custom Date:</label>
+          <input type="date" id="date" name="date" value="<%= new Date(post.createdAt).toISOString().split('T')[0] %>">
+        </div><br>
+
+        <input type="submit" value="Update Post" class="submit-btn">
+      </form>
+
+      <br>
+      <a href="<%= locals.dashboard ? '/index?dashboard=true' : '/index' %>"><button class="back-btn">← Go Back</button></a>
+    </section>
+
+    <% if (post.comments && post.comments.length > 0) { %>
+    <section class="comments-section">
+      <h3>Manage Comments (<%= post.comments.length %>)</h3>
+      <div id="commentsListContainer">
+        <% post.comments.forEach(comment => { %>
+          <div class="comment-item" id="comment-<%= comment._id %>">
+            <p class="comment-author"><strong><%= comment.author && comment.author.username ? comment.author.username : 'Anonymous' %>:</strong></p>
+            <p class="comment-text"><%= comment.text || (comment.content ? comment.content : 'No comment text available') %></p>
+            <p class="comment-date"><%= new Date(comment.createdAt).toLocaleString('en-PH', { timeZone: 'Asia/Manila' }) %></p>
+            <button type="button" class="delete-comment-btn" data-comment-id="<%= comment._id %>" onclick="deleteComment('<%= comment._id %>')">Delete Comment</button>
+          </div>
+        <% }) %>
+      </div>
+    </section>
+    <% } else { %>
+    <section class="comments-section">
+      <h3>Comments</h3>
+      <p>No comments yet for this post.</p>
+      <div style="color: #666; margin-top: 10px;"><em>Debug info: post.comments is <%= typeof post.comments %>, length: <%= Array.isArray(post.comments) ? post.comments.length : 'N/A' %></em></div>
+    </section>
+    <% } %>
+
+  </main>
+</div>
+</body>
+</html> 

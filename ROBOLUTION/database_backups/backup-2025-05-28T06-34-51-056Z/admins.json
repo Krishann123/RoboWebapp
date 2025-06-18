@@ -1,0 +1,99 @@
+[
+  {
+    "_id": "682a3ea6617a35539f81dbc3",
+    "backupCodes": [
+      "6IPJRU",
+      "7E5T7F",
+      "JP7DS6",
+      "Y8BTSE",
+      "XUZR5D",
+      "KUOF7F",
+      "DRKCDW",
+      "LM4DOQ"
+    ],
+    "createdAt": "2025-05-18T20:10:15.060Z",
+    "needs2FASetup": false,
+    "password": "$2b$10$wK7Qe3uGHb8pzURG/Mha0uAklyB9JzdoenwZKVuP2ZHqPHieWYp8y",
+    "role": "admin",
+    "twoFactorEnabled": true,
+    "twoFactorSecret": "GE4XAI2UIA2DM2CGPJJCCMCWJVIEYJBV",
+    "username": "TESTACCOUNT"
+  },
+  {
+    "_id": {
+      "buffer": {
+        "0": 104,
+        "1": 41,
+        "2": 215,
+        "3": 116,
+        "4": 167,
+        "5": 111,
+        "6": 6,
+        "7": 39,
+        "8": 20,
+        "9": 157,
+        "10": 107,
+        "11": 165
+      }
+    },
+    "username": "Admin_account",
+    "password": "$2b$10$oldWcf1AxiH.hAzr88FNBOMYYSfF8etOXAedeOLEWeg2weUMMtRjO",
+    "role": "superadmin",
+    "twoFactorSecret": "M5DDQ4DDKZBSG62XPF2WMOLZPBQUUYSNLU2SIZLVO5NSKMTPJ5GA",
+    "twoFactorEnabled": true,
+    "backupCodes": [
+      "70RUMM",
+      "38L0VF",
+      "6U9JL8",
+      "70B8TV",
+      "KDLL1C",
+      "YVVIM9",
+      "AG3JS4",
+      "FDOK3U"
+    ],
+    "createdAt": {}
+  },
+  {
+    "_id": "68261038b7ad1dfcf78b3b8d",
+    "username": "testadmin3",
+    "password": "$2b$10$lSkBdPYgP50Z5NvRJY4ZNOk2lC1f38Kzy6tgoVnm2W5G3GYpkCD1a",
+    "role": "admin",
+    "twoFactorSecret": "IBKDC2JQHF6UWRJ7KRQVGUZPFFLH2LRONNBUONRQIY2HUVT2N5ZA",
+    "twoFactorEnabled": true,
+    "backupCodes": [
+      "FEKHG5",
+      "FANK0J",
+      "MP1UFK",
+      "UD5EIB",
+      "8VY5C2",
+      "BD3MJD",
+      "0NWFTJ",
+      "OJYL3U"
+    ],
+    "createdAt": {
+      "$date": "2025-05-15T16:03:04.475Z"
+    }
+  },
+  {
+    "_id": "682c72def6a0281d50309485",
+    "backupCodes": [
+      "IQOGN5",
+      "O7K8LY",
+      "XKGFLA",
+      "U5Z84D",
+      "GYMUMR",
+      "GDT3WS",
+      "TFRMNX",
+      "FZSLMC"
+    ],
+    "createdAt": {
+      "$date": "2025-05-20T12:17:34.001Z"
+    },
+    "needs2FASetup": false,
+    "password": "$2b$10$vi4pY7q0wRbSyntwSkmkoeXOPiAhj1Iu4Sj8pOxD7s05WBR2HScpi",
+    "role": "admin",
+    "twoFactorEnabled": true,
+    "twoFactorSecret": "KASHG6KFEY5VQ4KRIZOVK3BMIMRXAKCG",
+    "username": "sandy"
+  }
+]

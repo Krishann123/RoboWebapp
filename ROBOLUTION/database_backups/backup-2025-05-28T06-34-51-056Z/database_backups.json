@@ -1,0 +1,3323 @@
+[
+  {
+    "_id": "6835d29d795e716ab0cf464a",
+    "backupId": "backup-2025-05-27T14-56-18-535Z",
+    "timestamp": {
+      "$date": "2025-05-27T14:56:29.957Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748357789/robolution/backups/backup-2025-05-27T14-56-18-535Z/kqjy1xxng7buoj61xhha.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748357780/robolution/backups/backup-2025-05-27T14-56-18-535Z/uwvmzthtjfi2xioc9i2i.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748357781/robolution/backups/backup-2025-05-27T14-56-18-535Z/dgyoxlq2tnktngl9cn3k.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748357782/robolution/backups/backup-2025-05-27T14-56-18-535Z/dwbum9oywtyonmsjk8b1.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748357784/robolution/backups/backup-2025-05-27T14-56-18-535Z/if8yj4kydo4fxbuwpma4.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748357784/robolution/backups/backup-2025-05-27T14-56-18-535Z/wfuj33xfnqealsm4lcpm.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748357785/robolution/backups/backup-2025-05-27T14-56-18-535Z/c0odktxksux0jsdl30zd.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748357787/robolution/backups/backup-2025-05-27T14-56-18-535Z/k3swgm2bsbi3u2hvcsom.json",
+        "documentCount": 454
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748357788/robolution/backups/backup-2025-05-27T14-56-18-535Z/zqe1t7fwb3epkldnwoze.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835d2c4f3ad3cec4a8bc360",
+    "backupId": "backup-2025-05-27T14-56-59-080Z",
+    "timestamp": {
+      "$date": "2025-05-27T14:57:08.703Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748357827/robolution/backups/backup-2025-05-27T14-56-59-080Z/zxmkmjbugc1os8art5wv.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748357820/robolution/backups/backup-2025-05-27T14-56-59-080Z/ns3uaacf4xng25pojnff.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748357821/robolution/backups/backup-2025-05-27T14-56-59-080Z/nwski4hxe0aowbcitybi.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748357822/robolution/backups/backup-2025-05-27T14-56-59-080Z/y0tfmwzidsic0aetswdu.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748357822/robolution/backups/backup-2025-05-27T14-56-59-080Z/fmmt2konbtknffiblksh.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748357823/robolution/backups/backup-2025-05-27T14-56-59-080Z/jl22d3bjw8emizq1795n.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748357824/robolution/backups/backup-2025-05-27T14-56-59-080Z/wibx5jidxplfmdrqioc9.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748357825/robolution/backups/backup-2025-05-27T14-56-59-080Z/vnufwhudxznmxit4xdxg.json",
+        "documentCount": 456
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748357826/robolution/backups/backup-2025-05-27T14-56-59-080Z/ly2vafxmbtroaheilzph.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835d3bbb7ea832b4de34721",
+    "backupId": "backup-2025-05-27T15-01-05-510Z",
+    "timestamp": {
+      "$date": "2025-05-27T15:01:15.646Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358074/robolution/backups/backup-2025-05-27T15-01-05-510Z/rfixx37y4oeth5elqx7p.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358066/robolution/backups/backup-2025-05-27T15-01-05-510Z/qqyxqk14o08wlcn8wrwb.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358067/robolution/backups/backup-2025-05-27T15-01-05-510Z/ctad4u3giwikwrcxy0wm.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358068/robolution/backups/backup-2025-05-27T15-01-05-510Z/f4dt1bapundylkouqvqz.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358069/robolution/backups/backup-2025-05-27T15-01-05-510Z/quz8icnbrztjpumbgdxf.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358070/robolution/backups/backup-2025-05-27T15-01-05-510Z/ukj7tiwhdt5ipdd34ucv.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358071/robolution/backups/backup-2025-05-27T15-01-05-510Z/n8kjwb7pqab40lp2kiz5.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358072/robolution/backups/backup-2025-05-27T15-01-05-510Z/izutxbcvpga2egsmbziv.json",
+        "documentCount": 456
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358073/robolution/backups/backup-2025-05-27T15-01-05-510Z/nedd4qvvxj83lajscbps.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835d5314a72325294f3862d",
+    "backupId": "backup-2025-05-27T15-07-19-399Z",
+    "timestamp": {
+      "$date": "2025-05-27T15:07:29.518Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358448/robolution/backups/backup-2025-05-27T15-07-19-399Z/clxjzv1t0pgrkmozgiwu.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358441/robolution/backups/backup-2025-05-27T15-07-19-399Z/d4wfslzewcvt9lkns1us.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358442/robolution/backups/backup-2025-05-27T15-07-19-399Z/lwrcy9fjicpkkty7qabt.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358443/robolution/backups/backup-2025-05-27T15-07-19-399Z/yioyont9svzlawatjux9.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358444/robolution/backups/backup-2025-05-27T15-07-19-399Z/zofp5tx4v6hmoilissyt.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358445/robolution/backups/backup-2025-05-27T15-07-19-399Z/m34bhxiwq1oixrpohlty.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358445/robolution/backups/backup-2025-05-27T15-07-19-399Z/ysesteaz2gwgebohcnbt.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358447/robolution/backups/backup-2025-05-27T15-07-19-399Z/pulz8udodrmzcszypx2p.json",
+        "documentCount": 455
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358448/robolution/backups/backup-2025-05-27T15-07-19-399Z/oticrsl92vktgvvaaw8w.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835d64ddd6e51d955579798",
+    "backupId": "backup-2025-05-27T15-12-03-859Z",
+    "timestamp": {
+      "$date": "2025-05-27T15:12:13.630Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358732/robolution/backups/backup-2025-05-27T15-12-03-859Z/voejw3l8s9js5xrpsca6.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358724/robolution/backups/backup-2025-05-27T15-12-03-859Z/dq2olas71hrmhjksujoq.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358725/robolution/backups/backup-2025-05-27T15-12-03-859Z/h2wr4bm31p312bbc4sbv.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358726/robolution/backups/backup-2025-05-27T15-12-03-859Z/xzqtv0edss2mcmdiyxto.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358727/robolution/backups/backup-2025-05-27T15-12-03-859Z/a5wcimy6xuzgsvxbtasq.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358728/robolution/backups/backup-2025-05-27T15-12-03-859Z/ctvzguxbpimdw2q1ccif.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358729/robolution/backups/backup-2025-05-27T15-12-03-859Z/zysaragafynac7cikghj.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358730/robolution/backups/backup-2025-05-27T15-12-03-859Z/gyxyutbsajajokpghdis.json",
+        "documentCount": 453
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748358731/robolution/backups/backup-2025-05-27T15-12-03-859Z/wmrykvplolaezrnxguk6.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835da6f4227fe857477022d",
+    "backupId": "backup-2025-05-27T15-29-40-856Z",
+    "timestamp": {
+      "$date": "2025-05-27T15:29:51.582Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748359791/robolution/backups/backup-2025-05-27T15-29-40-856Z/co1xbvdtg96fxsq4reta.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748359783/robolution/backups/backup-2025-05-27T15-29-40-856Z/dwo896udblgmzcd5lz8d.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748359784/robolution/backups/backup-2025-05-27T15-29-40-856Z/lvnrdsp8uuwvbny0yd4x.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748359785/robolution/backups/backup-2025-05-27T15-29-40-856Z/evbg2airf7oqfkmiopz0.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748359786/robolution/backups/backup-2025-05-27T15-29-40-856Z/u75mlgf8waaci4ezrzul.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748359787/robolution/backups/backup-2025-05-27T15-29-40-856Z/ocvcsuzxfuvb2j81vnuo.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748359788/robolution/backups/backup-2025-05-27T15-29-40-856Z/z06yuifxwfiiikaeb725.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748359789/robolution/backups/backup-2025-05-27T15-29-40-856Z/znsera6eagr3wa3sy8av.json",
+        "documentCount": 455
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748359790/robolution/backups/backup-2025-05-27T15-29-40-856Z/swv3swswqsi4ggijgb2r.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835db9b1b2b59e4964b5fce",
+    "backupId": "backup-2025-05-27T15-34-41-083Z",
+    "timestamp": {
+      "$date": "2025-05-27T15:34:51.014Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360089/robolution/backups/backup-2025-05-27T15-34-41-083Z/shibyvogjnautzfpmt9d.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360081/robolution/backups/backup-2025-05-27T15-34-41-083Z/gohaixciafgyn52by8jc.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360082/robolution/backups/backup-2025-05-27T15-34-41-083Z/w0ksbzxfsgki7gtpsudn.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360083/robolution/backups/backup-2025-05-27T15-34-41-083Z/yov6rj96niv37uzxjebs.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360084/robolution/backups/backup-2025-05-27T15-34-41-083Z/isaykw7ylqti5u2gqhd4.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360085/robolution/backups/backup-2025-05-27T15-34-41-083Z/yuvndpwwrg4pnwb550b8.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360086/robolution/backups/backup-2025-05-27T15-34-41-083Z/dlyvwswzzseqv16lqryi.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360087/robolution/backups/backup-2025-05-27T15-34-41-083Z/ylljjjstmqzkd9xknrbj.json",
+        "documentCount": 457
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360088/robolution/backups/backup-2025-05-27T15-34-41-083Z/ah06gfqizwqd7jdl8bkk.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835dd723b4c08e2e4bf81eb",
+    "backupId": "backup-2025-05-27T15-42-32-991Z",
+    "timestamp": {
+      "$date": "2025-05-27T15:42:42.866Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360561/robolution/backups/backup-2025-05-27T15-42-32-991Z/z8quqd2j1dpvmse0kcfa.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360553/robolution/backups/backup-2025-05-27T15-42-32-991Z/mpwhj6azjsji8vjz8nh2.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360554/robolution/backups/backup-2025-05-27T15-42-32-991Z/ycsksklopzhnp1fgfvfk.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360555/robolution/backups/backup-2025-05-27T15-42-32-991Z/g4uwj2glp1skgpkubpmq.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360556/robolution/backups/backup-2025-05-27T15-42-32-991Z/kqdgmoa1qgzxou9h6b92.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360557/robolution/backups/backup-2025-05-27T15-42-32-991Z/ncqhmmrlhgwnoprkd6e3.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360558/robolution/backups/backup-2025-05-27T15-42-32-991Z/fut8xoy6ldbkzivmnrrq.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360559/robolution/backups/backup-2025-05-27T15-42-32-991Z/qwxstzompkq8h4v9rnqg.json",
+        "documentCount": 459
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360560/robolution/backups/backup-2025-05-27T15-42-32-991Z/uvv7k1lrsablswivkaid.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835de6bd0a7d89f8331a8c0",
+    "backupId": "backup-2025-05-27T15-46-41-103Z",
+    "timestamp": {
+      "$date": "2025-05-27T15:46:51.273Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360809/robolution/backups/backup-2025-05-27T15-46-41-103Z/kvalsqfer5mvzctbsey6.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360801/robolution/backups/backup-2025-05-27T15-46-41-103Z/lbzjorzypxsilefkn2mg.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360802/robolution/backups/backup-2025-05-27T15-46-41-103Z/eecselnntjewxfe8p2h8.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360803/robolution/backups/backup-2025-05-27T15-46-41-103Z/p8otk97uvmudyvxm8neq.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360804/robolution/backups/backup-2025-05-27T15-46-41-103Z/ygrbectfkkceecqwni9d.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360805/robolution/backups/backup-2025-05-27T15-46-41-103Z/nqefln8g8hormklgbv8u.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360806/robolution/backups/backup-2025-05-27T15-46-41-103Z/bmox59axurufppvntkcv.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360807/robolution/backups/backup-2025-05-27T15-46-41-103Z/gfkb8gzw1splcoe27ssu.json",
+        "documentCount": 457
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748360808/robolution/backups/backup-2025-05-27T15-46-41-103Z/ebwo3dgparxwn8jlxpss.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835e0ad795e716ab0cf464b",
+    "backupId": "backup-2025-05-27T15-56-18-536Z",
+    "timestamp": {
+      "$date": "2025-05-27T15:56:29.301Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361388/robolution/backups/backup-2025-05-27T15-56-18-536Z/j179o885tvdivhfvqhxk.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361380/robolution/backups/backup-2025-05-27T15-56-18-536Z/vyiybghqtk8klungd6pb.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361381/robolution/backups/backup-2025-05-27T15-56-18-536Z/bx92zaodkkwovjgy8krr.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361382/robolution/backups/backup-2025-05-27T15-56-18-536Z/nyuvi6bsy4rn7xm8qjco.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361383/robolution/backups/backup-2025-05-27T15-56-18-536Z/wt0bykxs13h1wxkowmma.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361384/robolution/backups/backup-2025-05-27T15-56-18-536Z/iwzavuchsqd7qqwygexc.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361385/robolution/backups/backup-2025-05-27T15-56-18-536Z/yg3de1byxwgzdvxzcqhc.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361386/robolution/backups/backup-2025-05-27T15-56-18-536Z/xlmaeynffi3k6sjuewtg.json",
+        "documentCount": 460
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361387/robolution/backups/backup-2025-05-27T15-56-18-536Z/zfzbfpiywoatdfjpqzci.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835e0d3aeebbeb473758103",
+    "backupId": "backup-2025-05-27T15-56-57-523Z",
+    "timestamp": {
+      "$date": "2025-05-27T15:57:07.358Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361425/robolution/backups/backup-2025-05-27T15-56-57-523Z/kpajtkxdm05msdgjf3df.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361418/robolution/backups/backup-2025-05-27T15-56-57-523Z/rap1jmf73eyw8n4dfyda.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361419/robolution/backups/backup-2025-05-27T15-56-57-523Z/g9lef7sgevca1kynwe6i.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361420/robolution/backups/backup-2025-05-27T15-56-57-523Z/phz9mis7azuhpj1ybzzy.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361421/robolution/backups/backup-2025-05-27T15-56-57-523Z/l3fwilukol83whwatgrg.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361422/robolution/backups/backup-2025-05-27T15-56-57-523Z/h2scimx5gwodbjus0kky.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361422/robolution/backups/backup-2025-05-27T15-56-57-523Z/qkxvpm7uryup4rzrbaj8.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361423/robolution/backups/backup-2025-05-27T15-56-57-523Z/i1cvgirngn0yrwx9pmkr.json",
+        "documentCount": 460
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361424/robolution/backups/backup-2025-05-27T15-56-57-523Z/ohzhkzupxpqitvkfjm23.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835e25723eed95755c7147a",
+    "backupId": "backup-2025-05-27T16-03-25-622Z",
+    "timestamp": {
+      "$date": "2025-05-27T16:03:35.293Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361813/robolution/backups/backup-2025-05-27T16-03-25-622Z/rnobxtrtmy1ahfbgqmqe.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361806/robolution/backups/backup-2025-05-27T16-03-25-622Z/golnjb9nnzx2fdqjzm6r.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361807/robolution/backups/backup-2025-05-27T16-03-25-622Z/ejojbyyfnlg3eltfmpam.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361808/robolution/backups/backup-2025-05-27T16-03-25-622Z/gzloso3pazd5ufi66xqd.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361809/robolution/backups/backup-2025-05-27T16-03-25-622Z/hp1faymjepntbxi12phq.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361810/robolution/backups/backup-2025-05-27T16-03-25-622Z/a2dwn3o2ehp3la7vloht.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361811/robolution/backups/backup-2025-05-27T16-03-25-622Z/obpindj2idrdbh8gy1ko.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361812/robolution/backups/backup-2025-05-27T16-03-25-622Z/ux800jr1av5yzghlws8p.json",
+        "documentCount": 460
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748361812/robolution/backups/backup-2025-05-27T16-03-25-622Z/xyaymlcoixyvip54p91k.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835e44aa3e16978dc3b7a2a",
+    "backupId": "backup-2025-05-27T16-11-44-906Z",
+    "timestamp": {
+      "$date": "2025-05-27T16:11:54.241Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748362312/robolution/backups/backup-2025-05-27T16-11-44-906Z/oyg45xsvky6cbqkbmvxk.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748362305/robolution/backups/backup-2025-05-27T16-11-44-906Z/apcypqxaqvlzsb7w8lpb.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748362306/robolution/backups/backup-2025-05-27T16-11-44-906Z/kgdd3uymymsixnpfojcl.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748362307/robolution/backups/backup-2025-05-27T16-11-44-906Z/zhjtu5oc6uj9wauqze4x.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748362308/robolution/backups/backup-2025-05-27T16-11-44-906Z/oaxjuuxlryllaadatsj0.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748362308/robolution/backups/backup-2025-05-27T16-11-44-906Z/bh3hqajbfqjn3skenmbm.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748362309/robolution/backups/backup-2025-05-27T16-11-44-906Z/vhxgyo23wtbdqkloydgg.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748362310/robolution/backups/backup-2025-05-27T16-11-44-906Z/mrwbwalxe00vjtuooosq.json",
+        "documentCount": 460
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748362311/robolution/backups/backup-2025-05-27T16-11-44-906Z/lrtze4pqygf17gqe5e5u.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835e7b2084716a1647faba0",
+    "backupId": "backup-2025-05-27T16-26-15-484Z",
+    "timestamp": {
+      "$date": "2025-05-27T16:26:26.534Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748363186/robolution/backups/backup-2025-05-27T16-26-15-484Z/yb1a7djnhuyawbvrnao9.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748363177/robolution/backups/backup-2025-05-27T16-26-15-484Z/cj8tjwsk3ix6kzigtugv.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748363178/robolution/backups/backup-2025-05-27T16-26-15-484Z/zfrmkotmrtt3qudzn0ol.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748363179/robolution/backups/backup-2025-05-27T16-26-15-484Z/isq5thjecvbhk37nrfce.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748363180/robolution/backups/backup-2025-05-27T16-26-15-484Z/k3ojjqbp5sad4x2swi6p.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748363181/robolution/backups/backup-2025-05-27T16-26-15-484Z/hlppxtphsmnbhkrlpn6e.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748363182/robolution/backups/backup-2025-05-27T16-26-15-484Z/sdbwsb30kwllcpkuddc4.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748363184/robolution/backups/backup-2025-05-27T16-26-15-484Z/eca9uqrf7h0dojabgxkw.json",
+        "documentCount": 462
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748363185/robolution/backups/backup-2025-05-27T16-26-15-484Z/xizpgoc75ubyktzfi92v.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835e8814227fe857477022e",
+    "backupId": "backup-2025-05-27T16-29-40-882Z",
+    "timestamp": {
+      "$date": "2025-05-27T16:29:53.551Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748363393/robolution/backups/backup-2025-05-27T16-29-40-882Z/vxpr094bgw5aejageprp.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748363384/robolution/backups/backup-2025-05-27T16-29-40-882Z/zqyrxvnz34nkui9qndpd.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748363385/robolution/backups/backup-2025-05-27T16-29-40-882Z/e5pgvja4fmwryb8cu4mk.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748363386/robolution/backups/backup-2025-05-27T16-29-40-882Z/res0nygmveyy56xa7j2b.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748363387/robolution/backups/backup-2025-05-27T16-29-40-882Z/e2dq9fdkblcf93mpq2pa.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748363388/robolution/backups/backup-2025-05-27T16-29-40-882Z/hdhwzosezwjcbtolqvrm.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748363389/robolution/backups/backup-2025-05-27T16-29-40-882Z/s6fr03v7xk4pq9vcw6ts.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748363390/robolution/backups/backup-2025-05-27T16-29-40-882Z/xlkftmwargf48ycvbfac.json",
+        "documentCount": 466
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748363391/robolution/backups/backup-2025-05-27T16-29-40-882Z/qxtqi692tgrjxaegkqpn.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835ebb33e62836185b4c724",
+    "backupId": "backup-2025-05-27T16-43-21-187Z",
+    "timestamp": {
+      "$date": "2025-05-27T16:43:31.523Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748364209/robolution/backups/backup-2025-05-27T16-43-21-187Z/ckbfalmvwdhchnglgqtl.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748364201/robolution/backups/backup-2025-05-27T16-43-21-187Z/voam7lbeyvows0otfl6q.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748364202/robolution/backups/backup-2025-05-27T16-43-21-187Z/y61t2wxqkk87q5x9yqjz.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748364203/robolution/backups/backup-2025-05-27T16-43-21-187Z/iia0ove6wnr9zgqf9bth.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748364204/robolution/backups/backup-2025-05-27T16-43-21-187Z/ckv8bxtldt42grnz7eyu.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748364205/robolution/backups/backup-2025-05-27T16-43-21-187Z/xkbanxed90fxqqddm51h.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748364206/robolution/backups/backup-2025-05-27T16-43-21-187Z/ciux60ffxguaytlwumhb.json",
+        "documentCount": 0
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748364207/robolution/backups/backup-2025-05-27T16-43-21-187Z/wejs6ofxfowbeead0z73.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748364208/robolution/backups/backup-2025-05-27T16-43-21-187Z/as5bzdm7kphxh0xxxhru.json",
+        "documentCount": 468
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748364208/robolution/backups/backup-2025-05-27T16-43-21-187Z/ybv6mfe3exrnjap6lgrd.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835eea55b35440c31381475",
+    "backupId": "backup-2025-05-27T16-55-54-997Z",
+    "timestamp": {
+      "$date": "2025-05-27T16:56:05.545Z"
+    },
+    "metadataUrl": {
+      "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748364963/robolution/backups/backup-2025-05-27T16-55-54-997Z/p5uhnvcdpotcirrfpuu7.json",
+      "public_id": "robolution/backups/backup-2025-05-27T16-55-54-997Z/p5uhnvcdpotcirrfpuu7.json"
+    },
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748364955/robolution/backups/backup-2025-05-27T16-55-54-997Z/exmhpqwrkjuqr5vnn4iv.json",
+          "public_id": "robolution/backups/backup-2025-05-27T16-55-54-997Z/exmhpqwrkjuqr5vnn4iv.json"
+        },
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748364956/robolution/backups/backup-2025-05-27T16-55-54-997Z/spfbpt2soppivdijx8bs.json",
+          "public_id": "robolution/backups/backup-2025-05-27T16-55-54-997Z/spfbpt2soppivdijx8bs.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748364957/robolution/backups/backup-2025-05-27T16-55-54-997Z/jtljasa6i5p54gbuowgb.json",
+          "public_id": "robolution/backups/backup-2025-05-27T16-55-54-997Z/jtljasa6i5p54gbuowgb.json"
+        },
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748364958/robolution/backups/backup-2025-05-27T16-55-54-997Z/hrgcymk9advnhaga4jki.json",
+          "public_id": "robolution/backups/backup-2025-05-27T16-55-54-997Z/hrgcymk9advnhaga4jki.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748364958/robolution/backups/backup-2025-05-27T16-55-54-997Z/g8qacct6ohzs03fklgtc.json",
+          "public_id": "robolution/backups/backup-2025-05-27T16-55-54-997Z/g8qacct6ohzs03fklgtc.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748364959/robolution/backups/backup-2025-05-27T16-55-54-997Z/vidrktdjpqktf5db1vj0.json",
+          "public_id": "robolution/backups/backup-2025-05-27T16-55-54-997Z/vidrktdjpqktf5db1vj0.json"
+        },
+        "documentCount": 0
+      },
+      {
+        "collection": "users",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748364960/robolution/backups/backup-2025-05-27T16-55-54-997Z/zxberwyknuqzvurkoqa1.json",
+          "public_id": "robolution/backups/backup-2025-05-27T16-55-54-997Z/zxberwyknuqzvurkoqa1.json"
+        },
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748364961/robolution/backups/backup-2025-05-27T16-55-54-997Z/vbdmsmm48arbyu2j3gaq.json",
+          "public_id": "robolution/backups/backup-2025-05-27T16-55-54-997Z/vbdmsmm48arbyu2j3gaq.json"
+        },
+        "documentCount": 470
+      },
+      {
+        "collection": "scores",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748364962/robolution/backups/backup-2025-05-27T16-55-54-997Z/ktvjjuioqfp4gh9bldin.json",
+          "public_id": "robolution/backups/backup-2025-05-27T16-55-54-997Z/ktvjjuioqfp4gh9bldin.json"
+        },
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835f1b366b49fe83dbcc3ba",
+    "backupId": "backup-2025-05-27T17-08-55-144Z",
+    "timestamp": {
+      "$date": "2025-05-27T17:09:07.825Z"
+    },
+    "metadataUrl": {
+      "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748365746/robolution/backups/backup-2025-05-27T17-08-55-144Z/ukxclpn5jn2wonnthotp.json",
+      "public_id": "robolution/backups/backup-2025-05-27T17-08-55-144Z/ukxclpn5jn2wonnthotp.json"
+    },
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748365735/robolution/backups/backup-2025-05-27T17-08-55-144Z/iizmrlwzryfnvgf4d9cf.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-08-55-144Z/iizmrlwzryfnvgf4d9cf.json"
+        },
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748365736/robolution/backups/backup-2025-05-27T17-08-55-144Z/bzsyhnd58crvba6eub59.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-08-55-144Z/bzsyhnd58crvba6eub59.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748365737/robolution/backups/backup-2025-05-27T17-08-55-144Z/ajclgjtg8xshy35mf0tk.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-08-55-144Z/ajclgjtg8xshy35mf0tk.json"
+        },
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748365738/robolution/backups/backup-2025-05-27T17-08-55-144Z/lnf5d2zabxdfduylcqlg.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-08-55-144Z/lnf5d2zabxdfduylcqlg.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748365739/robolution/backups/backup-2025-05-27T17-08-55-144Z/islllksgtwl9ibugluhj.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-08-55-144Z/islllksgtwl9ibugluhj.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748365740/robolution/backups/backup-2025-05-27T17-08-55-144Z/m7hwics3tjstikfai1ah.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-08-55-144Z/m7hwics3tjstikfai1ah.json"
+        },
+        "documentCount": 0
+      },
+      {
+        "collection": "users",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748365741/robolution/backups/backup-2025-05-27T17-08-55-144Z/tawlupslt8ux3rygdmb7.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-08-55-144Z/tawlupslt8ux3rygdmb7.json"
+        },
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748365742/robolution/backups/backup-2025-05-27T17-08-55-144Z/yxqaqqhgw42xfnpeg45t.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-08-55-144Z/yxqaqqhgw42xfnpeg45t.json"
+        },
+        "documentCount": 469
+      },
+      {
+        "collection": "scores",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748365744/robolution/backups/backup-2025-05-27T17-08-55-144Z/ihnyztzobhcbc27cuokb.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-08-55-144Z/ihnyztzobhcbc27cuokb.json"
+        },
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835f3264b80cd041af1b208",
+    "backupId": "backup-2025-05-27T17-15-07-648Z",
+    "timestamp": {
+      "$date": "2025-05-27T17:15:18.022Z"
+    },
+    "metadataUrl": {
+      "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366116/robolution/backups/backup-2025-05-27T17-15-07-648Z/k92asunpfqizkhpblfqf.json",
+      "public_id": "robolution/backups/backup-2025-05-27T17-15-07-648Z/k92asunpfqizkhpblfqf.json"
+    },
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366108/robolution/backups/backup-2025-05-27T17-15-07-648Z/rkghjnnluf1vl7nrenjf.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-15-07-648Z/rkghjnnluf1vl7nrenjf.json"
+        },
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366109/robolution/backups/backup-2025-05-27T17-15-07-648Z/k7mpng8dofkdsq2mft1r.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-15-07-648Z/k7mpng8dofkdsq2mft1r.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366110/robolution/backups/backup-2025-05-27T17-15-07-648Z/hk55prtmtnbxxzz6ahrl.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-15-07-648Z/hk55prtmtnbxxzz6ahrl.json"
+        },
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366110/robolution/backups/backup-2025-05-27T17-15-07-648Z/u0iqp6y0ydgnsevqwpue.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-15-07-648Z/u0iqp6y0ydgnsevqwpue.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366111/robolution/backups/backup-2025-05-27T17-15-07-648Z/oz2lle8jmanbnybw0hd9.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-15-07-648Z/oz2lle8jmanbnybw0hd9.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366112/robolution/backups/backup-2025-05-27T17-15-07-648Z/bglv3m5g2k0rotchhjmp.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-15-07-648Z/bglv3m5g2k0rotchhjmp.json"
+        },
+        "documentCount": 2
+      },
+      {
+        "collection": "users",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366113/robolution/backups/backup-2025-05-27T17-15-07-648Z/nkvgqmvkudiowoljame1.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-15-07-648Z/nkvgqmvkudiowoljame1.json"
+        },
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366114/robolution/backups/backup-2025-05-27T17-15-07-648Z/gqxzbwoyqdmwrfflhfwl.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-15-07-648Z/gqxzbwoyqdmwrfflhfwl.json"
+        },
+        "documentCount": 472
+      },
+      {
+        "collection": "scores",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366115/robolution/backups/backup-2025-05-27T17-15-07-648Z/kyenj1h4jky8ae14shya.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-15-07-648Z/kyenj1h4jky8ae14shya.json"
+        },
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835f57353b421313cbc4c15",
+    "backupId": "backup-2025-05-27T17-24-56-689Z",
+    "timestamp": {
+      "$date": "2025-05-27T17:25:07.373Z"
+    },
+    "metadataUrl": {
+      "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366705/robolution/backups/backup-2025-05-27T17-24-56-689Z/bjjlnry3dlurd7luwv4d.json",
+      "public_id": "robolution/backups/backup-2025-05-27T17-24-56-689Z/bjjlnry3dlurd7luwv4d.json"
+    },
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366697/robolution/backups/backup-2025-05-27T17-24-56-689Z/z3vfvgxusqovpbsgmkyg.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-24-56-689Z/z3vfvgxusqovpbsgmkyg.json"
+        },
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366698/robolution/backups/backup-2025-05-27T17-24-56-689Z/tiyxaxbfbyr0vvw8p3mo.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-24-56-689Z/tiyxaxbfbyr0vvw8p3mo.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366699/robolution/backups/backup-2025-05-27T17-24-56-689Z/yoq5liojyehih3t1jrud.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-24-56-689Z/yoq5liojyehih3t1jrud.json"
+        },
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366699/robolution/backups/backup-2025-05-27T17-24-56-689Z/qsoopk5gr5wxmwzqr0rc.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-24-56-689Z/qsoopk5gr5wxmwzqr0rc.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366700/robolution/backups/backup-2025-05-27T17-24-56-689Z/fapzwbbtxbrdkv3iva7u.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-24-56-689Z/fapzwbbtxbrdkv3iva7u.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366701/robolution/backups/backup-2025-05-27T17-24-56-689Z/jbpvq7lvwoshiydqulk8.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-24-56-689Z/jbpvq7lvwoshiydqulk8.json"
+        },
+        "documentCount": 2
+      },
+      {
+        "collection": "users",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366702/robolution/backups/backup-2025-05-27T17-24-56-689Z/yoaq9gtptdpoldsjzrwx.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-24-56-689Z/yoaq9gtptdpoldsjzrwx.json"
+        },
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366703/robolution/backups/backup-2025-05-27T17-24-56-689Z/wtzqe99gck0l6jzfstqe.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-24-56-689Z/wtzqe99gck0l6jzfstqe.json"
+        },
+        "documentCount": 475
+      },
+      {
+        "collection": "scores",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366704/robolution/backups/backup-2025-05-27T17-24-56-689Z/bm4caw5cjw5pvtyke3k2.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-24-56-689Z/bm4caw5cjw5pvtyke3k2.json"
+        },
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835f5c3084716a1647faba1",
+    "backupId": "backup-2025-05-27T17-26-15-483Z",
+    "timestamp": {
+      "$date": "2025-05-27T17:26:27.544Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366787/robolution/backups/backup-2025-05-27T17-26-15-483Z/pkt3kcve700byemzmn5m.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366777/robolution/backups/backup-2025-05-27T17-26-15-483Z/srmd9jwtf0seehbs0gut.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366778/robolution/backups/backup-2025-05-27T17-26-15-483Z/o56svlfrac21jt8wq0aj.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366779/robolution/backups/backup-2025-05-27T17-26-15-483Z/yvdyxzqbbxo1krcgvqy1.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366780/robolution/backups/backup-2025-05-27T17-26-15-483Z/caj7zkbaeadzchla6gvz.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366781/robolution/backups/backup-2025-05-27T17-26-15-483Z/xeavxshi8v2k82j8bs5x.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366782/robolution/backups/backup-2025-05-27T17-26-15-483Z/u9xymspbiu7jau5fdp2i.json",
+        "documentCount": 2
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366783/robolution/backups/backup-2025-05-27T17-26-15-483Z/oorqqubewkrotvnmuomr.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366785/robolution/backups/backup-2025-05-27T17-26-15-483Z/rnydcerv6mpe9eucj5c9.json",
+        "documentCount": 473
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366785/robolution/backups/backup-2025-05-27T17-26-15-483Z/hinryixjtodhlrjjhtoc.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835f68ea31ba13e07159969",
+    "backupId": "backup-2025-05-27T17-29-39-798Z",
+    "timestamp": {
+      "$date": "2025-05-27T17:29:50.749Z"
+    },
+    "metadataUrl": {
+      "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366988/robolution/backups/backup-2025-05-27T17-29-39-798Z/xo9zumbocrdxbpzorcjq.json",
+      "public_id": "robolution/backups/backup-2025-05-27T17-29-39-798Z/xo9zumbocrdxbpzorcjq.json"
+    },
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366980/robolution/backups/backup-2025-05-27T17-29-39-798Z/tawhkwcyghc0am1n0zqs.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-29-39-798Z/tawhkwcyghc0am1n0zqs.json"
+        },
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366981/robolution/backups/backup-2025-05-27T17-29-39-798Z/umn8j3nbtcgvw8g35cvt.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-29-39-798Z/umn8j3nbtcgvw8g35cvt.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366982/robolution/backups/backup-2025-05-27T17-29-39-798Z/wentrvovvqivaxx6musj.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-29-39-798Z/wentrvovvqivaxx6musj.json"
+        },
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366983/robolution/backups/backup-2025-05-27T17-29-39-798Z/lh7kgqiihgtkroyz92th.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-29-39-798Z/lh7kgqiihgtkroyz92th.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366984/robolution/backups/backup-2025-05-27T17-29-39-798Z/l6wn5j6pzlghfq7nrz3y.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-29-39-798Z/l6wn5j6pzlghfq7nrz3y.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366984/robolution/backups/backup-2025-05-27T17-29-39-798Z/bbhszflvvrnbxk5clnx3.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-29-39-798Z/bbhszflvvrnbxk5clnx3.json"
+        },
+        "documentCount": 2
+      },
+      {
+        "collection": "users",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366985/robolution/backups/backup-2025-05-27T17-29-39-798Z/ri4lprn4z6oeoh5bqbdk.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-29-39-798Z/ri4lprn4z6oeoh5bqbdk.json"
+        },
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366986/robolution/backups/backup-2025-05-27T17-29-39-798Z/suwwvflie9xbblciy411.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-29-39-798Z/suwwvflie9xbblciy411.json"
+        },
+        "documentCount": 467
+      },
+      {
+        "collection": "scores",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748366988/robolution/backups/backup-2025-05-27T17-29-39-798Z/ryglwmnckjxpcvkaomt4.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-29-39-798Z/ryglwmnckjxpcvkaomt4.json"
+        },
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835f84c4cfe41d54bdd6f8b",
+    "backupId": "backup-2025-05-27T17-37-04-899Z",
+    "timestamp": {
+      "$date": "2025-05-27T17:37:16.008Z"
+    },
+    "metadataUrl": {
+      "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748367434/robolution/backups/backup-2025-05-27T17-37-04-899Z/llzrvwnwhphbgo8zyi5p.json",
+      "public_id": "robolution/backups/backup-2025-05-27T17-37-04-899Z/llzrvwnwhphbgo8zyi5p.json"
+    },
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748367425/robolution/backups/backup-2025-05-27T17-37-04-899Z/ebhodxemswpsqcyi5ilm.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-37-04-899Z/ebhodxemswpsqcyi5ilm.json"
+        },
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748367426/robolution/backups/backup-2025-05-27T17-37-04-899Z/yvewmxnjqfwnjtltiupz.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-37-04-899Z/yvewmxnjqfwnjtltiupz.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748367427/robolution/backups/backup-2025-05-27T17-37-04-899Z/mizjg9dbahmqbgcncmjm.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-37-04-899Z/mizjg9dbahmqbgcncmjm.json"
+        },
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748367428/robolution/backups/backup-2025-05-27T17-37-04-899Z/vcy94frqugl9uu9tlv5r.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-37-04-899Z/vcy94frqugl9uu9tlv5r.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748367429/robolution/backups/backup-2025-05-27T17-37-04-899Z/ts6xknsvtm7asexdimso.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-37-04-899Z/ts6xknsvtm7asexdimso.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748367429/robolution/backups/backup-2025-05-27T17-37-04-899Z/stq6yiklgwppyjmrbci3.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-37-04-899Z/stq6yiklgwppyjmrbci3.json"
+        },
+        "documentCount": 2
+      },
+      {
+        "collection": "users",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748367430/robolution/backups/backup-2025-05-27T17-37-04-899Z/omavdique5qgokaofehq.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-37-04-899Z/omavdique5qgokaofehq.json"
+        },
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748367432/robolution/backups/backup-2025-05-27T17-37-04-899Z/ihidh0eaqrveqwbp8voh.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-37-04-899Z/ihidh0eaqrveqwbp8voh.json"
+        },
+        "documentCount": 467
+      },
+      {
+        "collection": "scores",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748367433/robolution/backups/backup-2025-05-27T17-37-04-899Z/mnbkpshcyjrlfwx1jquf.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-37-04-899Z/mnbkpshcyjrlfwx1jquf.json"
+        },
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835f9278d07727db82916e4",
+    "backupId": "backup-2025-05-27T17-40-41-419Z",
+    "timestamp": {
+      "$date": "2025-05-27T17:40:55.797Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748367655/robolution/backups/backup-2025-05-27T17-40-41-419Z/i71dpurfjkvrvputln3q.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748367644/robolution/backups/backup-2025-05-27T17-40-41-419Z/f3gbxfojilpprlqj9xk1.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748367645/robolution/backups/backup-2025-05-27T17-40-41-419Z/ajgshlhpchjicewdb7bi.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748367647/robolution/backups/backup-2025-05-27T17-40-41-419Z/ybsbanmmjmy7of6jbrqa.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748367648/robolution/backups/backup-2025-05-27T17-40-41-419Z/jdnfmsjg4ttfs3qseivk.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748367649/robolution/backups/backup-2025-05-27T17-40-41-419Z/bkrkvtlzdth7svshsphp.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748367650/robolution/backups/backup-2025-05-27T17-40-41-419Z/dwxcpizdzseapm7uartm.json",
+        "documentCount": 2
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748367651/robolution/backups/backup-2025-05-27T17-40-41-419Z/kxdbgq6repcsugn2ajj9.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748367653/robolution/backups/backup-2025-05-27T17-40-41-419Z/peyknwsssms9l2pnziav.json",
+        "documentCount": 467
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748367654/robolution/backups/backup-2025-05-27T17-40-41-419Z/arkn4p0mzl005cv3qrs3.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835fa86d87ed28fd16cca8b",
+    "backupId": "backup-2025-05-27T17-46-35-530Z",
+    "timestamp": {
+      "$date": "2025-05-27T17:46:46.455Z"
+    },
+    "metadataUrl": {
+      "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748368004/robolution/backups/backup-2025-05-27T17-46-35-530Z/vfrq9xhwzpxmqgbo3jzm.json",
+      "public_id": "robolution/backups/backup-2025-05-27T17-46-35-530Z/vfrq9xhwzpxmqgbo3jzm.json"
+    },
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748367996/robolution/backups/backup-2025-05-27T17-46-35-530Z/wepwp7si5r0dhubtud3e.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-46-35-530Z/wepwp7si5r0dhubtud3e.json"
+        },
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748367997/robolution/backups/backup-2025-05-27T17-46-35-530Z/zhjrnngvoc8xlka0vgf3.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-46-35-530Z/zhjrnngvoc8xlka0vgf3.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748367998/robolution/backups/backup-2025-05-27T17-46-35-530Z/slog5bqtmpemb88eei7w.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-46-35-530Z/slog5bqtmpemb88eei7w.json"
+        },
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748367999/robolution/backups/backup-2025-05-27T17-46-35-530Z/ddt4l0nv0cxqdcqc5q79.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-46-35-530Z/ddt4l0nv0cxqdcqc5q79.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748368000/robolution/backups/backup-2025-05-27T17-46-35-530Z/j7watajzck9wni8mohb1.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-46-35-530Z/j7watajzck9wni8mohb1.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748368001/robolution/backups/backup-2025-05-27T17-46-35-530Z/l9maywtp1rvbl10ixrna.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-46-35-530Z/l9maywtp1rvbl10ixrna.json"
+        },
+        "documentCount": 2
+      },
+      {
+        "collection": "users",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748368001/robolution/backups/backup-2025-05-27T17-46-35-530Z/bxrtxbshofalk4hfkoaw.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-46-35-530Z/bxrtxbshofalk4hfkoaw.json"
+        },
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748368002/robolution/backups/backup-2025-05-27T17-46-35-530Z/s6j77x7kxsy805rj55ls.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-46-35-530Z/s6j77x7kxsy805rj55ls.json"
+        },
+        "documentCount": 464
+      },
+      {
+        "collection": "scores",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748368003/robolution/backups/backup-2025-05-27T17-46-35-530Z/iweq9m2xzj3gezqs9mdi.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-46-35-530Z/iweq9m2xzj3gezqs9mdi.json"
+        },
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6835fd4445dd107d30175c9f",
+    "backupId": "backup-2025-05-27T17-58-16-985Z",
+    "timestamp": {
+      "$date": "2025-05-27T17:58:28.996Z"
+    },
+    "metadataUrl": {
+      "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748368708/robolution/backups/backup-2025-05-27T17-58-16-985Z/xw1ihtxkgfngjdic160o.json",
+      "public_id": "robolution/backups/backup-2025-05-27T17-58-16-985Z/xw1ihtxkgfngjdic160o.json"
+    },
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748368699/robolution/backups/backup-2025-05-27T17-58-16-985Z/kxyykkuupso1os6pvg8g.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-58-16-985Z/kxyykkuupso1os6pvg8g.json"
+        },
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748368700/robolution/backups/backup-2025-05-27T17-58-16-985Z/sxrmgvagnscw3vrj6ua3.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-58-16-985Z/sxrmgvagnscw3vrj6ua3.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748368701/robolution/backups/backup-2025-05-27T17-58-16-985Z/xo0iv8wucoi4fb3sq2fb.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-58-16-985Z/xo0iv8wucoi4fb3sq2fb.json"
+        },
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748368702/robolution/backups/backup-2025-05-27T17-58-16-985Z/nclvu0cu3wr3033gvlx7.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-58-16-985Z/nclvu0cu3wr3033gvlx7.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748368703/robolution/backups/backup-2025-05-27T17-58-16-985Z/oj81efxrih1ogvqv7mbq.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-58-16-985Z/oj81efxrih1ogvqv7mbq.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748368704/robolution/backups/backup-2025-05-27T17-58-16-985Z/egzxa9nmxfzdu9oa6mof.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-58-16-985Z/egzxa9nmxfzdu9oa6mof.json"
+        },
+        "documentCount": 2
+      },
+      {
+        "collection": "users",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748368705/robolution/backups/backup-2025-05-27T17-58-16-985Z/skhvmnfiydyhroof7fry.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-58-16-985Z/skhvmnfiydyhroof7fry.json"
+        },
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748368706/robolution/backups/backup-2025-05-27T17-58-16-985Z/pvif6ueij91253okr93f.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-58-16-985Z/pvif6ueij91253okr93f.json"
+        },
+        "documentCount": 464
+      },
+      {
+        "collection": "scores",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748368707/robolution/backups/backup-2025-05-27T17-58-16-985Z/p3lojh1nbsnl809aa30b.json",
+          "public_id": "robolution/backups/backup-2025-05-27T17-58-16-985Z/p3lojh1nbsnl809aa30b.json"
+        },
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6836057984f4e08c949c4349",
+    "backupId": "backup-2025-05-27T18-33-16-782Z",
+    "timestamp": {
+      "$date": "2025-05-27T18:33:29.363Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748370809/robolution/backups/backup-2025-05-27T18-33-16-782Z/gwgqmtnzgzotz32zgxqc.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748370799/robolution/backups/backup-2025-05-27T18-33-16-782Z/dqdlufkjx5deowlyp2gc.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748370800/robolution/backups/backup-2025-05-27T18-33-16-782Z/mbqbflnxtsy0o8bfrt4f.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748370801/robolution/backups/backup-2025-05-27T18-33-16-782Z/rgmukkrngpcycwteo26j.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748370802/robolution/backups/backup-2025-05-27T18-33-16-782Z/d3et1zvwlovvcnbfqyaq.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748370803/robolution/backups/backup-2025-05-27T18-33-16-782Z/bhna2g30ibiudqatdlop.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748370804/robolution/backups/backup-2025-05-27T18-33-16-782Z/zfqdcprbgfzvwz4gj29q.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748370805/robolution/backups/backup-2025-05-27T18-33-16-782Z/gpjxe4slzmuabxtejnbe.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748370807/robolution/backups/backup-2025-05-27T18-33-16-782Z/pbunfgfq1p1fcbbqid2v.json",
+        "documentCount": 466
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748370808/robolution/backups/backup-2025-05-27T18-33-16-782Z/aafgadu7zkdzm6lzlfhb.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "68360960adeeadfaa85b630e",
+    "backupId": "backup-2025-05-27T18-49-54-473Z",
+    "timestamp": {
+      "$date": "2025-05-27T18:50:08.600Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748371808/robolution/backups/backup-2025-05-27T18-49-54-473Z/ve8v7czpeing7nhlkwgm.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748371797/robolution/backups/backup-2025-05-27T18-49-54-473Z/pmhgvyxkkd4zp2vtba30.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748371797/robolution/backups/backup-2025-05-27T18-49-54-473Z/biyyunnbp9r285x0vzyd.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748371799/robolution/backups/backup-2025-05-27T18-49-54-473Z/fbd1isypbynaguvzcuny.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748371800/robolution/backups/backup-2025-05-27T18-49-54-473Z/tydzbdpmvd2lxaabthf6.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748371800/robolution/backups/backup-2025-05-27T18-49-54-473Z/vzfqhvffztpooo9qmiiz.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748371801/robolution/backups/backup-2025-05-27T18-49-54-473Z/rpnkw7np9ezdfzpmf1h9.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748371803/robolution/backups/backup-2025-05-27T18-49-54-473Z/yg0lt5eyvbxjjrsum6ov.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748371804/robolution/backups/backup-2025-05-27T18-49-54-473Z/kwq1dsmqddinufdtciao.json",
+        "documentCount": 470
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748371805/robolution/backups/backup-2025-05-27T18-49-54-473Z/ynwope2vfelcrmedtptt.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "68360b5445dd107d30175ca0",
+    "backupId": "backup-2025-05-27T18-58-16-986Z",
+    "timestamp": {
+      "$date": "2025-05-27T18:58:28.783Z"
+    },
+    "metadataUrl": {
+      "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372308/robolution/backups/backup-2025-05-27T18-58-16-986Z/z8njzdeufrutqwlrgvcx.json",
+      "public_id": "robolution/backups/backup-2025-05-27T18-58-16-986Z/z8njzdeufrutqwlrgvcx.json"
+    },
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372299/robolution/backups/backup-2025-05-27T18-58-16-986Z/hus4lvbiolkz1qjiigug.json",
+          "public_id": "robolution/backups/backup-2025-05-27T18-58-16-986Z/hus4lvbiolkz1qjiigug.json"
+        },
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372300/robolution/backups/backup-2025-05-27T18-58-16-986Z/qek3m3pqjmjc0rkqnnp0.json",
+          "public_id": "robolution/backups/backup-2025-05-27T18-58-16-986Z/qek3m3pqjmjc0rkqnnp0.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372301/robolution/backups/backup-2025-05-27T18-58-16-986Z/brye2ecwenky6z2nltu4.json",
+          "public_id": "robolution/backups/backup-2025-05-27T18-58-16-986Z/brye2ecwenky6z2nltu4.json"
+        },
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372302/robolution/backups/backup-2025-05-27T18-58-16-986Z/rzrkdhosvnhdrwsztevr.json",
+          "public_id": "robolution/backups/backup-2025-05-27T18-58-16-986Z/rzrkdhosvnhdrwsztevr.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372303/robolution/backups/backup-2025-05-27T18-58-16-986Z/jdvnluvfds997xfrjnfn.json",
+          "public_id": "robolution/backups/backup-2025-05-27T18-58-16-986Z/jdvnluvfds997xfrjnfn.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372303/robolution/backups/backup-2025-05-27T18-58-16-986Z/hbme0ldyovoxqxn9yequ.json",
+          "public_id": "robolution/backups/backup-2025-05-27T18-58-16-986Z/hbme0ldyovoxqxn9yequ.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "users",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372304/robolution/backups/backup-2025-05-27T18-58-16-986Z/hgxibu2gkn57d9odjweb.json",
+          "public_id": "robolution/backups/backup-2025-05-27T18-58-16-986Z/hgxibu2gkn57d9odjweb.json"
+        },
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372306/robolution/backups/backup-2025-05-27T18-58-16-986Z/szxtpuzfpest3q1bklfu.json",
+          "public_id": "robolution/backups/backup-2025-05-27T18-58-16-986Z/szxtpuzfpest3q1bklfu.json"
+        },
+        "documentCount": 470
+      },
+      {
+        "collection": "scores",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372307/robolution/backups/backup-2025-05-27T18-58-16-986Z/mvqarsuabyjbcho7fpvp.json",
+          "public_id": "robolution/backups/backup-2025-05-27T18-58-16-986Z/mvqarsuabyjbcho7fpvp.json"
+        },
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "68360be41bd97b7ee8fe0b6b",
+    "backupId": "backup-2025-05-27T19-00-40-523Z",
+    "timestamp": {
+      "$date": "2025-05-27T19:00:52.145Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372451/robolution/backups/backup-2025-05-27T19-00-40-523Z/cva1hkdjjkwra4btqx7f.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372442/robolution/backups/backup-2025-05-27T19-00-40-523Z/grco7tcwutytlc3cmucc.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372444/robolution/backups/backup-2025-05-27T19-00-40-523Z/ngbvwviztvzcbbrrlp5l.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372445/robolution/backups/backup-2025-05-27T19-00-40-523Z/ha4lu8xfbv8dgy5lznow.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372446/robolution/backups/backup-2025-05-27T19-00-40-523Z/bdwvkn9ue3xilq06nvey.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372447/robolution/backups/backup-2025-05-27T19-00-40-523Z/mmcsrwawvgibffvm0kla.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372447/robolution/backups/backup-2025-05-27T19-00-40-523Z/iv56xuluo4lxwszpiswt.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372448/robolution/backups/backup-2025-05-27T19-00-40-523Z/aongt1ifzaduyj6gu62t.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372449/robolution/backups/backup-2025-05-27T19-00-40-523Z/cex3verplnxg1ja4w7ol.json",
+        "documentCount": 470
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372450/robolution/backups/backup-2025-05-27T19-00-40-523Z/qpiyfwvyr4p8oefyxu0s.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "68360c4519b16a932bfece28",
+    "backupId": "backup-2025-05-27T19-02-16-049Z",
+    "timestamp": {
+      "$date": "2025-05-27T19:02:29.826Z"
+    },
+    "metadataUrl": {
+      "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372549/robolution/backups/backup-2025-05-27T19-02-16-049Z/t5gkjsv3mnx2wmlmgoih.json",
+      "public_id": "robolution/backups/backup-2025-05-27T19-02-16-049Z/t5gkjsv3mnx2wmlmgoih.json"
+    },
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372538/robolution/backups/backup-2025-05-27T19-02-16-049Z/jxsggf66r7poujwyrail.json",
+          "public_id": "robolution/backups/backup-2025-05-27T19-02-16-049Z/jxsggf66r7poujwyrail.json"
+        },
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372540/robolution/backups/backup-2025-05-27T19-02-16-049Z/bmoxe3tjra9jehx9mwvv.json",
+          "public_id": "robolution/backups/backup-2025-05-27T19-02-16-049Z/bmoxe3tjra9jehx9mwvv.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372541/robolution/backups/backup-2025-05-27T19-02-16-049Z/gmdgakozowg9by5tti7d.json",
+          "public_id": "robolution/backups/backup-2025-05-27T19-02-16-049Z/gmdgakozowg9by5tti7d.json"
+        },
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372542/robolution/backups/backup-2025-05-27T19-02-16-049Z/jqcv8jlta7hroccjpma1.json",
+          "public_id": "robolution/backups/backup-2025-05-27T19-02-16-049Z/jqcv8jlta7hroccjpma1.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372543/robolution/backups/backup-2025-05-27T19-02-16-049Z/a8o1s1skhueorlscgxbb.json",
+          "public_id": "robolution/backups/backup-2025-05-27T19-02-16-049Z/a8o1s1skhueorlscgxbb.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372544/robolution/backups/backup-2025-05-27T19-02-16-049Z/fepx5ippribntemg36ea.json",
+          "public_id": "robolution/backups/backup-2025-05-27T19-02-16-049Z/fepx5ippribntemg36ea.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "users",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372545/robolution/backups/backup-2025-05-27T19-02-16-049Z/dbbmav3bm4fyl2jtqk4i.json",
+          "public_id": "robolution/backups/backup-2025-05-27T19-02-16-049Z/dbbmav3bm4fyl2jtqk4i.json"
+        },
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372547/robolution/backups/backup-2025-05-27T19-02-16-049Z/xdbnffvkonzpurpa6w22.json",
+          "public_id": "robolution/backups/backup-2025-05-27T19-02-16-049Z/xdbnffvkonzpurpa6w22.json"
+        },
+        "documentCount": 470
+      },
+      {
+        "collection": "scores",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372548/robolution/backups/backup-2025-05-27T19-02-16-049Z/etkuc3klqvgc0j6foa7e.json",
+          "public_id": "robolution/backups/backup-2025-05-27T19-02-16-049Z/etkuc3klqvgc0j6foa7e.json"
+        },
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "68360d2ed37ce74cee69f249",
+    "backupId": "backup-2025-05-27T19-06-08-814Z",
+    "timestamp": {
+      "$date": "2025-05-27T19:06:22.400Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372782/robolution/backups/backup-2025-05-27T19-06-08-814Z/pll9ergvksyrwt0ki51k.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372771/robolution/backups/backup-2025-05-27T19-06-08-814Z/qi8ptxzir2kslbbmuecw.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372773/robolution/backups/backup-2025-05-27T19-06-08-814Z/h5doapdjvfuwyjjj6lrb.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372774/robolution/backups/backup-2025-05-27T19-06-08-814Z/hlorxiyjrzenupdkki2k.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372775/robolution/backups/backup-2025-05-27T19-06-08-814Z/aanavxkea6r50i91bmnl.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372776/robolution/backups/backup-2025-05-27T19-06-08-814Z/c49rjvnj5mgzofeu8ufo.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372777/robolution/backups/backup-2025-05-27T19-06-08-814Z/w8xi773ammkwuqz6uxjc.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372779/robolution/backups/backup-2025-05-27T19-06-08-814Z/wsq4luljcvqaxtoz3hsr.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372780/robolution/backups/backup-2025-05-27T19-06-08-814Z/m9yqdvztyhmtw2gjqnck.json",
+        "documentCount": 471
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748372781/robolution/backups/backup-2025-05-27T19-06-08-814Z/gkglfqtsdrl7cdniqgpb.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6836182811101debb388396e",
+    "backupId": "backup-2025-05-27T19-52-59-720Z",
+    "timestamp": {
+      "$date": "2025-05-27T19:53:12.252Z"
+    },
+    "metadataUrl": {
+      "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748375591/robolution/backups/backup-2025-05-27T19-52-59-720Z/adpz8el7xsy8y7nntdzq.json",
+      "public_id": "robolution/backups/backup-2025-05-27T19-52-59-720Z/adpz8el7xsy8y7nntdzq.json"
+    },
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748375582/robolution/backups/backup-2025-05-27T19-52-59-720Z/dxredfjn3rpcognijwqb.json",
+          "public_id": "robolution/backups/backup-2025-05-27T19-52-59-720Z/dxredfjn3rpcognijwqb.json"
+        },
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748375583/robolution/backups/backup-2025-05-27T19-52-59-720Z/n5maqzctzq0nyvplbh8e.json",
+          "public_id": "robolution/backups/backup-2025-05-27T19-52-59-720Z/n5maqzctzq0nyvplbh8e.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748375584/robolution/backups/backup-2025-05-27T19-52-59-720Z/oci7lajda6q75ifmdfon.json",
+          "public_id": "robolution/backups/backup-2025-05-27T19-52-59-720Z/oci7lajda6q75ifmdfon.json"
+        },
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748375585/robolution/backups/backup-2025-05-27T19-52-59-720Z/sraqqgcj2sdumugptu8n.json",
+          "public_id": "robolution/backups/backup-2025-05-27T19-52-59-720Z/sraqqgcj2sdumugptu8n.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748375586/robolution/backups/backup-2025-05-27T19-52-59-720Z/uhyum32nj3kt5mp44fqr.json",
+          "public_id": "robolution/backups/backup-2025-05-27T19-52-59-720Z/uhyum32nj3kt5mp44fqr.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748375587/robolution/backups/backup-2025-05-27T19-52-59-720Z/iyqla1sqk5x3ubwm1hsf.json",
+          "public_id": "robolution/backups/backup-2025-05-27T19-52-59-720Z/iyqla1sqk5x3ubwm1hsf.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "users",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748375587/robolution/backups/backup-2025-05-27T19-52-59-720Z/qezh2w5bjo91tqlcaequ.json",
+          "public_id": "robolution/backups/backup-2025-05-27T19-52-59-720Z/qezh2w5bjo91tqlcaequ.json"
+        },
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748375590/robolution/backups/backup-2025-05-27T19-52-59-720Z/rbmm1zr7ribhgsnu7iy5.json",
+          "public_id": "robolution/backups/backup-2025-05-27T19-52-59-720Z/rbmm1zr7ribhgsnu7iy5.json"
+        },
+        "documentCount": 451
+      },
+      {
+        "collection": "scores",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748375590/robolution/backups/backup-2025-05-27T19-52-59-720Z/znm2zwj7f0z0fnw7kzsv.json",
+          "public_id": "robolution/backups/backup-2025-05-27T19-52-59-720Z/znm2zwj7f0z0fnw7kzsv.json"
+        },
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "68361b3ed37ce74cee69f24a",
+    "backupId": "backup-2025-05-27T20-06-08-833Z",
+    "timestamp": {
+      "$date": "2025-05-27T20:06:22.668Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748376382/robolution/backups/backup-2025-05-27T20-06-08-833Z/wsgtms53a9fsq8o7uryw.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748376373/robolution/backups/backup-2025-05-27T20-06-08-833Z/z8y5hpsbpk9dvkaofk4v.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748376374/robolution/backups/backup-2025-05-27T20-06-08-833Z/azcmm8ukdzj67we5gszd.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748376375/robolution/backups/backup-2025-05-27T20-06-08-833Z/u7zsa2ditrgehyaxtxvh.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748376376/robolution/backups/backup-2025-05-27T20-06-08-833Z/mx04mi7bwpzfkbto6rzx.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748376377/robolution/backups/backup-2025-05-27T20-06-08-833Z/bjdckziwq1zw5fcvxowt.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748376378/robolution/backups/backup-2025-05-27T20-06-08-833Z/cxpvovnvko4uhcley5d4.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748376379/robolution/backups/backup-2025-05-27T20-06-08-833Z/pwzh7kwmyn37x7i4t7w4.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748376380/robolution/backups/backup-2025-05-27T20-06-08-833Z/qkcexcmxdeb5vy9yvuw3.json",
+        "documentCount": 455
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748376381/robolution/backups/backup-2025-05-27T20-06-08-833Z/aqhhffh4aaemw7uwrwow.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "68361d81267bff4350703676",
+    "backupId": "backup-2025-05-27T20-15-48-162Z",
+    "timestamp": {
+      "$date": "2025-05-27T20:16:01.815Z"
+    },
+    "metadataUrl": {
+      "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748376961/robolution/backups/backup-2025-05-27T20-15-48-162Z/bu47zlgxt2rx4bejv9fj.json",
+      "public_id": "robolution/backups/backup-2025-05-27T20-15-48-162Z/bu47zlgxt2rx4bejv9fj.json"
+    },
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748376950/robolution/backups/backup-2025-05-27T20-15-48-162Z/tdaxjwj7g6gi4zbqsvza.json",
+          "public_id": "robolution/backups/backup-2025-05-27T20-15-48-162Z/tdaxjwj7g6gi4zbqsvza.json"
+        },
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748376951/robolution/backups/backup-2025-05-27T20-15-48-162Z/wkz4kbf1wemw0glaftkd.json",
+          "public_id": "robolution/backups/backup-2025-05-27T20-15-48-162Z/wkz4kbf1wemw0glaftkd.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748376953/robolution/backups/backup-2025-05-27T20-15-48-162Z/fzmyjyht7xuqmmfdykp6.json",
+          "public_id": "robolution/backups/backup-2025-05-27T20-15-48-162Z/fzmyjyht7xuqmmfdykp6.json"
+        },
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748376954/robolution/backups/backup-2025-05-27T20-15-48-162Z/zarrgvgh3ers0ruqisk1.json",
+          "public_id": "robolution/backups/backup-2025-05-27T20-15-48-162Z/zarrgvgh3ers0ruqisk1.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748376955/robolution/backups/backup-2025-05-27T20-15-48-162Z/bwdqeldwawhbbdmh3cwq.json",
+          "public_id": "robolution/backups/backup-2025-05-27T20-15-48-162Z/bwdqeldwawhbbdmh3cwq.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748376956/robolution/backups/backup-2025-05-27T20-15-48-162Z/zzu2r2dknbribqpvms8j.json",
+          "public_id": "robolution/backups/backup-2025-05-27T20-15-48-162Z/zzu2r2dknbribqpvms8j.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "users",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748376957/robolution/backups/backup-2025-05-27T20-15-48-162Z/g48pyvylskztg0euwrfe.json",
+          "public_id": "robolution/backups/backup-2025-05-27T20-15-48-162Z/g48pyvylskztg0euwrfe.json"
+        },
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748376959/robolution/backups/backup-2025-05-27T20-15-48-162Z/qd2kzk4qnmuge4giqurj.json",
+          "public_id": "robolution/backups/backup-2025-05-27T20-15-48-162Z/qd2kzk4qnmuge4giqurj.json"
+        },
+        "documentCount": 453
+      },
+      {
+        "collection": "scores",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748376960/robolution/backups/backup-2025-05-27T20-15-48-162Z/pohwsrtczyqdtyuo9dhl.json",
+          "public_id": "robolution/backups/backup-2025-05-27T20-15-48-162Z/pohwsrtczyqdtyuo9dhl.json"
+        },
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6836285fae299fcf22ecc215",
+    "backupId": "backup-2025-05-27T21-02-10-686Z",
+    "timestamp": {
+      "$date": "2025-05-27T21:02:23.744Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748379743/robolution/backups/backup-2025-05-27T21-02-10-686Z/d6dde0kxv93fa12rrigl.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748379733/robolution/backups/backup-2025-05-27T21-02-10-686Z/s1zzji6rs5crejtrm7kk.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748379734/robolution/backups/backup-2025-05-27T21-02-10-686Z/c7emrope6elsue0m3k8i.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748379735/robolution/backups/backup-2025-05-27T21-02-10-686Z/rd8fqmsseurbuit3iu6k.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748379736/robolution/backups/backup-2025-05-27T21-02-10-686Z/ghnazqjugzn29kx5gokw.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748379738/robolution/backups/backup-2025-05-27T21-02-10-686Z/e8o9yahlvxgzx2qzyzxo.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748379738/robolution/backups/backup-2025-05-27T21-02-10-686Z/cex9zj2kpzfh9lhsxite.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748379740/robolution/backups/backup-2025-05-27T21-02-10-686Z/pim6stwrwzobp1dlqu6s.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748379741/robolution/backups/backup-2025-05-27T21-02-10-686Z/zzkx4qsuio5eq8g0ct67.json",
+        "documentCount": 457
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748379742/robolution/backups/backup-2025-05-27T21-02-10-686Z/zvcn3cbx5ongc0hbc4as.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "68362a378dab583264767740",
+    "backupId": "backup-2025-05-27T21-10-02-194Z",
+    "timestamp": {
+      "$date": "2025-05-27T21:10:15.104Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748380214/robolution/backups/backup-2025-05-27T21-10-02-194Z/z3yhq8qpyjetocliay3t.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748380204/robolution/backups/backup-2025-05-27T21-10-02-194Z/s2akfvlzhgq8zwgxurm8.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748380206/robolution/backups/backup-2025-05-27T21-10-02-194Z/ycr28nctbtjitsa618ja.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748380207/robolution/backups/backup-2025-05-27T21-10-02-194Z/flniwqucfjyoaq1tmqpw.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748380208/robolution/backups/backup-2025-05-27T21-10-02-194Z/fop5pxwlnccxop3kyoy8.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748380209/robolution/backups/backup-2025-05-27T21-10-02-194Z/c5gyeqpnglovziwnirtg.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748380210/robolution/backups/backup-2025-05-27T21-10-02-194Z/i756y7mcvedqr43lx3cy.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748380211/robolution/backups/backup-2025-05-27T21-10-02-194Z/inpnudguhgvolkeehluw.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748380212/robolution/backups/backup-2025-05-27T21-10-02-194Z/k26ysv58lcrc7crfpisn.json",
+        "documentCount": 456
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748380213/robolution/backups/backup-2025-05-27T21-10-02-194Z/ebofqe7ovdewbs9yeojf.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "68362b8f267bff4350703677",
+    "backupId": "backup-2025-05-27T21-15-48-163Z",
+    "timestamp": {
+      "$date": "2025-05-27T21:15:59.869Z"
+    },
+    "metadataUrl": {
+      "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748380559/robolution/backups/backup-2025-05-27T21-15-48-163Z/csguhtdas2f2xptjhiij.json",
+      "public_id": "robolution/backups/backup-2025-05-27T21-15-48-163Z/csguhtdas2f2xptjhiij.json"
+    },
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748380550/robolution/backups/backup-2025-05-27T21-15-48-163Z/twsf3vtypfccepjvil6x.json",
+          "public_id": "robolution/backups/backup-2025-05-27T21-15-48-163Z/twsf3vtypfccepjvil6x.json"
+        },
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748380551/robolution/backups/backup-2025-05-27T21-15-48-163Z/atojdwhrqglqoqr3atsa.json",
+          "public_id": "robolution/backups/backup-2025-05-27T21-15-48-163Z/atojdwhrqglqoqr3atsa.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748380552/robolution/backups/backup-2025-05-27T21-15-48-163Z/vubc6ai5b4pgwnkmfzqd.json",
+          "public_id": "robolution/backups/backup-2025-05-27T21-15-48-163Z/vubc6ai5b4pgwnkmfzqd.json"
+        },
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748380553/robolution/backups/backup-2025-05-27T21-15-48-163Z/hwgg6m1jn9srtvfn8eky.json",
+          "public_id": "robolution/backups/backup-2025-05-27T21-15-48-163Z/hwgg6m1jn9srtvfn8eky.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748380554/robolution/backups/backup-2025-05-27T21-15-48-163Z/gac5jwmf1ixfwoqwyuws.json",
+          "public_id": "robolution/backups/backup-2025-05-27T21-15-48-163Z/gac5jwmf1ixfwoqwyuws.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748380555/robolution/backups/backup-2025-05-27T21-15-48-163Z/z0qfajrz2owvulr2tpoj.json",
+          "public_id": "robolution/backups/backup-2025-05-27T21-15-48-163Z/z0qfajrz2owvulr2tpoj.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "users",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748380556/robolution/backups/backup-2025-05-27T21-15-48-163Z/z4rovgxhs6qhgth7lswm.json",
+          "public_id": "robolution/backups/backup-2025-05-27T21-15-48-163Z/z4rovgxhs6qhgth7lswm.json"
+        },
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748380557/robolution/backups/backup-2025-05-27T21-15-48-163Z/z8hqfsbjltmxgigmcvhw.json",
+          "public_id": "robolution/backups/backup-2025-05-27T21-15-48-163Z/z8hqfsbjltmxgigmcvhw.json"
+        },
+        "documentCount": 454
+      },
+      {
+        "collection": "scores",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748380558/robolution/backups/backup-2025-05-27T21-15-48-163Z/m2q7hilfskiq2czjttgf.json",
+          "public_id": "robolution/backups/backup-2025-05-27T21-15-48-163Z/m2q7hilfskiq2czjttgf.json"
+        },
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6836320e5208326938bcfafc",
+    "backupId": "backup-2025-05-27T21-43-30-337Z",
+    "timestamp": {
+      "$date": "2025-05-27T21:43:42.355Z"
+    },
+    "metadataUrl": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748382221/robolution/backups/backup-2025-05-27T21-43-30-337Z/puwycqittlappmxb4ilg.json",
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748382212/robolution/backups/backup-2025-05-27T21-43-30-337Z/skfxl7vpcjdd4pgdi1st.json",
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748382213/robolution/backups/backup-2025-05-27T21-43-30-337Z/gdl3cta5jjnitwbzlihm.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748382214/robolution/backups/backup-2025-05-27T21-43-30-337Z/hsr4htak4ic3snm1zegj.json",
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748382215/robolution/backups/backup-2025-05-27T21-43-30-337Z/pmljp2j3b3exwovbpunu.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748382216/robolution/backups/backup-2025-05-27T21-43-30-337Z/pnadt3nawvir1lffxput.json",
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748382217/robolution/backups/backup-2025-05-27T21-43-30-337Z/py96kzjvedoojnfq80oc.json",
+        "documentCount": 10
+      },
+      {
+        "collection": "users",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748382218/robolution/backups/backup-2025-05-27T21-43-30-337Z/naurhg13lnn3yww7v7qd.json",
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748382219/robolution/backups/backup-2025-05-27T21-43-30-337Z/a9xdlmok5rlazntc2y7g.json",
+        "documentCount": 461
+      },
+      {
+        "collection": "scores",
+        "url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748382220/robolution/backups/backup-2025-05-27T21-43-30-337Z/dk4demgbwiqa5byqcizi.json",
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6836399f267bff4350703678",
+    "backupId": "backup-2025-05-27T22-15-48-164Z",
+    "timestamp": {
+      "$date": "2025-05-27T22:15:59.808Z"
+    },
+    "metadataUrl": {
+      "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748384159/robolution/backups/backup-2025-05-27T22-15-48-164Z/x9ghspuqsdickyumtjcp.json",
+      "public_id": "robolution/backups/backup-2025-05-27T22-15-48-164Z/x9ghspuqsdickyumtjcp.json"
+    },
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748384150/robolution/backups/backup-2025-05-27T22-15-48-164Z/hdjfbcpn9ltejyymcse1.json",
+          "public_id": "robolution/backups/backup-2025-05-27T22-15-48-164Z/hdjfbcpn9ltejyymcse1.json"
+        },
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748384151/robolution/backups/backup-2025-05-27T22-15-48-164Z/ikm0obvmll7zfwdjaaxe.json",
+          "public_id": "robolution/backups/backup-2025-05-27T22-15-48-164Z/ikm0obvmll7zfwdjaaxe.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748384152/robolution/backups/backup-2025-05-27T22-15-48-164Z/nzwtqgvb3rp54crmyh9o.json",
+          "public_id": "robolution/backups/backup-2025-05-27T22-15-48-164Z/nzwtqgvb3rp54crmyh9o.json"
+        },
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748384153/robolution/backups/backup-2025-05-27T22-15-48-164Z/awf1lzmbbhuerl4vd7nu.json",
+          "public_id": "robolution/backups/backup-2025-05-27T22-15-48-164Z/awf1lzmbbhuerl4vd7nu.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748384154/robolution/backups/backup-2025-05-27T22-15-48-164Z/xzgoys0jgs7oyeazhoqi.json",
+          "public_id": "robolution/backups/backup-2025-05-27T22-15-48-164Z/xzgoys0jgs7oyeazhoqi.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748384155/robolution/backups/backup-2025-05-27T22-15-48-164Z/qfb19dnm2vatycxpsbig.json",
+          "public_id": "robolution/backups/backup-2025-05-27T22-15-48-164Z/qfb19dnm2vatycxpsbig.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "users",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748384156/robolution/backups/backup-2025-05-27T22-15-48-164Z/fpg8xvq0xtwheuwwltjs.json",
+          "public_id": "robolution/backups/backup-2025-05-27T22-15-48-164Z/fpg8xvq0xtwheuwwltjs.json"
+        },
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748384157/robolution/backups/backup-2025-05-27T22-15-48-164Z/apnre5tjj2bsnvi92max.json",
+          "public_id": "robolution/backups/backup-2025-05-27T22-15-48-164Z/apnre5tjj2bsnvi92max.json"
+        },
+        "documentCount": 460
+      },
+      {
+        "collection": "scores",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748384158/robolution/backups/backup-2025-05-27T22-15-48-164Z/gnnu3mo7uvizhpk6o1hm.json",
+          "public_id": "robolution/backups/backup-2025-05-27T22-15-48-164Z/gnnu3mo7uvizhpk6o1hm.json"
+        },
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "683647af267bff4350703679",
+    "backupId": "backup-2025-05-27T23-15-48-165Z",
+    "timestamp": {
+      "$date": "2025-05-27T23:15:59.070Z"
+    },
+    "metadataUrl": {
+      "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748387758/robolution/backups/backup-2025-05-27T23-15-48-165Z/gqfnxoovojqfhpakxxvh.json",
+      "public_id": "robolution/backups/backup-2025-05-27T23-15-48-165Z/gqfnxoovojqfhpakxxvh.json"
+    },
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748387750/robolution/backups/backup-2025-05-27T23-15-48-165Z/ggbejl8mu7rwkcmrj9kn.json",
+          "public_id": "robolution/backups/backup-2025-05-27T23-15-48-165Z/ggbejl8mu7rwkcmrj9kn.json"
+        },
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748387751/robolution/backups/backup-2025-05-27T23-15-48-165Z/kobxrai2zdli6iyq4vve.json",
+          "public_id": "robolution/backups/backup-2025-05-27T23-15-48-165Z/kobxrai2zdli6iyq4vve.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748387752/robolution/backups/backup-2025-05-27T23-15-48-165Z/b2tpets1vzb2j9icyofc.json",
+          "public_id": "robolution/backups/backup-2025-05-27T23-15-48-165Z/b2tpets1vzb2j9icyofc.json"
+        },
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748387753/robolution/backups/backup-2025-05-27T23-15-48-165Z/skl3ovuynzd2tkuv8x54.json",
+          "public_id": "robolution/backups/backup-2025-05-27T23-15-48-165Z/skl3ovuynzd2tkuv8x54.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748387753/robolution/backups/backup-2025-05-27T23-15-48-165Z/libjjdmxeqsqostf00vs.json",
+          "public_id": "robolution/backups/backup-2025-05-27T23-15-48-165Z/libjjdmxeqsqostf00vs.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748387754/robolution/backups/backup-2025-05-27T23-15-48-165Z/cckhtlfqm3df717mnnhc.json",
+          "public_id": "robolution/backups/backup-2025-05-27T23-15-48-165Z/cckhtlfqm3df717mnnhc.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "users",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748387755/robolution/backups/backup-2025-05-27T23-15-48-165Z/edxnayrdso3ukf9cw8x2.json",
+          "public_id": "robolution/backups/backup-2025-05-27T23-15-48-165Z/edxnayrdso3ukf9cw8x2.json"
+        },
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748387757/robolution/backups/backup-2025-05-27T23-15-48-165Z/hkfndfvotgv7znmh42hk.json",
+          "public_id": "robolution/backups/backup-2025-05-27T23-15-48-165Z/hkfndfvotgv7znmh42hk.json"
+        },
+        "documentCount": 471
+      },
+      {
+        "collection": "scores",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748387757/robolution/backups/backup-2025-05-27T23-15-48-165Z/rjmm6cb438us3e97nfg2.json",
+          "public_id": "robolution/backups/backup-2025-05-27T23-15-48-165Z/rjmm6cb438us3e97nfg2.json"
+        },
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "68364d549a70f211f7048a96",
+    "backupId": "backup-2025-05-27T23-39-52-157Z",
+    "timestamp": {
+      "$date": "2025-05-27T23:40:04.896Z"
+    },
+    "metadataUrl": {
+      "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748389204/robolution/backups/backup-2025-05-27T23-39-52-157Z/f2shrcn3ltesoweulset.json",
+      "public_id": "robolution/backups/backup-2025-05-27T23-39-52-157Z/f2shrcn3ltesoweulset.json"
+    },
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748389194/robolution/backups/backup-2025-05-27T23-39-52-157Z/zl1szsdr8gkwmdsdefgw.json",
+          "public_id": "robolution/backups/backup-2025-05-27T23-39-52-157Z/zl1szsdr8gkwmdsdefgw.json"
+        },
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748389195/robolution/backups/backup-2025-05-27T23-39-52-157Z/mzi1kqeczab7jxnarp0i.json",
+          "public_id": "robolution/backups/backup-2025-05-27T23-39-52-157Z/mzi1kqeczab7jxnarp0i.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748389197/robolution/backups/backup-2025-05-27T23-39-52-157Z/bwn5cmcmnqw0do3dquho.json",
+          "public_id": "robolution/backups/backup-2025-05-27T23-39-52-157Z/bwn5cmcmnqw0do3dquho.json"
+        },
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748389198/robolution/backups/backup-2025-05-27T23-39-52-157Z/ialqkhsrbgbebjpcftux.json",
+          "public_id": "robolution/backups/backup-2025-05-27T23-39-52-157Z/ialqkhsrbgbebjpcftux.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748389199/robolution/backups/backup-2025-05-27T23-39-52-157Z/hp3dhstniywhexf7zppn.json",
+          "public_id": "robolution/backups/backup-2025-05-27T23-39-52-157Z/hp3dhstniywhexf7zppn.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748389200/robolution/backups/backup-2025-05-27T23-39-52-157Z/glzqwsgemxy0sldndrlw.json",
+          "public_id": "robolution/backups/backup-2025-05-27T23-39-52-157Z/glzqwsgemxy0sldndrlw.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "users",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748389200/robolution/backups/backup-2025-05-27T23-39-52-157Z/adi7rncy4zlsp1eu2kyf.json",
+          "public_id": "robolution/backups/backup-2025-05-27T23-39-52-157Z/adi7rncy4zlsp1eu2kyf.json"
+        },
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748389202/robolution/backups/backup-2025-05-27T23-39-52-157Z/rm8lhdiecbrsvp1kjn28.json",
+          "public_id": "robolution/backups/backup-2025-05-27T23-39-52-157Z/rm8lhdiecbrsvp1kjn28.json"
+        },
+        "documentCount": 469
+      },
+      {
+        "collection": "scores",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748389203/robolution/backups/backup-2025-05-27T23-39-52-157Z/k3ay0oauuufnhjniifvq.json",
+          "public_id": "robolution/backups/backup-2025-05-27T23-39-52-157Z/k3ay0oauuufnhjniifvq.json"
+        },
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6836521ab87d7d0b120a63ef",
+    "backupId": "backup-2025-05-28T00-00-13-886Z",
+    "timestamp": {
+      "$date": "2025-05-28T00:00:26.811Z"
+    },
+    "metadataUrl": {
+      "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748390426/robolution/backups/backup-2025-05-28T00-00-13-886Z/m7pn7xtli2lpniexv7h9.json",
+      "public_id": "robolution/backups/backup-2025-05-28T00-00-13-886Z/m7pn7xtli2lpniexv7h9.json"
+    },
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748390416/robolution/backups/backup-2025-05-28T00-00-13-886Z/pmen14fhpic0rdszgmqa.json",
+          "public_id": "robolution/backups/backup-2025-05-28T00-00-13-886Z/pmen14fhpic0rdszgmqa.json"
+        },
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748390417/robolution/backups/backup-2025-05-28T00-00-13-886Z/ubhmltv3zxwajdguzbby.json",
+          "public_id": "robolution/backups/backup-2025-05-28T00-00-13-886Z/ubhmltv3zxwajdguzbby.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748390419/robolution/backups/backup-2025-05-28T00-00-13-886Z/hl2wgidy9iptgbb6gipi.json",
+          "public_id": "robolution/backups/backup-2025-05-28T00-00-13-886Z/hl2wgidy9iptgbb6gipi.json"
+        },
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748390420/robolution/backups/backup-2025-05-28T00-00-13-886Z/socvoifwktvyybiruzp5.json",
+          "public_id": "robolution/backups/backup-2025-05-28T00-00-13-886Z/socvoifwktvyybiruzp5.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748390421/robolution/backups/backup-2025-05-28T00-00-13-886Z/hp2u8kp8pwej5o7xwvhb.json",
+          "public_id": "robolution/backups/backup-2025-05-28T00-00-13-886Z/hp2u8kp8pwej5o7xwvhb.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748390421/robolution/backups/backup-2025-05-28T00-00-13-886Z/y9siff2okcoapjvufxov.json",
+          "public_id": "robolution/backups/backup-2025-05-28T00-00-13-886Z/y9siff2okcoapjvufxov.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "users",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748390422/robolution/backups/backup-2025-05-28T00-00-13-886Z/xumrteu6wki4xtpyayfm.json",
+          "public_id": "robolution/backups/backup-2025-05-28T00-00-13-886Z/xumrteu6wki4xtpyayfm.json"
+        },
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748390424/robolution/backups/backup-2025-05-28T00-00-13-886Z/dqzpq6tqhpr7ilercj5c.json",
+          "public_id": "robolution/backups/backup-2025-05-28T00-00-13-886Z/dqzpq6tqhpr7ilercj5c.json"
+        },
+        "documentCount": 463
+      },
+      {
+        "collection": "scores",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748390425/robolution/backups/backup-2025-05-28T00-00-13-886Z/gi67bz6hcgrt6wu0vaqp.json",
+          "public_id": "robolution/backups/backup-2025-05-28T00-00-13-886Z/gi67bz6hcgrt6wu0vaqp.json"
+        },
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "68365af86513c3d21081b6f3",
+    "backupId": "backup-2025-05-28T00-38-03-843Z",
+    "timestamp": {
+      "$date": "2025-05-28T00:38:16.610Z"
+    },
+    "metadataUrl": {
+      "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748392696/robolution/backups/backup-2025-05-28T00-38-03-843Z/p1zunp1uhlva3wyjuhc0.json",
+      "public_id": "robolution/backups/backup-2025-05-28T00-38-03-843Z/p1zunp1uhlva3wyjuhc0.json"
+    },
+    "files": [
+      {
+        "collection": "database_backups",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748392686/robolution/backups/backup-2025-05-28T00-38-03-843Z/as5nks0cxmewigabvgav.json",
+          "public_id": "robolution/backups/backup-2025-05-28T00-38-03-843Z/as5nks0cxmewigabvgav.json"
+        },
+        "documentCount": 48
+      },
+      {
+        "collection": "registrations",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748392687/robolution/backups/backup-2025-05-28T00-38-03-843Z/zfvxctwpo7cwmgtmyfao.json",
+          "public_id": "robolution/backups/backup-2025-05-28T00-38-03-843Z/zfvxctwpo7cwmgtmyfao.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "posts",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748392688/robolution/backups/backup-2025-05-28T00-38-03-843Z/xsfvegdwnlyhjiaerzdf.json",
+          "public_id": "robolution/backups/backup-2025-05-28T00-38-03-843Z/xsfvegdwnlyhjiaerzdf.json"
+        },
+        "documentCount": 70
+      },
+      {
+        "collection": "categories",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748392689/robolution/backups/backup-2025-05-28T00-38-03-843Z/p5xm0othe9t7tunps2eu.json",
+          "public_id": "robolution/backups/backup-2025-05-28T00-38-03-843Z/p5xm0othe9t7tunps2eu.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "admins",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748392690/robolution/backups/backup-2025-05-28T00-38-03-843Z/hznio5i6vkr2fhxn30o7.json",
+          "public_id": "robolution/backups/backup-2025-05-28T00-38-03-843Z/hznio5i6vkr2fhxn30o7.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "partners",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748392691/robolution/backups/backup-2025-05-28T00-38-03-843Z/t7khwgchwyi4c8oplfy1.json",
+          "public_id": "robolution/backups/backup-2025-05-28T00-38-03-843Z/t7khwgchwyi4c8oplfy1.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "users",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748392692/robolution/backups/backup-2025-05-28T00-38-03-843Z/jdvz4t2ved0jhjjzs0qe.json",
+          "public_id": "robolution/backups/backup-2025-05-28T00-38-03-843Z/jdvz4t2ved0jhjjzs0qe.json"
+        },
+        "documentCount": 7
+      },
+      {
+        "collection": "sessions",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748392694/robolution/backups/backup-2025-05-28T00-38-03-843Z/argwdk8wcenw51ebbidz.json",
+          "public_id": "robolution/backups/backup-2025-05-28T00-38-03-843Z/argwdk8wcenw51ebbidz.json"
+        },
+        "documentCount": 448
+      },
+      {
+        "collection": "scores",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748392695/robolution/backups/backup-2025-05-28T00-38-03-843Z/t2jfw3heybas5twnfsfr.json",
+          "public_id": "robolution/backups/backup-2025-05-28T00-38-03-843Z/t2jfw3heybas5twnfsfr.json"
+        },
+        "documentCount": 2
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "68369fd1016a4f4ef4febd6d",
+    "backupId": "backup-2025-05-28T05-31-51-974Z",
+    "timestamp": {
+      "$date": "2025-05-28T05:32:01.082Z"
+    },
+    "metadataUrl": {
+      "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748410319/robolution/backups/backup-2025-05-28T05-31-51-974Z/zsw1fzrendviv4n8ruzb.json",
+      "public_id": "robolution/backups/backup-2025-05-28T05-31-51-974Z/zsw1fzrendviv4n8ruzb.json"
+    },
+    "files": [
+      {
+        "collection": "registrations",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748410312/robolution/backups/backup-2025-05-28T05-31-51-974Z/mzecwjha0x8a4ylehuzn.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-31-51-974Z/mzecwjha0x8a4ylehuzn.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "categories",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748410313/robolution/backups/backup-2025-05-28T05-31-51-974Z/xfvtwgo0banxd3upx5eo.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-31-51-974Z/xfvtwgo0banxd3upx5eo.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "database_backups",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748410314/robolution/backups/backup-2025-05-28T05-31-51-974Z/r9sjvyyg1xuzowbvp6cq.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-31-51-974Z/r9sjvyyg1xuzowbvp6cq.json"
+        },
+        "documentCount": 48
+      },
+      {
+        "collection": "users",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748410314/robolution/backups/backup-2025-05-28T05-31-51-974Z/uwhudu5yunbgmrt52e9w.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-31-51-974Z/uwhudu5yunbgmrt52e9w.json"
+        },
+        "documentCount": 7
+      },
+      {
+        "collection": "partners",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748410315/robolution/backups/backup-2025-05-28T05-31-51-974Z/dosujpcxyvoydt69yf2c.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-31-51-974Z/dosujpcxyvoydt69yf2c.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "scores",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748410316/robolution/backups/backup-2025-05-28T05-31-51-974Z/sc94w2nq7b2nqttz8b3l.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-31-51-974Z/sc94w2nq7b2nqttz8b3l.json"
+        },
+        "documentCount": 2
+      },
+      {
+        "collection": "posts",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748410317/robolution/backups/backup-2025-05-28T05-31-51-974Z/an2s4n4o6horqoauc6cx.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-31-51-974Z/an2s4n4o6horqoauc6cx.json"
+        },
+        "documentCount": 70
+      },
+      {
+        "collection": "admins",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748410317/robolution/backups/backup-2025-05-28T05-31-51-974Z/xvw7ttohlr2ykbhfikeh.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-31-51-974Z/xvw7ttohlr2ykbhfikeh.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "sessions",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748410318/robolution/backups/backup-2025-05-28T05-31-51-974Z/v8m8scr3jr5xgmtbmk4b.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-31-51-974Z/v8m8scr3jr5xgmtbmk4b.json"
+        },
+        "documentCount": 387
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6836a04297e84bebbbc5f207",
+    "backupId": "backup-2025-05-28T05-33-42-015Z",
+    "timestamp": {
+      "$date": "2025-05-28T05:33:54.050Z"
+    },
+    "metadataUrl": {
+      "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748410433/robolution/backups/backup-2025-05-28T05-33-42-015Z/hwtf6iavxj819ssjb7hm.json",
+      "public_id": "robolution/backups/backup-2025-05-28T05-33-42-015Z/hwtf6iavxj819ssjb7hm.json"
+    },
+    "files": [
+      {
+        "collection": "registrations",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748410423/robolution/backups/backup-2025-05-28T05-33-42-015Z/ugfuzroaazntlnfsafcv.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-33-42-015Z/ugfuzroaazntlnfsafcv.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "categories",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748410424/robolution/backups/backup-2025-05-28T05-33-42-015Z/mdy36kglsjheio5h2rqe.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-33-42-015Z/mdy36kglsjheio5h2rqe.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "database_backups",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748410426/robolution/backups/backup-2025-05-28T05-33-42-015Z/rpvtr7vpfskl6h86lryf.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-33-42-015Z/rpvtr7vpfskl6h86lryf.json"
+        },
+        "documentCount": 48
+      },
+      {
+        "collection": "users",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748410427/robolution/backups/backup-2025-05-28T05-33-42-015Z/fa3l4dkt1finvzpw6c1w.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-33-42-015Z/fa3l4dkt1finvzpw6c1w.json"
+        },
+        "documentCount": 7
+      },
+      {
+        "collection": "partners",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748410428/robolution/backups/backup-2025-05-28T05-33-42-015Z/mzo1xmuqfaykpkyam7yt.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-33-42-015Z/mzo1xmuqfaykpkyam7yt.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "scores",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748410428/robolution/backups/backup-2025-05-28T05-33-42-015Z/rywxnospo2vlktre04io.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-33-42-015Z/rywxnospo2vlktre04io.json"
+        },
+        "documentCount": 2
+      },
+      {
+        "collection": "posts",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748410430/robolution/backups/backup-2025-05-28T05-33-42-015Z/l65f321hec09tevq8jei.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-33-42-015Z/l65f321hec09tevq8jei.json"
+        },
+        "documentCount": 70
+      },
+      {
+        "collection": "admins",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748410431/robolution/backups/backup-2025-05-28T05-33-42-015Z/bs2pnlqd5507ftjatywc.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-33-42-015Z/bs2pnlqd5507ftjatywc.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "sessions",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748410432/robolution/backups/backup-2025-05-28T05-33-42-015Z/gol5fb4gbn6sc800chpg.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-33-42-015Z/gol5fb4gbn6sc800chpg.json"
+        },
+        "documentCount": 390
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6836a4ba9f1d8c6c9f975a21",
+    "backupId": "backup-2025-05-28T05-52-49-512Z",
+    "timestamp": {
+      "$date": "2025-05-28T05:52:58.758Z"
+    },
+    "metadataUrl": {
+      "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748411577/robolution/backups/backup-2025-05-28T05-52-49-512Z/trz3s8nhqw0skq1ecesr.json",
+      "public_id": "robolution/backups/backup-2025-05-28T05-52-49-512Z/trz3s8nhqw0skq1ecesr.json"
+    },
+    "files": [
+      {
+        "collection": "registrations",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748411569/robolution/backups/backup-2025-05-28T05-52-49-512Z/hs9fulcaooqvp1eg7ede.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-52-49-512Z/hs9fulcaooqvp1eg7ede.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "categories",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748411570/robolution/backups/backup-2025-05-28T05-52-49-512Z/zmtggkzjmws8eflkacdh.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-52-49-512Z/zmtggkzjmws8eflkacdh.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "database_backups",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748411571/robolution/backups/backup-2025-05-28T05-52-49-512Z/s5hi3gravdk7h9hxunbv.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-52-49-512Z/s5hi3gravdk7h9hxunbv.json"
+        },
+        "documentCount": 48
+      },
+      {
+        "collection": "users",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748411572/robolution/backups/backup-2025-05-28T05-52-49-512Z/hckgj9uu8bp5y2j2ccb3.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-52-49-512Z/hckgj9uu8bp5y2j2ccb3.json"
+        },
+        "documentCount": 7
+      },
+      {
+        "collection": "partners",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748411573/robolution/backups/backup-2025-05-28T05-52-49-512Z/rxeqtpjc7cxuydxt5g69.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-52-49-512Z/rxeqtpjc7cxuydxt5g69.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "scores",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748411574/robolution/backups/backup-2025-05-28T05-52-49-512Z/xdrom4uvnwwlzqb2yegb.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-52-49-512Z/xdrom4uvnwwlzqb2yegb.json"
+        },
+        "documentCount": 2
+      },
+      {
+        "collection": "posts",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748411574/robolution/backups/backup-2025-05-28T05-52-49-512Z/eleijjslerrt2tzmsyxv.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-52-49-512Z/eleijjslerrt2tzmsyxv.json"
+        },
+        "documentCount": 71
+      },
+      {
+        "collection": "admins",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748411575/robolution/backups/backup-2025-05-28T05-52-49-512Z/zbsqnmnikxebcbtni9se.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-52-49-512Z/zbsqnmnikxebcbtni9se.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "sessions",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748411576/robolution/backups/backup-2025-05-28T05-52-49-512Z/p7rtutkfjb7xlz5ifnnp.json",
+          "public_id": "robolution/backups/backup-2025-05-28T05-52-49-512Z/p7rtutkfjb7xlz5ifnnp.json"
+        },
+        "documentCount": 405
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  },
+  {
+    "_id": "6836a6c0f9a5383226679727",
+    "backupId": "backup-2025-05-28T06-01-24-450Z",
+    "timestamp": {
+      "$date": "2025-05-28T06:01:36.380Z"
+    },
+    "metadataUrl": {
+      "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748412095/robolution/backups/backup-2025-05-28T06-01-24-450Z/bv27aa7do5axaui0rf2y.json",
+      "public_id": "robolution/backups/backup-2025-05-28T06-01-24-450Z/bv27aa7do5axaui0rf2y.json"
+    },
+    "files": [
+      {
+        "collection": "registrations",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748412086/robolution/backups/backup-2025-05-28T06-01-24-450Z/oud1t9kglfbssbtojgds.json",
+          "public_id": "robolution/backups/backup-2025-05-28T06-01-24-450Z/oud1t9kglfbssbtojgds.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "categories",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748412087/robolution/backups/backup-2025-05-28T06-01-24-450Z/vctdkvspo54au8xunpxw.json",
+          "public_id": "robolution/backups/backup-2025-05-28T06-01-24-450Z/vctdkvspo54au8xunpxw.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "database_backups",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748412088/robolution/backups/backup-2025-05-28T06-01-24-450Z/blexdzefmlzdahgvaadr.json",
+          "public_id": "robolution/backups/backup-2025-05-28T06-01-24-450Z/blexdzefmlzdahgvaadr.json"
+        },
+        "documentCount": 48
+      },
+      {
+        "collection": "users",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748412089/robolution/backups/backup-2025-05-28T06-01-24-450Z/meqt76ycfusegwabdbui.json",
+          "public_id": "robolution/backups/backup-2025-05-28T06-01-24-450Z/meqt76ycfusegwabdbui.json"
+        },
+        "documentCount": 7
+      },
+      {
+        "collection": "partners",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748412090/robolution/backups/backup-2025-05-28T06-01-24-450Z/piwdrkayphpvcagok0cz.json",
+          "public_id": "robolution/backups/backup-2025-05-28T06-01-24-450Z/piwdrkayphpvcagok0cz.json"
+        },
+        "documentCount": 10
+      },
+      {
+        "collection": "scores",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748412091/robolution/backups/backup-2025-05-28T06-01-24-450Z/n6z2wi1xxbd9zbixebfv.json",
+          "public_id": "robolution/backups/backup-2025-05-28T06-01-24-450Z/n6z2wi1xxbd9zbixebfv.json"
+        },
+        "documentCount": 2
+      },
+      {
+        "collection": "posts",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748412092/robolution/backups/backup-2025-05-28T06-01-24-450Z/buiop2j09mr2h7rfjmoz.json",
+          "public_id": "robolution/backups/backup-2025-05-28T06-01-24-450Z/buiop2j09mr2h7rfjmoz.json"
+        },
+        "documentCount": 70
+      },
+      {
+        "collection": "admins",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748412093/robolution/backups/backup-2025-05-28T06-01-24-450Z/qxtdpertc7hjldgthpwh.json",
+          "public_id": "robolution/backups/backup-2025-05-28T06-01-24-450Z/qxtdpertc7hjldgthpwh.json"
+        },
+        "documentCount": 4
+      },
+      {
+        "collection": "sessions",
+        "url": {
+          "secure_url": "https://res.cloudinary.com/dji4cktex/raw/upload/v1748412094/robolution/backups/backup-2025-05-28T06-01-24-450Z/swsraykgkjvq03phk6aj.json",
+          "public_id": "robolution/backups/backup-2025-05-28T06-01-24-450Z/swsraykgkjvq03phk6aj.json"
+        },
+        "documentCount": 406
+      }
+    ],
+    "format": "json_with_objectid_strings",
+    "size": 0
+  }
+]

@@ -1,0 +1,472 @@
+---
+import Layout from "../layouts/Layout.astro";
+import "../styles/global.css";
+import Cardnav from "../components/Cardnav.astro";
+import { fetchPageContent } from "@/components/db";
+
+const data = await fetchPageContent("News");
+const Hero = data.Hero;
+const latestnews = data["latest-news"];
+const events = data["latest-events"];
+const web = data["latest-webinar"];
+const cards = data["latest-cards"];
+const NewsCard = data["NewsCard"];
+---
+
+<Layout title="Erovoutika Dubai - News">
+    <div>
+        <p
+            id="greetings"
+            class="font-bold text-5xl lg:text-[96px] p-5 text-center font-bebas tracking-wider text-[#212529] pt-50 pb-10"
+        >
+            {Hero.title}
+        </p>
+        <div class="mx-[150px]">
+            <p id="latestNews" class="text-[25px]" style="margin-bottom: 10px;">
+                {latestnews[0].NewsCard.title}
+            </p>
+            <div class="grid grid-flow-col grid-rows-4 gap-4 h-[600px]">
+                <div class="relative row-span-4 col-span-4 bg-blue-200">
+                    <a href={latestnews[0].NewsCard.link}>
+                        <img
+                            src={latestnews[0].NewsCard.image}
+                            alt={latestnews[0].NewsCard.alt}
+                            style="width: 100%; height: 100%; object-fit: cover;"
+                        />
+                    </a>
+                    <div class="absolute bottom-4 left-6 text-white">
+                        <p id="date1" class="text-xl font-bold">
+                            {latestnews[0].NewsCard.date}
+                        </p>
+                    </div>
+                    <div class="absolute top-4 left-6 text-blue-900">
+                        <p id="subtitle1" class="text-7xl font-bold">
+                            {latestnews[0].NewsCard.description}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="relative row-span-2 col-span-2 group">
+                    <a href={latestnews[1].NewsCard.link}>
+                        <img
+                            src={latestnews[1].NewsCard.image}
+                            alt={latestnews[1].NewsCard.alt}
+                            class="w-full h-full object-cover"
+                        />
+                    </a>
+
+                    <div
+                        class="absolute bottom-0 left-0 w-full bg-white/70 px-4 py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    >
+                        <p id="date2" class="text-sm text-gray-262626">
+                            {latestnews[1].NewsCard.date}
+                        </p>
+                        <p id="title1" class="text-lg text-black font-semibold">
+                            {latestnews[1].NewsCard.description}
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    class="relative group row-span-2 col-span-2 object-fill w-full"
+                >
+                    <a href={latestnews[2].NewsCard.link}>
+                        <img
+                            src={latestnews[2].NewsCard.image}
+                            alt={latestnews[2].NewsCard.alt}
+                            class="w-full h-full object-cover"
+                        />
+                    </a>
+                    <div
+                        class="absolute bottom-0 left-0 w-full bg-white/70 px-4 py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    >
+                        <p id="date3" class="text-sm text-gray-262626">
+                            {latestnews[2].NewsCard.date}
+                        </p>
+                        <p id="title2" class="text-lg text-black font-semibold">
+                            {latestnews[2].NewsCard.description}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <p id="eventsTitle" class="text-[25px] mt-[30px] py-10">
+                {events[0].NewsCard.events}
+            </p>
+
+            <!-- Responsive wrapper -->
+            <div class="w-full px-4">
+                <div
+                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center"
+                >
+                    <!-- Card 1 -->
+                    <div
+                        class="max-w-sm w-full bg-white rounded-lg shadow-sm dark:hover:bg-gray-200"
+                    >
+                        <a href={events[0].NewsCard.link}
+                            ><img
+                                class="rounded-t-lg w-full"
+                                src={events[0].NewsCard.image}
+                                alt={events[0].NewsCard.alt}
+                            /></a
+                        >
+                        <div class="p-5">
+                            <p
+                                id="date4"
+                                class="mb-3 font-normal text-gray-700"
+                            >
+                                {events[0].NewsCard.date}
+                            </p>
+                            <a href="#"
+                                ><h5
+                                    id="title3"
+                                    class="mb-2 text-2xl font-bold tracking-tight text-gray-900"
+                                >
+                                    {events[0].NewsCard.title}
+                                </h5></a
+                            >
+                            <p
+                                id="desc1"
+                                class="mb-3 font-normal text-gray-700"
+                            >
+                                {events[0].NewsCard.description}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div
+                        class="max-w-sm w-full bg-white rounded-lg shadow-sm dark:hover:bg-gray-200"
+                    >
+                        <a href={events[1].NewsCard.link}
+                            ><img
+                                class="rounded-t-lg w-full"
+                                src={events[1].NewsCard.image}
+                                alt={events[1].NewsCard.alt}
+                            /></a
+                        >
+                        <div class="p-5">
+                            <p
+                                id="date5"
+                                class="mb-3 font-normal text-gray-700"
+                            >
+                                {events[1].NewsCard.date}
+                            </p>
+                            <a href="#"
+                                ><h5
+                                    id="title4"
+                                    class="mb-2 text-2xl font-bold tracking-tight text-gray-900"
+                                >
+                                    {events[1].NewsCard.title}
+                                </h5></a
+                            >
+                            <p
+                                id="desc2"
+                                class="mb-3 font-normal text-gray-700"
+                            >
+                                {events[1].NewsCard.description}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div
+                        class="max-w-sm w-full bg-white rounded-lg shadow-sm dark:hover:bg-gray-200"
+                    >
+                        <a href={events[2].NewsCard.link}
+                            ><img
+                                class="rounded-t-lg w-full"
+                                src={events[2].NewsCard.image}
+                                alt={events[2].NewsCard.alt}
+                            /></a
+                        >
+                        <div class="p-5">
+                            <p
+                                id="date6"
+                                class="mb-3 font-normal text-gray-700"
+                            >
+                                {events[2].NewsCard.date}
+                            </p>
+                            <a href="#"
+                                ><h5
+                                    id="title5"
+                                    class="mb-2 text-2xl font-bold tracking-tight text-gray-900"
+                                >
+                                    {events[2].NewsCard.title}
+                                </h5></a
+                            >
+                            <p
+                                id="desc3"
+                                class="mb-3 font-normal text-gray-700"
+                            >
+                                {events[2].NewsCard.description}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="text-[25px] mt-[30px] pt-25 px-25">{web[0].NewsCard.name}</p>
+
+        <div class="grid grid-cols-2 px-25">
+            <div class="grid grid-flow-col grid-rows-3 gap-4 bg-gray-200">
+                <!-- Webinar A -->
+                <a
+                    href={web[0].NewsCard.link}
+                    class="flex flex-col items-center rounded-lg shadow-sm md:flex-row md:max-w-xl hover:bg-gray-100 dark:hover:bg-gray-400 pl-100px ml-[30px]"
+                >
+                    <img
+                        class="object-cover w-full rounded-t-lg h-110 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg pl-100px"
+                        src={web[0].NewsCard.image}
+                        alt={web[0].NewsCard.alt}
+                    />
+                    <div
+                        class="flex flex-col justify-between p-4 leading-normal"
+                    >
+                        <p
+                            class="mb-3 font-normal text-gray-700 dark:text-black-400"
+                        >
+                            {web[0].NewsCard.date}
+                        </p>
+                        <h5
+                            class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black"
+                        >
+                            {web[0].NewsCard.title}
+                        </h5>
+                        <p
+                            class="mb-3 font-normal text-gray-700 dark:text-black-400"
+                        >
+                            {web[0].NewsCard.description}
+                        </p>
+                    </div>
+                </a>
+
+                <!-- Webinar B -->
+                <a
+                    href={web[1].NewsCard.link}
+                    class="flex flex-col items-center rounded-lg shadow-sm md:flex-row md:max-w-xl hover:bg-gray-100 dark:hover:bg-gray-400 pl-100px ml-[30px]"
+                >
+                    <img
+                        class="object-cover w-full rounded-t-lg h-110 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg pl-100px"
+                        src={web[1].NewsCard.image}
+                        alt={web[1].NewsCard.alt}
+                    />
+                    <div
+                        class="flex flex-col justify-between p-4 leading-normal"
+                    >
+                        <p
+                            class="mb-3 font-normal text-gray-700 dark:text-black-400"
+                        >
+                            {web[1].NewsCard.date}
+                        </p>
+                        <h5
+                            class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black"
+                        >
+                            {web[1].NewsCard.title}
+                        </h5>
+                        <p
+                            class="mb-3 font-normal text-gray-700 dark:text-black-400"
+                        >
+                            {web[1].NewsCard.description}
+                        </p>
+                    </div>
+                </a>
+
+                <!-- Webinar C -->
+                <a
+                    href={web[2].NewsCard.link}
+                    class="flex flex-col items-center rounded-lg shadow-sm md:flex-row md:max-w-xl hover:bg-gray-100 dark:hover:bg-gray-400 pl-100px ml-[30px]"
+                >
+                    <img
+                        class="object-cover w-full rounded-t-lg h-110 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg pl-100px"
+                        src={web[2].NewsCard.image}
+                        alt={web[2].NewsCard.alt}
+                    />
+                    <div
+                        class="flex flex-col justify-between p-4 leading-normal"
+                    >
+                        <p
+                            class="mb-3 font-normal text-gray-700 dark:text-black-400"
+                        >
+                            {web[2].NewsCard.date}
+                        </p>
+                        <h5
+                            class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black"
+                        >
+                            {web[2].NewsCard.title}
+                        </h5>
+                        <p
+                            class="mb-3 font-normal text-gray-700 dark:text-black-400"
+                        >
+                            {web[2].NewsCard.description}
+                        </p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="relative group">
+                <!-- Image -->
+                <a href={web[3].NewsCard.link}>
+                    <img
+                        class="h-full w-full object-fill"
+                        src={web[3].NewsCard.image}
+                        alt="Overlay Image"
+                    />
+
+                    <!-- Overlay -->
+                    <div
+                        class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6 bg-gradient-to-t from-black/70 to-transparent"
+                    >
+                        <p class="text-white text-sm mb-1">
+                            {web[3].NewsCard.date}
+                        </p>
+                        <h2 class="text-white font-bold text-2xl leading-snug">
+                            {web[3].NewsCard.title}
+                        </h2>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <p
+            id="eventsTitle"
+            class="text-start text-[25px] mt-[40px] px-25 pt-20"
+        >
+            {NewsCard.title}
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-25">
+            {cards.map((card) => <Cardnav {...card} />)}
+        </div>
+    </div>
+</Layout>
+
+<style>
+    @media (max-width: 768px) {
+        /* Headlines */
+        .text-\[50px\] {
+            font-size: 30px;
+            margin: 20px;
+        }
+
+        .m-\[150px\] {
+            margin: 20px;
+        }
+
+        .text-\[25px\] {
+            font-size: 18px;
+        }
+
+        /* Grid responsiveness for News */
+        .grid-flow-col {
+            grid-auto-flow: row;
+        }
+
+        .grid-rows-4 {
+            grid-template-rows: none;
+        }
+
+        .h-\[600px\] {
+            height: auto;
+        }
+
+        .row-span-4,
+        .row-span-2 {
+            grid-row: auto / span 1;
+        }
+
+        .col-span-4,
+        .col-span-2 {
+            grid-column: auto / span 1;
+        }
+
+        .text-7xl {
+            font-size: 1.5rem;
+        }
+
+        .text-xl {
+            font-size: 1rem;
+        }
+
+        .absolute {
+            position: static;
+        }
+
+        .group:hover .group-hover\:opacity-100 {
+            opacity: 1;
+        }
+
+        .bg-white\/70 {
+            background-color: rgba(255, 255, 255, 1);
+        }
+
+        /* Events section */
+        .grid-cols-3 {
+            grid-template-columns: 1fr;
+        }
+
+        .text-2xl {
+            font-size: 1.25rem;
+        }
+
+        /* Webinar section */
+        .grid-cols-2 {
+            grid-template-columns: 1fr;
+        }
+
+        .md\:flex-row {
+            flex-direction: column;
+        }
+
+        .md\:max-w-xl {
+            max-width: 100%;
+        }
+
+        .md\:w-48 {
+            width: 100%;
+        }
+
+        .md\:h-auto {
+            height: auto;
+        }
+
+        .md\:rounded-none {
+            border-radius: 0.5rem;
+        }
+
+        .md\:rounded-s-lg {
+            border-radius: 0.5rem;
+        }
+
+        /* Fix spacing */
+        .pl-100px {
+            padding-left: 0 !important;
+        }
+
+        .rounded-t-lg {
+            border-radius: 0.5rem;
+        }
+
+        .h-110 {
+            height: auto;
+        }
+
+        /* Button section */
+        .flex {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .rounded-s-lg,
+        .rounded-e-lg {
+            border-radius: 0.5rem !important;
+        }
+
+        /* Background image column fix */
+        .bg-\[url\(.*\)\] {
+            background-size: cover;
+            height: 300px;
+        }
+    }
+</style>
