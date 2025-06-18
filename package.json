@@ -1,0 +1,28 @@
+{
+  "name": "robo-combined",
+  "version": "1.0.0",
+  "description": "Combined ROBOLUTION and International applications",
+  "main": "start.js",
+  "scripts": {
+    "dev": "node start.js",
+    "build": "cd international && npm run build && cd ../ROBOLUTION && npm run build",
+    "start": "cross-env NODE_ENV=production node start.js",
+    "postinstall": "cd international && npm install && cd ../ROBOLUTION && npm install",
+    "clean": "rimraf international/dist ROBOLUTION/public/international"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "keywords": [
+    "robolution",
+    "astro"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cross-env": "^7.0.3"
+  },
+  "devDependencies": {
+    "rimraf": "^5.0.5"
+  }
+}
