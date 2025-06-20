@@ -444,31 +444,136 @@ function setupMobileCollapsibles() {
 }
 
 /**
- * Check if user is logged in using cookie or localStorage
+ * Check if user is logged in using cookie or localStorage, with server verification
  */
 function checkLoginStatus() {
-  const isLoggedIn = document.cookie.split(';').some((item) => item.trim().startsWith('robolution_session=')) || 
+  // First check localStorage and cookie for quick UI update
+  const isLoggedInLocal = document.cookie.split(';').some((item) => item.trim().startsWith('robolution_session=')) || 
                       localStorage.getItem('isLoggedIn') === 'true';
   
   const loginButtons = document.querySelectorAll('.login-button');
   const signupButtons = document.querySelectorAll('.signup-button');
   const logoutButtons = document.querySelectorAll('.logout-button');
+  const profileButtons = document.querySelectorAll('.profile-button');
   
-  if (isLoggedIn) {
-    // User is logged in
-    loginButtons.forEach(btn => { if (btn) btn.style.display = 'none'; });
-    signupButtons.forEach(btn => { if (btn) btn.style.display = 'none'; });
-    logoutButtons.forEach(btn => { if (btn) btn.style.display = 'inline-block'; });
-  } else {
-    // User is not logged in
-    loginButtons.forEach(btn => { if (btn) btn.style.display = 'inline-block'; });
-    signupButtons.forEach(btn => { if (btn) btn.style.display = 'inline-block'; });
-    logoutButtons.forEach(btn => { if (btn) btn.style.display = 'none'; });
+  // Initial UI update based on local state
+  updateLoginUI(isLoggedInLocal);
+  
+  // Then verify with server
+  fetch('/api/check-session?t=' + new Date().getTime(), {
+    credentials: 'include', // Important for cross-domain cookies
+    headers: { 'Cache-Control': 'no-cache' }
+  })
+  .then(response => response.json())
+  .then(data => {
+    const isLoggedInServer = data.authenticated;
+    
+    // Update localStorage to match server state
+    if (isLoggedInServer) {
+      localStorage.setItem('isLoggedIn', 'true');
+    } else {
+      localStorage.removeItem('isLoggedIn');
+    }
+    
+    // Update UI to match server state
+    updateLoginUI(isLoggedInServer);
+    
+    // Schedule periodic session checks if logged in
+    if (isLoggedInServer) {
+      if (!window.sessionCheckInterval) {
+        console.log('Starting periodic session checks');
+        window.sessionCheckInterval = setInterval(verifySessionStatus, 30000); // Check every 30 seconds
+      }
+    } else if (window.sessionCheckInterval) {
+      console.log('Stopping periodic session checks');
+      clearInterval(window.sessionCheckInterval);
+      window.sessionCheckInterval = null;
+    }
+  })
+  .catch(error => {
+    console.error('Session check error:', error);
+    // Fallback to local check on error
+    updateLoginUI(isLoggedInLocal);
+  });
+  
+  // Helper function to update UI based on login state
+  function updateLoginUI(isLoggedIn) {
+    if (isLoggedIn) {
+      // User is logged in
+      loginButtons.forEach(btn => { if (btn) btn.style.display = 'none'; });
+      signupButtons.forEach(btn => { if (btn) btn.style.display = 'none'; });
+      logoutButtons.forEach(btn => { if (btn) btn.style.display = 'inline-block'; });
+      profileButtons.forEach(btn => { if (btn) btn.style.display = 'inline-block'; });
+    } else {
+      // User is not logged in
+      loginButtons.forEach(btn => { if (btn) btn.style.display = 'inline-block'; });
+      signupButtons.forEach(btn => { if (btn) btn.style.display = 'inline-block'; });
+      logoutButtons.forEach(btn => { if (btn) btn.style.display = 'none'; });
+      profileButtons.forEach(btn => { if (btn) btn.style.display = 'none'; });
+    }
   }
+}
+
+/**
+ * Verify session status with server and update UI accordingly
+ * This is called periodically and on navigation events
+ */
+function verifySessionStatus() {
+  fetch('/api/check-session?t=' + new Date().getTime(), {
+    credentials: 'include',
+    headers: { 'Cache-Control': 'no-cache' }
+  })
+  .then(response => response.json())
+  .then(data => {
+    const isAuthenticated = data.authenticated;
+    
+    // Update localStorage to match server state
+    if (isAuthenticated) {
+      localStorage.setItem('isLoggedIn', 'true');
+      
+      // Ensure profile buttons are visible
+      document.querySelectorAll('.profile-button').forEach(btn => {
+        if (btn) btn.style.display = 'inline-block';
+      });
+      document.querySelectorAll('.logout-button').forEach(btn => {
+        if (btn) btn.style.display = 'inline-block';
+      });
+      
+      // Hide login/signup buttons
+      document.querySelectorAll('.login-button, .signup-button').forEach(btn => {
+        if (btn) btn.style.display = 'none';
+      });
+    } else {
+      localStorage.removeItem('isLoggedIn');
+      
+      // Hide profile buttons
+      document.querySelectorAll('.profile-button').forEach(btn => {
+        if (btn) btn.style.display = 'none';
+      });
+      document.querySelectorAll('.logout-button').forEach(btn => {
+        if (btn) btn.style.display = 'none';
+      });
+      
+      // Show login/signup buttons
+      document.querySelectorAll('.login-button, .signup-button').forEach(btn => {
+        if (btn) btn.style.display = 'inline-block';
+      });
+    }
+  })
+  .catch(error => {
+    console.error('Session verification error:', error);
+  });
 }
 
 // Run login check on page load
 document.addEventListener('DOMContentLoaded', checkLoginStatus);
+
+// Also verify session when page is shown (e.g., when returning via back button)
+window.addEventListener('pageshow', function(event) {
+  if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+    verifySessionStatus();
+  }
+});
 
 // Handle viewport height for mobile browsers (fixes issue with address bar)
 function setMobileHeight() {

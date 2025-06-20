@@ -383,7 +383,56 @@
       <img src="/images/LOGO.webp" alt="Robolution Logo" class="logo">
       <!-- Mobile menu toggle will be added by JavaScript on small screens -->
       <nav class="header-nav">
-        <a href="/home" class="nav-button">News</a>
+        <div class="dropdown">
+          <button class="nav-button dropdown-btn" style="display: flex; align-items: center;">News <span style="margin-left: 5px; font-size: 0.8em;">▼</span></button>
+          <div class="dropdown-content">
+            <a href="/home">All News</a>
+            <% 
+            // Get unique years from post dates if posts exist
+            let years = [];
+            
+            if (typeof allPosts !== 'undefined') {
+              allPosts.forEach(post => {
+                try {
+                  // Handle different date formats
+                  let postYear;
+                  if (post.createdAt instanceof Date) {
+                    postYear = post.createdAt.getFullYear();
+                  } else if (typeof post.createdAt === 'string') {
+                    const dateMatch = post.createdAt.match(/(\d{4})/);
+                    if (dateMatch) {
+                      postYear = parseInt(dateMatch[1]);
+                    } else {
+                      postYear = new Date(post.createdAt).getFullYear();
+                    }
+                  } else if (post.createdAt && typeof post.createdAt === 'object' && post.createdAt.$date) {
+                    postYear = new Date(post.createdAt.$date).getFullYear();
+                  } else {
+                    postYear = new Date(post.createdAt).getFullYear();
+                  }
+                  
+                  if (!isNaN(postYear) && postYear && !years.includes(postYear)) {
+                    years.push(postYear);
+                  }
+                } catch (e) {
+                  console.error('Error parsing date for post:', post.title, e);
+                }
+              });
+              
+              // Sort years in descending order
+              years.sort((a, b) => b - a);
+            }
+            
+            if (years.length > 0) { 
+              // Display years with posts
+              years.forEach(year => { %>
+                <a href="/home/year/<%= year %>"><%= year %></a>
+              <% });
+            } else { %>
+              <div class="dropdown-empty">No yearly posts available</div>
+            <% } %>
+          </div>
+        </div>
         <a href="/user-categories" class="nav-button">Categories</a>
         <a href="/international" class="nav-button">International</a>
         <div class="dropdown">

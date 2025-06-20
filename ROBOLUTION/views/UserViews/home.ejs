@@ -738,14 +738,69 @@
       <img src="/images/LOGO.webp" alt="Robolution Logo" class="logo">
       <!-- Mobile menu toggle will be added by JavaScript on small screens -->
       <nav class="header-nav">
-        <a href="/home" class="nav-button">Home</a>
+        <div class="dropdown">
+          <button class="nav-button dropdown-btn" style="display: flex; align-items: center;">News <span style="margin-left: 5px; font-size: 0.8em;">▼</span></button>
+          <div class="dropdown-content">
+            <a href="/home" <%= selectedYear == 'all' ? 'style="background-color: #e6e6e6; font-weight: bold;"' : '' %>>All News</a>
+            <% 
+            // Get unique years from post dates
+            let years = [];
+            // Use allPosts if available (on year-specific pages), otherwise use posts
+            const postsToUse = typeof allPosts !== 'undefined' ? allPosts : posts;
+            
+            postsToUse.forEach(post => {
+              let postYear;
+              
+              try {
+                // Handle different date formats
+                if (post.createdAt instanceof Date) {
+                  postYear = post.createdAt.getFullYear();
+                } else if (typeof post.createdAt === 'string') {
+                  // Try to extract year from string format
+                  const dateMatch = post.createdAt.match(/(\d{4})/);
+                  if (dateMatch) {
+                    postYear = parseInt(dateMatch[1]);
+                  } else {
+                    postYear = new Date(post.createdAt).getFullYear();
+                  }
+                } else if (post.createdAt && typeof post.createdAt === 'object' && post.createdAt.$date) {
+                  // MongoDB extended JSON format
+                  postYear = new Date(post.createdAt.$date).getFullYear();
+                } else {
+                  // Fallback
+                  postYear = new Date(post.createdAt).getFullYear();
+                }
+                
+                // Only add valid years
+                if (!isNaN(postYear) && postYear && !years.includes(postYear)) {
+                  console.log(`Adding year ${postYear} from post ${post.title}`);
+                  years.push(postYear);
+                }
+              } catch (e) {
+                console.error('Error parsing date for post:', post.title, e);
+              }
+            });
+            
+            // Sort years in descending order (newest first)
+            years.sort((a, b) => b - a);
+            
+            if(years.length > 0) { 
+              // Display years with posts
+              years.forEach(year => { %>
+                <a href="/home/year/<%= year %>" <%= selectedYear == year ? 'style="background-color: #e6e6e6; font-weight: bold;"' : '' %>><%= year %></a>
+              <% });
+            } else { %>
+              <div class="dropdown-empty">No yearly posts available</div>
+            <% } %>
+          </div>
+        </div>
         <a href="/user-categories" class="nav-button">Categories</a>
         <% if (user && user.role === 'judge') { %>
           <a href="/scoresheet" class="nav-button">Scoresheet</a>
         <% } %>
         <a href="/international" class="nav-button">International</a>
         <div class="dropdown">
-          <button class="nav-button dropdown-btn">Regional</button>
+          <button class="nav-button dropdown-btn" style="display: flex; align-items: center;">Regional <span style="margin-left: 5px; font-size: 0.8em;">▼</span></button>
           <div class="dropdown-content">
             <a href="/regional?region=All">All Regions</a>
             <% 
@@ -782,13 +837,16 @@
   </header>
 
   <div class="video-section">
-    <video src="/images/Robolution2025.mp4" loop muted autoplay playsinline></video>
+    <video src="<%= currentVideo %>" loop muted autoplay playsinline></video>
   </div>
 
   <main>
 
     <div class="NandU">
       <img src="/images/News and Updates.png" alt="News and Updates" class="NandU-banner">
+      <% if (selectedYear && selectedYear !== 'all') { %>
+        <h1 style="text-align: center; color: #00008b; margin-top: 20px; font-size: 2rem;">News from <%= selectedYear %></h1>
+      <% } %>
     </div>
 
     <!-- Trending Posts Section -->
@@ -818,10 +876,13 @@
               console.log('Sample post upvotes field:', posts[0].upvotes ? `${posts[0].upvotes.length} upvotes` : 'no upvotes field');
             }
             
+            // Use allPosts (all posts) for trending if available, otherwise use displayed posts
+            const postsForTrending = typeof allPosts !== 'undefined' ? allPosts : posts;
+            
             // Make a separate array to avoid modifying the original posts
-            let weeklyPosts = [...posts].filter(post => new Date(post.createdAt) >= oneWeekAgo);
-            let monthlyPosts = [...posts].filter(post => new Date(post.createdAt) >= oneMonthAgo);
-            let alltimePosts = [...posts]; // No date filter
+            let weeklyPosts = [...postsForTrending].filter(post => new Date(post.createdAt) >= oneWeekAgo);
+            let monthlyPosts = [...postsForTrending].filter(post => new Date(post.createdAt) >= oneMonthAgo);
+            let alltimePosts = [...postsForTrending]; // No date filter
             
             // Function to sort posts by upvotes
             const sortByUpvotes = (postArray) => {
@@ -985,20 +1046,48 @@
       </form>
     </div>
 
-    <% let years = {}; %>
+    <% let postsByYear = {}; %>
     <% posts.forEach(post => { %>
-      <% const year = new Date(post.createdAt).getFullYear(); %>
-      <% if (!years[year]) years[year] = []; %>
-      <% years[year].push(post); %>
+      <% 
+        let year;
+        try {
+          // Handle different date formats
+          if (post.createdAt instanceof Date) {
+            year = post.createdAt.getFullYear();
+          } else if (typeof post.createdAt === 'string') {
+            // Try to extract year from string format
+            const dateMatch = post.createdAt.match(/(\d{4})/);
+            if (dateMatch) {
+              year = parseInt(dateMatch[1]);
+            } else {
+              year = new Date(post.createdAt).getFullYear();
+            }
+          } else if (post.createdAt && typeof post.createdAt === 'object' && post.createdAt.$date) {
+            // MongoDB extended JSON format
+            year = new Date(post.createdAt.$date).getFullYear();
+          } else {
+            // Fallback
+            year = new Date(post.createdAt).getFullYear();
+          }
+          
+          // Only process valid years
+          if (!isNaN(year) && year) {
+            if (!postsByYear[year]) postsByYear[year] = [];
+            postsByYear[year].push(post);
+          }
+        } catch (e) {
+          console.error('Error parsing date for post in postsByYear:', post.title, e);
+        }
+      %>
     <% }); %>
 
-    <% Object.keys(years).sort((a, b) => { %>
+    <% Object.keys(postsByYear).sort((a, b) => { %>
       <% return sort === 'asc' ? a - b : b - a; %>
     <% }).forEach(year => { %>
       <div class="year-section">
         <button class="collapsible"><%= year %> <span class="arrow">▼</span></button>
         <div class="posts-grid" style="display: none;">
-          <% years[year].forEach(post => { %>
+          <% postsByYear[year].forEach(post => { %>
             <a href="/post/<%= post._id %>" class="post-card">
               <img src="<%= post.imageUrl %>" alt="<%= post.title %>" class="post-img">
               <div class="post-overlay">

@@ -2,7 +2,7 @@ import { e as createComponent, m as maybeRenderHead, r as renderTemplate, f as c
 import 'kleur/colors';
 import 'clsx';
 import { f as fetchPageContent } from '../chunks/db_Dri7-qrb.mjs';
-import { $ as $$Layout } from '../chunks/Layout_BKWeNHvE.mjs';
+import { $ as $$Layout } from '../chunks/Layout_DdGyDZKU.mjs';
 export { renderers } from '../renderers.mjs';
 
 const $$Hero = createComponent(async ($$result, $$props, $$slots) => {

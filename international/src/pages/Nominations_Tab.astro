@@ -5,13 +5,19 @@ import { fetchPageContent } from "@/components/db";
 
 const data = await fetchPageContent("Nomination");
 const content = data.NominationContent;
+const getImageUrl = (path) => {
+    if (typeof path === 'string' && path.startsWith('/')) {
+        return import.meta.env.BASE_URL + path;
+    }
+    return path;
+};
 ---
 
 <Layout title="Erovoutika Dubai - Nominations">
     <body>
         <section
             class="nomination-hero"
-            style={`background-image: url(${content.hero_background});`}
+            style={`background-image: url(${getImageUrl(content.hero_background)});`}
         >
             <div class="hero-content">
                 <h1 class="hero-title">{content.hero_title}</h1>

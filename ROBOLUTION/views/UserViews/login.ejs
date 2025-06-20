@@ -349,6 +349,7 @@
                 const response = await fetch('/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include', // Ensure cookies are sent and received
                     body: JSON.stringify(data)
                 });
                 
@@ -356,15 +357,28 @@
                 console.log('Login response:', result);
                 
                 if (result.success) {
-                    showMessage('Login successful! Redirecting...', 'success');
                     if (result.setLocalStorage) {
                         try {
+                            // Set login status immediately
                             localStorage.setItem('isLoggedIn', 'true');
-                        } catch (e) { console.error('Could not save to localStorage:', e); }
+                            if (result.sessionID) {
+                                localStorage.setItem('sessionID', result.sessionID);
+                            }
+                            console.log('localStorage isLoggedIn set to true, sessionID:', result.sessionID);
+                            
+                            // Log cookie configuration for debugging
+                            if (result.cookieConfig) {
+                                console.log('Cookie configuration:', result.cookieConfig);
+                            }
+                        } catch (e) { 
+                            console.error('Could not save to localStorage:', e); 
+                        }
                     }
+                    showMessage('Login successful! Redirecting...', 'success');
+                    // Add a small delay before redirecting to ensure cookie is set
                     setTimeout(() => {
-                        window.location.replace(result.redirectUrl || '/');
-                    }, 1000);
+                        window.location.href = result.redirectUrl || '/';
+                    }, 500); // 500ms delay
                 } else if (result.requireTwoFactor) {
                     if (result.needs2FASetup) {
                         showMessage('Redirecting to 2FA setup...', 'info');
@@ -401,6 +415,7 @@
                 const response = await fetch('/api/verify-email-otp', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include', // Ensure cookies are sent and received
                     body: JSON.stringify(data)
                 });
 
@@ -410,12 +425,20 @@
                     showMessage(result.message, 'success');
                      if (localStorage) { // Check for localStorage availability
                         try {
+                            // Set login status immediately
                             localStorage.setItem('isLoggedIn', 'true');
-                        } catch (e) { console.error('Could not save to localStorage:', e); }
+                            if (result.sessionID) {
+                                localStorage.setItem('sessionID', result.sessionID);
+                            }
+                            console.log('localStorage isLoggedIn set to true on OTP verify, sessionID:', result.sessionID);
+                        } catch (e) { 
+                            console.error('Could not save to localStorage:', e); 
+                        }
                     }
+                    // Add a small delay before redirecting
                     setTimeout(() => {
-                        window.location.replace(result.redirectUrl || '/');
-                    }, 1000);
+                        window.location.href = result.redirectUrl || '/';
+                    }, 500);
                 } else {
                     showMessage(result.message || 'Verification failed.', 'error');
                 }
@@ -472,11 +495,12 @@
             if (localStorage.getItem('isLoggedIn') === 'true') {
                 // Add a random parameter to avoid caching
                 fetch('/api/check-session?t=' + new Date().getTime(), { 
-                    credentials: 'same-origin',
+                    credentials: 'include',
                     headers: { 'Cache-Control': 'no-cache' }
                 })
                 .then(response => response.json())
                 .then(data => {
+                    console.log('Session check response:', data);
                     if (!data.authenticated) {
                         localStorage.removeItem('isLoggedIn');
                     }

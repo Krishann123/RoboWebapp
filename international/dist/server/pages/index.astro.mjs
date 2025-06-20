@@ -2,7 +2,7 @@ import { e as createComponent, f as createAstro, m as maybeRenderHead, h as addA
 import 'kleur/colors';
 import 'clsx';
 import { f as fetchPageContent } from '../chunks/db_Dri7-qrb.mjs';
-import { $ as $$Layout } from '../chunks/Layout_BKWeNHvE.mjs';
+import { $ as $$Layout } from '../chunks/Layout_DdGyDZKU.mjs';
 /* empty css                                 */
 import { jsx, jsxs } from 'react/jsx-runtime';
 import 'react';

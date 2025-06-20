@@ -7,7 +7,7 @@ import { ChevronDownIcon, XIcon } from 'lucide-react';
 import { c as cn } from '../chunks/utils_B05Dmz_H.mjs';
 import { Slot } from '@radix-ui/react-slot';
 import { cva } from 'class-variance-authority';
-import { $ as $$Layout } from '../chunks/Layout_BKWeNHvE.mjs';
+import { $ as $$Layout } from '../chunks/Layout_DdGyDZKU.mjs';
 import { g as getPageDetails, f as fetchPageContent, a as getData, b as getSelectedIndex } from '../chunks/db_Dri7-qrb.mjs';
 import 'clsx';
 /* empty css                                 */

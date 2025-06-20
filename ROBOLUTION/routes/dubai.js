@@ -4,13 +4,21 @@ const path = require('path');
 const fs = require('fs');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
-// Debug middleware to log all requests
+// Debug middleware to log all requests and session state
 router.use((req, res, next) => {
-  console.log(`[International Route] ${req.method} ${req.url}`);
+  console.log(`[International Route] ${req.method} ${req.url} | Session Auth: ${!!req.session?.user}`);
+  
   // Redirect root requests to the correct international path
   if (req.originalUrl === '/international') {
     return res.redirect('/international/');
   }
+  
+  // Add session check middleware
+  if (req.session && req.session.user) {
+    // Add user data to res.locals for template access if needed
+    res.locals.user = req.session.user;
+  }
+  
   next();
 });
 
@@ -105,6 +113,18 @@ else {
     target: 'http://localhost:4321', // Default Astro dev server port
     changeOrigin: true,
     ws: true, // Support WebSocket
+    cookieDomainRewrite: {
+      '*': process.env.COOKIE_DOMAIN || 'localhost' // Rewrite all cookie domains
+    },
+    onProxyReq: (proxyReq, req, res) => {
+      // Ensure session cookies are properly forwarded
+      if (req.session && req.session.user) {
+        proxyReq.setHeader('X-User-ID', req.session.user.id || '');
+        proxyReq.setHeader('X-User-Name', req.session.user.username || '');
+        proxyReq.setHeader('X-User-Auth', 'true');
+      }
+      console.log(`[International Route] Proxying request: ${req.method} ${req.url}`);
+    },
     pathRewrite: (path, req) => {
       console.log(`[International Route] Proxy rewriting path: ${path}`);
       // Prepend /international to the path for the Astro dev server
@@ -113,6 +133,17 @@ else {
     onProxyRes: (proxyRes, req, res) => {
       // Handle headers if needed
       console.log(`[International Route] Proxy response status: ${proxyRes.statusCode}`);
+      
+      // Preserve cookies
+      const cookies = proxyRes.headers['set-cookie'];
+      if (cookies) {
+        const rewrittenCookies = cookies.map(cookie => {
+          return cookie
+            .replace(/Path=\/;/g, 'Path=/;')
+            .replace(/Domain=[^;]+;/g, `Domain=${process.env.COOKIE_DOMAIN || 'localhost'};`);
+        });
+        proxyRes.headers['set-cookie'] = rewrittenCookies;
+      }
     },
     logLevel: 'debug'
   };

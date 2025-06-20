@@ -11,8 +11,20 @@ const MAIN_APP_DIR = path.join(__dirname, 'ROBOLUTION');
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 const ASTRO_DEV_PORT = 4321; // Default Astro dev port
 
+// Set a consistent domain for cookie sharing
+// Make sure cookie domain is set correctly for localhost
+process.env.COOKIE_DOMAIN = 'localhost'; // Always use localhost for local development
+// Add SESSION_SECRET for consistent session management
+process.env.SESSION_SECRET = fs.existsSync('./.jwt_secret') 
+  ? fs.readFileSync('./.jwt_secret', 'utf8').trim()
+  : 'your-secure-admin-key';
+
+// Added redirect from /home/profile to /profile in the ROBOLUTION app
+// This ensures the profile button in the international app works correctly
+
 // Log the environment mode
 console.log(`Running in ${IS_PRODUCTION ? 'PRODUCTION' : 'DEVELOPMENT'} mode (NODE_ENV: ${process.env.NODE_ENV})`);
+console.log(`Using cookie domain: ${process.env.COOKIE_DOMAIN}`);
 
 // Helper function to log with timestamps
 function log(message) {
@@ -95,7 +107,15 @@ function runCommand(command, args, options = {}) {
   const proc = spawn(command, args, {
     cwd,
     stdio: 'inherit',
-    shell: true
+    shell: true,
+    env: {
+      ...process.env,
+      // Pass environment variables needed for session management
+      COOKIE_DOMAIN: process.env.COOKIE_DOMAIN,
+      SESSION_SECRET: process.env.SESSION_SECRET,
+      SESSION_COOKIE_PATH: '/',
+      RUN_ENV: IS_PRODUCTION ? 'production' : 'development'
+    }
   });
   
   proc.on('exit', (code) => {

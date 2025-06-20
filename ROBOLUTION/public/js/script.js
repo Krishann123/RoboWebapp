@@ -137,6 +137,70 @@ document.addEventListener('DOMContentLoaded', function() {
       organizeRegionalPage();
     }
   }
+
+  // Verify authentication status and show/hide profile button
+  verifyAuthenticationStatus();
+});
+
+// Function to verify authentication status with server
+function verifyAuthenticationStatus() {
+  // First check localStorage for quick UI update
+  const isLoggedInLocal = localStorage.getItem('isLoggedIn') === 'true';
+  updateAuthUI(isLoggedInLocal);
+  
+  // Then verify with server
+  fetch('/api/check-session?t=' + new Date().getTime(), {
+    credentials: 'include',
+    headers: { 'Cache-Control': 'no-cache' }
+  })
+  .then(response => response.json())
+  .then(data => {
+    const isLoggedInServer = data.authenticated;
+    
+    // Update localStorage to match server state
+    if (isLoggedInServer) {
+      localStorage.setItem('isLoggedIn', 'true');
+    } else {
+      localStorage.removeItem('isLoggedIn');
+    }
+    
+    // Update UI to match server state
+    updateAuthUI(isLoggedInServer);
+  })
+  .catch(error => {
+    console.error('Session check error:', error);
+  });
+}
+
+// Update UI based on authentication status
+function updateAuthUI(isAuthenticated) {
+  const profileButtons = document.querySelectorAll('.profile-button');
+  const loginButtons = document.querySelectorAll('.login-button');
+  const signupButtons = document.querySelectorAll('.signup-button');
+  const logoutButtons = document.querySelectorAll('.logout-button');
+  
+  if (isAuthenticated) {
+    // Show profile and logout buttons
+    profileButtons.forEach(btn => { if (btn) btn.style.display = 'inline-block'; });
+    logoutButtons.forEach(btn => { if (btn) btn.style.display = 'inline-block'; });
+    // Hide login and signup buttons
+    loginButtons.forEach(btn => { if (btn) btn.style.display = 'none'; });
+    signupButtons.forEach(btn => { if (btn) btn.style.display = 'none'; });
+  } else {
+    // Hide profile and logout buttons
+    profileButtons.forEach(btn => { if (btn) btn.style.display = 'none'; });
+    logoutButtons.forEach(btn => { if (btn) btn.style.display = 'none'; });
+    // Show login and signup buttons
+    loginButtons.forEach(btn => { if (btn) btn.style.display = 'inline-block'; });
+    signupButtons.forEach(btn => { if (btn) btn.style.display = 'inline-block'; });
+  }
+}
+
+// Also verify when page is shown (e.g., when returning via back button)
+window.addEventListener('pageshow', function(event) {
+  if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+    verifyAuthenticationStatus();
+  }
 });
 
 // Function to handle regional page organization

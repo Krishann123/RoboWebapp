@@ -5,6 +5,7 @@ const express = require('express');
 const app = express();
 const port = process.env.SERVER_PORT || process.env.PORT || 3000;
 const mongoose = require('mongoose');
+const cors = require('cors');
 const moment = require('moment'); // Added moment
 const Post = require('./models/Post');
 const multer = require('multer');  // To handle file uploads
@@ -27,6 +28,7 @@ const Score = require('./models/Score');
 const Partner = require('./models/Partner');
 const otpGenerator = require('otp-generator');
 const postmark = require('postmark');
+const YearVideo = require('./models/YearVideo');
 
 let postmarkClient;
 if (process.env.POSTMARK_API_TOKEN && process.env.POSTMARK_API_TOKEN !== 'YOUR_POSTMARK_SERVER_API_TOKEN') {
@@ -114,54 +116,107 @@ let robolutionDb; // For direct robolution database access
 // Define international app integration
 let internationalHandler;
 
+const isProduction = process.env.NODE_ENV === 'production';
+const isLocalhost = process.env.COOKIE_DOMAIN === 'localhost';
+
+app.set('trust proxy', 1); // Trust first proxy. Important for reverse proxies (like the one in start.js)
+
+// Configure CORS to allow cookies and credentials
+app.use(cors({
+    origin: ['http://localhost:3000', 'http://localhost:4321', 'http://127.0.0.1:3000', 'http://127.0.0.1:4321'],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 // Set up session middleware before routes
 app.use(session({
     secret: process.env.SESSION_SECRET || 'your-secure-admin-key',
-    resave: false,
-    saveUninitialized: false,
+    resave: true, // Changed from false to true to ensure session is saved on each request
+    saveUninitialized: false, // Do not create session until something is stored
     store: MongoStore.create({
         mongoUrl: process.env.MONGODB_URI,
         dbName: 'robolution',
         collectionName: 'sessions',
         ttl: 3 * 60 * 60, // Session TTL in seconds (3 hours)
-        autoRemove: 'native', // Enable automatic removal of expired sessions
+        touchAfter: 60, // Only update the session every 1 minute if no changes (reduced from 5 minutes)
+        stringify: false, // Store as native MongoDB documents
+        autoRemove: 'native', // Use MongoDB's TTL index
         crypto: {
             secret: process.env.SESSION_SECRET || 'your-secure-admin-key'
         }
     }),
     cookie: { 
-        secure: process.env.NODE_ENV === 'production', // Only use secure cookies in production
+        secure: false, // Set to false to work on both HTTP and HTTPS
         httpOnly: true,
         maxAge: 3 * 60 * 60 * 1000, // 3 hours in milliseconds
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Required for cross-site cookies in production
-        path: '/' // Ensure cookie is available for all routes
+        sameSite: 'lax', // Use lax for better compatibility
+        domain: process.env.COOKIE_DOMAIN || undefined, // Use environment variable or default to undefined for localhost
+        path: '/' // Ensure cookie is available on all paths
     },
     name: 'robolution_session',
-    proxy: true // Trust the reverse proxy
 }));
 
 // Set up flash middleware after session if available
 if (flash) {
   app.use(flash());
+} else {
+  // Simple flash middleware implementation if connect-flash is not available
+  app.use((req, res, next) => {
+    if (!req.session.messages) {
+      req.session.messages = {};
+    }
+    
+    req.flash = function(type, message) {
+      if (!req.session.messages[type]) {
+        req.session.messages[type] = [];
+      }
+      req.session.messages[type].push(message);
+    };
+    
+    res.locals.messages = req.session.messages || {};
+    req.session.messages = {};
+    
+    next();
+  });
 }
 
-// Add better session debugging
+// Add better session debugging and persistence
 app.use((req, res, next) => {
-    console.log('Session Debug:', {
-        url: req.url,
-        method: req.method,
-        sessionID: req.sessionID,
-        session: {
-            hasSession: !!req.session,
-            isAuthenticated: !!req.session?.user,
-            isAdmin: req.session?.user?.isAdmin,
-            username: req.session?.user?.username
-        },
-        store: {
-            type: 'MongoStore',
-            connected: !!req.session?.store
-        }
-    });
+    // Skip session debug for static files to reduce log noise
+    if (!req.url.startsWith('/js/') && !req.url.startsWith('/css/') && !req.url.startsWith('/images/')) {
+        console.log('Session Debug:', {
+            url: req.url,
+            method: req.method,
+            sessionID: req.sessionID,
+            session: {
+                hasSession: !!req.session,
+                isAuthenticated: !!req.session?.user,
+                isAdmin: req.session?.user?.isAdmin,
+                username: req.session?.user?.username
+            },
+            store: {
+                type: 'MongoStore',
+                connected: !!req.session?.store
+            },
+            cookie: req.session?.cookie ? {
+                maxAge: req.session.cookie.maxAge,
+                expires: req.session.cookie.expires,
+                httpOnly: req.session.cookie.httpOnly,
+                path: req.session.cookie.path,
+                domain: req.session.cookie.domain,
+                secure: req.session.cookie.secure,
+                sameSite: req.session.cookie.sameSite
+            } : 'No cookie'
+        });
+    }
+    
+    // Ensure session persistence
+    if (req.session && req.session.user) {
+        // Touch the session on each request
+        req.session.touch();
+    }
+    
     next();
 });
 
@@ -229,6 +284,12 @@ const requireLogin = (req, res, next) => {
         req.flash('error', 'You must be logged in to view this page.');
         return res.redirect(`/login?redirect=${encodeURIComponent(redirectUrl)}`);
     }
+    
+    // Touch the session to keep it alive
+    if (req.session) {
+        req.session.touch();
+    }
+    
     next();
 };
 
@@ -584,6 +645,21 @@ mongoose.connect(uri, { dbName: 'robolution' })
       })
       .catch(err => console.error('Error checking for admins collection:', err));
     
+    // TEMPORARY: Clear sessions collection on startup to fix parsing errors
+    if (robolutionDb) {
+        console.log('Attempting to clear sessions collection to resolve format mismatch...');
+        robolutionDb.collection('sessions').deleteMany({})
+            .then(result => {
+                console.log(`Sessions collection cleared successfully. Deleted ${result.deletedCount} sessions.`);
+            })
+            .catch(err => {
+                console.error('Error clearing sessions collection:', err);
+            });
+    }
+
+    // Define Admin model after successful database connection
+    const Admin = robolutionDb.collection('admins');
+
     // Start the database backup system
     setupDatabaseBackups();
     
@@ -655,32 +731,36 @@ const upload = multer({
     }
 });
 
-// Multer storage configuration for poster video
-const posterVideoStorage = multer.diskStorage({
+// Note: Poster video storage configuration has been removed as it's been replaced by the Year Videos feature
+
+// Configure Multer for video uploads
+const videoStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const uploadDir = path.join(__dirname, 'public', 'images');
-    // Ensure directory exists (it should, but good practice)
+    const uploadDir = path.join(__dirname, 'public', 'videos');
+    // Ensure directory exists
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir, { recursive: true });
     }
     cb(null, uploadDir);
   },
   filename: (req, file, cb) => {
-    cb(null, 'Robolution2025.mp4'); // Always use this filename, overwriting existing
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, 'year-video-' + uniqueSuffix + path.extname(file.originalname));
   }
 });
 
-const uploadPosterVideo = multer({
-  storage: posterVideoStorage,
+const videoUpload = multer({
+  storage: videoStorage,
   fileFilter: (req, file, cb) => {
-    if (file.mimetype === 'video/mp4') { // Updated to video/mp4
+    // Accept video files
+    if (file.mimetype.startsWith('video/')) {
       cb(null, true);
     } else {
-      cb(new Error('Invalid file type. Only MP4 videos are allowed.'), false);
+      cb(new Error('Not a video file! Please upload a video file.'), false);
     }
   },
   limits: {
-    fileSize: 50 * 1024 * 1024 // 50MB limit for video
+    fileSize: 100 * 1024 * 1024 // 100MB limit for videos
   }
 });
 
@@ -745,6 +825,10 @@ app.use('/international/src/assets', express.static(path.join(__dirname, '../int
 
 // Serve static files for the Dubai site at /international
 app.use('/international', express.static(path.join(__dirname, 'public/international')));
+
+// Serve video files
+app.use('/videos', express.static(path.join(__dirname, 'public/videos')));
+
 app.use(express.json());
 
 // Password reset routes
@@ -871,13 +955,119 @@ app.get('/home', async (req, res) => {
     
     // Fetch partners for the carousel sections
     const partners = await Partner.find().lean();
-    console.log('Fetched partners in /home route:', JSON.stringify(partners, null, 2)); // Log fetched partners
+    
+    // Fetch year videos
+    const yearVideos = await YearVideo.find({ active: true }).lean();
+    console.log(`Found ${yearVideos.length} year videos`);
+    
+    // Get the default video (used when no specific year is selected)
+    const defaultVideo = '/images/Robolution2025.mp4'; // Default fallback video
     
     res.render('UserViews/home', { 
       posts, 
       sort: req.query.sort || 'desc',
-      user: req.session.user,  // Add this line to pass the user object
-      partners
+      user: req.session.user,
+      partners,
+      selectedYear: 'all',
+      yearVideos,
+      currentVideo: defaultVideo
+    });
+  } catch (error) {
+    console.error('Error in home route:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+// Route for year-specific news
+app.get('/home/year/:year', async (req, res) => {
+  try {
+    const year = parseInt(req.params.year);
+    console.log(`Accessing user landing page for year: ${year}`);
+    
+    if (isNaN(year)) {
+      return res.redirect('/home');
+    }
+    
+    const sortDirection = req.query.sort === 'asc' ? 1 : -1;
+    
+    // DIRECT COLLECTION ACCESS
+    const postsCollection = robolutionDb.collection('posts');
+    
+    // Create date range for the specified year
+    const startDate = new Date(year, 0, 1); // January 1st of the year
+    const endDate = new Date(year + 1, 0, 1); // January 1st of the next year
+    
+    console.log(`Searching for posts between ${startDate.toISOString()} and ${endDate.toISOString()}`);
+    
+    // Fetch posts for the specified year - handle different date formats
+    // MongoDB might store dates in different formats depending on how they were inserted
+    const query = {
+      $or: [
+        // Standard Date object format
+        {
+          createdAt: {
+            $gte: startDate,
+            $lt: endDate
+          }
+        },
+        // String format (ISO string comparison)
+        {
+          createdAt: {
+            $gte: startDate.toISOString(),
+            $lt: endDate.toISOString()
+          }
+        },
+        // MongoDB extended JSON format
+        {
+          'createdAt.$date': {
+            $gte: startDate.getTime(),
+            $lt: endDate.getTime()
+          }
+        },
+        // String format with year in it (fallback)
+        {
+          createdAt: new RegExp(`${year}-`)
+        }
+      ]
+    };
+    
+    console.log('Query:', JSON.stringify(query));
+    
+    // Fetch posts for the specified year
+    let posts = await postsCollection.find(query).sort({ createdAt: sortDirection }).toArray();
+    
+    console.log(`Found ${posts.length} posts for year ${year}`);
+    
+    // Convert MongoDB documents to JavaScript objects
+    posts = JSON.parse(JSON.stringify(posts));
+    
+    // Also fetch all posts to generate the years dropdown
+    let allPosts = await postsCollection.find().toArray();
+    allPosts = JSON.parse(JSON.stringify(allPosts));
+    
+    // Fetch partners for the carousel sections
+    const partners = await Partner.find().lean();
+    
+    // Fetch year videos
+    const yearVideos = await YearVideo.find({ active: true }).lean();
+    console.log(`Found ${yearVideos.length} year videos`);
+    
+    // Find the video for the selected year
+    const yearVideo = yearVideos.find(video => video.year === year);
+    
+    // Default video if no specific video for this year
+    const defaultVideo = '/images/Robolution2025.mp4';
+    const currentVideo = yearVideo ? yearVideo.videoUrl : defaultVideo;
+    
+    res.render('UserViews/home', { 
+      posts, 
+      allPosts, // Pass all posts to generate the years dropdown
+      sort: req.query.sort || 'desc',
+      user: req.session.user,
+      partners,
+      selectedYear: year,
+      yearVideos,
+      currentVideo
     });
   } catch (error) {
     console.error('Error in home route:', error);
@@ -888,6 +1078,265 @@ app.get('/home', async (req, res) => {
 // Route to show all posts - changed to redirect to user landing
 app.get('/', async (req, res) => {
   res.redirect('/home');
+});
+
+// Routes for managing year videos
+app.get('/admin/year-videos', requireAdmin, async (req, res) => {
+  try {
+    // Get years with posts
+    const postsCollection = robolutionDb.collection('posts');
+    const posts = await postsCollection.find().toArray();
+    
+    // Extract years from post dates
+    const years = posts.map(post => {
+      if (post.createdAt) {
+        let date;
+        if (typeof post.createdAt === 'string') {
+          date = new Date(post.createdAt);
+        } else {
+          date = post.createdAt;
+        }
+        
+        if (isNaN(date.getTime())) {
+          return null;
+        }
+        
+        return date.getFullYear();
+      }
+      return null;
+    }).filter(year => year !== null);
+    
+    // Get unique years and sort them
+    const uniqueYears = [...new Set(years)].sort((a, b) => b - a);
+    
+    const yearVideos = await YearVideo.find().sort({ year: -1 });
+    
+    res.render('admin-year-videos', { 
+      yearVideos,
+      user: req.session.user,
+      dashboard: req.query.dashboard === 'true',
+      uniqueYears
+    });
+  } catch (error) {
+    console.error('Error fetching year videos:', error);
+    req.flash('error', 'Error fetching year videos');
+    res.redirect('/admin-dashboard');
+  }
+});
+
+// Add new year video
+app.post('/admin/year-videos/add', requireAdmin, videoUpload.single('video'), async (req, res) => {
+  try {
+    const { year, title } = req.body;
+    let videoUrl = '';
+    
+    if (req.file) {
+      // Generate URL for local video file
+      videoUrl = `/videos/${req.file.filename}`;
+      console.log(`Video saved locally at: ${req.file.path}`);
+      console.log(`Video URL set to: ${videoUrl}`);
+    } else if (req.body.videoUrl) {
+      // If a URL was provided directly
+      videoUrl = req.body.videoUrl;
+    } else {
+      throw new Error('No video file or URL provided');
+    }
+    
+    // Create the year video record
+    await YearVideo.create({
+      year: parseInt(year),
+      title,
+      videoUrl,
+      active: true
+    });
+    
+    req.flash('success', `Video for year ${year} added successfully`);
+    res.redirect('/admin/year-videos');
+  } catch (error) {
+    console.error('Error adding year video:', error);
+    req.flash('error', `Error adding year video: ${error.message}`);
+    res.redirect('/admin/year-videos');
+  }
+});
+
+// Update year video
+app.post('/admin/year-videos/update/:id', requireAdmin, videoUpload.single('video'), async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { year, title, active } = req.body;
+    
+    const yearVideo = await YearVideo.findById(id);
+    if (!yearVideo) {
+      throw new Error('Year video not found');
+    }
+    
+    yearVideo.year = parseInt(year);
+    yearVideo.title = title;
+    yearVideo.active = active === 'on';
+    
+    if (req.file) {
+      // Save old URL to potentially delete the file
+      const oldVideoUrl = yearVideo.videoUrl;
+      
+      // Generate URL for local video file
+      yearVideo.videoUrl = `/videos/${req.file.filename}`;
+      console.log(`Video saved locally at: ${req.file.path}`);
+      console.log(`Video URL set to: ${yearVideo.videoUrl}`);
+      
+      // Delete old video file if it was a local file
+      if (oldVideoUrl && oldVideoUrl.startsWith('/videos/')) {
+        // Extract filename from URL (format is /videos/filename.mp4)
+        const filename = oldVideoUrl.split('/').pop();
+        const filePath = path.join(__dirname, 'public', 'videos', filename);
+        
+        console.log(`Attempting to delete old video file: ${filePath}`);
+        
+        // Check if file exists and delete it
+        if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath);
+          console.log(`Deleted old video file: ${filePath}`);
+        } else {
+          console.log(`Old video file not found: ${filePath}`);
+        }
+      }
+    } else if (req.body.videoUrl) {
+      // If a URL was provided directly
+      yearVideo.videoUrl = req.body.videoUrl;
+    }
+    
+    await yearVideo.save();
+    
+    req.flash('success', `Video for year ${year} updated successfully`);
+    res.redirect('/admin/year-videos');
+  } catch (error) {
+    console.error('Error updating year video:', error);
+    req.flash('error', `Error updating year video: ${error.message}`);
+    res.redirect('/admin/year-videos');
+  }
+});
+
+// Delete year video
+app.post('/admin/year-videos/delete/:id', requireAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // Find the video before deleting to get the URL
+    const yearVideo = await YearVideo.findById(id);
+    if (!yearVideo) {
+      throw new Error('Year video not found');
+    }
+    
+    // Check if it's a local video file
+    if (yearVideo.videoUrl && yearVideo.videoUrl.startsWith('/videos/')) {
+      // Extract filename from URL (format is /videos/filename.mp4)
+      const filename = yearVideo.videoUrl.split('/').pop();
+      const filePath = path.join(__dirname, 'public', 'videos', filename);
+      
+      console.log(`Attempting to delete video file: ${filePath}`);
+      
+      // Check if file exists and delete it
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+        console.log(`Deleted video file: ${filePath}`);
+      } else {
+        console.log(`Video file not found: ${filePath}`);
+      }
+    } else {
+      console.log(`Video URL is not a local file: ${yearVideo.videoUrl}`);
+    }
+    
+    // Delete from database
+    await YearVideo.findByIdAndDelete(id);
+    
+    req.flash('success', 'Year video deleted successfully');
+    res.redirect('/admin/year-videos');
+  } catch (error) {
+    console.error('Error deleting year video:', error);
+    req.flash('error', `Error deleting year video: ${error.message}`);
+    res.redirect('/admin/year-videos');
+  }
+});
+
+// Debug route to check post dates
+app.get('/debug/post-dates', async (req, res) => {
+  try {
+    // DIRECT COLLECTION ACCESS
+    const postsCollection = robolutionDb.collection('posts');
+    
+    // Fetch all posts using native MongoDB
+    let posts = await postsCollection.find().toArray();
+    
+    // Extract and format date information
+    const dateInfo = posts.map(post => {
+      const createdAt = post.createdAt;
+      const createdAtType = typeof createdAt;
+      
+      let dateObj, year, month, day;
+      let isValidDate = false;
+      
+      try {
+        if (createdAt instanceof Date) {
+          dateObj = createdAt;
+          isValidDate = !isNaN(dateObj.getTime());
+        } else if (typeof createdAt === 'string') {
+          dateObj = new Date(createdAt);
+          isValidDate = !isNaN(dateObj.getTime());
+        } else if (createdAt && typeof createdAt === 'object' && createdAt.$date) {
+          // MongoDB extended JSON format
+          dateObj = new Date(createdAt.$date);
+          isValidDate = !isNaN(dateObj.getTime());
+        }
+        
+        if (isValidDate) {
+          year = dateObj.getFullYear();
+          month = dateObj.getMonth() + 1;
+          day = dateObj.getDate();
+        }
+      } catch (e) {
+        console.error('Error parsing date:', e);
+      }
+      
+      return {
+        id: post._id.toString(),
+        title: post.title,
+        createdAtRaw: createdAt,
+        createdAtType,
+        isValidDate,
+        year,
+        month,
+        day,
+        dateString: isValidDate ? dateObj.toISOString() : 'Invalid Date'
+      };
+    });
+    
+    // Group by year
+    const postsByYear = {};
+    dateInfo.forEach(post => {
+      if (post.isValidDate) {
+        if (!postsByYear[post.year]) {
+          postsByYear[post.year] = [];
+        }
+        postsByYear[post.year].push(post);
+      }
+    });
+    
+    // Count posts by year
+    const yearCounts = Object.keys(postsByYear).map(year => ({
+      year,
+      count: postsByYear[year].length
+    })).sort((a, b) => b.year - a.year);
+    
+    res.json({
+      totalPosts: posts.length,
+      postsWithValidDates: dateInfo.filter(p => p.isValidDate).length,
+      yearCounts,
+      postsByYear,
+      allPostDates: dateInfo
+    });
+  } catch (error) {
+    console.error('Error in debug route:', error);
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // Admin index page with direct MongoDB access
@@ -1023,7 +1472,12 @@ app.get('/user-categories', async (req, res) => {
     // Convert MongoDB documents to JavaScript objects
     categories = JSON.parse(JSON.stringify(categories));
     
-    res.render('UserViews/user-categories', { categories });
+    // Fetch all posts to generate the years dropdown
+    const postsCollection = robolutionDb.collection('posts');
+    let allPosts = await postsCollection.find().toArray();
+    allPosts = JSON.parse(JSON.stringify(allPosts));
+    
+    res.render('UserViews/user-categories', { categories, allPosts });
   } catch (error) {
     console.error('Error fetching user categories:', error);
     res.status(500).send('An error occurred while fetching categories');
@@ -1643,7 +2097,14 @@ app.post('/login', async (req, res) => {
     try {
         const { username, password, token, redirect } = req.body;
         
-        console.log('Login attempt:', { username, hasToken: !!token });
+        console.log('Login attempt:', { 
+            username, 
+            hasToken: !!token,
+            sessionID: req.sessionID,
+            cookieDomain: process.env.COOKIE_DOMAIN,
+            environment: process.env.NODE_ENV,
+            secure: process.env.NODE_ENV === 'production'
+        });
         
         // DIRECT DB ACCESS: First check admin collection
         const adminUser = await db.collection('admins').findOne({ username });
@@ -1674,7 +2135,7 @@ app.post('/login', async (req, res) => {
                 if (!token) {
                     return res.json({ 
                         success: false, 
-                        requireTwoFactor: true,
+                        requireTwoFactor: true, 
                         needs2FASetup: false,
                         message: 'Please enter your two-factor authentication code'
                     });
@@ -1710,41 +2171,60 @@ app.post('/login', async (req, res) => {
                 }
             }
             
-            // Set admin session with all necessary data
-            req.session.user = {
-                id: adminUser._id.toString ? adminUser._id.toString() : adminUser._id,
-                username: adminUser.username,
-                isAdmin: true,
-                role: adminUser.role || 'admin'
-            };
-            
-            // Force session save and wait for it
-            await new Promise((resolve, reject) => {
-                req.session.save((err) => {
-                    if (err) {
-                        console.error('Session save error:', err);
-                        reject(err);
-                    } else {
-                        resolve();
+            // Clear any existing session first
+            console.log('Regenerating session for user:', username);
+            req.session.regenerate((regError) => {
+                if (regError) {
+                    console.error('Session regeneration error:', regError);
+                    // Try to destroy and create a new session as a fallback
+                    req.session.destroy(() => {
+                        req.session = null;
+                        return res.json({ success: false, message: 'Session error. Please try again.' });
+                    });
+                    return;
+                }
+                
+                // Set admin session with all necessary data
+                req.session.user = {
+                    id: adminUser._id.toString ? adminUser._id.toString() : adminUser._id,
+                    username: adminUser.username,
+                    isAdmin: true,
+                    role: adminUser.role || 'admin'
+                };
+                
+                // Save the session
+                req.session.save((saveError) => {
+                    if (saveError) {
+                        console.error('Session save error:', saveError);
+                        return res.json({ success: false, message: 'Session error. Please try again.' });
                     }
+                    
+                    console.log('Admin login successful - Session saved:', {
+                        sessionID: req.sessionID,
+                        user: req.session.user,
+                        cookie: req.session.cookie
+                    });
+                    
+                    // Force save the session again to ensure it's stored
+                    req.session.touch();
+                    
+                    // Add localStorage configuration
+                    const redirectUrl = redirect || '/admin-dashboard'; // Changed from /index
+                    
+                    return res.json({ 
+                        success: true,
+                        redirectUrl: redirectUrl,
+                        role: adminUser.role || 'admin',
+                        message: 'Login successful! Welcome back, ' + adminUser.username,
+                        setLocalStorage: true,  // Signal client to set localStorage
+                        sessionID: req.sessionID, // Send session ID to client for debugging
+                        cookieConfig: {
+                            domain: process.env.COOKIE_DOMAIN || undefined,
+                            secure: false,
+                            sameSite: 'lax'
+                        }
+                    });
                 });
-            });
-            
-            console.log('Admin login successful - Session saved:', {
-                sessionID: req.sessionID,
-                user: req.session.user,
-                cookie: req.session.cookie
-            });
-            
-            // Add localStorage configuration
-            const redirectUrl = redirect || '/admin-dashboard'; // Changed from /index
-            
-            return res.json({ 
-                success: true,
-                redirectUrl: redirectUrl,
-                role: adminUser.role || 'admin',
-                message: 'Login successful! Welcome back, ' + adminUser.username,
-                setLocalStorage: true  // Signal client to set localStorage
             });
         } else {
             // DIRECT DB ACCESS: If not an admin, check regular users collection
@@ -1893,40 +2373,59 @@ app.post('/login', async (req, res) => {
             
             console.log('Setting regular user session with ID:', userId);
             
-            req.session.user = {
-                id: userId,
-                username: regularUser.username,
-                isAdmin: false,
-                role: regularUser.role || 'user'
-            };
-            
-            // Force session save and wait for it
-            await new Promise((resolve, reject) => {
-                req.session.save((err) => {
-                    if (err) {
-                        console.error('Session save error:', err);
-                        reject(err);
-                    } else {
-                        resolve();
+            // Clear any existing session first
+            console.log('Regenerating session for regular user:', username);
+            req.session.regenerate(async (regError) => {
+                if (regError) {
+                    console.error('Session regeneration error:', regError);
+                    // Try to destroy and create a new session as a fallback
+                    req.session.destroy(() => {
+                        req.session = null;
+                        return res.json({ success: false, message: 'Session error. Please try again.' });
+                    });
+                    return;
+                }
+                
+                // Set new session data
+                req.session.user = {
+                    id: userId,
+                    username: regularUser.username,
+                    isAdmin: false,
+                    role: regularUser.role || 'user'
+                };
+                
+                // Save the session
+                req.session.save((saveError) => {
+                    if (saveError) {
+                        console.error('Session save error:', saveError);
+                        return res.json({ success: false, message: 'Session error. Please try again.' });
                     }
+                    
+                    console.log('User login successful - Session saved:', {
+                        sessionID: req.sessionID,
+                        user: req.session.user
+                    });
+                    
+                    // Force save the session again to ensure it's stored
+                    req.session.touch();
+                    
+                    // Get redirect URL from request or use default
+                    const redirectUrl = redirect || '/home'; // User redirect remains the same
+                    
+                    return res.json({ 
+                        success: true,
+                        redirectUrl: redirectUrl,
+                        role: 'user',
+                        message: 'Login successful! Welcome back, ' + regularUser.username,
+                        setLocalStorage: true,  // Signal client to set localStorage
+                        sessionID: req.sessionID, // Send session ID to client for debugging
+                        cookieConfig: {
+                            domain: process.env.COOKIE_DOMAIN || undefined,
+                            secure: false,
+                            sameSite: 'lax'
+                        }
+                    });
                 });
-            });
-            
-            console.log('User login successful - Session saved:', {
-                sessionID: req.sessionID,
-                user: req.session.user,
-                cookie: req.session.cookie
-            });
-            
-            // Get redirect URL from request or use default
-            const redirectUrl = redirect || '/home'; // User redirect remains the same
-            
-            return res.json({ 
-                success: true,
-                redirectUrl: redirectUrl,
-                role: 'user',
-                message: 'Login successful! Welcome back, ' + regularUser.username,
-                setLocalStorage: true  // Signal client to set localStorage
             });
         }
     } catch (error) {
@@ -1973,24 +2472,54 @@ app.post('/api/verify-email-otp', async (req, res) => {
             }
         );
 
-        // Create session
-        req.session.user = {
-            id: user._id.toString(),
-            username: user.username,
-            isAdmin: false,
-            role: user.role || 'user'
-        };
-
-        await new Promise((resolve, reject) => {
-            req.session.save(err => err ? reject(err) : resolve());
-        });
-
-        const redirectUrl = req.body.redirect || '/home';
-        
-        return res.json({ 
-            success: true,
-            redirectUrl: redirectUrl,
-            message: 'Email verified successfully! Logging you in...'
+        // Clear any existing session and create a new one
+        console.log('Regenerating session for email verification for user:', username);
+        req.session.regenerate((regError) => {
+            if (regError) {
+                console.error('Session regeneration error during OTP verification:', regError);
+                // Try to destroy and create a new session as a fallback
+                req.session.destroy(() => {
+                    req.session = null;
+                    return res.status(500).json({ 
+                        success: false, 
+                        message: 'Session error. Please try again.' 
+                    });
+                });
+                return;
+            }
+            
+            // Set session data
+            req.session.user = {
+                id: user._id.toString(),
+                username: user.username,
+                isAdmin: false,
+                role: user.role || 'user'
+            };
+            
+            // Save the session
+            req.session.save((saveError) => {
+                if (saveError) {
+                    console.error('Session save error during OTP verification:', saveError);
+                    return res.status(500).json({ 
+                        success: false, 
+                        message: 'Session error. Please try again.' 
+                    });
+                }
+                
+                const redirectUrl = req.body.redirect || '/home';
+                
+                return res.json({ 
+                    success: true,
+                    redirectUrl: redirectUrl,
+                    message: 'Email verified successfully! Logging you in...',
+                    sessionID: req.sessionID,
+                    cookieConfig: {
+                        domain: process.env.COOKIE_DOMAIN || undefined,
+                        secure: false,
+                        sameSite: 'lax'
+                    }
+                });
+            });
         });
 
     } catch (error) {
@@ -2125,7 +2654,22 @@ app.get('/user-categories/:id', async (req, res) => {
     }
     
     if (category) {
-      res.render('UserViews/user-category_details', { event: category });
+      // Fetch all posts for the years dropdown
+      const postsCollection = robolutionDb.collection('posts');
+      let allPosts = await postsCollection.find().toArray();
+      allPosts = JSON.parse(JSON.stringify(allPosts));
+      
+      // Get unique regions for the regional dropdown
+      const uniqueRegions = [...new Set(allPosts
+        .map(post => post.region)
+        .filter(region => region && region !== 'All')
+      )].sort();
+      
+      res.render('UserViews/user-category_details', { 
+        event: category,
+        allPosts,
+        uniqueRegions
+      });
     } else {
       console.error('Event not found with ID:', req.params.id);
       res.status(404).send('Event not found');
@@ -2580,6 +3124,7 @@ app.get('/regional', async (req, res) => {
       posts, 
       region,
       uniqueRegions,
+      allPosts, // Pass all posts for the years dropdown
       sort: req.query.sort || 'desc'
     });
   } catch (error) {
@@ -2701,9 +3246,30 @@ app.get('/api/check-admin-username', async (req, res) => {
 
 // API route to check if session is valid
 app.get('/api/check-session', (req, res) => {
-  console.log('Session user data:', req.session.user); // Debug log
+  console.log('Session check request from:', req.headers.referer || 'unknown', 'session:', {
+    id: req.sessionID,
+    hasUser: !!req.session?.user,
+    userId: req.session?.user?.id,
+    username: req.session?.user?.username,
+    cookieDomain: process.env.COOKIE_DOMAIN,
+    isProduction: isProduction,
+    isLocalhost: isLocalhost
+  });
   
-  if (req.session.user && req.session.user.id) {
+  // Touch the session to keep it alive
+  if (req.session) {
+    req.session.touch();
+  }
+  
+  // Simple check to see if user is in session
+  if (req.session && req.session.user && req.session.user.id) {
+    // Force save the session to ensure it persists
+    req.session.save((err) => {
+      if (err) {
+        console.error('Error saving session during check:', err);
+      }
+    });
+    
     return res.json({ 
       authenticated: true,
       user: {
@@ -2711,10 +3277,25 @@ app.get('/api/check-session', (req, res) => {
         username: req.session.user.username,
         role: req.session.user.role,
         isAdmin: req.session.user.isAdmin
+      },
+      sessionID: req.sessionID,
+      cookieConfig: {
+        domain: process.env.COOKIE_DOMAIN || undefined,
+        secure: false,
+        sameSite: 'lax'
+      }
+    });
+  } else {
+    return res.json({ 
+      authenticated: false,
+      sessionID: req.sessionID,
+      cookieConfig: {
+        domain: process.env.COOKIE_DOMAIN || undefined,
+        secure: false,
+        sameSite: 'lax'
       }
     });
   }
-  res.json({ authenticated: false });
 });
 
 // Function to setup the international Astro app
@@ -5823,13 +6404,26 @@ app.get('/profile', requireLogin, async (req, res) => {
       const userSample = await usersCollection.find().limit(1).toArray();
       console.log('Sample user structure:', JSON.stringify(userSample, null, 2));
       
+      // Fetch all posts for the years dropdown
+      const postsCollection = robolutionDb.collection('posts');
+      let allPosts = await postsCollection.find().toArray();
+      allPosts = JSON.parse(JSON.stringify(allPosts));
+      
+      // Get unique regions for the regional dropdown
+      const uniqueRegions = [...new Set(allPosts
+        .map(post => post.region)
+        .filter(region => region && region !== 'All')
+      )].sort();
+      
       // Render an error page instead of redirecting to login
       return res.render('UserViews/user-error', {
         error: 'Account Not Found',
         message: 'Your user account could not be found in the database. This may be due to a recent database restore operation. Please sign up for a new account.',
         actionText: 'Sign Up',
         actionLink: '/signup',
-        showLogoutButton: true
+        showLogoutButton: true,
+        allPosts,
+        uniqueRegions
       });
     }
     
@@ -6397,6 +6991,30 @@ app.get('/admin-dashboard', requireAdmin, async (req, res) => {
 
 // ==== USER PROFILE ROUTES ==== 
 
+// Add a redirect from /home/profile to /profile
+app.get('/home/profile', requireLogin, (req, res) => {
+  // Debug session info
+  console.log('Session Debug:', {
+    url: req.originalUrl,
+    method: req.method,
+    sessionID: req.sessionID,
+    session: {
+      hasSession: !!req.session,
+      isAuthenticated: !!req.session?.user,
+      isAdmin: req.session?.user?.isAdmin,
+      username: req.session?.user?.username
+    },
+    store: { 
+      type: req.sessionStore?.constructor?.name || 'Unknown', 
+      connected: !!req.sessionStore?.client?.isConnected
+    },
+    cookie: req.session?.cookie
+  });
+  
+  // Redirect to the actual profile page
+  res.redirect('/profile');
+});
+
 // GET route to display user profile page
 app.get('/profile', requireLogin, async (req, res) => {
     try {
@@ -6421,12 +7039,33 @@ app.get('/profile', requireLogin, async (req, res) => {
         }
 
         const registrations = await Registration.find({ userId: user._id }).sort({ registeredAt: -1 });
+        
+        // Capture referring page information
+        const referrer = req.get('Referrer') || '';
+        const isFromInternational = referrer.includes('international');
+        
+        console.log('Profile accessed from:', referrer, 'Is from international:', isFromInternational);
 
+        // Fetch all posts for the years dropdown
+        const postsCollection = robolutionDb.collection('posts');
+        let allPosts = await postsCollection.find().toArray();
+        allPosts = JSON.parse(JSON.stringify(allPosts));
+        
+        // Get unique regions for the regional dropdown
+        const uniqueRegions = [...new Set(allPosts
+          .map(post => post.region)
+          .filter(region => region && region !== 'All')
+        )].sort();
+        
         res.render('UserViews/profile', {
             user,
             age,
             registrations,
-            profilePicture: user.profilePicture || '/images/default-profile.jpg'
+            profilePicture: user.profilePicture || '/images/default-profile.jpg',
+            referrer,
+            isFromInternational,
+            allPosts,
+            uniqueRegions
         });
     } catch (error) {
         console.error('Error fetching profile:', error);
@@ -6543,96 +7182,7 @@ app.post('/profile/change-password', requireLogin, async (req, res) => {
 // Update routes for 2FA setup and verification
 // ... existing code ...
 
-// Route for admin to edit the poster video
-app.get('/admin/edit-poster-video', requireAdmin, (req, res) => {
-  const isDashboard = req.query.dashboard === 'true';
-  // === MODIFIED LOGIC START ===
-  let displayedVideoFilename = 'No video uploaded yet.';
-  const posterVideoPath = path.join(__dirname, 'public', 'images', 'Robolution2025.mp4');
-  const posterInfoPath = path.join(__dirname, 'poster-info.json');
-
-  if (fs.existsSync(posterVideoPath)) {
-    displayedVideoFilename = 'Robolution2025.mp4'; // Default if info file is missing
-    if (fs.existsSync(posterInfoPath)) {
-      try {
-        const posterInfoRaw = fs.readFileSync(posterInfoPath, 'utf8');
-        const posterInfo = JSON.parse(posterInfoRaw);
-        if (posterInfo && posterInfo.originalFilename) {
-          displayedVideoFilename = posterInfo.originalFilename;
-        }
-      } catch (readError) {
-        console.error('Error reading poster-info.json:', readError);
-        // Keep default Robolution2025.mp4 if info file is corrupted
-      }
-    }
-  } else {
-    // If Robolution2025.mp4 does not exist, ensure poster-info.json is also removed for consistency
-    if (fs.existsSync(posterInfoPath)) {
-        try {
-            fs.unlinkSync(posterInfoPath);
-            console.log('Removed poster-info.json because Robolution2025.mp4 was not found.');
-        } catch (unlinkError) {
-            console.error('Error removing poster-info.json:', unlinkError);
-        }
-    }
-  }
-  // === MODIFIED LOGIC END ===
-
-  res.render('edit-poster-video', {
-    user: req.session.user,
-    dashboard: isDashboard,
-    currentVideoFile: displayedVideoFilename, // Use the new variable
-    // flashMessages are already available globally via middleware
-  });
-});
-
-// POST route to handle poster video update
-app.post('/admin/update-poster-video', requireAdmin, (req, res) => {
-  console.log('[LOG] POST /admin/update-poster-video route hit.'); // Added log
-
-  uploadPosterVideo.single('posterVideo')(req, res, function (err) {
-    const isDashboard = req.query.dashboard === 'true' || (req.get('Referer') && req.get('Referer').includes('dashboard=true'));
-    const redirectUrl = `/admin/edit-poster-video${isDashboard ? '?dashboard=true' : ''}`;
-
-    console.log('[LOG] Inside uploadPosterVideo.single callback.'); // Added log
-
-    if (err instanceof multer.MulterError) {
-      // A Multer error occurred when uploading.
-      console.error('[LOG] Multer error updating poster video:', err); // Modified log
-      req.flash('error', `Upload error: ${err.message}`);
-      return res.redirect(redirectUrl);
-    } else if (err) {
-      // An unknown error occurred when uploading.
-      console.error('[LOG] Unknown error updating poster video:', err); // Modified log
-      req.flash('error', `Upload error: ${err.message}`);
-      return res.redirect(redirectUrl);
-    }
-
-    // If file upload was successful
-    if (!req.file) {
-      console.log('[LOG] No video file was uploaded (req.file is empty).'); // Added log
-      req.flash('error', 'No video file was uploaded. Please select an MP4 file.');
-      return res.redirect(redirectUrl);
-    }
-
-    console.log('[LOG] Video file uploaded, req.file:', req.file); // Added log
-
-    // === ADDED LOGIC START ===
-    const originalFilename = req.file.originalname;
-    const posterInfoPath = path.join(__dirname, 'poster-info.json');
-    const posterInfo = { originalFilename: originalFilename, uploadedTimestamp: new Date().toISOString() };
-    try {
-      fs.writeFileSync(posterInfoPath, JSON.stringify(posterInfo, null, 2));
-      console.log(`Stored poster info: ${originalFilename}`);
-    } catch (writeError) {
-      console.error('Error writing poster-info.json:', writeError);
-      // Not critical enough to fail the request, but log it.
-    }
-
-    req.flash('success', 'Poster video updated successfully! The change may take a moment to reflect if the browser has cached the old video.');
-    res.redirect(redirectUrl);
-  });
-});
+// Note: Edit Poster Video functionality has been replaced by the Year Videos feature
 
 
 
@@ -6850,12 +7400,13 @@ app.get('/post/:id', async (req, res) => {
     }
     
     // Get unique regions with posts for the dropdown menu
-    const allPosts = await Post.find({ region: { $ne: null } });
+    const allPosts = await Post.find().select('title region createdAt');
     const uniqueRegions = [...new Set(allPosts.map(p => p.region).filter(r => r && r !== 'All'))];
     
     res.render('UserViews/post-detail', { 
       post,
       uniqueRegions,
+      allPosts, // Pass all posts for the years dropdown
       user: req.session.user || null,
       defaultProfilePicture: defaultProfilePicture  // Pass default image path to the template
     });

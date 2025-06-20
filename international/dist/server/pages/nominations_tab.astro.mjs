@@ -2,7 +2,7 @@ import { e as createComponent, r as renderTemplate, m as maybeRenderHead, k as r
 import 'kleur/colors';
 import 'clsx';
 /* empty css                                           */
-import { $ as $$Layout } from '../chunks/Layout_BKWeNHvE.mjs';
+import { $ as $$Layout } from '../chunks/Layout_DdGyDZKU.mjs';
 import { f as fetchPageContent } from '../chunks/db_Dri7-qrb.mjs';
 export { renderers } from '../renderers.mjs';
 
@@ -21,9 +21,14 @@ var _a;
 const $$NominationsTab = createComponent(async ($$result, $$props, $$slots) => {
   const data = await fetchPageContent("Nomination");
   const content = data.NominationContent;
-  return renderTemplate(_a || (_a = __template(["", '  <script>\n    const nominateButton = document.querySelector(".nominate-button");\n    nominateButton.addEventListener("click", () => {\n        const introSection = document.getElementById("nomination-form");\n        if (introSection) {\n            introSection.scrollIntoView({ behavior: "smooth" });\n        } else {\n            console.error("Introduction section not found.");\n        }\n    });\n<\/script>'])), renderComponent($$result, "Layout", $$Layout, { "title": "Erovoutika Dubai - Nominations", "data-astro-cid-g56mpxfz": true }, { "default": async ($$result2) => renderTemplate` ${maybeRenderHead()}<section class="nomination-hero"${addAttribute(`background-image: url(${content.hero_background});`, "style")} data-astro-cid-g56mpxfz> <div class="hero-content" data-astro-cid-g56mpxfz> <h1 class="hero-title" data-astro-cid-g56mpxfz>${content.hero_title}</h1> <p class="hero-subtitle" data-astro-cid-g56mpxfz>${content.hero_subtitle}</p> <button class="nominate-button" data-astro-cid-g56mpxfz>${content.hero_buttonText}</button> </div> </section> <section class="nomination-form" id="nominations" data-astro-cid-g56mpxfz> ${renderComponent($$result2, "NominationForm", $$NominationsForm, { "data-astro-cid-g56mpxfz": true })} </section> ` }));
+  const getImageUrl = (path) => {
+    if (typeof path === "string" && path.startsWith("/")) {
+      return "/international" + path;
+    }
+    return path;
+  };
+  return renderTemplate(_a || (_a = __template(["", '  <script>\n    const nominateButton = document.querySelector(".nominate-button");\n    nominateButton.addEventListener("click", () => {\n        const introSection = document.getElementById("nomination-form");\n        if (introSection) {\n            introSection.scrollIntoView({ behavior: "smooth" });\n        } else {\n            console.error("Introduction section not found.");\n        }\n    });\n</script>'])), renderComponent($$result, "Layout", $$Layout, { "title": "Erovoutika Dubai - Nominations", "data-astro-cid-g56mpxfz": true }, { "default": async ($$result2) => renderTemplate` ${maybeRenderHead()}<section class="nomination-hero"${addAttribute(`background-image: url(${getImageUrl(content.hero_background)});`, "style")} data-astro-cid-g56mpxfz> <div class="hero-content" data-astro-cid-g56mpxfz> <h1 class="hero-title" data-astro-cid-g56mpxfz>${content.hero_title}</h1> <p class="hero-subtitle" data-astro-cid-g56mpxfz>${content.hero_subtitle}</p> <button class="nominate-button" data-astro-cid-g56mpxfz>${content.hero_buttonText}</button> </div> </section> <section class="nomination-form" id="nominations" data-astro-cid-g56mpxfz> ${renderComponent($$result2, "NominationForm", $$NominationsForm, { "data-astro-cid-g56mpxfz": true })} </section> ` }));
 }, "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/Nominations_Tab.astro", void 0);
-
 const $$file = "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/Nominations_Tab.astro";
 const $$url = "/international/Nominations_Tab";
 

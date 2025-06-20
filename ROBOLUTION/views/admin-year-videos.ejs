@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="/images/ROBOLUTION_ICON.ico" type="image/x-icon">
+  <title>Manage Year Videos - Robolution Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    :root {
+      --primary-color: #00008b;
+      --primary-light: #1a1a9e;
+      --primary-dark: #000066;
+      --secondary-color: #4CAF50;
+      --secondary-hover: #45a049;
+      --text-light: #f8f9fa;
+      --text-dark: #343a40;
+      --bg-light: #ffffff;
+      --bg-dark: #212529;
+      --bg-gray: #f8f9fa;
+      --border-color: #dee2e6;
+      --sidebar-width: 250px;
+      --header-height: 70px;
+      --danger: #dc3545;
+      --warning: #ffc107;
+      --info: #17a2b8;
+      --success: #28a745;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-gray);
+      color: var(--text-dark);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Dashboard Layout */
+    .dashboard-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--primary-color);
+      color: var(--text-light);
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar.collapsed {
+      width: 70px;
+    }
+    
+    .sidebar.collapsed .sidebar-logo h1 {
+      display: none;
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .sidebar.collapsed .sidebar-header {
+      padding: 20px 10px;
+      justify-content: center;
+    }
+
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .sidebar-logo img {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+    
+    .sidebar.collapsed .sidebar-logo img {
+      margin-right: 0;
+    }
+
+    .sidebar-logo h1 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .sidebar-toggle {
+      background: none;
+      border: none;
+      color: var(--text-light);
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 4px;
+    }
+    
+    .sidebar.collapsed .sidebar-toggle {
+      position: absolute;
+      right: 10px;
+      top: 20px;
+    }
+
+    .sidebar-toggle:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar.collapsed .sidebar-toggle {
+      transform: rotate(180deg);
+    }
+    
+    .sidebar.collapsed .sidebar-text,
+    .sidebar.collapsed .sidebar-heading {
+      display: none;
+    }
+    
+    .sidebar.collapsed .sidebar-item {
+      display: flex;
+      justify-content: center;
+    }
+    
+    .sidebar.collapsed .sidebar-link {
+      padding: 12px;
+      justify-content: center;
+    }
+    
+    .sidebar.collapsed .sidebar-icon {
+      margin-right: 0;
+    }
+
+    .sidebar-menu {
+      padding: 20px 0;
+    }
+
+    .sidebar-heading {
+      padding: 10px 20px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .sidebar-item {
+      position: relative;
+      display: block;
+    }
+
+    .sidebar-link {
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.8);
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-link:hover {
+      background-color: var(--primary-light);
+      color: white;
+    }
+
+    .sidebar-link.active {
+      background-color: var(--primary-light);
+      color: white;
+      border-left: 4px solid var(--secondary-color);
+    }
+
+    .sidebar-icon {
+      margin-right: 10px;
+      font-size: 1.1rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      transition: all 0.3s ease;
+      padding: 20px;
+    }
+
+    .main-content.expanded {
+      margin-left: 70px;
+    }
+
+    .navbar {
+      background-color: #00008b;
+    }
+    .navbar-brand {
+      color: white;
+      font-weight: bold;
+    }
+    .nav-link {
+      color: rgba(255, 255, 255, 0.8);
+    }
+    .nav-link:hover {
+      color: white;
+    }
+    .navbar-toggler {
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+    .card {
+      margin-bottom: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .card-header {
+      font-weight: bold;
+    }
+    .bg-primary {
+      background-color: #00008b !important;
+    }
+    .bg-secondary {
+      background-color: #6c757d !important;
+    }
+    .btn-primary {
+      background-color: #00008b;
+      border-color: #00008b;
+    }
+    .btn-primary:hover {
+      background-color: #1a1a9e;
+      border-color: #1a1a9e;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img src="/images/ROBOLUTION_ICON.ico" alt="Robolution">
+          <h1>Robolution</h1>
+        </div>
+        <button id="sidebar-toggle" class="sidebar-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+
+      <div class="sidebar-menu">
+        <div class="sidebar-heading">Main</div>
+        <div class="sidebar-item">
+          <a href="/admin-dashboard" class="sidebar-link">
+            <i class="fas fa-tachometer-alt sidebar-icon"></i>
+            <span class="sidebar-text">Dashboard</span>
+          </a>
+        </div>
+        <div class="sidebar-item">
+          <a href="/admin-dashboard#posts" class="sidebar-link">
+            <i class="fas fa-newspaper sidebar-icon"></i>
+            <span class="sidebar-text">Posts</span>
+          </a>
+        </div>
+        <div class="sidebar-item">
+          <a href="/admin-dashboard#create-post" class="sidebar-link">
+            <i class="fas fa-plus-circle sidebar-icon"></i>
+            <span class="sidebar-text">Create Post</span>
+          </a>
+        </div>
+        
+        <div class="sidebar-heading">Content</div>
+        <div class="sidebar-item">
+          <a href="/admin-dashboard#categories" class="sidebar-link">
+            <i class="fas fa-layer-group sidebar-icon"></i>
+            <span class="sidebar-text">Categories</span>
+          </a>
+        </div>
+        <div class="sidebar-item">
+          <a href="/admin-dashboard#manage-categories" class="sidebar-link">
+            <i class="fas fa-tasks sidebar-icon"></i>
+            <span class="sidebar-text">Manage Categories</span>
+          </a>
+        </div>
+
+        <div class="sidebar-heading">System</div>
+        <div class="sidebar-item">
+          <a href="/admin/year-videos" class="sidebar-link active">
+            <i class="fas fa-calendar-alt sidebar-icon"></i>
+            <span class="sidebar-text">Year Videos</span>
+          </a>
+        </div>
+        <div class="sidebar-item">
+          <a href="/admin-dashboard#manage-partners" class="sidebar-link">
+            <i class="fas fa-handshake sidebar-icon"></i>
+            <span class="sidebar-text">Manage Partners</span>
+          </a>
+        </div>
+        <div class="sidebar-item">
+          <a href="/logout" class="sidebar-link">
+            <i class="fas fa-sign-out-alt sidebar-icon"></i>
+            <span class="sidebar-text">Logout</span>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="main-content">
+      <div class="container mt-4">
+        <div class="row">
+          <div class="col-12">
+            <h1>Manage Year Videos</h1>
+            <p class="text-muted">Set different videos to be displayed for each year on the home page.</p>
+            
+            <% if (locals.messages && messages.success) { %>
+              <div class="alert alert-success">
+                <%= messages.success %>
+              </div>
+            <% } %>
+            
+            <% if (locals.messages && messages.error) { %>
+              <div class="alert alert-danger">
+                <%= messages.error %>
+              </div>
+            <% } %>
+            
+            <!-- Add New Year Video Form -->
+            <div class="card mb-4">
+              <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Add New Year Video</h5>
+              </div>
+              <div class="card-body">
+                <form action="/admin/year-videos/add" method="POST" enctype="multipart/form-data">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="year">Year</label>
+                        <select class="form-control" id="year" name="year" required>
+                          <option value="" disabled selected>Select a year</option>
+                          <% if (locals.uniqueYears && uniqueYears.length > 0) { %>
+                            <% uniqueYears.forEach(year => { %>
+                              <option value="<%= year %>"><%= year %></option>
+                            <% }); %>
+                          <% } %>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <label for="title">Title (Optional)</label>
+                        <input type="text" class="form-control" id="title" name="title">
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group mt-3">
+                    <label>Video Source</label>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="videoSource" id="videoSourceFile" value="file" checked>
+                      <label class="form-check-label" for="videoSourceFile">
+                        Upload Video File
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="videoSource" id="videoSourceUrl" value="url">
+                      <label class="form-check-label" for="videoSourceUrl">
+                        Provide Video URL
+                      </label>
+                    </div>
+                  </div>
+                  
+                  <div id="fileUploadSection" class="form-group mt-3">
+                    <label for="video">Upload Video</label>
+                    <input type="file" class="form-control" id="video" name="video" accept="video/*">
+                    <small class="form-text text-muted">Maximum file size: 100MB. Supported formats: MP4, WebM.</small>
+                  </div>
+                  
+                  <div id="urlSection" class="form-group mt-3" style="display: none;">
+                    <label for="videoUrl">Video URL</label>
+                    <input type="url" class="form-control" id="videoUrl" name="videoUrl" placeholder="https://...">
+                    <small class="form-text text-muted">Enter a direct link to a video file or streaming URL.</small>
+                  </div>
+                  
+                  <button type="submit" class="btn btn-primary mt-3">Add Year Video</button>
+                </form>
+              </div>
+            </div>
+            
+            <!-- Existing Year Videos -->
+            <div class="card">
+              <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0">Existing Year Videos</h5>
+              </div>
+              <div class="card-body">
+                <% if (yearVideos && yearVideos.length > 0) { %>
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Year</th>
+                          <th>Title</th>
+                          <th>Video</th>
+                          <th>Status</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% yearVideos.forEach(video => { %>
+                          <tr>
+                            <td><%= video.year %></td>
+                            <td><%= video.title || 'No title' %></td>
+                            <td>
+                              <video width="200" height="120" controls>
+                                <source src="<%= video.videoUrl %>" type="video/mp4">
+                                Your browser does not support the video tag.
+                              </video>
+                            </td>
+                            <td>
+                              <span class="badge <%= video.active ? 'bg-success' : 'bg-danger' %>">
+                                <%= video.active ? 'Active' : 'Inactive' %>
+                              </span>
+                            </td>
+                            <td>
+                              <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editModal<%= video._id %>">
+                                Edit
+                              </button>
+                              <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<%= video._id %>">
+                                Delete
+                              </button>
+                            </td>
+                          </tr>
+                          
+                          <!-- Edit Modal -->
+                          <div class="modal fade" id="editModal<%= video._id %>" tabindex="-1" aria-labelledby="editModalLabel<%= video._id %>" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="editModalLabel<%= video._id %>">Edit Year Video</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  <form action="/admin/year-videos/update/<%= video._id %>" method="POST" enctype="multipart/form-data">
+                                    <div class="form-group">
+                                      <label for="year<%= video._id %>">Year</label>
+                                      <select class="form-control" id="year<%= video._id %>" name="year" required>
+                                        <% if (locals.uniqueYears && uniqueYears.length > 0) { %>
+                                          <% uniqueYears.forEach(year => { %>
+                                            <option value="<%= year %>" <%= video.year === year ? 'selected' : '' %>><%= year %></option>
+                                          <% }); %>
+                                        <% } %>
+                                      </select>
+                                    </div>
+                                    
+                                    <div class="form-group mt-3">
+                                      <label for="title<%= video._id %>">Title</label>
+                                      <input type="text" class="form-control" id="title<%= video._id %>" name="title" value="<%= video.title %>">
+                                    </div>
+                                    
+                                    <div class="form-group mt-3">
+                                      <label>Current Video</label>
+                                      <div>
+                                        <video width="100%" height="auto" controls>
+                                          <source src="<%= video.videoUrl %>" type="video/mp4">
+                                          Your browser does not support the video tag.
+                                        </video>
+                                      </div>
+                                    </div>
+                                    
+                                    <div class="form-group mt-3">
+                                      <label>Video Source</label>
+                                      <div class="form-check">
+                                        <input class="form-check-input edit-source-radio" type="radio" name="videoSourceEdit" id="videoSourceFileEdit<%= video._id %>" value="file" data-id="<%= video._id %>" checked>
+                                        <label class="form-check-label" for="videoSourceFileEdit<%= video._id %>">
+                                          Upload New Video File
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input edit-source-radio" type="radio" name="videoSourceEdit" id="videoSourceUrlEdit<%= video._id %>" value="url" data-id="<%= video._id %>">
+                                        <label class="form-check-label" for="videoSourceUrlEdit<%= video._id %>">
+                                          Provide Video URL
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input edit-source-radio" type="radio" name="videoSourceEdit" id="videoSourceKeepEdit<%= video._id %>" value="keep" data-id="<%= video._id %>">
+                                        <label class="form-check-label" for="videoSourceKeepEdit<%= video._id %>">
+                                          Keep Current Video
+                                        </label>
+                                      </div>
+                                    </div>
+                                    
+                                    <div id="fileUploadSectionEdit<%= video._id %>" class="form-group mt-3">
+                                      <label for="videoEdit<%= video._id %>">Upload New Video</label>
+                                      <input type="file" class="form-control" id="videoEdit<%= video._id %>" name="video" accept="video/*">
+                                      <small class="form-text text-muted">Maximum file size: 100MB. Supported formats: MP4, WebM.</small>
+                                    </div>
+                                    
+                                    <div id="urlSectionEdit<%= video._id %>" class="form-group mt-3" style="display: none;">
+                                      <label for="videoUrlEdit<%= video._id %>">Video URL</label>
+                                      <input type="url" class="form-control" id="videoUrlEdit<%= video._id %>" name="videoUrl" placeholder="https://..." value="<%= video.videoUrl %>">
+                                      <small class="form-text text-muted">Enter a direct link to a video file or streaming URL.</small>
+                                    </div>
+                                    
+                                    <div class="form-check mt-3">
+                                      <input class="form-check-input" type="checkbox" id="active<%= video._id %>" name="active" <%= video.active ? 'checked' : '' %>>
+                                      <label class="form-check-label" for="active<%= video._id %>">
+                                        Active
+                                      </label>
+                                    </div>
+                                    
+                                    <div class="mt-4">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                      <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <!-- Delete Modal -->
+                          <div class="modal fade" id="deleteModal<%= video._id %>" tabindex="-1" aria-labelledby="deleteModalLabel<%= video._id %>" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="deleteModalLabel<%= video._id %>">Confirm Delete</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  <p>Are you sure you want to delete the video for year <%= video.year %>?</p>
+                                  <p>This action cannot be undone.</p>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                  <form action="/admin/year-videos/delete/<%= video._id %>" method="POST">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        <% }); %>
+                      </tbody>
+                    </table>
+                  </div>
+                <% } else { %>
+                  <div class="alert alert-info">
+                    No year videos have been added yet. Use the form above to add your first year video.
+                  </div>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Toggle between file upload and URL input for new videos
+    document.addEventListener('DOMContentLoaded', function() {
+      // For new video form
+      const radioButtons = document.querySelectorAll('input[name="videoSource"]');
+      const fileUploadSection = document.getElementById('fileUploadSection');
+      const urlSection = document.getElementById('urlSection');
+      
+      radioButtons.forEach(radio => {
+        radio.addEventListener('change', function() {
+          if (this.value === 'file') {
+            fileUploadSection.style.display = 'block';
+            urlSection.style.display = 'none';
+            document.getElementById('videoUrl').value = '';
+          } else {
+            fileUploadSection.style.display = 'none';
+            urlSection.style.display = 'block';
+            document.getElementById('video').value = '';
+          }
+        });
+      });
+      
+      // For edit forms
+      const editRadioButtons = document.querySelectorAll('.edit-source-radio');
+      editRadioButtons.forEach(radio => {
+        radio.addEventListener('change', function() {
+          const videoId = this.getAttribute('data-id');
+          const fileUploadSectionEdit = document.getElementById(`fileUploadSectionEdit${videoId}`);
+          const urlSectionEdit = document.getElementById(`urlSectionEdit${videoId}`);
+          
+          if (this.value === 'file') {
+            fileUploadSectionEdit.style.display = 'block';
+            urlSectionEdit.style.display = 'none';
+            document.getElementById(`videoUrlEdit${videoId}`).value = '';
+          } else if (this.value === 'url') {
+            fileUploadSectionEdit.style.display = 'none';
+            urlSectionEdit.style.display = 'block';
+            document.getElementById(`videoEdit${videoId}`).value = '';
+          } else {
+            // Keep current video
+            fileUploadSectionEdit.style.display = 'none';
+            urlSectionEdit.style.display = 'none';
+            document.getElementById(`videoEdit${videoId}`).value = '';
+            document.getElementById(`videoUrlEdit${videoId}`).value = '';
+          }
+        });
+      });
+      
+      // Sidebar toggle
+      const sidebar = document.getElementById('sidebar');
+      const sidebarToggle = document.getElementById('sidebar-toggle');
+      const mainContent = document.getElementById('main-content');
+      
+      sidebarToggle.addEventListener('click', function() {
+        sidebar.classList.toggle('collapsed');
+        mainContent.classList.toggle('expanded');
+        
+        // Update the toggle icon based on sidebar state
+        const toggleIcon = this.querySelector('i');
+        if (sidebar.classList.contains('collapsed')) {
+          toggleIcon.classList.remove('fa-bars');
+          toggleIcon.classList.add('fa-chevron-right');
+        } else {
+          toggleIcon.classList.remove('fa-chevron-right');
+          toggleIcon.classList.add('fa-bars');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -8,6 +8,10 @@ const { image, buttonText, buttonLink } = button;
 // Get the base path from Astro's environment
 const basePath = import.meta.env.BASE_URL || '/international';
 
+// Check if user is logged in (by checking for robolution session cookie)
+const { cookies } = Astro;
+const isLoggedIn = cookies.has('robolution_session');
+
 // Helper function to create internal links with the correct base path
 function getPath(path) {
     // Don't add prefix to external links or paths to the main app
@@ -60,17 +64,26 @@ function getPath(path) {
                         )
                     )
                 }
+
             </ul>
 
-            <!-- CTA Button -->
+            <!-- CTA Button and Profile Button -->
             <div class="flex items-center gap-4 mr-5">
                 <div class="flex sm:gap-4">
+                    {isLoggedIn && (
+                        <a
+                            href="/profile"
+                            class="bg-blue-500 text-white text-center text-xs lg:text-lg font-medium rounded-full px-4 py-2 hover:bg-blue-600 shadow-2xl transition mr-2"
+                            id="profile-button"
+                        >
+                            Profile
+                        </a>
+                    )}
                     <a
-                        href={getPath(buttonLink)}
-                        target="_blank"
+                        href={getPath('/registration')}
                         class="bg-white text-blue-900 text-center text-xs lg:text-lg font-medium rounded-full px-4 py-2 hover:bg-indigo-400 hover:text-white shadow-2xl transition"
                     >
-                        {buttonText}
+                        Register Now
                     </a>
                 </div>
             </div>
@@ -114,6 +127,18 @@ function getPath(path) {
                         </li>
                     ))
                 }
+
+                <!-- Profile Link for Mobile (when logged in) -->
+                {isLoggedIn && (
+                    <li>
+                        <a
+                            href="/profile"
+                            class="block text-blue-300 hover:text-blue-100 hover:scale-120 font-bold"
+                        >
+                            Profile
+                        </a>
+                    </li>
+                )}
                 <!-- Back to Main Site Link (Mobile) -->
                 <li>
                     <a
@@ -152,5 +177,50 @@ function getPath(path) {
                 }
             });
         }
+
+        // Check if user is logged in by checking the cookie or localStorage
+        async function checkLoginStatus() {
+            // First check cookie
+            const isLoggedInCookie = document.cookie.split(';').some(item => 
+                item.trim().startsWith('robolution_session=')
+            );
+            
+            // Also check localStorage which is used by the main app
+            const isLoggedInLocalStorage = localStorage.getItem('isLoggedIn') === 'true';
+            
+            // Also check with our session-check API
+            let isLoggedInAPI = false;
+            try {
+                const response = await fetch('/api/session-check?t=' + new Date().getTime(), {
+                    credentials: 'include',
+                    headers: { 'Cache-Control': 'no-cache' }
+                });
+                const data = await response.json();
+                isLoggedInAPI = data.authenticated;
+                console.log('Session check response:', data);
+            } catch (error) {
+                console.error('Error checking session:', error);
+            }
+            
+            // Consider user logged in if any of these is true
+            const isLoggedIn = isLoggedInCookie || isLoggedInLocalStorage || isLoggedInAPI;
+            
+            const profileButton = document.getElementById('profile-button');
+            const mobileProfileLink = document.querySelector('a[href="/profile"]');
+            
+            if (isLoggedIn) {
+                if (profileButton) profileButton.style.display = 'inline-block';
+                if (mobileProfileLink) mobileProfileLink.style.display = 'block';
+            } else {
+                if (profileButton) profileButton.style.display = 'none';
+                if (mobileProfileLink) mobileProfileLink.style.display = 'none';
+            }
+        }
+        
+        // Run on page load
+        checkLoginStatus();
+        
+        // Also check every minute in case user logs in/out in another tab
+        setInterval(checkLoginStatus, 60000);
     });
 </script>

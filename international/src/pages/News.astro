@@ -10,463 +10,279 @@ const latestnews = data["latest-news"];
 const events = data["latest-events"];
 const web = data["latest-webinar"];
 const cards = data["latest-cards"];
-const NewsCard = data["NewsCard"];
+
+const getImageUrl = (path) => {
+    if (typeof path === 'string') {
+        if (path.startsWith('public/')) {
+            return import.meta.env.BASE_URL + '/' + path.substring(7);
+        }
+        if (path.startsWith('/')) {
+            return import.meta.env.BASE_URL + path;
+        }
+    }
+    return path;
+};
 ---
 
 <Layout title="Erovoutika Dubai - News">
-    <div>
-        <p
-            id="greetings"
-            class="font-bold text-5xl lg:text-[96px] p-5 text-center font-bebas tracking-wider text-[#212529] pt-50 pb-10"
-        >
-            {Hero.title}
-        </p>
-        <div class="mx-[150px]">
-            <p id="latestNews" class="text-[25px]" style="margin-bottom: 10px;">
-                {latestnews[0].NewsCard.title}
-            </p>
-            <div class="grid grid-flow-col grid-rows-4 gap-4 h-[600px]">
-                <div class="relative row-span-4 col-span-4 bg-blue-200">
-                    <a href={latestnews[0].NewsCard.link}>
-                        <img
-                            src={latestnews[0].NewsCard.image}
-                            alt={latestnews[0].NewsCard.alt}
-                            style="width: 100%; height: 100%; object-fit: cover;"
-                        />
+    <section class="news-hero">
+        <h1 class="news-hero-title">{Hero.title}</h1>
+    </section>
+
+    <div class="page-container">
+        <section class="latest-news-section">
+            <h2 class="section-title">{latestnews?.[0]?.NewsCard?.title}</h2>
+            <div class="latest-news-grid">
+                <div class="main-news-card">
+                    <a href={latestnews?.[0]?.NewsCard?.link}>
+                        <img src={getImageUrl(latestnews?.[0]?.NewsCard?.image)} alt={latestnews?.[0]?.NewsCard?.alt} />
+                        <div class="main-news-card-overlay">
+                            <p class="news-date">{latestnews?.[0]?.NewsCard?.date}</p>
+                            <p class="news-description">{latestnews?.[0]?.NewsCard?.description}</p>
+                        </div>
                     </a>
-                    <div class="absolute bottom-4 left-6 text-white">
-                        <p id="date1" class="text-xl font-bold">
-                            {latestnews[0].NewsCard.date}
-                        </p>
-                    </div>
-                    <div class="absolute top-4 left-6 text-blue-900">
-                        <p id="subtitle1" class="text-7xl font-bold">
-                            {latestnews[0].NewsCard.description}
-                        </p>
-                    </div>
                 </div>
-
-                <div class="relative row-span-2 col-span-2 group">
-                    <a href={latestnews[1].NewsCard.link}>
-                        <img
-                            src={latestnews[1].NewsCard.image}
-                            alt={latestnews[1].NewsCard.alt}
-                            class="w-full h-full object-cover"
-                        />
-                    </a>
-
-                    <div
-                        class="absolute bottom-0 left-0 w-full bg-white/70 px-4 py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    >
-                        <p id="date2" class="text-sm text-gray-262626">
-                            {latestnews[1].NewsCard.date}
-                        </p>
-                        <p id="title1" class="text-lg text-black font-semibold">
-                            {latestnews[1].NewsCard.description}
-                        </p>
+                <div class="side-news-container">
+                    <div class="side-news-card">
+                        <a href={latestnews?.[1]?.NewsCard?.link}>
+                            <img src={getImageUrl(latestnews?.[1]?.NewsCard?.image)} alt={latestnews?.[1]?.NewsCard?.alt} />
+                            <div class="side-news-card-overlay">
+                                <p class="news-date">{latestnews?.[1]?.NewsCard?.date}</p>
+                                <p class="news-description-side">{latestnews?.[1]?.NewsCard?.description}</p>
+                            </div>
+                        </a>
                     </div>
-                </div>
-
-                <div
-                    class="relative group row-span-2 col-span-2 object-fill w-full"
-                >
-                    <a href={latestnews[2].NewsCard.link}>
-                        <img
-                            src={latestnews[2].NewsCard.image}
-                            alt={latestnews[2].NewsCard.alt}
-                            class="w-full h-full object-cover"
-                        />
-                    </a>
-                    <div
-                        class="absolute bottom-0 left-0 w-full bg-white/70 px-4 py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    >
-                        <p id="date3" class="text-sm text-gray-262626">
-                            {latestnews[2].NewsCard.date}
-                        </p>
-                        <p id="title2" class="text-lg text-black font-semibold">
-                            {latestnews[2].NewsCard.description}
-                        </p>
+                    <div class="side-news-card">
+                        <a href={latestnews?.[2]?.NewsCard?.link}>
+                            <img src={getImageUrl(latestnews?.[2]?.NewsCard?.image)} alt={latestnews?.[2]?.NewsCard?.alt} />
+                             <div class="side-news-card-overlay">
+                                <p class="news-date">{latestnews?.[2]?.NewsCard?.date}</p>
+                                <p class="news-description-side">{latestnews?.[2]?.NewsCard?.description}</p>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <p id="eventsTitle" class="text-[25px] mt-[30px] py-10">
-                {events[0].NewsCard.events}
-            </p>
-
-            <!-- Responsive wrapper -->
-            <div class="w-full px-4">
-                <div
-                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center"
-                >
-                    <!-- Card 1 -->
-                    <div
-                        class="max-w-sm w-full bg-white rounded-lg shadow-sm dark:hover:bg-gray-200"
-                    >
-                        <a href={events[0].NewsCard.link}
-                            ><img
-                                class="rounded-t-lg w-full"
-                                src={events[0].NewsCard.image}
-                                alt={events[0].NewsCard.alt}
-                            /></a
-                        >
-                        <div class="p-5">
-                            <p
-                                id="date4"
-                                class="mb-3 font-normal text-gray-700"
-                            >
-                                {events[0].NewsCard.date}
-                            </p>
-                            <a href="#"
-                                ><h5
-                                    id="title3"
-                                    class="mb-2 text-2xl font-bold tracking-tight text-gray-900"
-                                >
-                                    {events[0].NewsCard.title}
-                                </h5></a
-                            >
-                            <p
-                                id="desc1"
-                                class="mb-3 font-normal text-gray-700"
-                            >
-                                {events[0].NewsCard.description}
-                            </p>
+        <section class="events-section">
+            <h2 class="section-title">{events?.[0]?.NewsCard?.events}</h2>
+            <div class="events-grid">
+                {events.map(event => (
+                    <div class="event-card">
+                        <a href={event.NewsCard.link}>
+                            <img src={getImageUrl(event.NewsCard.image)} alt={event.NewsCard.alt} />
+                        </a>
+                        <div class="event-card-content">
+                            <p class="news-date">{event.NewsCard.date}</p>
+                            <h5 class="event-title">{event.NewsCard.title}</h5>
+                            <p class="event-description">{event.NewsCard.description}</p>
                         </div>
                     </div>
+                ))}
+            </div>
+        </section>
 
-                    <!-- Card 2 -->
-                    <div
-                        class="max-w-sm w-full bg-white rounded-lg shadow-sm dark:hover:bg-gray-200"
-                    >
-                        <a href={events[1].NewsCard.link}
-                            ><img
-                                class="rounded-t-lg w-full"
-                                src={events[1].NewsCard.image}
-                                alt={events[1].NewsCard.alt}
-                            /></a
-                        >
-                        <div class="p-5">
-                            <p
-                                id="date5"
-                                class="mb-3 font-normal text-gray-700"
-                            >
-                                {events[1].NewsCard.date}
-                            </p>
-                            <a href="#"
-                                ><h5
-                                    id="title4"
-                                    class="mb-2 text-2xl font-bold tracking-tight text-gray-900"
-                                >
-                                    {events[1].NewsCard.title}
-                                </h5></a
-                            >
-                            <p
-                                id="desc2"
-                                class="mb-3 font-normal text-gray-700"
-                            >
-                                {events[1].NewsCard.description}
-                            </p>
+        <section class="webinar-section">
+            <h2 class="section-title">{web?.[0]?.NewsCard?.name}</h2>
+             <div class="webinar-grid">
+                {web.slice(1).map(item => (
+                    <a href={item.NewsCard.link} class="webinar-card">
+                        <img src={getImageUrl(item.NewsCard.image)} alt={item.NewsCard.alt} />
+                        <div class="webinar-card-content">
+                            <p class="news-date">{item.NewsCard.date}</p>
+                            <h5 class="webinar-title">{item.NewsCard.title}</h5>
+                            <p class="webinar-description">{item.NewsCard.description}</p>
                         </div>
-                    </div>
-
-                    <!-- Card 3 -->
-                    <div
-                        class="max-w-sm w-full bg-white rounded-lg shadow-sm dark:hover:bg-gray-200"
-                    >
-                        <a href={events[2].NewsCard.link}
-                            ><img
-                                class="rounded-t-lg w-full"
-                                src={events[2].NewsCard.image}
-                                alt={events[2].NewsCard.alt}
-                            /></a
-                        >
-                        <div class="p-5">
-                            <p
-                                id="date6"
-                                class="mb-3 font-normal text-gray-700"
-                            >
-                                {events[2].NewsCard.date}
-                            </p>
-                            <a href="#"
-                                ><h5
-                                    id="title5"
-                                    class="mb-2 text-2xl font-bold tracking-tight text-gray-900"
-                                >
-                                    {events[2].NewsCard.title}
-                                </h5></a
-                            >
-                            <p
-                                id="desc3"
-                                class="mb-3 font-normal text-gray-700"
-                            >
-                                {events[2].NewsCard.description}
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                    </a>
+                ))}
             </div>
-        </div>
-
-        <p class="text-[25px] mt-[30px] pt-25 px-25">{web[0].NewsCard.name}</p>
-
-        <div class="grid grid-cols-2 px-25">
-            <div class="grid grid-flow-col grid-rows-3 gap-4 bg-gray-200">
-                <!-- Webinar A -->
-                <a
-                    href={web[0].NewsCard.link}
-                    class="flex flex-col items-center rounded-lg shadow-sm md:flex-row md:max-w-xl hover:bg-gray-100 dark:hover:bg-gray-400 pl-100px ml-[30px]"
-                >
-                    <img
-                        class="object-cover w-full rounded-t-lg h-110 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg pl-100px"
-                        src={web[0].NewsCard.image}
-                        alt={web[0].NewsCard.alt}
-                    />
-                    <div
-                        class="flex flex-col justify-between p-4 leading-normal"
-                    >
-                        <p
-                            class="mb-3 font-normal text-gray-700 dark:text-black-400"
-                        >
-                            {web[0].NewsCard.date}
-                        </p>
-                        <h5
-                            class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black"
-                        >
-                            {web[0].NewsCard.title}
-                        </h5>
-                        <p
-                            class="mb-3 font-normal text-gray-700 dark:text-black-400"
-                        >
-                            {web[0].NewsCard.description}
-                        </p>
-                    </div>
-                </a>
-
-                <!-- Webinar B -->
-                <a
-                    href={web[1].NewsCard.link}
-                    class="flex flex-col items-center rounded-lg shadow-sm md:flex-row md:max-w-xl hover:bg-gray-100 dark:hover:bg-gray-400 pl-100px ml-[30px]"
-                >
-                    <img
-                        class="object-cover w-full rounded-t-lg h-110 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg pl-100px"
-                        src={web[1].NewsCard.image}
-                        alt={web[1].NewsCard.alt}
-                    />
-                    <div
-                        class="flex flex-col justify-between p-4 leading-normal"
-                    >
-                        <p
-                            class="mb-3 font-normal text-gray-700 dark:text-black-400"
-                        >
-                            {web[1].NewsCard.date}
-                        </p>
-                        <h5
-                            class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black"
-                        >
-                            {web[1].NewsCard.title}
-                        </h5>
-                        <p
-                            class="mb-3 font-normal text-gray-700 dark:text-black-400"
-                        >
-                            {web[1].NewsCard.description}
-                        </p>
-                    </div>
-                </a>
-
-                <!-- Webinar C -->
-                <a
-                    href={web[2].NewsCard.link}
-                    class="flex flex-col items-center rounded-lg shadow-sm md:flex-row md:max-w-xl hover:bg-gray-100 dark:hover:bg-gray-400 pl-100px ml-[30px]"
-                >
-                    <img
-                        class="object-cover w-full rounded-t-lg h-110 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg pl-100px"
-                        src={web[2].NewsCard.image}
-                        alt={web[2].NewsCard.alt}
-                    />
-                    <div
-                        class="flex flex-col justify-between p-4 leading-normal"
-                    >
-                        <p
-                            class="mb-3 font-normal text-gray-700 dark:text-black-400"
-                        >
-                            {web[2].NewsCard.date}
-                        </p>
-                        <h5
-                            class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black"
-                        >
-                            {web[2].NewsCard.title}
-                        </h5>
-                        <p
-                            class="mb-3 font-normal text-gray-700 dark:text-black-400"
-                        >
-                            {web[2].NewsCard.description}
-                        </p>
-                    </div>
-                </a>
+        </section>
+        
+        <section class="more-news-section">
+             <div class="cardnav-grid">
+                {cards.map(card => (
+                    <Cardnav image={getImageUrl(card.image)} icon={card.icon} text={card.text} source={card.source} link={card.link} date={card.date} />
+                ))}
             </div>
-
-            <div class="relative group">
-                <!-- Image -->
-                <a href={web[3].NewsCard.link}>
-                    <img
-                        class="h-full w-full object-fill"
-                        src={web[3].NewsCard.image}
-                        alt="Overlay Image"
-                    />
-
-                    <!-- Overlay -->
-                    <div
-                        class="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-6 bg-gradient-to-t from-black/70 to-transparent"
-                    >
-                        <p class="text-white text-sm mb-1">
-                            {web[3].NewsCard.date}
-                        </p>
-                        <h2 class="text-white font-bold text-2xl leading-snug">
-                            {web[3].NewsCard.title}
-                        </h2>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        <p
-            id="eventsTitle"
-            class="text-start text-[25px] mt-[40px] px-25 pt-20"
-        >
-            {NewsCard.title}
-        </p>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-25">
-            {cards.map((card) => <Cardnav {...card} />)}
-        </div>
+        </section>
     </div>
 </Layout>
 
 <style>
-    @media (max-width: 768px) {
-        /* Headlines */
-        .text-\[50px\] {
-            font-size: 30px;
-            margin: 20px;
-        }
+    .page-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
 
-        .m-\[150px\] {
-            margin: 20px;
-        }
+    .news-hero {
+        text-align: center;
+        padding: 4rem 2rem;
+        background-color: #f8f9fa;
+    }
 
-        .text-\[25px\] {
-            font-size: 18px;
-        }
+    .news-hero-title {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 5rem;
+        font-weight: bold;
+        color: #212529;
+    }
 
-        /* Grid responsiveness for News */
-        .grid-flow-col {
-            grid-auto-flow: row;
-        }
+    .section-title {
+        font-size: 2.5rem;
+        font-family: 'Bebas Neue', sans-serif;
+        margin-bottom: 2rem;
+        margin-top: 3rem;
+        color: #343a40;
+    }
 
-        .grid-rows-4 {
-            grid-template-rows: none;
-        }
+    .latest-news-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 1.5rem;
+        height: 600px;
+    }
 
-        .h-\[600px\] {
-            height: auto;
-        }
+    .main-news-card, .side-news-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 0.5rem;
+    }
 
-        .row-span-4,
-        .row-span-2 {
-            grid-row: auto / span 1;
-        }
+    .main-news-card img, .side-news-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    
+    .main-news-card:hover img, .side-news-card:hover img {
+        transform: scale(1.05);
+    }
 
-        .col-span-4,
-        .col-span-2 {
-            grid-column: auto / span 1;
-        }
+    .main-news-card-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 1.5rem;
+        color: white;
+        background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    }
 
-        .text-7xl {
-            font-size: 1.5rem;
-        }
+    .news-date {
+        font-size: 0.9rem;
+        font-weight: 300;
+        margin-bottom: 0.5rem;
+    }
 
-        .text-xl {
-            font-size: 1rem;
-        }
+    .news-description {
+        font-size: 2rem;
+        font-weight: bold;
+        font-family: 'Bebas Neue', sans-serif;
+    }
+    
+    .news-description-side {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
 
-        .absolute {
-            position: static;
-        }
+    .side-news-container {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        gap: 1.5rem;
+    }
+    
+    .side-news-card-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 1rem;
+        color: black;
+        background: rgba(255, 255, 255, 0.8);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .side-news-card:hover .side-news-card-overlay {
+        opacity: 1;
+    }
 
-        .group:hover .group-hover\:opacity-100 {
-            opacity: 1;
-        }
+    .events-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
 
-        .bg-white\/70 {
-            background-color: rgba(255, 255, 255, 1);
-        }
+    .event-card {
+        background: #ffffff;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
 
-        /* Events section */
-        .grid-cols-3 {
-            grid-template-columns: 1fr;
-        }
+    .event-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
 
-        .text-2xl {
-            font-size: 1.25rem;
-        }
+    .event-card-content {
+        padding: 1.5rem;
+    }
 
-        /* Webinar section */
-        .grid-cols-2 {
-            grid-template-columns: 1fr;
-        }
+    .event-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin: 0.5rem 0;
+    }
 
-        .md\:flex-row {
-            flex-direction: column;
-        }
+    .event-description {
+        font-size: 1rem;
+        color: #6c757d;
+    }
 
-        .md\:max-w-xl {
-            max-width: 100%;
-        }
+    .webinar-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
 
-        .md\:w-48 {
-            width: 100%;
-        }
+    .webinar-card {
+        display: flex;
+        background: #ffffff;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
 
-        .md\:h-auto {
-            height: auto;
-        }
+    .webinar-card img {
+        width: 200px;
+        height: auto;
+        object-fit: cover;
+    }
 
-        .md\:rounded-none {
-            border-radius: 0.5rem;
-        }
-
-        .md\:rounded-s-lg {
-            border-radius: 0.5rem;
-        }
-
-        /* Fix spacing */
-        .pl-100px {
-            padding-left: 0 !important;
-        }
-
-        .rounded-t-lg {
-            border-radius: 0.5rem;
-        }
-
-        .h-110 {
-            height: auto;
-        }
-
-        /* Button section */
-        .flex {
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .rounded-s-lg,
-        .rounded-e-lg {
-            border-radius: 0.5rem !important;
-        }
-
-        /* Background image column fix */
-        .bg-\[url\(.*\)\] {
-            background-size: cover;
-            height: 300px;
-        }
+    .webinar-card-content {
+        padding: 1.5rem;
+    }
+    
+    .webinar-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin: 0.5rem 0;
+    }
+    
+    .webinar-description {
+        font-size: 1rem;
+        color: #6c757d;
+    }
+    
+    .cardnav-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-top: 3rem;
     }
 </style>

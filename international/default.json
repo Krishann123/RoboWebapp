@@ -287,7 +287,7 @@
                                     "title": "Latest News",
                                     "subtitle": "ROBOLUTION DUBAI 2025",
                                     "date": "December 15- 18, 2025",
-                                    "image": "/image 143.png",
+                                    "image": "/src/assets/images/NewsUpdateImages/Robolution.png",
                                     "link": "https://web.facebook.com/share/p/18k7L7gcKt/",
                                     "alt": "Robolution"
                                 }
@@ -297,7 +297,7 @@
                                     "title": "Erovoutika Expansion",
                                     "description": "Erovoutika is now officially in Dubai!",
                                     "date": "Feb 16, 2025",
-                                    "image": "/image 99.png",
+                                    "image": "/src/assets/images/NewsUpdateImages/Robolution Competition.png",
                                     "link": "https://web.facebook.com/share/p/18k7L7gcKt/",
                                     "alt": "Robolution"
                                 }
@@ -307,7 +307,7 @@
                                     "title": "ROBOLUTION Dubai 2025",
                                     "subtitle": "ROBOLUTION: Robotics & Automation Competition 2025 – DUBAI",
                                     "date": "Dec. 15–18, 2025",
-                                    "image": "/image 144.png",
+                                    "image": "/src/assets/images/NewsUpdateImages/Robolution Competition.png",
                                     "link": "https://web.facebook.com/share/p/1AEJKkTnU9/",
                                     "alt": "Robolution Competition"
                                 }
@@ -320,7 +320,7 @@
                                     "title": "Murata Robolution: Erovouthon 2.0 Competition 2025",
                                     "description": "Successfully concluded on March 14, 2025 at FPIP.",
                                     "date": "March 13, 2025",
-                                    "image": "/image (2).png",
+                                    "image": "/src/assets/images/NewsUpdateImages/Erovouthon.png",
                                     "link": "https://web.facebook.com/share/p/193EG7LNdH/",
                                     "alt": "Erovouthon"
                                 }
@@ -330,7 +330,7 @@
                                     "title": "Murata Robolution: E-Robot Mobile Controlled Competition 2025",
                                     "description": "Congratulations to all winners and participants for their outstanding performance in advancing robotics and innovation!",
                                     "date": "March 17, 2025",
-                                    "image": "/image (3).png",
+                                    "image": "/src/assets/images/NewsUpdateImages/Erovouthon.png",
                                     "link": "https://web.facebook.com/share/p/18pB4HdkYZ/",
                                     "alt": "Erovouthon"
                                 }
@@ -340,7 +340,7 @@
                                     "title": "Enroll in Mathematics and Robotics Class",
                                     "description": "Prepare for International Competitions with our training sessions.",
                                     "date": "Jan 10, 2025",
-                                    "image": "/image (4).png",
+                                    "image": "/src/assets/images/NewsUpdateImages/Math.png",
                                     "link": "https://web.facebook.com/share/p/1RqQ7QDppZ/",
                                     "alt": "Math"
                                 }
@@ -353,7 +353,7 @@
                                     "title": "Beginner's Guide to Logic Circuits",
                                     "description": "Learn about logic gates, truth tables, and build circuits in our live demo.",
                                     "date": "Mar 17, 2025",
-                                    "image": "/image (5).png",
+                                    "image": "/src/assets/images/NewsUpdateImages/Logic Circuit.png",
                                     "link": "https://web.facebook.com/share/p/15YJaFG4UV/",
                                     "alt": "Logic Circuit"
                                 }
@@ -363,7 +363,7 @@
                                     "title": "AI and IoT Convergence",
                                     "description": "Explore the limitless possibilities of AIoT.",
                                     "date": "Mar 11, 2025",
-                                    "image": "/image (6).png",
+                                    "image": "/src/assets/images/NewsUpdateImages/IOT.png",
                                     "link": "https://web.facebook.com/share/p/16cZpmiNzc/",
                                     "alt": "IOT"
                                 }
@@ -373,7 +373,7 @@
                                     "title": "GearsBot Robotics Demo",
                                     "description": "Watch code turn into motion with a live demonstration of GearsBot.",
                                     "date": "Feb 24, 2025",
-                                    "image": "/image (7).png",
+                                    "image": "/src/assets/images/NewsUpdateImages/Gearbots.png",
                                     "link": "https://web.facebook.com/share/p/1HZERfBUyu/",
                                     "alt": "Gearbots"
                                 }
@@ -383,7 +383,7 @@
                                     "title": "Feeding The Mind Of AI",
                                     "description": "Understanding Neural Networks and CNNs in real-world AI development.",
                                     "date": "Mar 24, 2025",
-                                    "image": "/image 146.png",
+                                    "image": "/src/assets/images/NewsUpdateImages/AI.png",
                                     "link": "https://web.facebook.com/share/p/1AeJfiB5Cd/",
                                     "alt": "AI"
                                 }
@@ -394,7 +394,7 @@
                                 "title": "News 1",
                                 "subtitle": "The 𝐌𝐮𝐫𝐚𝐭𝐚 𝐑𝐨𝐛𝐨𝐥𝐮𝐭𝐢𝐨𝐧: 𝐄𝐫𝐨𝐯𝐨𝐮𝐭𝐡𝐨𝐧 𝟐.𝟎 𝐂𝐨𝐦𝐩𝐞𝐭𝐢𝐭𝐢𝐨𝐧 𝟐𝟎𝟐𝟓",
                                 "date": "May 8, 2025",
-                                "image": "/image (2).png",
+                                "image": "/src/assets/images/NewsUpdateImages/Erovouthon.png",
                                 "link": "https://web.facebook.com/share/p/193EG7LNdH/",
                                 "alt": "Erovouthon",
                                 "description": "Congratulations to all the winners and participants of 𝐌𝐮𝐫𝐚𝐭𝐚 𝐑𝐨𝐛𝐨𝐥𝐮𝐭𝐢𝐨𝐧: 𝐄-𝐑𝐨𝐛𝐨𝐭 𝐌𝐨𝐛𝐢𝐥𝐞 𝐂𝐨𝐧𝐭𝐫𝐨𝐥𝐥𝐞𝐝 𝐂𝐨𝐦𝐩𝐞𝐭𝐢𝐭𝐢𝐨𝐧 𝟐𝟎𝟐𝟓!  🏆Champion: DepEd Tayo Batangas City Integrated High School🥇1st Runner-up: De La Salle University-Dasmariñas🥈2nd Runner-up: OK sa DepEd Lutucan Integrated National High SchoolUniversity Participants:• FAITH Catholic School• Batangas City Integrated High School• Lipa City Science Integrated National High School "
@@ -403,7 +403,7 @@
                                 "title": "News 2",
                                 "subtitle": "Murata Robolution: E-Robot Mobile Controlled Competition 2025",
                                 "date": "March 17, 2025",
-                                "image": "/image (3).png",
+                                "image": "/src/assets/images/NewsUpdateImages/Erovouthon.png",
                                 "link": "https://web.facebook.com/share/p/18pB4HdkYZ/",
                                 "alt": "Erovouthon",
                                 "description": "Batangas City Integrated High School secured the championship title in the 𝐌𝐮𝐫𝐚𝐭𝐚 𝐑𝐨𝐛𝐨𝐥𝐮𝐭𝐢𝐨𝐧: 𝐄-𝐑𝐨𝐛𝐨𝐭 𝐌𝐨𝐛𝐢𝐥𝐞 𝐂𝐨𝐧𝐭𝐫𝐨𝐥𝐥𝐞𝐝 𝐂𝐨𝐦𝐩𝐞𝐭𝐢𝐭𝐢𝐨𝐧 𝟐𝟎𝟐𝟓, held to showcase the innovation and technical skills of young robotics enthusiasts on March 13, 2025 at the Philippine Manufacturing Co. of Murata, Inc., First Philippine Industrial Park (FPIP), Tanauan City, Batangas.🏆 Winners:🥇 Champion – Batangas City Integrated High School (The Volcano)🥈 1st Runner-up – De La Salle University-Dasmariñas (Anemo Spear)🥉 2nd Runner-up – Lutucan Integrated National High School ( Roboteam)The competition gathered talented students from various schools, with university participants including FAITH Catholic School and Lipa City Science Integrated National High School.Congratulations to all winners and participants for their outstanding performance in advancing robotics and innovation! 🚀"
@@ -412,7 +412,7 @@
                                 "title": "News 3",
                                 "subtitle": "Enroll in our Mathematics and Robotics Class! Prepare for International Competitions.",
                                 "date": "Jan 10, 2025",
-                                "image": "/image (4).png",
+                                "image": "/src/assets/images/NewsUpdateImages/Math.png",
                                 "link": "https://web.facebook.com/share/p/1RqQ7QDppZ/",
                                 "alt": "Math",
                                 "description": "🌟 Enroll in our Mathematics and Robotics Class! Prepare for International Competitions.👩‍🏫 Erovoutika Mathematics ProgramCATEGORIES: ELEMENTARY - SENIOR HIGHSCHOOL📅 World Championship 🇺🇸 USA - University of Minnesota🇮🇹 Italy - Roma Uninettuno University 🇹🇷 Turkey - Antalya Boğaziçi University🏆 Grand Reward:The champions of the International Fibonacci Olympiad in Italy, Turkey, and USA will be awarded an international scholarship and exchange program, giving them a chance to pursue their academic and career dreams on a global stage! 🌎✨🚀Enrollment link: https://bit.ly/EroMathClass👩‍🏫 Robotics & Automation ProgramLevel 1 to Level 5Level 6 to Level 10🌟 Robotics Competition: ASIA & EUROPE 🇹🇩🇦🇮🇹🇭🇹🇷🇺🇸🇪🇭🇻🇳🇻🇳🇭🇰🇨🇳"
@@ -777,96 +777,105 @@
                         "latest-news": [
                             {
                                 "NewsCard": {
-                                    "alt": "ROBOlution Dubai",
-                                    "date": "December 15-18, 2025",
-                                    "link": "https://www.facebook.com/share/p/1FjVj8sWys/",
-                                    "image": "/src/assets/images/NewsUpdateImages/Poster.png",
-                                    "title": "ROBOLUTION DUBAI 2025",
-                                    "description": "Join us for an International Training & Tournament Camp in Robotics & Automation and Cybersecurity with Certification!"
+                                    "image": "/src/assets/images/NewsUpdateImages/Robolution.png",
+                                    "date": "December 15- 18, 2025",
+                                    "description": "Robolution",
+                                    "alt": "Robolution",
+                                    "link": "#"
                                 }
                             },
                             {
                                 "NewsCard": {
-                                    "alt": "RobolutionDubai",
-                                    "date": "April 28, 2025",
-                                    "link": "https://www.facebook.com/share/p/16UfvX7ZW1/",
-                                    "image": "/src/assets/images/NewsUpdateImages/RobolutionDubai.jpg",
-                                    "title": "Calling All Robotics Coaches Around the Globe!",
-                                    "description": "Whether you're coaching in a local school or guiding international champions — this is your MOMENT."
+                                    "image": "/src/assets/images/NewsUpdateImages/Robolution Competition.png",
+                                    "date": "July 12, 2024",
+                                    "description": "Robolution Competition",
+                                    "alt": "Robolution Competition",
+                                    "link": "#"
                                 }
                             },
                             {
                                 "NewsCard": {
-                                    "alt": "Outstanding",
-                                    "date": "April 26, 2025",
-                                    "link": "https://www.facebook.com/share/p/16MmGyfeGb/",
-                                    "image": "/src/assets/images/NewsUpdateImages/Outstanding.jpg",
-                                    "title": "Erovoutika Honored as Outstanding Partner by St. Dominic College of Asia",
-                                    "description": "ERovoutika Electronics Robotics Automation has been awarded and recognized as an outstanding partner by St. Dominic College of Asia (SDCA) for its remarkable and invaluable contribution toward the institution's mission of providing holistic education for all towards a better quality of life."
+                                    "image": "/src/assets/images/NewsUpdateImages/Robolution Competition.png",
+                                    "date": "July 12, 2024",
+                                    "description": "Robolution Competition",
+                                    "alt": "Robolution Competition",
+                                    "link": "#"
                                 }
                             }
                         ],
                         "latest-events": [
                             {
                                 "NewsCard": {
-                                    "alt": "ROBOlution Dubai",
-                                    "date": "December 15-18, 2025",
-                                    "link": "https://www.facebook.com/share/p/1FjVj8sWys/",
-                                    "image": "/src/assets/images/NewsUpdateImages/Poster.png",
-                                    "title": "ROBOLUTION DUBAI 2025",
-                                    "description": "Join us for an International Training & Tournament Camp in Robotics & Automation and Cybersecurity with Certification!"
+                                    "events": "Events",
+                                    "title": "Murata Robolution: Erovouthon 2.0 Competition 2025",
+                                    "description": "Successfully concluded on March 14, 2025 at FPIP.",
+                                    "date": "March 13, 2025",
+                                    "image": "/src/assets/images/NewsUpdateImages/Erovouthon.png",
+                                    "link": "https://web.facebook.com/share/p/193EG7LNdH/",
+                                    "alt": "Erovouthon"
                                 }
                             },
                             {
                                 "NewsCard": {
-                                    "alt": "RobolutionDubai",
-                                    "date": "April 28, 2025",
-                                    "link": "https://www.facebook.com/share/p/16UfvX7ZW1/",
-                                    "image": "/src/assets/images/NewsUpdateImages/RobolutionDubai.jpg",
-                                    "title": "Calling All Robotics Coaches Around the Globe!",
-                                    "description": "Whether you're coaching in a local school or guiding international champions — this is your MOMENT."
+                                    "title": "Murata Robolution: E-Robot Mobile Controlled Competition 2025",
+                                    "description": "Congratulations to all winners and participants for their outstanding performance in advancing robotics and innovation!",
+                                    "date": "March 17, 2025",
+                                    "image": "/src/assets/images/NewsUpdateImages/Erovouthon.png",
+                                    "link": "https://web.facebook.com/share/p/18pB4HdkYZ/",
+                                    "alt": "Erovouthon"
                                 }
                             },
                             {
                                 "NewsCard": {
-                                    "alt": "Outstanding",
-                                    "date": "April 26, 2025",
-                                    "link": "https://www.facebook.com/share/p/16MmGyfeGb/",
-                                    "image": "/src/assets/images/NewsUpdateImages/Outstanding.jpg",
-                                    "title": "Erovoutika Honored as Outstanding Partner by St. Dominic College of Asia",
-                                    "description": "ERovoutika Electronics Robotics Automation has been awarded and recognized as an outstanding partner by St. Dominic College of Asia (SDCA) for its remarkable and invaluable contribution toward the institution's mission of providing holistic education for all towards a better quality of life."
+                                    "title": "Enroll in Mathematics and Robotics Class",
+                                    "description": "Prepare for International Competitions with our training sessions.",
+                                    "date": "Jan 10, 2025",
+                                    "image": "/src/assets/images/NewsUpdateImages/Math.png",
+                                    "link": "https://web.facebook.com/share/p/1RqQ7QDppZ/",
+                                    "alt": "Math"
                                 }
                             }
                         ],
                         "latest-webinar": [
                             {
                                 "NewsCard": {
-                                    "alt": "ROBOlution Dubai",
-                                    "date": "December 15-18, 2025",
-                                    "link": "https://www.facebook.com/share/p/1FjVj8sWys/",
-                                    "image": "/src/assets/images/NewsUpdateImages/Poster.png",
-                                    "title": "ROBOLUTION DUBAI 2025",
-                                    "description": "Join us for an International Training & Tournament Camp in Robotics & Automation and Cybersecurity with Certification!"
+                                    "name": "Webinar",
+                                    "title": "Beginner's Guide to Logic Circuits",
+                                    "description": "Learn about logic gates, truth tables, and build circuits in our live demo.",
+                                    "date": "Mar 17, 2025",
+                                    "image": "/src/assets/images/NewsUpdateImages/Logic Circuit.png",
+                                    "link": "https://web.facebook.com/share/p/15YJaFG4UV/",
+                                    "alt": "Logic Circuit"
                                 }
                             },
                             {
                                 "NewsCard": {
-                                    "alt": "RobolutionDubai",
-                                    "date": "April 28, 2025",
-                                    "link": "https://www.facebook.com/share/p/16UfvX7ZW1/",
-                                    "image": "/src/assets/images/NewsUpdateImages/RobolutionDubai.jpg",
-                                    "title": "Calling All Robotics Coaches Around the Globe!",
-                                    "description": "Whether you're coaching in a local school or guiding international champions — this is your MOMENT."
+                                    "title": "AI and IoT Convergence",
+                                    "description": "Explore the limitless possibilities of AIoT.",
+                                    "date": "Mar 11, 2025",
+                                    "image": "/src/assets/images/NewsUpdateImages/IOT.png",
+                                    "link": "https://web.facebook.com/share/p/16cZpmiNzc/",
+                                    "alt": "IOT"
                                 }
                             },
                             {
                                 "NewsCard": {
-                                    "alt": "Outstanding",
-                                    "date": "April 26, 2025",
-                                    "link": "https://www.facebook.com/share/p/16MmGyfeGb/",
-                                    "image": "/src/assets/images/NewsUpdateImages/Outstanding.jpg",
-                                    "title": "Erovoutika Honored as Outstanding Partner by St. Dominic College of Asia",
-                                    "description": "ERovoutika Electronics Robotics Automation has been awarded and recognized as an outstanding partner by St. Dominic College of Asia (SDCA) for its remarkable and invaluable contribution toward the institution's mission of providing holistic education for all towards a better quality of life."
+                                    "title": "GearsBot Robotics Demo",
+                                    "description": "Watch code turn into motion with a live demonstration of GearsBot.",
+                                    "date": "Feb 24, 2025",
+                                    "image": "/src/assets/images/NewsUpdateImages/Gearbots.png",
+                                    "link": "https://web.facebook.com/share/p/1HZERfBUyu/",
+                                    "alt": "Gearbots"
+                                }
+                            },
+                            {
+                                "NewsCard": {
+                                    "title": "Feeding The Mind Of AI",
+                                    "description": "Understanding Neural Networks and CNNs in real-world AI development.",
+                                    "date": "Mar 24, 2025",
+                                    "image": "/src/assets/images/NewsUpdateImages/AI.png",
+                                    "link": "https://web.facebook.com/share/p/1AeJfiB5Cd/",
+                                    "alt": "AI"
                                 }
                             }
                         ]
