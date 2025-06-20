@@ -1,9 +1,9 @@
 import { e as createComponent, f as createAstro, r as renderTemplate, h as addAttribute, m as maybeRenderHead, k as renderComponent } from '../chunks/astro/server_C-kESatQ.mjs';
 import 'kleur/colors';
-import { $ as $$Layout } from '../chunks/Layout_DdGyDZKU.mjs';
+import { $ as $$Layout } from '../chunks/Layout_BBh2tBzR.mjs';
 /* empty css                                  */
 import 'clsx';
-import { f as fetchPageContent } from '../chunks/db_Dri7-qrb.mjs';
+import { s as supabase } from '../chunks/supabase-client_BrwR6F9D.mjs';
 /* empty css                                */
 export { renderers } from '../renderers.mjs';
 
@@ -20,25 +20,49 @@ const $$Cardnav = createComponent(($$result, $$props, $$slots) => {
 }, "C:/Users/Krishann/Desktop/Robo-combined/international/src/components/Cardnav.astro", void 0);
 
 const $$News = createComponent(async ($$result, $$props, $$slots) => {
-  const data = await fetchPageContent("News");
-  const Hero = data.Hero;
-  const latestnews = data["latest-news"];
-  const events = data["latest-events"];
-  const web = data["latest-webinar"];
-  const cards = data["latest-cards"];
-  const getImageUrl = (path) => {
-    if (typeof path === "string") {
-      if (path.startsWith("public/")) {
-        return "/international/" + path.substring(7);
-      }
-      if (path.startsWith("/")) {
-        return "/international" + path;
-      }
+  const { data: templateData, error: templateError } = await supabase.from("Templates").select("config").eq("Name", "Default").single();
+  if (templateError) {
+    console.error("Error fetching template:", templateError);
+  }
+  const Hero = templateData?.config?.Contents?.News?.Hero || {};
+  const latestnews = templateData?.config?.Contents?.News["latest-news"] || [];
+  const events = templateData?.config?.Contents?.News["latest-events"] || [];
+  const web = templateData?.config?.Contents?.News["latest-webinar"] || [];
+  const cards = templateData?.config?.Contents?.News["latest-cards"] || [];
+  const getImageUrl = (imagePath) => {
+    if (typeof imagePath !== "string") return "/images/placeholder.png";
+    if (imagePath.startsWith("http")) {
+      return imagePath;
     }
-    return path;
+    if (imagePath.startsWith("/image-")) {
+      return imagePath;
+    }
+    if (imagePath.startsWith("/src/assets/")) {
+      return `/international${imagePath}`;
+    }
+    if (imagePath.startsWith("/public/")) {
+      return `/international${imagePath}`;
+    }
+    if (imagePath.startsWith("/images/")) {
+      return imagePath;
+    }
+    return `/international/${imagePath}`;
   };
-  return renderTemplate`${renderComponent($$result, "Layout", $$Layout, { "title": "Erovoutika Dubai - News", "data-astro-cid-tpum64yd": true }, { "default": async ($$result2) => renderTemplate` ${maybeRenderHead()}<section class="news-hero" data-astro-cid-tpum64yd> <h1 class="news-hero-title" data-astro-cid-tpum64yd>${Hero.title}</h1> </section> <div class="page-container" data-astro-cid-tpum64yd> <section class="latest-news-section" data-astro-cid-tpum64yd> <h2 class="section-title" data-astro-cid-tpum64yd>${latestnews?.[0]?.NewsCard?.title}</h2> <div class="latest-news-grid" data-astro-cid-tpum64yd> <div class="main-news-card" data-astro-cid-tpum64yd> <a${addAttribute(latestnews?.[0]?.NewsCard?.link, "href")} data-astro-cid-tpum64yd> <img${addAttribute(getImageUrl(latestnews?.[0]?.NewsCard?.image), "src")}${addAttribute(latestnews?.[0]?.NewsCard?.alt, "alt")} data-astro-cid-tpum64yd> <div class="main-news-card-overlay" data-astro-cid-tpum64yd> <p class="news-date" data-astro-cid-tpum64yd>${latestnews?.[0]?.NewsCard?.date}</p> <p class="news-description" data-astro-cid-tpum64yd>${latestnews?.[0]?.NewsCard?.description}</p> </div> </a> </div> <div class="side-news-container" data-astro-cid-tpum64yd> <div class="side-news-card" data-astro-cid-tpum64yd> <a${addAttribute(latestnews?.[1]?.NewsCard?.link, "href")} data-astro-cid-tpum64yd> <img${addAttribute(getImageUrl(latestnews?.[1]?.NewsCard?.image), "src")}${addAttribute(latestnews?.[1]?.NewsCard?.alt, "alt")} data-astro-cid-tpum64yd> <div class="side-news-card-overlay" data-astro-cid-tpum64yd> <p class="news-date" data-astro-cid-tpum64yd>${latestnews?.[1]?.NewsCard?.date}</p> <p class="news-description-side" data-astro-cid-tpum64yd>${latestnews?.[1]?.NewsCard?.description}</p> </div> </a> </div> <div class="side-news-card" data-astro-cid-tpum64yd> <a${addAttribute(latestnews?.[2]?.NewsCard?.link, "href")} data-astro-cid-tpum64yd> <img${addAttribute(getImageUrl(latestnews?.[2]?.NewsCard?.image), "src")}${addAttribute(latestnews?.[2]?.NewsCard?.alt, "alt")} data-astro-cid-tpum64yd> <div class="side-news-card-overlay" data-astro-cid-tpum64yd> <p class="news-date" data-astro-cid-tpum64yd>${latestnews?.[2]?.NewsCard?.date}</p> <p class="news-description-side" data-astro-cid-tpum64yd>${latestnews?.[2]?.NewsCard?.description}</p> </div> </a> </div> </div> </div> </section> <section class="events-section" data-astro-cid-tpum64yd> <h2 class="section-title" data-astro-cid-tpum64yd>${events?.[0]?.NewsCard?.events}</h2> <div class="events-grid" data-astro-cid-tpum64yd> ${events.map((event) => renderTemplate`<div class="event-card" data-astro-cid-tpum64yd> <a${addAttribute(event.NewsCard.link, "href")} data-astro-cid-tpum64yd> <img${addAttribute(getImageUrl(event.NewsCard.image), "src")}${addAttribute(event.NewsCard.alt, "alt")} data-astro-cid-tpum64yd> </a> <div class="event-card-content" data-astro-cid-tpum64yd> <p class="news-date" data-astro-cid-tpum64yd>${event.NewsCard.date}</p> <h5 class="event-title" data-astro-cid-tpum64yd>${event.NewsCard.title}</h5> <p class="event-description" data-astro-cid-tpum64yd>${event.NewsCard.description}</p> </div> </div>`)} </div> </section> <section class="webinar-section" data-astro-cid-tpum64yd> <h2 class="section-title" data-astro-cid-tpum64yd>${web?.[0]?.NewsCard?.name}</h2> <div class="webinar-grid" data-astro-cid-tpum64yd> ${web.slice(1).map((item) => renderTemplate`<a${addAttribute(item.NewsCard.link, "href")} class="webinar-card" data-astro-cid-tpum64yd> <img${addAttribute(getImageUrl(item.NewsCard.image), "src")}${addAttribute(item.NewsCard.alt, "alt")} data-astro-cid-tpum64yd> <div class="webinar-card-content" data-astro-cid-tpum64yd> <p class="news-date" data-astro-cid-tpum64yd>${item.NewsCard.date}</p> <h5 class="webinar-title" data-astro-cid-tpum64yd>${item.NewsCard.title}</h5> <p class="webinar-description" data-astro-cid-tpum64yd>${item.NewsCard.description}</p> </div> </a>`)} </div> </section> <section class="more-news-section" data-astro-cid-tpum64yd> <div class="cardnav-grid" data-astro-cid-tpum64yd> ${cards.map((card) => renderTemplate`${renderComponent($$result2, "Cardnav", $$Cardnav, { "image": getImageUrl(card.image), "icon": card.icon, "text": card.text, "source": card.source, "link": card.link, "date": card.date, "data-astro-cid-tpum64yd": true })}`)} </div> </section> </div> ` })} `;
+  const formatUrl = (url) => {
+    if (typeof url !== "string" || url.trim() === "" || url.trim() === "#") {
+      return "#";
+    }
+    if (url.startsWith("http://") || url.startsWith("https://")) {
+      return url;
+    }
+    if (url.startsWith("/")) {
+      return url;
+    }
+    return `https://${url}`;
+  };
+  return renderTemplate`${renderComponent($$result, "Layout", $$Layout, { "title": "Erovoutika Dubai - News", "data-astro-cid-tpum64yd": true }, { "default": async ($$result2) => renderTemplate` ${maybeRenderHead()}<section class="news-hero" data-astro-cid-tpum64yd> <h1 class="news-hero-title" data-astro-cid-tpum64yd>${Hero?.title}</h1> </section> <div class="page-container" data-astro-cid-tpum64yd> <section class="latest-news-section" data-astro-cid-tpum64yd> <h2 class="section-title" data-astro-cid-tpum64yd>Latest News</h2> <div class="scalable-news-grid" data-astro-cid-tpum64yd> ${latestnews.map((newsItem) => renderTemplate`<div class="news-item-card" data-astro-cid-tpum64yd> <a${addAttribute(formatUrl(newsItem.NewsCard.link), "href")} data-astro-cid-tpum64yd> <img${addAttribute(getImageUrl(newsItem.NewsCard.image), "src")}${addAttribute(newsItem.NewsCard.alt, "alt")} data-astro-cid-tpum64yd> </a> <div class="news-item-card-content" data-astro-cid-tpum64yd> <p class="news-date" data-astro-cid-tpum64yd>${newsItem.NewsCard.date}</p> <h5 class="news-item-title" data-astro-cid-tpum64yd>${newsItem.NewsCard.description || newsItem.NewsCard.title}</h5> </div> </div>`)} </div> </section> <section class="events-section" data-astro-cid-tpum64yd> <h2 class="section-title" data-astro-cid-tpum64yd>${events?.[0]?.NewsCard?.events || "Events"}</h2> <div class="events-grid" data-astro-cid-tpum64yd> ${events.map((event) => renderTemplate`<div class="event-card" data-astro-cid-tpum64yd> <a${addAttribute(formatUrl(event.NewsCard.link), "href")} data-astro-cid-tpum64yd> <img${addAttribute(getImageUrl(event.NewsCard.image), "src")}${addAttribute(event.NewsCard.alt, "alt")} data-astro-cid-tpum64yd> </a> <div class="event-card-content" data-astro-cid-tpum64yd> <p class="news-date" data-astro-cid-tpum64yd>${event.NewsCard.date}</p> <h5 class="event-title" data-astro-cid-tpum64yd>${event.NewsCard.title}</h5> <p class="event-description" data-astro-cid-tpum64yd>${event.NewsCard.description}</p> </div> </div>`)} </div> </section> <section class="webinar-section" data-astro-cid-tpum64yd> <h2 class="section-title" data-astro-cid-tpum64yd>${web?.[0]?.NewsCard?.name || "Webinars"}</h2> <div class="webinar-grid" data-astro-cid-tpum64yd> ${web.map((item) => renderTemplate`<a${addAttribute(formatUrl(item.NewsCard.link), "href")} class="webinar-card" data-astro-cid-tpum64yd> <img${addAttribute(getImageUrl(item.NewsCard.image), "src")}${addAttribute(item.NewsCard.alt, "alt")} data-astro-cid-tpum64yd> <div class="webinar-card-content" data-astro-cid-tpum64yd> <p class="news-date" data-astro-cid-tpum64yd>${item.NewsCard.date}</p> <h5 class="webinar-title" data-astro-cid-tpum64yd>${item.NewsCard.title}</h5> <p class="webinar-description" data-astro-cid-tpum64yd>${item.NewsCard.description}</p> </div> </a>`)} </div> </section> <section class="more-news-section" data-astro-cid-tpum64yd> <div class="cardnav-grid" data-astro-cid-tpum64yd> ${cards.map((card) => renderTemplate`${renderComponent($$result2, "Cardnav", $$Cardnav, { "image": getImageUrl(card.image), "icon": card.icon, "text": card.text, "source": card.source, "link": formatUrl(card.link), "date": card.date, "data-astro-cid-tpum64yd": true })}`)} </div> </section> </div> ` })} `;
 }, "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/News.astro", void 0);
+
 const $$file = "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/News.astro";
 const $$url = "/international/News";
 

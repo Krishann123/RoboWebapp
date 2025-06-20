@@ -2,75 +2,103 @@
 import Layout from "../layouts/Layout.astro";
 import "../styles/global.css";
 import Cardnav from "../components/Cardnav.astro";
-import { fetchPageContent } from "@/components/db";
+import { supabase } from "@/lib/supabase-client";
 
-const data = await fetchPageContent("News");
-const Hero = data.Hero;
-const latestnews = data["latest-news"];
-const events = data["latest-events"];
-const web = data["latest-webinar"];
-const cards = data["latest-cards"];
+// Fetch the Default template from Supabase
+const { data: templateData, error: templateError } = await supabase
+    .from('Templates')
+    .select('config')
+    .eq('Name', 'Default')
+    .single();
 
-const getImageUrl = (path) => {
-    if (typeof path === 'string') {
-        if (path.startsWith('public/')) {
-            return import.meta.env.BASE_URL + '/' + path.substring(7);
-        }
-        if (path.startsWith('/')) {
-            return import.meta.env.BASE_URL + path;
-        }
+if (templateError) {
+    console.error('Error fetching template:', templateError);
+}
+
+// Extract the News content from the template
+const Hero = templateData?.config?.Contents?.News?.Hero || {};
+const latestnews = templateData?.config?.Contents?.News["latest-news"] || [];
+const events = templateData?.config?.Contents?.News["latest-events"] || [];
+const web = templateData?.config?.Contents?.News["latest-webinar"] || [];
+const cards = templateData?.config?.Contents?.News["latest-cards"] || [];
+
+const getImageUrl = (imagePath) => {
+    if (typeof imagePath !== 'string') return '/images/placeholder.png'; // Return placeholder if path is not a string
+
+    // If it's an external URL, use it directly
+    if (imagePath.startsWith('http')) {
+        return imagePath;
     }
-    return path;
+
+    // Handle new image uploads directly to the public directory
+    if (imagePath.startsWith('/image-')) {
+        // These should be served directly from the public directory
+        return imagePath;
+    }
+
+    // For local assets, construct the path relative to the Robolution public directory
+    // based on the monorepo build process.
+    if (imagePath.startsWith('/src/assets/')) {
+        return `/international${imagePath}`;
+    }
+    
+    // Handle older /public/ paths if they exist
+    if (imagePath.startsWith('/public/')) {
+         return `/international${imagePath}`;
+    }
+
+    // Handle images that start with /images (uploaded through the admin panel)
+    if (imagePath.startsWith('/images/')) {
+        return imagePath;
+    }
+
+    // Fallback for any other path format
+    return `/international/${imagePath}`;
+};
+
+const formatUrl = (url) => {
+    if (typeof url !== 'string' || url.trim() === '' || url.trim() === '#') {
+        return '#';
+    }
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+        return url;
+    }
+    if (url.startsWith('/')) { // Internal link
+        return url;
+    }
+    return `https://${url}`;
 };
 ---
 
 <Layout title="Erovoutika Dubai - News">
     <section class="news-hero">
-        <h1 class="news-hero-title">{Hero.title}</h1>
+        <h1 class="news-hero-title">{Hero?.title}</h1>
     </section>
 
     <div class="page-container">
         <section class="latest-news-section">
-            <h2 class="section-title">{latestnews?.[0]?.NewsCard?.title}</h2>
-            <div class="latest-news-grid">
-                <div class="main-news-card">
-                    <a href={latestnews?.[0]?.NewsCard?.link}>
-                        <img src={getImageUrl(latestnews?.[0]?.NewsCard?.image)} alt={latestnews?.[0]?.NewsCard?.alt} />
-                        <div class="main-news-card-overlay">
-                            <p class="news-date">{latestnews?.[0]?.NewsCard?.date}</p>
-                            <p class="news-description">{latestnews?.[0]?.NewsCard?.description}</p>
+            <h2 class="section-title">Latest News</h2>
+            <div class="scalable-news-grid">
+                {latestnews.map(newsItem => (
+                    <div class="news-item-card">
+                        <a href={formatUrl(newsItem.NewsCard.link)}>
+                            <img src={getImageUrl(newsItem.NewsCard.image)} alt={newsItem.NewsCard.alt} />
+                        </a>
+                        <div class="news-item-card-content">
+                            <p class="news-date">{newsItem.NewsCard.date}</p>
+                            <h5 class="news-item-title">{newsItem.NewsCard.description || newsItem.NewsCard.title}</h5>
                         </div>
-                    </a>
-                </div>
-                <div class="side-news-container">
-                    <div class="side-news-card">
-                        <a href={latestnews?.[1]?.NewsCard?.link}>
-                            <img src={getImageUrl(latestnews?.[1]?.NewsCard?.image)} alt={latestnews?.[1]?.NewsCard?.alt} />
-                            <div class="side-news-card-overlay">
-                                <p class="news-date">{latestnews?.[1]?.NewsCard?.date}</p>
-                                <p class="news-description-side">{latestnews?.[1]?.NewsCard?.description}</p>
-                            </div>
-                        </a>
                     </div>
-                    <div class="side-news-card">
-                        <a href={latestnews?.[2]?.NewsCard?.link}>
-                            <img src={getImageUrl(latestnews?.[2]?.NewsCard?.image)} alt={latestnews?.[2]?.NewsCard?.alt} />
-                             <div class="side-news-card-overlay">
-                                <p class="news-date">{latestnews?.[2]?.NewsCard?.date}</p>
-                                <p class="news-description-side">{latestnews?.[2]?.NewsCard?.description}</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+                ))}
             </div>
         </section>
 
         <section class="events-section">
-            <h2 class="section-title">{events?.[0]?.NewsCard?.events}</h2>
+            <h2 class="section-title">{events?.[0]?.NewsCard?.events || 'Events'}</h2>
             <div class="events-grid">
                 {events.map(event => (
                     <div class="event-card">
-                        <a href={event.NewsCard.link}>
+                        <a href={formatUrl(event.NewsCard.link)}>
                             <img src={getImageUrl(event.NewsCard.image)} alt={event.NewsCard.alt} />
                         </a>
                         <div class="event-card-content">
@@ -84,10 +112,10 @@ const getImageUrl = (path) => {
         </section>
 
         <section class="webinar-section">
-            <h2 class="section-title">{web?.[0]?.NewsCard?.name}</h2>
+            <h2 class="section-title">{web?.[0]?.NewsCard?.name || 'Webinars'}</h2>
              <div class="webinar-grid">
-                {web.slice(1).map(item => (
-                    <a href={item.NewsCard.link} class="webinar-card">
+                {web.map(item => (
+                    <a href={formatUrl(item.NewsCard.link)} class="webinar-card">
                         <img src={getImageUrl(item.NewsCard.image)} alt={item.NewsCard.alt} />
                         <div class="webinar-card-content">
                             <p class="news-date">{item.NewsCard.date}</p>
@@ -102,7 +130,7 @@ const getImageUrl = (path) => {
         <section class="more-news-section">
              <div class="cardnav-grid">
                 {cards.map(card => (
-                    <Cardnav image={getImageUrl(card.image)} icon={card.icon} text={card.text} source={card.source} link={card.link} date={card.date} />
+                    <Cardnav image={getImageUrl(card.image)} icon={card.icon} text={card.text} source={card.source} link={formatUrl(card.link)} date={card.date} />
                 ))}
             </div>
         </section>
@@ -137,77 +165,41 @@ const getImageUrl = (path) => {
         color: #343a40;
     }
 
-    .latest-news-grid {
+    /* NEW SCALABLE NEWS GRID */
+    .scalable-news-grid {
         display: grid;
-        grid-template-columns: 2fr 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
         gap: 1.5rem;
-        height: 600px;
     }
 
-    .main-news-card, .side-news-card {
-        position: relative;
-        overflow: hidden;
+    .news-item-card {
+        background: #ffffff;
         border-radius: 0.5rem;
-    }
-
-    .main-news-card img, .side-news-card img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        overflow: hidden;
         transition: transform 0.3s ease;
     }
-    
-    .main-news-card:hover img, .side-news-card:hover img {
-        transform: scale(1.05);
+    .news-item-card:hover {
+        transform: translateY(-5px);
     }
-
-    .main-news-card-overlay {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
+    .news-item-card img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+    }
+    .news-item-card-content {
         padding: 1.5rem;
-        color: white;
-        background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
     }
-
+    .news-item-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+        margin-top: 0.5rem;
+    }
+    
     .news-date {
         font-size: 0.9rem;
         font-weight: 300;
         margin-bottom: 0.5rem;
-    }
-
-    .news-description {
-        font-size: 2rem;
-        font-weight: bold;
-        font-family: 'Bebas Neue', sans-serif;
-    }
-    
-    .news-description-side {
-        font-size: 1.2rem;
-        font-weight: bold;
-    }
-
-    .side-news-container {
-        display: grid;
-        grid-template-rows: 1fr 1fr;
-        gap: 1.5rem;
-    }
-    
-    .side-news-card-overlay {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 1rem;
-        color: black;
-        background: rgba(255, 255, 255, 0.8);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-    
-    .side-news-card:hover .side-news-card-overlay {
-        opacity: 1;
     }
 
     .events-grid {
@@ -256,10 +248,12 @@ const getImageUrl = (path) => {
         border-radius: 0.5rem;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         overflow: hidden;
+        color: inherit;
+        text-decoration: none;
     }
 
     .webinar-card img {
-        width: 200px;
+        width: 300px;
         height: auto;
         object-fit: cover;
     }
@@ -267,13 +261,13 @@ const getImageUrl = (path) => {
     .webinar-card-content {
         padding: 1.5rem;
     }
-    
+
     .webinar-title {
         font-size: 1.5rem;
         font-weight: bold;
         margin: 0.5rem 0;
     }
-    
+
     .webinar-description {
         font-size: 1rem;
         color: #6c757d;
@@ -281,8 +275,7 @@ const getImageUrl = (path) => {
     
     .cardnav-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 1.5rem;
-        margin-top: 3rem;
     }
 </style>

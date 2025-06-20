@@ -1,4 +1,4 @@
-import { c as addNewsCard } from '../../chunks/db_Dri7-qrb.mjs';
+import { c as addNewsCard } from '../../chunks/db_EK65h4qK.mjs';
 export { renderers } from '../../renderers.mjs';
 
 const prerender = false;

@@ -2,8 +2,8 @@ import { e as createComponent, r as renderTemplate, m as maybeRenderHead, k as r
 import 'kleur/colors';
 import 'clsx';
 /* empty css                                           */
-import { $ as $$Layout } from '../chunks/Layout_DdGyDZKU.mjs';
-import { f as fetchPageContent } from '../chunks/db_Dri7-qrb.mjs';
+import { $ as $$Layout } from '../chunks/Layout_BBh2tBzR.mjs';
+import { f as fetchPageContent } from '../chunks/db_EK65h4qK.mjs';
 export { renderers } from '../renderers.mjs';
 
 var __freeze$1 = Object.freeze;

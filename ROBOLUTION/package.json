@@ -51,7 +51,8 @@
     "otp-generator": "^4.0.1",
     "postmark": "^4.0.5",
     "qrcode": "^1.5.4",
-    "speakeasy": "^2.0.0"
+    "speakeasy": "^2.0.0",
+    "@supabase/supabase-js": "^2.39.0"
   },
   "devDependencies": {
     "fs-extra": "^11.3.0",

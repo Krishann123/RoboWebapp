@@ -4,28 +4,26 @@ import { supabase } from "@/lib/supabase-client";
 
 // More robust path resolution
 const findDefaultJsonPath = () => {
-  // Try current directory first (development mode)
-  const localPath = "./default.json";
-  if (fs.existsSync(localPath)) {
-    console.log("Using local default.json file");
-    return localPath;
+  // Construct the path relative to the current module's directory
+  // This is more reliable than using process.cwd() in some environments.
+  const projectRoot = path.resolve(process.cwd(), '..');
+  const internationalDir = path.resolve(projectRoot, 'international');
+  const jsonPath = path.join(internationalDir, "default.json");
+
+  if (fs.existsSync(jsonPath)) {
+    console.log(`Using default.json from: ${jsonPath}`);
+    return jsonPath;
   }
   
-  // Try parent directory (production mode - could be in ROBOLUTION directory)
-  try {
-    const rootDir = process.cwd();
-    const parentPath = path.join(rootDir, "default.json");
-    if (fs.existsSync(parentPath)) {
-      console.log(`Using default.json from: ${parentPath}`);
-      return parentPath;
-    }
-  } catch (err) {
-    console.error("Error checking parent directory:", err);
+  // Fallback for different project structures
+  const fallbackPath = path.resolve(process.cwd(), "default.json");
+   if (fs.existsSync(fallbackPath)) {
+    console.log(`Using default.json from fallback: ${fallbackPath}`);
+    return fallbackPath;
   }
-  
-  // Fallback to original path
-  console.warn("Using fallback path for default.json");
-  return "./default.json";
+
+  console.error("Could not find default.json");
+  throw new Error("default.json not found");
 };
 
 const jsonPath = findDefaultJsonPath();
@@ -70,34 +68,6 @@ function mapDbRowsToObjects(rows) {
     return rows.map(({ Name, config }) => {
         return { [Name]: config };
     });
-}
-
-async function insertDbData() {
-    const tdata = readFile(); // Read data from the JSON file
-    const templates = tdata.templates;
-
-    const insertData = templates.map((template) => {
-        const name = Object.keys(template)[0];
-        const config = Object.values(template)[0];
-        return {
-            Name: name,
-            config: config, // JSON field
-        };
-    });
-    try {
-        // Perform the upsert operation
-        const { data, error } = await connectionInfo.db
-            .from("Templates")
-            .upsert(insertData, { onConflict: "Name" }); // Use "Name" as the unique key
-
-        if (error) {
-            console.error("Error inserting/updating data:", error);
-        } else {
-            console.log("Inserted/Updated data:", data);
-        }
-    } catch (err) {
-        console.error("Unexpected error:", err);
-    }
 }
 
 function readFile(dbName = jsonPath) {
@@ -235,7 +205,6 @@ function updateContent(location, description) {
     }
 
     writeFile(jsonPath, fileData);
-    insertDbData(); // Insert the updated data into the database
 }
 
 function addNewsCard(category, newsCardObj) {
@@ -254,11 +223,9 @@ function addNewsCard(category, newsCardObj) {
     }
 
     writeFile(jsonPath, fileData);
-    insertDbData();
 }
 
 await getDbData(); // Call the function to fetch data from the database
-await insertDbData(); // Call the function to insert data into the database
 
 //for creating a new template not yet in use
 function createNewData(name = "New Template") {
@@ -271,7 +238,6 @@ function createNewData(name = "New Template") {
         },
     });
     writeFile(jsonPath, fileData);
-    insertDbData();
 }
 
 function getData() {

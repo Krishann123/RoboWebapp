@@ -786,6 +786,7 @@ async function uploadToCloudinary(filePath, folder = 'robolution') {
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));  // To serve static files
+app.use(express.static(path.join(__dirname, '..', 'international', 'public')));  // Serve files from international public directory
 
 // Redirect for Astro pages
 const astroPages = ['/News', '/Trainings', '/Tournament', '/Awards', '/Nominations_Tab'];
@@ -826,14 +827,33 @@ app.use('/international/src/assets', express.static(path.join(__dirname, '../int
 // Serve static files for the Dubai site at /international
 app.use('/international', express.static(path.join(__dirname, 'public/international')));
 
+// Serve international public folder
+app.use('/international/public', express.static(path.join(__dirname, '..', 'international', 'public'), {
+  setHeaders: (res, path) => {
+    res.setHeader('X-Asset-Source', 'International public assets');
+  }
+}));
+
+// Serve international src folder directly for proper image loading
+app.use('/international/src', express.static(path.join(__dirname, '..', 'international', 'src'), {
+  setHeaders: (res, path) => {
+    res.setHeader('X-Asset-Source', 'International src assets');
+  }
+}));
+
 // Serve video files
 app.use('/videos', express.static(path.join(__dirname, 'public/videos')));
 
 app.use(express.json());
 
-// Password reset routes
+// Routes
 const passwordResetRoutes = require('./routes/password-reset');
+const adminRoutes = require('./routes/admin');
+const apiRoutes = require('./routes/api');
+
 app.use('/password-reset', passwordResetRoutes);
+app.use('/admin', adminRoutes);
+app.use('/api', apiRoutes);
 
 // Direct routes for password reset (fallbacks)
 app.get('/password-reset/reset/:token', async (req, res) => {
