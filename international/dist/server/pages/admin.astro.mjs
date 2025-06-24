@@ -7,8 +7,8 @@ import { ChevronDownIcon, XIcon } from 'lucide-react';
 import { c as cn } from '../chunks/utils_B05Dmz_H.mjs';
 import { Slot } from '@radix-ui/react-slot';
 import { cva } from 'class-variance-authority';
-import { $ as $$Layout } from '../chunks/Layout_BBh2tBzR.mjs';
-import { g as getPageDetails, f as fetchPageContent, a as getData, b as getSelectedIndex } from '../chunks/db_EK65h4qK.mjs';
+import { $ as $$Layout } from '../chunks/Layout_hV_SdrMw.mjs';
+import { g as getPageDetails, f as fetchPageContent, a as getData, b as getSelectedIndex } from '../chunks/db_BLiRlGFB.mjs';
 import 'clsx';
 /* empty css                                 */
 import * as DialogPrimitive from '@radix-ui/react-dialog';
@@ -665,7 +665,7 @@ Toggle Banner
 }, "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/admin.astro", void 0);
 
 const $$file = "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/admin.astro";
-const $$url = "/international/admin";
+const $$url = "/dubai/admin";
 
 const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,

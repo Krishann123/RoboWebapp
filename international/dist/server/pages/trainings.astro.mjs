@@ -1,8 +1,8 @@
 import { e as createComponent, k as renderComponent, l as renderScript, r as renderTemplate, m as maybeRenderHead, u as unescapeHTML, h as addAttribute } from '../chunks/astro/server_C-kESatQ.mjs';
 import 'kleur/colors';
-import { f as fetchPageContent } from '../chunks/db_EK65h4qK.mjs';
-import { $ as $$Layout } from '../chunks/Layout_BBh2tBzR.mjs';
-import { $ as $$Hero } from '../chunks/Hero_Bdwcko-w.mjs';
+import { f as fetchPageContent } from '../chunks/db_BLiRlGFB.mjs';
+import { $ as $$Layout } from '../chunks/Layout_hV_SdrMw.mjs';
+import { $ as $$Hero } from '../chunks/Hero_CJJ83nJA.mjs';
 /* empty css                                     */
 export { renderers } from '../renderers.mjs';
 
@@ -13,7 +13,7 @@ const $$Trainings = createComponent(async ($$result, $$props, $$slots) => {
 }, "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/Trainings.astro", void 0);
 
 const $$file = "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/Trainings.astro";
-const $$url = "/international/Trainings";
+const $$url = "/dubai/Trainings";
 
 const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
     __proto__: null,

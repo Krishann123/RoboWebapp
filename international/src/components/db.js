@@ -82,6 +82,34 @@ function readFile(dbName = jsonPath) {
     }
 }
 
+// Get the template index for the current country context
+function getTemplateIndexForCurrentContext(requestHeaders) {
+    try {
+        // Check if request headers are available (server-side)
+        if (requestHeaders && requestHeaders.get) {
+            const countryHeader = requestHeaders.get('x-country-site');
+            if (countryHeader) {
+                const countryInfo = JSON.parse(countryHeader);
+                if (countryInfo && typeof countryInfo.templateIndex === 'number') {
+                    console.log(`Using template index ${countryInfo.templateIndex} for ${countryInfo.name}`);
+                    return countryInfo.templateIndex;
+                }
+            }
+        }
+        
+        // Client-side: use window.countryInfo if available
+        if (typeof window !== 'undefined' && window.countryInfo && typeof window.countryInfo.templateIndex === 'number') {
+            return window.countryInfo.templateIndex;
+        }
+    } catch (error) {
+        console.error('Error getting template index from context:', error);
+    }
+    
+    // If no country context is available, use the default selected index
+    const fileData = readFile();
+    return fileData.selectedIndex || 0;
+}
+
 function writeFile(dbName = jsonPath, newData) {
     console.log(`Writing to: ${dbName}`);
     try {
@@ -98,12 +126,21 @@ function deleteFileContents(dbName = jsonPath) {
     console.log("deleted");
 }
 
-async function fetchPageContent(pageName) {
+async function fetchPageContent(pageName, requestHeaders) {
     console.log(`Fetching content for page: ${pageName}`);
     const fileData = readFile();
-    const selectedIndex = fileData.selectedIndex;
+    
+    // Use country-specific template index if available
+    const selectedIndex = getTemplateIndexForCurrentContext(requestHeaders) || fileData.selectedIndex;
+    console.log(`Using template index: ${selectedIndex}`);
 
     try {
+        // Make sure the template exists
+        if (!fileData.templates[selectedIndex]) {
+            console.log(`Template index ${selectedIndex} not found, falling back to default`);
+            return fetchPageContent(pageName); // Recursive call without requestHeaders to use default
+        }
+        
         const contents = Object.values(fileData.templates[selectedIndex])[0].Contents;
         console.log(`Available content keys: ${Object.keys(contents).join(', ')}`);
         

@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Country Site | Robolution Admin</title>
+  <link rel="shortcut icon" href="/images/ROBOLUTION_ICON.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <script src="/js/script.js" defer></script>
+  <script src="/js/international-dropdown.js" defer></script>
+  <!-- Add Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    <% if (!locals.inDashboard) { %>
+    /* Admin Dashboard Layout Styles */
+    :root {
+      --primary-color: #00008b;
+      --primary-light: #1a1a9e;
+      --primary-dark: #000066;
+      --secondary-color: #4CAF50;
+      --secondary-hover: #45a049;
+      --text-light: #f8f9fa;
+      --text-dark: #343a40;
+      --bg-light: #ffffff;
+      --bg-dark: #212529;
+      --bg-gray: #f8f9fa;
+      --border-color: #dee2e6;
+      --sidebar-width: 250px;
+      --header-height: 70px;
+      --danger: #dc3545;
+      --warning: #ffc107;
+      --info: #17a2b8;
+      --success: #28a745;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-gray);
+      color: var(--text-dark);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Dashboard Layout */
+    .dashboard-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--primary-color);
+      color: var(--text-light);
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar.collapsed {
+      width: 70px;
+    }
+    
+    .sidebar.collapsed .sidebar-logo h1 {
+      display: none;
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .sidebar.collapsed .sidebar-header {
+      padding: 20px 10px;
+      justify-content: center;
+    }
+
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .sidebar-logo img {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+    
+    .sidebar.collapsed .sidebar-logo img {
+      margin-right: 0;
+    }
+
+    .sidebar-logo h1 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .sidebar-toggle {
+      background: none;
+      border: none;
+      color: var(--text-light);
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 4px;
+    }
+    
+    .sidebar.collapsed .sidebar-toggle {
+      position: absolute;
+      right: 10px;
+      top: 20px;
+    }
+
+    .sidebar-toggle:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar.collapsed .sidebar-toggle {
+      transform: rotate(180deg);
+    }
+    
+    .sidebar.collapsed .sidebar-text,
+    .sidebar.collapsed .sidebar-heading {
+      display: none;
+    }
+    
+    .sidebar.collapsed .sidebar-item {
+      display: flex;
+      justify-content: center;
+    }
+    
+    .sidebar.collapsed .sidebar-link {
+      padding: 12px;
+      justify-content: center;
+    }
+    
+    .sidebar.collapsed .sidebar-icon {
+      margin-right: 0;
+    }
+    
+    .sidebar.collapsed .sidebar-dropdown-toggle::after {
+      display: none;
+    }
+    
+    .sidebar.collapsed .sidebar-dropdown.active .sidebar-dropdown-menu {
+      display: none; /* Always hide dropdown when collapsed */
+    }
+
+    .sidebar-menu {
+      padding: 20px 0;
+    }
+
+    .sidebar-heading {
+      padding: 10px 20px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .sidebar-item {
+      position: relative;
+      display: block;
+    }
+
+    .sidebar-link {
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.8);
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-link:hover {
+      background-color: var(--primary-light);
+      color: white;
+    }
+
+    .sidebar-link.active {
+      background-color: var(--primary-light);
+      color: white;
+      border-left: 4px solid var(--secondary-color);
+    }
+
+    .sidebar-icon {
+      width: 20px;
+      text-align: center;
+      margin-right: 15px;
+      font-size: 16px;
+    }
+
+    .sidebar-text {
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .sidebar.collapsed .sidebar-text,
+    .sidebar.collapsed .sidebar-logo h1 {
+      display: none;
+    }
+
+    .sidebar-dropdown {
+      position: relative;
+    }
+
+    .sidebar-dropdown-menu {
+      display: none;
+      background-color: rgba(0, 0, 0, 0.1);
+      padding: 5px 0;
+    }
+
+    .sidebar-dropdown.active .sidebar-dropdown-menu {
+      display: block;
+    }
+
+    .sidebar-dropdown-link {
+      padding: 10px 10px 10px 55px;
+      display: block;
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-dropdown-link:hover {
+      color: white;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-dropdown-toggle::after {
+      content: '\f105';
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      position: absolute;
+      right: 20px;
+      top: 12px;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar-dropdown.active .sidebar-dropdown-toggle::after {
+      transform: rotate(90deg);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      transition: margin-left 0.3s ease;
+      position: relative;
+    }
+
+    .main-content.expanded {
+      margin-left: 70px;
+    }
+
+    /* Header */
+    .header {
+      background-color: white;
+      height: var(--header-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .header-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .user-dropdown {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .user-dropdown-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 5px;
+      background-color: transparent;
+      transition: all 0.3s;
+    }
+
+    .user-dropdown-btn:hover {
+      background-color: var(--bg-gray);
+    }
+
+    .user-avatar {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .user-role {
+      font-size: 0.8rem;
+      color: #6c757d;
+    }
+
+    .user-dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color: white;
+      border-radius: 5px;
+      padding: 5px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      min-width: 180px;
+      display: none;
+      z-index: 100;
+    }
+
+    .user-dropdown.active .user-dropdown-menu {
+      display: block;
+    }
+
+    .user-dropdown-item {
+      padding: 8px 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-dark);
+      font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+
+    .user-dropdown-item:hover {
+      background-color: var(--bg-gray);
+    }
+
+    .user-dropdown-item i {
+      font-size: 1rem;
+      width: 20px;
+      text-align: center;
+    }
+    <% } %>
+
+    /* Background color change */
+    body, main {
+      background-color: #f8f9fa;
+      background-image: none;
+    }
+    
+    .content-container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .page-title {
+      margin: 0;
+      color: #00008b;
+      font-size: 1.8rem;
+    }
+    
+    .back-button {
+      background-color: #6c757d;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background-color 0.2s;
+    }
+    
+    .back-button:hover {
+      background-color: #5a6268;
+    }
+    
+    .message {
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+    }
+    
+    .error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    
+    .form-section {
+      margin-bottom: 30px;
+    }
+    
+    .form-section-title {
+      font-size: 1.2rem;
+      color: #333;
+      margin-bottom: 15px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .form-row {
+      margin-bottom: 20px;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #333;
+    }
+    
+    .form-input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 1rem;
+    }
+    
+    .form-textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 1rem;
+      min-height: 100px;
+      resize: vertical;
+    }
+    
+    .form-select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: white;
+      box-sizing: border-box;
+      font-size: 1rem;
+    }
+    
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      border-color: #80bdff;
+      outline: 0;
+      box-shadow: 0 0 0 3px rgba(0,123,255,.25);
+    }
+    
+    .form-instructions {
+      font-size: 0.85rem;
+      color: #6c757d;
+      margin-top: 5px;
+    }
+    
+    .form-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+    
+    .submit-button {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+    
+    .submit-button:hover {
+      background-color: #218838;
+    }
+    
+    .cancel-button {
+      background-color: #dc3545;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      text-decoration: none;
+    }
+    
+    .cancel-button:hover {
+      background-color: #c82333;
+    }
+    
+    .color-preview {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+    
+    /* Flag preview */
+    .flag-preview {
+      width: 100%;
+      height: 100px;
+      border: 1px dashed #ddd;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      background-color: #f8f9fa;
+    }
+    
+    .flag-preview img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+    
+    .flag-upload-label {
+      display: inline-block;
+      background-color: #007bff;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    
+    .flag-upload-label:hover {
+      background-color: #0069d9;
+    }
+    
+    .hidden-input {
+      display: none;
+    }
+    
+    .template-selection {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+    
+    .template-selection:hover {
+      background-color: #f8f9fa;
+    }
+    
+    .template-selection.selected {
+      background-color: #e9f5fe;
+      border-color: #80bdff;
+    }
+    
+    .required-field::after {
+      content: "*";
+      color: red;
+      margin-left: 4px;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+      
+      .form-actions {
+        flex-direction: column-reverse;
+        gap: 15px;
+      }
+      
+      .form-actions button, .form-actions a {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <% if (!locals.inDashboard) { %>
+  <div class="dashboard-container">
+    <!-- Admin Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a href="/admin" class="sidebar-logo">
+          <img src="/images/ADMIN_LOGO.png" alt="Robolution Logo">
+          <h1>Robolution</h1>
+        </a>
+        <button class="sidebar-toggle" id="sidebar-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+
+      <div class="sidebar-menu">
+        <div class="sidebar-heading">Main</div>
+        <div class="sidebar-item">
+          <a href="/admin#dashboard" class="sidebar-link" data-page="dashboard">
+            <i class="fas fa-tachometer-alt sidebar-icon"></i>
+            <span class="sidebar-text">Dashboard</span>
+          </a>
+        </div>
+        <div class="sidebar-item">
+          <a href="/admin#posts" class="sidebar-link" data-page="posts">
+            <i class="fas fa-newspaper sidebar-icon"></i>
+            <span class="sidebar-text">Posts</span>
+          </a>
+        </div>
+        <div class="sidebar-item">
+          <a href="/admin#create-post" class="sidebar-link" data-page="create-post">
+            <i class="fas fa-plus-circle sidebar-icon"></i>
+            <span class="sidebar-text">Create Post</span>
+          </a>
+        </div>
+        
+        <div class="sidebar-heading">Content</div>
+        <div class="sidebar-item">
+          <a href="/admin#categories" class="sidebar-link" data-page="categories">
+            <i class="fas fa-layer-group sidebar-icon"></i>
+            <span class="sidebar-text">Categories</span>
+          </a>
+        </div>
+        <div class="sidebar-item">
+          <a href="/admin#manage-categories" class="sidebar-link" data-page="manage-categories">
+            <i class="fas fa-tasks sidebar-icon"></i>
+            <span class="sidebar-text">Manage Categories</span>
+          </a>
+        </div>
+
+        <div class="sidebar-heading">Users</div>
+        <% if (locals.user && user.role === 'superadmin') { %>
+        <div class="sidebar-item">
+          <a href="/admin#manage-accounts" class="sidebar-link" data-page="manage-accounts">
+            <i class="fas fa-users-cog sidebar-icon"></i>
+            <span class="sidebar-text">Manage Accounts</span>
+          </a>
+        </div>
+        <% } %>
+        <div class="sidebar-item">
+          <a href="/admin#user-profiles" class="sidebar-link" data-page="user-profiles">
+            <i class="fas fa-id-card sidebar-icon"></i>
+            <span class="sidebar-text">User Profiles</span>
+          </a>
+        </div>
+        
+        <div class="sidebar-heading">Registrations</div>
+        <div class="sidebar-item">
+          <a href="/admin#manage-registrations" class="sidebar-link" data-page="manage-registrations">
+            <i class="fas fa-clipboard-list sidebar-icon"></i>
+            <span class="sidebar-text">Manage Registrations</span>
+          </a>
+        </div>
+
+        <div class="sidebar-item sidebar-dropdown">
+          <a href="#regional" class="sidebar-link sidebar-dropdown-toggle" data-page="regional">
+            <i class="fas fa-map-marker-alt sidebar-icon"></i>
+            <span class="sidebar-text">Regional</span>
+          </a>
+          <div class="sidebar-dropdown-menu">
+            <a href="/admin#regional-all" class="sidebar-dropdown-link" data-region="All">All Regions</a>
+            <% if (typeof uniqueRegions !== 'undefined' && uniqueRegions.length > 0) { %>
+              <% uniqueRegions.forEach(function(region) { %>
+                <a href="/admin#regional-<%= region.toLowerCase().replace(/\s+/g, '-') %>" class="sidebar-dropdown-link" data-region="<%= region %>"><%= region %></a>
+              <% }); %>
+            <% } else { %>
+              <!-- Optional: Message if no specific regions beyond 'All' -->
+            <% } %>
+          </div>
+        </div>
+
+        <div class="sidebar-heading">International Sites</div>
+        <div class="sidebar-item">
+          <a href="/country-sites" class="sidebar-link active" data-page="country-sites">
+            <i class="fas fa-globe-americas sidebar-icon"></i>
+            <span class="sidebar-text">Country Sites</span>
+          </a>
+        </div>
+        <div class="sidebar-item">
+          <a href="/admin/international/news" class="sidebar-link">
+            <i class="fas fa-newspaper sidebar-icon"></i>
+            <span class="sidebar-text">Manage News</span>
+          </a>
+        </div>
+        <div class="sidebar-item">
+          <a href="/admin#manage-partners" class="sidebar-link" data-page="manage-partners">
+            <i class="fas fa-handshake sidebar-icon"></i>
+            <span class="sidebar-text">Manage Partners</span>
+          </a>
+        </div>
+        <div class="sidebar-item">
+          <a href="/logout" class="sidebar-link">
+            <i class="fas fa-sign-out-alt sidebar-icon"></i>
+            <span class="sidebar-text">Logout</span>
+          </a>
+        </div>
+      </div>
+    </aside>
+    
+    <main class="main-content" id="main-content">
+      <!-- Header -->
+      <%- include('../../partials/admin-header.ejs', {pageTitle: 'Create Country Site'}) %>
+  <% } %>
+      
+      <div class="content-container">
+        <div class="page-header">
+          <h1 class="page-title"><i class="fas fa-globe-americas"></i> Create Country Site</h1>
+          <a href="/country-sites<%= locals.inDashboard ? '?dashboard=true' : '' %>" class="back-button">
+            <i class="fas fa-arrow-left"></i> Back to Country Sites
+          </a>
+        </div>
+        
+        <% if (errorMessage && errorMessage.length > 0) { %>
+          <div class="message error">
+            <%= errorMessage %>
+          </div>
+        <% } %>
+        
+        <form action="/country-sites/create<%= locals.inDashboard ? '?dashboard=true' : '' %>" method="POST" enctype="multipart/form-data">
+          <div class="form-section">
+            <h2 class="form-section-title">Basic Information</h2>
+            
+            <div class="form-group">
+              <label for="name" class="form-label required-field">Country Name</label>
+              <input type="text" id="name" name="name" class="form-input" required placeholder="e.g. Dubai, Malaysia, Singapore">
+              <p class="form-instructions">Enter the name of the country or location.</p>
+            </div>
+            
+            <div class="form-group">
+              <label for="slug" class="form-label required-field">URL Slug</label>
+              <input type="text" id="slug" name="slug" class="form-input" required placeholder="e.g. dubai, malaysia, singapore">
+              <p class="form-instructions">This will be used in the URL: /country/<strong>slug</strong>. Use lowercase letters, numbers, and hyphens only.</p>
+            </div>
+            
+            <div class="form-group">
+              <label for="title" class="form-label required-field">Title</label>
+              <input type="text" id="title" name="title" class="form-input" required placeholder="e.g. Erovoutika Dubai">
+              <p class="form-instructions">This will be displayed as the site title in the browser tab.</p>
+            </div>
+            
+            <div class="form-group">
+              <label for="description" class="form-label">Description</label>
+              <textarea id="description" name="description" class="form-textarea" placeholder="Brief description of this country site..."></textarea>
+              <p class="form-instructions">A brief description of this country site (optional).</p>
+            </div>
+          </div>
+          
+          <div class="form-section">
+            <h2 class="form-section-title">Flag & Branding</h2>
+            
+            <div class="form-group">
+              <label class="form-label">Country Flag</label>
+              <div class="flag-preview">
+                <img id="flag-preview-image" src="/images/flags/placeholder.png" alt="Flag Preview">
+              </div>
+              <label for="flag" class="flag-upload-label">
+                <i class="fas fa-upload"></i> Upload Flag Image
+              </label>
+              <input type="file" id="flag" name="flag" class="hidden-input" accept="image/*" onchange="previewFlag(event)">
+              <p class="form-instructions">Upload a flag image for this country. Recommended size: 300x200px, JPG or PNG format.</p>
+            </div>
+            
+            <div class="form-group">
+              <label for="primaryColor" class="form-label">Primary Color</label>
+              <div style="display: flex; align-items: center;">
+                <input type="color" id="primaryColor" name="primaryColor" value="#00008b" style="margin-right: 10px;">
+                <input type="text" class="form-input" style="width: 120px;" id="primaryColorText" value="#00008b" onchange="updateColorPicker('primaryColor')">
+                <div class="color-preview" id="primaryColorPreview" style="background-color: #00008b;"></div>
+              </div>
+              <p class="form-instructions">Main color used throughout the site.</p>
+            </div>
+            
+            <div class="form-group">
+              <label for="secondaryColor" class="form-label">Secondary Color</label>
+              <div style="display: flex; align-items: center;">
+                <input type="color" id="secondaryColor" name="secondaryColor" value="#FFB366" style="margin-right: 10px;">
+                <input type="text" class="form-input" style="width: 120px;" id="secondaryColorText" value="#FFB366" onchange="updateColorPicker('secondaryColor')">
+                <div class="color-preview" id="secondaryColorPreview" style="background-color: #FFB366;"></div>
+              </div>
+              <p class="form-instructions">Accent color for buttons, highlights, etc.</p>
+            </div>
+            
+            <div class="form-group">
+              <label for="accentColor" class="form-label">Accent Color</label>
+              <div style="display: flex; align-items: center;">
+                <input type="color" id="accentColor" name="accentColor" value="#6AAAFF" style="margin-right: 10px;">
+                <input type="text" class="form-input" style="width: 120px;" id="accentColorText" value="#6AAAFF" onchange="updateColorPicker('accentColor')">
+                <div class="color-preview" id="accentColorPreview" style="background-color: #6AAAFF;"></div>
+              </div>
+              <p class="form-instructions">Used for links and other interactive elements.</p>
+            </div>
+          </div>
+          
+          <div class="form-section">
+            <h2 class="form-section-title">Content Template</h2>
+            
+            <div class="form-group">
+              <label class="form-label required-field">Select Template</label>
+              
+              <% if (templates && templates.length > 0) { %>
+                <% templates.forEach(template => { %>
+                  <div class="template-selection" onclick="selectTemplate('<%=template.name%>', <%=template.index%>)">
+                    <input type="radio" name="templateName" value="<%=template.name%>" id="template_<%=template.index%>" required <%= template.name === 'test' ? 'checked' : '' %>>
+                    <input type="hidden" name="templateIndex" value="<%=template.index%>" id="templateIndex_<%=template.index%>" <%= template.name === 'test' ? 'checked' : '' %>>
+                    <label for="template_<%=template.index%>"><%=template.name%> (Template #<%=template.index+1%>)</label>
+                    <p class="form-instructions">Template ID: <%=template.index%></p>
+                  </div>
+                <% }) %>
+              <% } else { %>
+                <p>No templates available. Please create a template in the default.json file.</p>
+              <% } %>
+            </div>
+          </div>
+          
+          <div class="form-actions">
+            <a href="/country-sites<%= locals.inDashboard ? '?dashboard=true' : '' %>" class="cancel-button">Cancel</a>
+            <button type="submit" class="submit-button">Create Country Site</button>
+          </div>
+        </form>
+      </div>
+      
+      <% if (!locals.inDashboard) { %>
+      <%- include('../../partials/admin-footer.ejs') %>
+    </main>
+  </div>
+  <% } %>
+  
+  <script>
+    <% if (!locals.inDashboard) { %>
+    document.addEventListener('DOMContentLoaded', function() {
+      const sidebar = document.getElementById('sidebar');
+      const sidebarToggle = document.getElementById('sidebar-toggle');
+      const mainContent = document.getElementById('main-content');
+      
+      if (sidebarToggle) {
+        sidebarToggle.addEventListener('click', function() {
+          sidebar.classList.toggle('collapsed');
+          mainContent.classList.toggle('expanded');
+          
+          const toggleIcon = this.querySelector('i');
+          if (sidebar.classList.contains('collapsed')) {
+            toggleIcon.classList.remove('fa-bars');
+            toggleIcon.classList.add('fa-chevron-right');
+          } else {
+            toggleIcon.classList.remove('fa-chevron-right');
+            toggleIcon.classList.add('fa-bars');
+          }
+        });
+      }
+    
+      const sidebarDropdownToggles = document.querySelectorAll('.sidebar-dropdown-toggle');
+      sidebarDropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (!sidebar.classList.contains('collapsed')) {
+            const parent = this.parentElement;
+            parent.classList.toggle('active');
+          } else {
+            sidebar.classList.remove('collapsed');
+            mainContent.classList.remove('expanded');
+            
+            const toggleIcon = sidebarToggle.querySelector('i');
+            toggleIcon.classList.remove('fa-chevron-right');
+            toggleIcon.classList.add('fa-bars');
+            
+            setTimeout(() => {
+              this.parentElement.classList.add('active');
+            }, 300);
+          }
+        });
+      });
+    });
+    <% } %>
+
+    // Preview uploaded flag
+    function previewFlag(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('flag-preview-image').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+    
+    // Update color picker from text input
+    function updateColorPicker(id) {
+      const textInput = document.getElementById(id + 'Text');
+      const colorPicker = document.getElementById(id);
+      const preview = document.getElementById(id + 'Preview');
+      
+      // Validate hex color
+      const isValidHex = /^#([0-9A-F]{3}){1,2}$/i.test(textInput.value);
+      
+      if (isValidHex) {
+        colorPicker.value = textInput.value;
+        preview.style.backgroundColor = textInput.value;
+      } else {
+        // Reset to previous valid value
+        textInput.value = colorPicker.value;
+      }
+    }
+    
+    // Handle color picker changes
+    document.querySelectorAll('input[type="color"]').forEach(picker => {
+      picker.addEventListener('input', function() {
+        const id = this.id;
+        const textInput = document.getElementById(id + 'Text');
+        const preview = document.getElementById(id + 'Preview');
+        
+        textInput.value = this.value;
+        preview.style.backgroundColor = this.value;
+      });
+    });
+    
+    // Handle template selection
+    function selectTemplate(name, index) {
+      // Clear all selected
+      document.querySelectorAll('.template-selection').forEach(el => {
+        el.classList.remove('selected');
+      });
+      
+      // Mark as selected
+      const radio = document.getElementById(`template_${index}`);
+      radio.checked = true;
+      radio.closest('.template-selection').classList.add('selected');
+      
+      // Set the template index
+      document.getElementById(`templateIndex_${index}`).value = index;
+    }
+    
+    // Set the default template as selected
+    document.addEventListener('DOMContentLoaded', function() {
+      const defaultTemplate = document.querySelector('input[name="templateName"]:checked');
+      if (defaultTemplate) {
+        defaultTemplate.closest('.template-selection').classList.add('selected');
+      }
+    });
+    
+    // Auto-generate slug from name
+    document.getElementById('name').addEventListener('input', function() {
+      // Convert to lowercase, replace spaces and special chars with hyphens
+      const slug = this.value.toLowerCase()
+        .trim()
+        .replace(/[^\w\s-]/g, '') // Remove special characters
+        .replace(/[\s_-]+/g, '-') // Replace spaces, underscores, and hyphens with a single hyphen
+        .replace(/^-+|-+$/g, ''); // Remove leading and trailing hyphens
+      
+      document.getElementById('slug').value = slug;
+    });
+  </script>
+</body>
+</html> 

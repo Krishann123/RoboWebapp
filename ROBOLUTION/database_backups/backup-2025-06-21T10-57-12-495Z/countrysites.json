@@ -1,0 +1,32 @@
+[
+  {
+    "_id": "68568f2ed21bfe4b13210159",
+    "name": "Singapore",
+    "slug": "singapore",
+    "title": "singapore(test)",
+    "active": true,
+    "description": "singapore(test)",
+    "logoUrl": "",
+    "flagUrl": "/images/flags/singapore.svg",
+    "templateName": "test",
+    "templateIndex": 0,
+    "customStyles": {
+      "primaryColor": "#00008b",
+      "secondaryColor": "#FFB366",
+      "accentColor": "#6AAAFF",
+      "backgroundColor": "#FFFFFF"
+    },
+    "metaTags": {
+      "title": "",
+      "description": "",
+      "keywords": ""
+    },
+    "createdAt": {
+      "$date": "2025-06-21T10:53:34.893Z"
+    },
+    "updatedAt": {
+      "$date": "2025-06-21T10:53:34.896Z"
+    },
+    "__v": 0
+  }
+]

@@ -823,10 +823,16 @@
           </a>
         </div>
         
-        <div class="sidebar-heading">International Site</div>
+        <div class="sidebar-heading">International Sites</div>
+        <div class="sidebar-item">
+          <a href="#country-sites" class="sidebar-link" data-page="country-sites">
+            <i class="fas fa-globe-americas sidebar-icon"></i>
+            <span class="sidebar-text">Country Sites</span>
+          </a>
+        </div>
         <div class="sidebar-item">
           <a href="/admin/international/news" class="sidebar-link">
-            <i class="fas fa-globe sidebar-icon"></i>
+            <i class="fas fa-newspaper sidebar-icon"></i>
             <span class="sidebar-text">Manage News</span>
           </a>
         </div>
@@ -1221,7 +1227,8 @@
             'manage-registrations': '/manage-registrations',
             'backups': '/manage-backups',
             'leaderboard': '/admin/leaderboard',
-            'manage-partners': '/admin/manage-partners'
+            'manage-partners': '/admin/manage-partners',
+            'country-sites': '/country-sites'
           };
           
           url = pageUrls[pageName] || `/${pageName}`;

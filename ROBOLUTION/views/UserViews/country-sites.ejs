@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>International Robolution Sites</title>
+  <link rel="shortcut icon" href="/images/ROBOLUTION_ICON.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <script src="/js/script.js" defer></script>
+  <script src="/js/mobile.js" defer></script>
+  <script src="/js/international-dropdown.js" defer></script>
+  <!-- Add Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body, main {
+      background-color: #f8f9fa;
+    }
+    
+    .countries-container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    
+    .countries-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .countries-title {
+      font-size: 2.5rem;
+      color: #00008b;
+      margin-bottom: 10px;
+    }
+    
+    .countries-subtitle {
+      font-size: 1.2rem;
+      color: #666;
+      max-width: 700px;
+      margin: 0 auto 30px;
+    }
+    
+    .countries-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 25px;
+    }
+    
+    .country-card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .country-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .country-banner {
+      height: 150px;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    
+    .country-flag-container {
+      position: absolute;
+      bottom: -20px;
+      left: 20px;
+      width: 80px;
+      height: 50px;
+      border-radius: 4px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .country-flag {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .country-content {
+      padding: 30px 20px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .country-name {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    
+    .country-description {
+      color: #666;
+      margin-bottom: 20px;
+      flex: 1;
+    }
+    
+    .country-link {
+      display: inline-block;
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 4px;
+      text-decoration: none;
+      text-align: center;
+      transition: background-color 0.2s ease;
+      font-weight: 500;
+    }
+    
+    .country-link:hover {
+      background-color: #0056b3;
+    }
+    
+    .no-countries {
+      padding: 60px 20px;
+      text-align: center;
+    }
+    
+    .no-countries-message {
+      font-size: 1.2rem;
+      color: #666;
+      margin-bottom: 20px;
+    }
+    
+    /* Message styling */
+    .message {
+      padding: 15px;
+      margin-bottom: 30px;
+      border-radius: 4px;
+      text-align: center;
+    }
+    
+    .success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    
+    .error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .countries-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+      
+      .countries-title {
+        font-size: 2rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .countries-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="content-wrapper">
+    <!-- Header -->
+    <header>
+      <div class="header-container">
+        <a href="/" class="logo">
+          <img src="/images/ROBOLUTION_2.png" alt="ROBOLUTION Logo" width="60px" height="60px">
+        </a>
+        <a href="/" class="title">ROBOLUTION</a>
+        
+        <!-- Toggle button for mobile menu -->
+        <div class="menu-toggle" id="mobile-menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+        
+        <!-- Navigation links -->
+        <nav id="navbar">
+          <a href="/" class="nav-button">Home</a>
+          
+          <div class="dropdown">
+            <button class="nav-button dropdown-btn" style="display: flex; align-items: center;">Regional <span style="margin-left: 5px; font-size: 0.8em;">▼</span></button>
+            <div class="dropdown-content">
+              <a href="/regional?region=All">All Regions</a>
+              <% /* regions would be rendered here */ %>
+            </div>
+          </div>
+          
+          <a href="/user-categories" class="nav-button">Categories</a>
+          <% if (user && user.role === 'judge') { %>
+            <a href="/scoresheet" class="nav-button">Scoresheet</a>
+          <% } %>
+          
+          <a href="/country" class="nav-button selected">International</a>
+          
+          <div class="dropdown">
+            <button class="nav-button dropdown-btn">Account</button>
+            <div class="dropdown-content">
+              <% if (user) { %>
+                <a href="/profile">Profile</a>
+                <a href="/logout">Logout</a>
+                <% if (user.isAdmin) { %>
+                  <a href="/admin/dashboard">Admin Dashboard</a>
+                <% } %>
+              <% } else { %>
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+              <% } %>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    
+    <main>
+      <div class="countries-container">
+        <div class="countries-header">
+          <h1 class="countries-title">International Robolution Sites</h1>
+          <p class="countries-subtitle">Explore Robolution events around the world. Connect with our international community and discover opportunities for global collaboration in robotics education.</p>
+        </div>
+        
+        <% if (successMessage && successMessage.length > 0) { %>
+          <div class="message success">
+            <%= successMessage %>
+          </div>
+        <% } %>
+        
+        <% if (errorMessage && errorMessage.length > 0) { %>
+          <div class="message error">
+            <%= errorMessage %>
+          </div>
+        <% } %>
+        
+        <% if (countrySites && countrySites.length > 0) { %>
+          <div class="countries-grid">
+            <% countrySites.forEach(site => { %>
+              <div class="country-card">
+                <div class="country-banner" style="background-color: <%= site.customStyles?.primaryColor || '#00008b' %>">
+                  <div class="country-flag-container">
+                    <img src="<%= site.flagUrl || '/images/flags/placeholder.png' %>" alt="<%= site.name %> Flag" class="country-flag">
+                  </div>
+                </div>
+                <div class="country-content">
+                  <h2 class="country-name"><%= site.name %></h2>
+                  <p class="country-description">
+                    <% if (site.description && site.description.length > 0) { %>
+                      <%= site.description %>
+                    <% } else { %>
+                      Explore Robolution events in <%= site.name %>. Join our community and discover robotics innovation.
+                    <% } %>
+                  </p>
+                  <a href="/country/<%= site.slug %>" class="country-link">Visit Site</a>
+                </div>
+              </div>
+            <% }); %>
+          </div>
+        <% } else { %>
+          <div class="no-countries">
+            <p class="no-countries-message">No international sites available at the moment.</p>
+            <p>Please check back later for updates.</p>
+          </div>
+        <% } %>
+      </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+      <div class="footer-container">
+        <div class="footer-section about">
+          <h3>About Us</h3>
+          <p>ROBOLUTION promotes robotics education through competitions, training, and community building.</p>
+        </div>
+        <div class="footer-section links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/regional?region=All">Regional</a></li>
+            <li><a href="/user-categories">Categories</a></li>
+            <li><a href="/country">International</a></li>
+          </ul>
+        </div>
+        <div class="footer-section contact">
+          <h3>Contact Us</h3>
+          <p>Email: info@robolution.org</p>
+          <div class="social-icons">
+            <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2023 ROBOLUTION. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html> 

@@ -8,9 +8,9 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 router.use((req, res, next) => {
   console.log(`[International Route] ${req.method} ${req.url} | Session Auth: ${!!req.session?.user}`);
   
-  // Redirect root requests to the correct international path
-  if (req.originalUrl === '/international') {
-    return res.redirect('/international/');
+  // Redirect root requests to the correct dubai path
+  if (req.originalUrl === '/dubai') {
+    return res.redirect('/dubai/');
   }
   
   // Add session check middleware
@@ -68,9 +68,9 @@ else {
   router.use((req, res, next) => {
     const lowerPath = req.path.toLowerCase();
     if (astroPages.includes(lowerPath)) {
-        // Check if it's NOT already under /international
-        if (!req.originalUrl.startsWith('/international')) {
-            return res.redirect(`/international${req.path}`);
+        // Check if it's NOT already under /dubai
+        if (!req.originalUrl.startsWith('/dubai')) {
+            return res.redirect(`/dubai${req.path}`);
         }
     }
     next();
@@ -127,8 +127,8 @@ else {
     },
     pathRewrite: (path, req) => {
       console.log(`[International Route] Proxy rewriting path: ${path}`);
-      // Prepend /international to the path for the Astro dev server
-      return '/international' + path;
+      // Prepend /dubai to the path for the Astro dev server
+      return '/dubai' + path;
     },
     onProxyRes: (proxyRes, req, res) => {
       // Handle headers if needed

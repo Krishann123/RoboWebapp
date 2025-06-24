@@ -785,18 +785,6 @@
                         "latest-news": [
                             {
                                 "NewsCard": {
-                                    "title": "test",
-                                    "date": "Dec 15-18",
-                                    "description": "test",
-                                    "image": "/image-1750417348813-999456090.jpg",
-                                    "link": "Facebook.com",
-                                    "alt": "test",
-                                    "subtitle": "test",
-                                    "events": "Events"
-                                }
-                            },
-                            {
-                                "NewsCard": {
                                     "title": "Latest News",
                                     "subtitle": "ROBOLUTION DUBAI 2025",
                                     "date": "December 15- 18, 2025",

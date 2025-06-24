@@ -1,0 +1,244 @@
+[
+  {
+    "_id": "6826142fc1b18ea33eb46bc1",
+    "fullName": "Sir Cahrlos",
+    "username": "dire",
+    "email": "maicahvienne@gmail.com",
+    "password": "$2b$10$xAuhqV/Gnedc5mfy4KVRO.L4LEVYGLSQLjNTLcUUhgPLVZVB.c1Am",
+    "twoFactorSecret": "JZ4UK6SSMFUEKI2LGBIESVJYK5XUWMSL",
+    "twoFactorEnabled": true,
+    "backupCodes": [
+      "X75NFK",
+      "NNAHE3",
+      "H6SLCV",
+      "P8JFPQ",
+      "S3F81B",
+      "G9BUEB",
+      "NQQVMO",
+      "LUG6TQ"
+    ],
+    "createdAt": "2025-05-15T16:19:59.684Z",
+    "__v": 0,
+    "profilePicture": "https://res.cloudinary.com/dji4cktex/image/upload/v1747745481/robolution/profiles/cwb5z2sidnkbjbz5cpsy.jpg",
+    "role": "judge",
+    "updatedAt": {
+      "$date": "2025-05-26T14:47:17.072Z"
+    }
+  },
+  {
+    "_id": "6835af61b524723ca8a433af",
+    "fullName": "Krishann_user2",
+    "username": "Krishann_user2",
+    "email": "dastallaa1018@gmail.com",
+    "password": "$2b$10$8p9tquujCWGmJ7fz/BFeZOxDmbpaBWkTNCLD37G40J/5E.jJ1GSXG",
+    "school": "",
+    "profilePicture": "https://res.cloudinary.com/dji4cktex/image/upload/v1748414133/robolution/profiles/ppomujztnwlu4tn5v2ev.jpg",
+    "address": "",
+    "createdAt": {
+      "$date": "2025-05-18T13:19:47.330Z"
+    },
+    "twoFactorEnabled": false,
+    "backupCodes": [
+      "AANHXY",
+      "DJQP4A",
+      "8R2OYZ",
+      "YU9945",
+      "95TDEP",
+      "8Q0FPG",
+      "ZFXZDW",
+      "38QYF6"
+    ],
+    "__v": 2,
+    "role": "judge",
+    "updatedAt": {
+      "$date": "2025-06-09T04:24:18.552Z"
+    },
+    "birthDate": {
+      "month": 10,
+      "year": 2003
+    },
+    "lastLogin": {
+      "$date": "2025-06-09T04:24:18.548Z"
+    },
+    "registeredAt": {
+      "$date": "2025-06-09T03:27:03.652Z"
+    },
+    "twoFactorAuth": {
+      "backupCodes": [],
+      "enabled": false
+    },
+    "isEmailVerified": true,
+    "resetPasswordExpiry": {
+      "$date": "2025-06-22T05:28:26.259Z"
+    },
+    "resetPasswordToken": "0d3443ccb1cdb179938b16040bf493613568e697680b2bc7d5115af69f327cdf"
+  },
+  {
+    "_id": "6821ad5ae4a440b8e7951ece",
+    "fullName": "Sir Cahrlos",
+    "username": "syeshayde",
+    "email": "sirporquez@gmail.com",
+    "password": "$2b$10$DNhd0Btr8wfiv3TXJWEDWOPWRRw3/p3PhBF/1vARwC6EIeAUrJ3HG",
+    "createdAt": "2025-05-12T08:12:10.357Z",
+    "__v": 0
+  },
+  {
+    "_id": "683470960a96b4485903d25d",
+    "fullName": "Sir Cahrlos",
+    "username": "sye",
+    "email": "sporquez.k12042563@umak.edu.ph",
+    "password": "$2b$10$fz6OhqzZ5kMmGRzJlZbvv./iUhM32rG/XKDsTFVl3oFtQdYOo3c0a",
+    "profilePicture": "",
+    "twoFactorSecret": "MQZGO6CPNZDGY7JSNBHGMS3IOUYSY22B",
+    "twoFactorEnabled": true,
+    "backupCodes": [
+      "5I5FNB",
+      "0YW9LZ",
+      "U9GIA9",
+      "9QA5QE",
+      "WC7519",
+      "HMQ1D6",
+      "FKHRA4",
+      "5SP5I8"
+    ],
+    "createdAt": {
+      "$date": "2025-05-26T13:45:58.521Z"
+    },
+    "__v": 0,
+    "role": "judge",
+    "updatedAt": {
+      "$date": "2025-05-26T13:54:22.768Z"
+    }
+  },
+  {
+    "_id": "6830a8b3879b10d84a4087b4",
+    "fullName": "TESTACCOUNT2",
+    "username": "TESTACCOUNT2",
+    "email": "testaccount2@robolution.default",
+    "password": "$2b$10$ZDg32e2bHkfWz8Q3c8HwLucVSrG5vZ408Q3xjA10ZbceISQC5PcC6",
+    "school": "",
+    "profilePicture": null,
+    "address": "",
+    "createdAt": "2025-05-20T12:16:51.095Z",
+    "twoFactorSecret": "JRBDE5CAGU4VEOSUNNQTEUTXM5HFA7LW",
+    "twoFactorEnabled": true,
+    "backupCodes": [
+      "QLFTNG",
+      "CN7V27",
+      "0NWIWY",
+      "9CLRUK",
+      "5KCQQL",
+      "9BSHV7",
+      "WFBJ7H",
+      "NFZ6GT"
+    ],
+    "__v": 1
+  },
+  {
+    "_id": "68369820ae58ae54d334a82e",
+    "fullName": "Krishann_user",
+    "username": "Krishann_user",
+    "email": "krishannmillares@gmail.com",
+    "password": "$2b$10$pz/7wr8jexuiVSKTqy7feeNYABYGH31QmvaJ6kajv819wyYCsAgAS",
+    "school": "",
+    "profilePicture": "https://res.cloudinary.com/dji4cktex/image/upload/v1748412976/robolution/profiles/kta2majyzoswv8srvubs.jpg",
+    "address": "",
+    "createdAt": {
+      "$date": "2025-05-18T13:10:53.471Z"
+    },
+    "twoFactorEnabled": false,
+    "backupCodes": [
+      "EL5VVZ",
+      "0MIEBV",
+      "CVHDXH",
+      "SU1SNT",
+      "VQ405D",
+      "BG8S34",
+      "U8QVXL",
+      "JMM9W8"
+    ],
+    "__v": 2,
+    "birthDate": {
+      "month": 10,
+      "year": 2003
+    },
+    "lastLogin": {
+      "$date": "2025-06-09T04:10:48.831Z"
+    },
+    "registeredAt": {
+      "$date": "2025-06-09T03:26:26.594Z"
+    },
+    "role": "user",
+    "twoFactorAuth": {
+      "backupCodes": [],
+      "enabled": false
+    },
+    "updatedAt": {
+      "$date": "2025-06-09T04:10:48.831Z"
+    },
+    "isEmailVerified": true
+  },
+  {
+    "_id": "683825495f9b8c5f1ad6f216",
+    "fullName": "jowen",
+    "username": "Jmobi",
+    "email": "jmobilla@gmail.com",
+    "password": "$2b$10$D9RhkA2oaLSudnGPeyOnkuUTDBLEArizGb2GATKB2Jklz39U7fa1C",
+    "profilePicture": "",
+    "twoFactorSecret": "JR2DOM2NINYU2RB4LJQXAMLGFAUWYNDX",
+    "twoFactorEnabled": true,
+    "backupCodes": [
+      "Z9Z280",
+      "X4JE1X",
+      "XWWI7C",
+      "85SMOA",
+      "92U926",
+      "948XGD",
+      "Z6PBZ0",
+      "TI4205"
+    ],
+    "createdAt": {
+      "$date": "2025-05-29T09:13:45.865Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "6843d5329fc1d9af2b58d926",
+    "fullName": "bhai nhuraisha",
+    "username": "bhai",
+    "email": "erovoutika@gmail.com",
+    "password": "$2b$10$mQp7.2PhMIp9Ex5vMtUkf.in6xOdnOk.c485Wc5cmWWYXZS1nRRsu",
+    "profilePicture": "",
+    "twoFactorSecret": "EZIFEPSGGRYSS7KFFZ2CGU3MNVSEEY3W",
+    "twoFactorEnabled": true,
+    "backupCodes": [
+      "XKRCT5",
+      "X0CK9I",
+      "0DU1FE",
+      "SL0MYZ",
+      "YNLRB3",
+      "AEHA2U",
+      "XEG4X0",
+      "RO7KV4"
+    ],
+    "createdAt": {
+      "$date": "2025-06-07T05:59:14.435Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": "6846875026f6fdd4ccb2f062",
+    "fullName": "Carl Krishann J MIllares",
+    "username": "TESTACCOUNT",
+    "email": "krishanncfacc@gmail.com",
+    "password": "$2b$10$uDjACPn3gXsUY1rJNanM..i/aLAAjSDo9QrpTGeuq8.PUQJZvnbTu",
+    "profilePicture": "",
+    "isEmailVerified": true,
+    "twoFactorEnabled": false,
+    "backupCodes": [],
+    "createdAt": {
+      "$date": "2025-06-09T07:03:44.276Z"
+    },
+    "__v": 0
+  }
+]

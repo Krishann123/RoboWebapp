@@ -1,10 +1,10 @@
 import { e as createComponent, f as createAstro, k as renderComponent, l as renderScript, r as renderTemplate, m as maybeRenderHead, h as addAttribute } from '../chunks/astro/server_C-kESatQ.mjs';
 import 'kleur/colors';
-import { $ as $$Layout } from '../chunks/Layout_BBh2tBzR.mjs';
+import { $ as $$Layout } from '../chunks/Layout_hV_SdrMw.mjs';
 /* empty css                                 */
 export { renderers } from '../renderers.mjs';
 
-const logo = new Proxy({"src":"/international/_astro/Erovoutika Dubai logo.DqaA4qgV.png","width":209,"height":68,"format":"png"}, {
+const logo = new Proxy({"src":"/dubai/_astro/Erovoutika Dubai logo.DqaA4qgV.png","width":209,"height":68,"format":"png"}, {
 						get(target, name, receiver) {
 							if (name === 'clone') {
 								return structuredClone(target);
@@ -17,7 +17,7 @@ const logo = new Proxy({"src":"/international/_astro/Erovoutika Dubai logo.DqaA4
 						}
 					});
 
-const show_password_icon = new Proxy({"src":"/international/_astro/show-password.JZZGCVaN.png","width":19,"height":15,"format":"png"}, {
+const show_password_icon = new Proxy({"src":"/dubai/_astro/show-password.JZZGCVaN.png","width":19,"height":15,"format":"png"}, {
 						get(target, name, receiver) {
 							if (name === 'clone') {
 								return structuredClone(target);
@@ -30,7 +30,7 @@ const show_password_icon = new Proxy({"src":"/international/_astro/show-password
 						}
 					});
 
-const hide_password_icon = new Proxy({"src":"/international/_astro/hide-password.CycqiXUW.png","width":18,"height":17,"format":"png"}, {
+const hide_password_icon = new Proxy({"src":"/dubai/_astro/hide-password.CycqiXUW.png","width":18,"height":17,"format":"png"}, {
 						get(target, name, receiver) {
 							if (name === 'clone') {
 								return structuredClone(target);
@@ -66,7 +66,7 @@ If this email is registered, a reset link has
 }, "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/login.astro", void 0);
 
 const $$file = "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/login.astro";
-const $$url = "/international/login";
+const $$url = "/dubai/login";
 
 const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
 	__proto__: null,

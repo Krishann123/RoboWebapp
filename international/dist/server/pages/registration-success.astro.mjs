@@ -1,6 +1,6 @@
 import { e as createComponent, k as renderComponent, r as renderTemplate, m as maybeRenderHead } from '../chunks/astro/server_C-kESatQ.mjs';
 import 'kleur/colors';
-import { $ as $$Layout } from '../chunks/Layout_BBh2tBzR.mjs';
+import { $ as $$Layout } from '../chunks/Layout_hV_SdrMw.mjs';
 /* empty css                                                */
 export { renderers } from '../renderers.mjs';
 
@@ -14,7 +14,7 @@ If you have any questions, please contact us at <a href="mailto:erovoutika@gmail
 }, "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/registration-success.astro", void 0);
 
 const $$file = "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/registration-success.astro";
-const $$url = "/international/registration-success";
+const $$url = "/dubai/registration-success";
 
 const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,

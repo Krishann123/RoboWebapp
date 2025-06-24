@@ -1,8 +1,8 @@
 import { e as createComponent, f as createAstro, m as maybeRenderHead, h as addAttribute, r as renderTemplate, u as unescapeHTML, k as renderComponent } from '../chunks/astro/server_C-kESatQ.mjs';
 import 'kleur/colors';
 import 'clsx';
-import { f as fetchPageContent } from '../chunks/db_EK65h4qK.mjs';
-import { $ as $$Layout } from '../chunks/Layout_BBh2tBzR.mjs';
+import { f as fetchPageContent } from '../chunks/db_BLiRlGFB.mjs';
+import { $ as $$Layout } from '../chunks/Layout_hV_SdrMw.mjs';
 /* empty css                                 */
 import { jsx, jsxs } from 'react/jsx-runtime';
 import 'react';
@@ -40,7 +40,7 @@ const $$Package = createComponent(async ($$result, $$props, $$slots) => {
   let data = await fetchPageContent("Home");
   const packageDetails = data.package;
   const icon = "/src/assets/images/icons/Icon.png";
-  const basePath = "/international";
+  const basePath = "/dubai";
   function getPath(path) {
     if (path && (path.startsWith("http") || path.startsWith("//") || path === "/home")) {
       return path;
@@ -160,7 +160,7 @@ const $$Index = createComponent(($$result, $$props, $$slots) => {
 }, "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/index.astro", void 0);
 
 const $$file = "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/index.astro";
-const $$url = "/international";
+const $$url = "/dubai";
 
 const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
     __proto__: null,

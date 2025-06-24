@@ -1,6 +1,6 @@
 import { e as createComponent, f as createAstro, r as renderTemplate, h as addAttribute, m as maybeRenderHead, k as renderComponent } from '../chunks/astro/server_C-kESatQ.mjs';
 import 'kleur/colors';
-import { $ as $$Layout } from '../chunks/Layout_BBh2tBzR.mjs';
+import { $ as $$Layout } from '../chunks/Layout_hV_SdrMw.mjs';
 /* empty css                                  */
 import 'clsx';
 import { s as supabase } from '../chunks/supabase-client_BrwR6F9D.mjs';
@@ -64,7 +64,7 @@ const $$News = createComponent(async ($$result, $$props, $$slots) => {
 }, "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/News.astro", void 0);
 
 const $$file = "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/News.astro";
-const $$url = "/international/News";
+const $$url = "/dubai/News";
 
 const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
     __proto__: null,

@@ -11,8 +11,8 @@ dotenv.config(); // Load .env variables
 const isProd = process.env.NODE_ENV === 'production';
 
 export default defineConfig({
-  // Set base path for production mode to '/international'
-  base: '/international',
+  // Set base path for production mode to '/dubai'
+  base: '/dubai',
   integrations: [react()],
   output: 'server',
   adapter: node({

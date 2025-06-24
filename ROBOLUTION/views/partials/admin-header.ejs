@@ -1,0 +1,58 @@
+<!-- Admin Header Partial -->
+<header class="header">
+  <h1 class="header-title" id="page-title"><%= typeof pageTitle !== 'undefined' ? pageTitle : 'Admin Dashboard' %></h1>
+  <div class="header-actions">
+    <div class="user-dropdown" id="user-dropdown">
+      <div class="user-dropdown-btn" id="user-dropdown-btn">
+        <div class="user-avatar">
+          <% if (locals.user && user.username) { %>
+            <%= user.username.charAt(0).toUpperCase() %>
+          <% } else { %>
+            A
+          <% } %>
+        </div>
+        <div class="user-info">
+          <div class="user-name">
+            <% if (locals.user && user.username) { %>
+              <%= user.username %>
+            <% } else { %>
+              Admin
+            <% } %>
+          </div>
+          <div class="user-role">
+            <% if (locals.user && user.role) { %>
+              <%= user.role %>
+            <% } else { %>
+              Administrator
+            <% } %>
+          </div>
+        </div>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="user-dropdown-menu">
+        <a href="/logout" class="user-dropdown-item">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const userDropdownBtn = document.getElementById('user-dropdown-btn');
+    const userDropdown = document.getElementById('user-dropdown');
+    
+    if (userDropdownBtn) {
+      userDropdownBtn.addEventListener('click', function() {
+        userDropdown.classList.toggle('active');
+      });
+    }
+    
+    document.addEventListener('click', function(event) {
+      if (userDropdown && !userDropdown.contains(event.target)) {
+        userDropdown.classList.remove('active');
+      }
+    });
+  });
+</script> 

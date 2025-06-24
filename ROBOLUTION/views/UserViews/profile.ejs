@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="/css/responsive.css">
   <script src="/js/script.js" defer></script>
   <script src="/js/mobile.js" defer></script>
+  <script src="/js/international-dropdown.js" defer></script>
   <style>
     /* Set background to white */
     body, main {
@@ -330,6 +331,32 @@
       font-style: italic;
     }
     
+    .dropdown-divider {
+      height: 1px;
+      margin: 5px 0;
+      background-color: #e9e9e9;
+    }
+    
+    /* Country item styles for international dropdown */
+    .country-item {
+      display: flex;
+      align-items: center;
+      padding: 8px 16px;
+      transition: background-color 0.2s ease;
+    }
+    
+    .country-item:hover {
+      background-color: #f1f1f1;
+    }
+    
+    .country-flag {
+      width: 24px;
+      height: 16px;
+      margin-right: 10px;
+      object-fit: cover;
+      border: 1px solid #eee;
+    }
+    
     /* Registration status styles */
     .registration-card {
       background-color: #f8f9fa;
@@ -504,7 +531,15 @@
           </div>
         </div>
         <a href="/user-categories" class="nav-button">Categories</a>
-        <a href="/international" class="nav-button">International</a>
+        <div class="dropdown">
+          <button class="nav-button dropdown-btn" style="display: flex; align-items: center;">International <span style="margin-left: 5px; font-size: 0.8em;">▼</span></button>
+          <div class="dropdown-content">
+            <a href="/country">View All Countries</a>
+            <div class="dropdown-divider"></div>
+            <a href="/dubai">Dubai</a>
+            <!-- Other countries will be added dynamically -->
+          </div>
+        </div>
         <div class="dropdown">
           <button class="nav-button dropdown-btn">Regional</button>
           <div class="dropdown-content">
@@ -852,7 +887,7 @@
     backButton.addEventListener('click', function() {
       <% if (typeof isFromInternational !== 'undefined' && isFromInternational) { %>
         // Server detected referral from international app
-        window.location.href = '/international';
+        window.location.href = '/dubai';
       <% } else if (typeof referrer !== 'undefined' && referrer) { %>
         // Server provided referrer
         window.location.href = '<%= referrer %>';
@@ -863,9 +898,9 @@
         // Check if we have a referrer
         if (referrer) {
           // Check if referrer contains 'international'
-          if (referrer.includes('international')) {
+          if (referrer.includes('international') || referrer.includes('dubai')) {
             // Go back to international app
-            window.location.href = '/international';
+            window.location.href = '/dubai';
           } else {
             // Go back to the previous page (main app)
             window.history.back();

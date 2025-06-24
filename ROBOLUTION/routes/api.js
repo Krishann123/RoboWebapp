@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const router = express.Router();
+const CountrySite = require('../models/CountrySite');
 const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
@@ -181,6 +182,25 @@ router.delete('/international/news/:category/:index', ensureAuthenticated, ensur
         console.error('Error deleting news item:', error.message);
         res.status(500).json({ error: 'Error deleting news item' });
     }
+});
+
+// Get active country sites
+router.get('/country-sites', async (req, res) => {
+  try {
+    const countrySites = await CountrySite.find({ active: true }).select('name slug flagUrl').sort({ name: 1 });
+    
+    res.json({
+      success: true,
+      countrySites
+    });
+  } catch (error) {
+    console.error('Error fetching country sites:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching country sites',
+      error: error.message
+    });
+  }
 });
 
 module.exports = router; 

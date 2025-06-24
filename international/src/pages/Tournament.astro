@@ -1,13 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import "@/styles/style.css";
-
 import { fetchPageContent } from "@/components/db";
 import Hero from "@/components/Tournament/Hero.astro";
 
 const copyTheme = await fetchPageContent("Tournament");
 console.log("Tournament content:", copyTheme);
-const { erobot, eromath, freestyle, cybersecurity } = copyTheme.Pictures || {};
+const { erobot, eromath, freestyle, cybersecurity } = copyTheme.Pictures || {}
 ---
 
 <Layout title="Erovoutika Dubai - Tournament">

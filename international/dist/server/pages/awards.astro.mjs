@@ -1,8 +1,8 @@
 import { e as createComponent, m as maybeRenderHead, r as renderTemplate, f as createAstro, k as renderComponent } from '../chunks/astro/server_C-kESatQ.mjs';
 import 'kleur/colors';
 import 'clsx';
-import { f as fetchPageContent } from '../chunks/db_EK65h4qK.mjs';
-import { $ as $$Layout } from '../chunks/Layout_BBh2tBzR.mjs';
+import { f as fetchPageContent } from '../chunks/db_BLiRlGFB.mjs';
+import { $ as $$Layout } from '../chunks/Layout_hV_SdrMw.mjs';
 export { renderers } from '../renderers.mjs';
 
 const $$Hero = createComponent(async ($$result, $$props, $$slots) => {
@@ -18,7 +18,7 @@ const $$Awards = createComponent(($$result, $$props, $$slots) => {
 }, "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/Awards.astro", void 0);
 
 const $$file = "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/Awards.astro";
-const $$url = "/international/Awards";
+const $$url = "/dubai/Awards";
 
 const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
     __proto__: null,

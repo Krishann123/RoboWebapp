@@ -804,11 +804,29 @@ const expressLayouts = require('express-ejs-layouts');
 app.set('layout extractScripts', true);
 app.set('layout extractStyles', true);
 
-// Load the Dubai site router
+// Load routers for international sites
 const dubaiRoutes = require('./routes/dubai');
+const countrySitesRoutes = require('./routes/country-sites');
+const internationalSitesRoutes = require('./routes/international-sites');
 
-// Mount the Dubai routes at /international
-app.use('/international', dubaiRoutes);
+// Mount the Dubai routes at /dubai
+app.use('/dubai', dubaiRoutes);
+
+// Mount the country sites admin routes
+app.use('/country-sites', countrySitesRoutes);
+
+// Mount the international sites routes 
+app.use('/country', internationalSitesRoutes);
+
+// Add a redirect from the old /international path to the new /dubai path
+app.get('/international', (req, res) => {
+  res.redirect('/dubai');
+});
+
+app.get('/international/*', (req, res) => {
+  const newPath = req.originalUrl.replace('/international', '/dubai');
+  res.redirect(newPath);
+});
 
 // Directly serve the international src/assets folder with highest priority - direct access
 app.use('/src/assets', express.static(path.join(__dirname, '../international/src/assets'), {
@@ -817,25 +835,25 @@ app.use('/src/assets', express.static(path.join(__dirname, '../international/src
   }
 }));
 
-// Serve the same assets through the /international prefix for relative paths
-app.use('/international/src/assets', express.static(path.join(__dirname, '../international/src/assets'), {
+// Serve the same assets through the /dubai prefix for relative paths
+app.use('/dubai/src/assets', express.static(path.join(__dirname, '../international/src/assets'), {
   setHeaders: (res, path) => {
     res.setHeader('X-Asset-Source', 'International assets');
   }
 }));
 
-// Serve static files for the Dubai site at /international
-app.use('/international', express.static(path.join(__dirname, 'public/international')));
+// Serve static files for the Dubai site at /dubai
+app.use('/dubai', express.static(path.join(__dirname, 'public/international')));
 
 // Serve international public folder
-app.use('/international/public', express.static(path.join(__dirname, '..', 'international', 'public'), {
+app.use('/dubai/public', express.static(path.join(__dirname, '..', 'international', 'public'), {
   setHeaders: (res, path) => {
     res.setHeader('X-Asset-Source', 'International public assets');
   }
 }));
 
 // Serve international src folder directly for proper image loading
-app.use('/international/src', express.static(path.join(__dirname, '..', 'international', 'src'), {
+app.use('/dubai/src', express.static(path.join(__dirname, '..', 'international', 'src'), {
   setHeaders: (res, path) => {
     res.setHeader('X-Asset-Source', 'International src assets');
   }
@@ -3343,14 +3361,24 @@ if (require.main === module) {
         // Import Dubai routes
         const dubaiRoutes = require('./routes/dubai');
         
-        // Set up routes for international app
-        app.use('/international', dubaiRoutes);
+        // Set up routes for Dubai app
+        app.use('/dubai', dubaiRoutes);
+        
+        // Add redirect from old path to new path
+        app.get('/international', (req, res) => {
+            res.redirect('/dubai');
+        });
+        
+        app.get('/international/*', (req, res) => {
+            const newPath = req.originalUrl.replace('/international', '/dubai');
+            res.redirect(newPath);
+        });
         
         // Special middleware for production mode to use the built Astro app
         if (process.env.NODE_ENV === 'production' && internationalHandler) {
-            app.use('/international', (req, res, next) => {
-                // Strip /international prefix
-                req.url = req.originalUrl.replace(/^\/international/, '');
+            app.use('/dubai', (req, res, next) => {
+                // Strip /dubai prefix
+                req.url = req.originalUrl.replace(/^\/dubai/, '');
                 if (req.url === '') req.url = '/';
                 return internationalHandler(req, res, next);
             });
