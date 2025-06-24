@@ -13,7 +13,7 @@
   <!-- Add Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <style>
-    <% if (!locals.inDashboard) { %>
+    <% if (typeof dashboard === 'undefined' && typeof inDashboard === 'undefined') { %>
     /* Admin Dashboard Layout Styles */
     :root {
       --primary-color: #00008b;
@@ -643,7 +643,7 @@
   </style>
 </head>
 <body>
-  <% if (!locals.inDashboard) { %>
+  <% if (typeof dashboard === 'undefined' && typeof inDashboard === 'undefined') { %>
   <div class="dashboard-container">
     <!-- Admin Sidebar -->
     <aside class="sidebar" id="sidebar">
@@ -769,7 +769,7 @@
       <div class="content-container">
         <div class="page-header">
           <h1 class="page-title"><i class="fas fa-globe-americas"></i> Create Country Site</h1>
-          <a href="/country-sites<%= locals.inDashboard ? '?dashboard=true' : '' %>" class="back-button">
+          <a href="/country-sites<%= (typeof dashboard !== 'undefined' && dashboard === true) || (typeof inDashboard !== 'undefined' && inDashboard === true) ? '?dashboard=true' : '' %>" class="back-button">
             <i class="fas fa-arrow-left"></i> Back to Country Sites
           </a>
         </div>
@@ -780,7 +780,7 @@
           </div>
         <% } %>
         
-        <form action="/country-sites/create<%= locals.inDashboard ? '?dashboard=true' : '' %>" method="POST" enctype="multipart/form-data">
+        <form action="/country-sites/create<%= (typeof dashboard !== 'undefined' && dashboard === true) || (typeof inDashboard !== 'undefined' && inDashboard === true) ? '?dashboard=true' : '' %>" method="POST" enctype="multipart/form-data">
           <div class="form-section">
             <h2 class="form-section-title">Basic Information</h2>
             
@@ -877,20 +877,20 @@
           </div>
           
           <div class="form-actions">
-            <a href="/country-sites<%= locals.inDashboard ? '?dashboard=true' : '' %>" class="cancel-button">Cancel</a>
+            <a href="/country-sites<%= (typeof dashboard !== 'undefined' && dashboard === true) || (typeof inDashboard !== 'undefined' && inDashboard === true) ? '?dashboard=true' : '' %>" class="cancel-button">Cancel</a>
             <button type="submit" class="submit-button">Create Country Site</button>
           </div>
         </form>
       </div>
       
-      <% if (!locals.inDashboard) { %>
+      <% if (typeof dashboard === 'undefined' && typeof inDashboard === 'undefined') { %>
       <%- include('../../partials/admin-footer.ejs') %>
     </main>
   </div>
   <% } %>
   
   <script>
-    <% if (!locals.inDashboard) { %>
+    <% if (typeof dashboard === 'undefined' && typeof inDashboard === 'undefined') { %>
     document.addEventListener('DOMContentLoaded', function() {
       const sidebar = document.getElementById('sidebar');
       const sidebarToggle = document.getElementById('sidebar-toggle');

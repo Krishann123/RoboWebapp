@@ -279,7 +279,7 @@
   </style>
 </head>
 <body>
-  <% if (!locals.inDashboard) { %>
+  <% if (typeof dashboard === 'undefined' && typeof inDashboard === 'undefined') { %>
   <div class="dashboard-container">
     <%- include('../../partials/admin-sidebar.ejs') %>
     <main class="main-content">
@@ -289,7 +289,7 @@
       <div class="container">
         <div class="page-header">
           <h1 class="page-title"><i class="fas fa-file-alt"></i> Manage Country Site Content</h1>
-          <a href="/country-sites<%= locals.inDashboard ? '?dashboard=true' : '' %>" class="back-button">
+          <a href="/country-sites<%= (typeof dashboard !== 'undefined' && dashboard === true) || (typeof inDashboard !== 'undefined' && inDashboard === true) ? '?dashboard=true' : '' %>" class="back-button">
             <i class="fas fa-arrow-left"></i> Back to Country Sites
           </a>
         </div>
@@ -326,7 +326,7 @@
               <div class="content-card-header">
                 <h4 class="content-card-title">Home Page</h4>
                 <div class="content-card-actions">
-                  <a href="/country-sites/edit-page/<%= countrySite._id %>/home<%= locals.inDashboard ? '?dashboard=true' : '' %>" class="action-btn edit-btn">
+                  <a href="/country-sites/edit-page/<%= countrySite._id %>/home<%= (typeof dashboard !== 'undefined' && dashboard === true) || (typeof inDashboard !== 'undefined' && inDashboard === true) ? '?dashboard=true' : '' %>" class="action-btn edit-btn">
                     <i class="fas fa-edit"></i> Edit
                   </a>
                 </div>
@@ -338,7 +338,7 @@
               <div class="content-card-header">
                 <h4 class="content-card-title">About Page</h4>
                 <div class="content-card-actions">
-                  <a href="/country-sites/edit-page/<%= countrySite._id %>/about<%= locals.inDashboard ? '?dashboard=true' : '' %>" class="action-btn edit-btn">
+                  <a href="/country-sites/edit-page/<%= countrySite._id %>/about<%= (typeof dashboard !== 'undefined' && dashboard === true) || (typeof inDashboard !== 'undefined' && inDashboard === true) ? '?dashboard=true' : '' %>" class="action-btn edit-btn">
                     <i class="fas fa-edit"></i> Edit
                   </a>
                 </div>
@@ -350,7 +350,7 @@
               <div class="content-card-header">
                 <h4 class="content-card-title">Contact Page</h4>
                 <div class="content-card-actions">
-                  <a href="/country-sites/edit-page/<%= countrySite._id %>/contact<%= locals.inDashboard ? '?dashboard=true' : '' %>" class="action-btn edit-btn">
+                  <a href="/country-sites/edit-page/<%= countrySite._id %>/contact<%= (typeof dashboard !== 'undefined' && dashboard === true) || (typeof inDashboard !== 'undefined' && inDashboard === true) ? '?dashboard=true' : '' %>" class="action-btn edit-btn">
                     <i class="fas fa-edit"></i> Edit
                   </a>
                 </div>
@@ -362,7 +362,7 @@
           <div class="tab-content" id="news-content">
             <h3>News Articles</h3>
             <p>Manage news articles specific to <%= countrySite.name %></p>
-            <a href="/admin/international/news?country=<%= countrySite.slug %><%= locals.inDashboard ? '&dashboard=true' : '' %>" class="btn btn-primary">
+            <a href="/admin/international/news?country=<%= countrySite.slug %><%= (typeof dashboard !== 'undefined' && dashboard === true) || (typeof inDashboard !== 'undefined' && inDashboard === true) ? '&dashboard=true' : '' %>" class="btn btn-primary">
               <i class="fas fa-newspaper"></i> Manage News
             </a>
           </div>
@@ -370,7 +370,7 @@
           <div class="tab-content" id="events-content">
             <h3>Events</h3>
             <p>Manage events specific to <%= countrySite.name %></p>
-            <a href="/country-sites/events/<%= countrySite._id %><%= locals.inDashboard ? '?dashboard=true' : '' %>" class="btn btn-primary">
+            <a href="/country-sites/events/<%= countrySite._id %><%= (typeof dashboard !== 'undefined' && dashboard === true) || (typeof inDashboard !== 'undefined' && inDashboard === true) ? '?dashboard=true' : '' %>" class="btn btn-primary">
               <i class="fas fa-calendar-alt"></i> Manage Events
             </a>
           </div>
@@ -383,7 +383,7 @@
               <div class="content-card-header">
                 <h4 class="content-card-title">Global Settings</h4>
                 <div class="content-card-actions">
-                  <a href="/country-sites/edit/<%= countrySite._id %><%= locals.inDashboard ? '?dashboard=true' : '' %>" class="action-btn edit-btn">
+                  <a href="/country-sites/edit/<%= countrySite._id %><%= (typeof dashboard !== 'undefined' && dashboard === true) || (typeof inDashboard !== 'undefined' && inDashboard === true) ? '?dashboard=true' : '' %>" class="action-btn edit-btn">
                     <i class="fas fa-cog"></i> Configure
                   </a>
                 </div>
@@ -395,7 +395,7 @@
               <div class="content-card-header">
                 <h4 class="content-card-title">Navigation Menu</h4>
                 <div class="content-card-actions">
-                  <a href="/country-sites/navigation/<%= countrySite._id %><%= locals.inDashboard ? '?dashboard=true' : '' %>" class="action-btn edit-btn">
+                  <a href="/country-sites/navigation/<%= countrySite._id %><%= (typeof dashboard !== 'undefined' && dashboard === true) || (typeof inDashboard !== 'undefined' && inDashboard === true) ? '?dashboard=true' : '' %>" class="action-btn edit-btn">
                     <i class="fas fa-bars"></i> Configure
                   </a>
                 </div>
@@ -407,7 +407,7 @@
               <div class="content-card-header">
                 <h4 class="content-card-title">Footer Content</h4>
                 <div class="content-card-actions">
-                  <a href="/country-sites/footer/<%= countrySite._id %><%= locals.inDashboard ? '?dashboard=true' : '' %>" class="action-btn edit-btn">
+                  <a href="/country-sites/footer/<%= countrySite._id %><%= (typeof dashboard !== 'undefined' && dashboard === true) || (typeof inDashboard !== 'undefined' && inDashboard === true) ? '?dashboard=true' : '' %>" class="action-btn edit-btn">
                     <i class="fas fa-shoe-prints"></i> Configure
                   </a>
                 </div>
@@ -418,7 +418,7 @@
         </div>
       </div>
       
-      <% if (!locals.inDashboard) { %>
+      <% if (typeof dashboard === 'undefined' && typeof inDashboard === 'undefined') { %>
       <%- include('../../partials/admin-footer.ejs') %>
     </main>
   </div>

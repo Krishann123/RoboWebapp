@@ -254,7 +254,7 @@
   </style>
 </head>
 <body>
-  <% if (!locals.inDashboard) { %>
+  <% if (typeof dashboard === 'undefined' && typeof inDashboard === 'undefined') { %>
   <div class="dashboard-container">
     <%- include('../../partials/admin-sidebar.ejs') %>
     <main class="main-content">
@@ -264,7 +264,7 @@
       <div class="container">
         <div class="page-header">
           <h1 class="page-title"><i class="fas fa-edit"></i> Edit Country Site</h1>
-          <a href="/country-sites<%= locals.inDashboard ? '?dashboard=true' : '' %>" class="back-button">
+          <a href="/country-sites<%= (typeof dashboard !== 'undefined' && dashboard === true) || (typeof inDashboard !== 'undefined' && inDashboard === true) ? '?dashboard=true' : '' %>" class="back-button">
             <i class="fas fa-arrow-left"></i> Back to Country Sites
           </a>
         </div>
@@ -278,7 +278,7 @@
         <div class="form-container">
           <h2 class="form-title">Edit <%= countrySite.name %> Site</h2>
           
-          <form action="/country-sites/edit/<%= countrySite._id %><%= locals.inDashboard ? '?dashboard=true' : '' %>" method="POST" enctype="multipart/form-data">
+          <form action="/country-sites/edit/<%= countrySite._id %><%= (typeof dashboard !== 'undefined' && dashboard === true) || (typeof inDashboard !== 'undefined' && inDashboard === true) ? '?dashboard=true' : '' %>" method="POST" enctype="multipart/form-data">
             <div class="form-group">
               <label for="name">Country Name</label>
               <input type="text" id="name" name="name" class="form-control" value="<%= countrySite.name %>" required>
@@ -349,14 +349,14 @@
             </div>
             
             <div class="form-buttons">
-              <a href="/country-sites<%= locals.inDashboard ? '?dashboard=true' : '' %>" class="btn btn-cancel">Cancel</a>
+              <a href="/country-sites<%= (typeof dashboard !== 'undefined' && dashboard === true) || (typeof inDashboard !== 'undefined' && inDashboard === true) ? '?dashboard=true' : '' %>" class="btn btn-cancel">Cancel</a>
               <button type="submit" class="btn btn-primary">Save Changes</button>
             </div>
           </form>
         </div>
       </div>
       
-      <% if (!locals.inDashboard) { %>
+      <% if (typeof dashboard === 'undefined' && typeof inDashboard === 'undefined') { %>
       <%- include('../../partials/admin-footer.ejs') %>
     </main>
   </div>
