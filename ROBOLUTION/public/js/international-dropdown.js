@@ -1,127 +1,124 @@
 /**
- * International dropdown enhancement script
- * This script enhances the international dropdown with country flags and styling
- * and dynamically loads available country sites
+ * International dropdown enhancement script.
+ * This script powers the session-based international page.
  */
 document.addEventListener('DOMContentLoaded', function() {
-  // Get all international dropdown content elements
+  // This variable should be globally available from the EJS template
+  const currentUser = window.CUR_USER; 
+  
+  // Find all dropdowns and enhance the international one
   const internationalDropdowns = document.querySelectorAll('.dropdown-content');
   
-  // Find the international dropdown (parent has button with "International" text)
-  let internationalDropdown = null;
-  
   internationalDropdowns.forEach(dropdown => {
-    const dropdownParent = dropdown.parentElement;
-    const dropdownButton = dropdownParent.querySelector('button');
+    const dropdownButton = dropdown.parentElement.querySelector('button');
     
     if (dropdownButton && dropdownButton.textContent.includes('International')) {
-      internationalDropdown = dropdown;
-      
-      // Add styling to existing links
-      const links = dropdown.querySelectorAll('a');
-      links.forEach(link => {
-        if (link.textContent.trim() !== 'View All Countries' && 
-            !link.classList.contains('dropdown-empty') &&
-            !link.parentElement.classList.contains('dropdown-divider')) {
-          decorateCountryLink(link);
-        }
-      });
-      
-      // Fetch available country sites
-      fetchCountrySites(dropdown);
+      // Fetch dynamic countries
+      setupInternationalDropdown(dropdown, currentUser);
     }
   });
-  
-  /**
-   * Fetch available country sites from the API
-   * @param {HTMLElement} dropdown - The dropdown element to populate
-   */
-  function fetchCountrySites(dropdown) {
-    // Skip if we don't have a dropdown
-    if (!dropdown) return;
+});
+
+/**
+ * Sets up the international dropdown menu.
+ * - Fetches country sites and populates them.
+ * - Adds event listeners to handle country selection via API.
+ * @param {HTMLElement} dropdown - The dropdown content element.
+ * @param {Object} currentUser - The current user object (or null).
+ */
+function setupInternationalDropdown(dropdown, currentUser) {
+  // Fetch and populate dynamic country links
+  fetchAndPopulateCountries(dropdown);
+
+  // Add a single event listener to the dropdown for handling clicks
+  dropdown.addEventListener('click', function(event) {
+    const link = event.target.closest('a.country-link');
     
-    fetch('/api/country-sites')
+    // If the click was not on a country link, allow default behavior
+    if (!link) return;
+
+    event.preventDefault(); // Stop the browser from navigating for country-specific links
+    
+    const slug = link.dataset.slug;
+    if (!slug) {
+      console.error('[International] Link is missing data-slug attribute.');
+      return;
+    }
+    
+    console.log(`[International] Country selected: ${slug}`);
+
+    // Set the selected country via API and then reload
+    fetch(`/api/set-country/${slug}`, { method: 'POST' })
       .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch country sites');
-        }
+        if (!response.ok) throw new Error('API request failed');
         return response.json();
       })
       .then(data => {
-        if (data.success && data.countrySites && data.countrySites.length > 0) {
-          // Get existing links to avoid duplicates
-          const existingLinks = Array.from(dropdown.querySelectorAll('a'))
-            .map(link => link.getAttribute('href'));
+        if (data.success) {
+          console.log(`[International] Successfully set country to ${slug}. Reloading page.`);
           
-          // Add new country sites that aren't already in the dropdown
-          data.countrySites.forEach(site => {
-            const href = `/country/${site.slug}`;
-            if (!existingLinks.includes(href) && site.slug !== 'dubai') {
-              // Find the Dubai link or the last link before adding
-              const lastLink = dropdown.lastElementChild;
-              
-              // Create new link element
-              const link = document.createElement('a');
-              link.href = href;
-              link.textContent = site.name;
-              
-              // Add after Dubai or at the end
-              dropdown.insertBefore(link, lastLink.nextSibling);
-              
-              // Apply styling
-              decorateCountryLink(link, site);
-            }
-          });
+          // If already on the /international page, just reload. Otherwise, navigate.
+          if (window.location.pathname.startsWith('/international')) {
+            window.location.reload();
+          } else {
+            window.location.href = '/international';
+          }
+        } else {
+          console.error('[International] Failed to set country:', data.message);
         }
       })
       .catch(error => {
-        console.error('Error fetching country sites:', error);
+        console.error('[International] Error setting country:', error);
       });
-  }
-  
-  /**
-   * Decorate a country link with flag and styling
-   * @param {HTMLElement} link - The link element to decorate
-   * @param {Object} site - Optional site data with flagUrl
-   */
-  function decorateCountryLink(link, site = null) {
-    // Skip if already processed or special link
-    if (link.classList.contains('country-link-decorated')) return;
-    
-    // Get country name from link text
-    const countryName = link.textContent.trim();
-    
-    // Create country item container
-    const countryItem = document.createElement('div');
-    countryItem.className = 'country-item';
-    
-    // Add flag image
-    const flagImg = document.createElement('img');
-    flagImg.className = 'country-flag';
-    flagImg.alt = `${countryName} Flag`;
-    
-    // Use site flagUrl if provided, otherwise generate from link href
-    if (site && site.flagUrl) {
-      flagImg.src = site.flagUrl;
-    } else {
-      // Extract country slug from link href
-      const href = link.getAttribute('href');
-      const slug = href.split('/').filter(Boolean).pop();
-      flagImg.src = `/images/flags/${slug}-flag.png`;
-    }
-    
-    // Add fallback for missing images
-    flagImg.onerror = function() {
-      this.src = '/images/flags/placeholder.png';
-    };
-    
-    // Add flag and name to the item
-    countryItem.appendChild(flagImg);
-    countryItem.appendChild(document.createTextNode(countryName));
-    
-    // Replace link text with the structured item
-    link.innerHTML = '';
-    link.appendChild(countryItem);
-    link.classList.add('country-link-decorated');
-  }
-}); 
+  });
+}
+
+/**
+ * Fetches country sites from the API and populates the dropdown.
+ * @param {HTMLElement} dropdown - The dropdown content element.
+ */
+function fetchAndPopulateCountries(dropdown) {
+  fetch('/country/api/sites')
+    .then(response => {
+      if (!response.ok) throw new Error('Failed to fetch country sites');
+      return response.json();
+    })
+    .then(data => {
+      if (data.success && data.countrySites && data.countrySites.length > 0) {
+        
+        // Remove any existing dynamically added links to prevent duplication
+        dropdown.querySelectorAll('.country-link, .dropdown-divider').forEach(el => el.remove());
+
+        // Add a divider
+        const divider = document.createElement('div');
+        divider.className = 'dropdown-divider';
+        dropdown.appendChild(divider);
+
+        // Add each country site to the dropdown
+        data.countrySites.forEach(site => {
+          const link = document.createElement('a');
+          link.href = '/international'; // All links point to the main page
+          link.className = 'country-link';
+          link.dataset.slug = site.slug; // Store slug in data attribute
+
+          const countryItem = document.createElement('div');
+          countryItem.className = 'country-item';
+          
+          const flagImg = document.createElement('img');
+          flagImg.className = 'country-flag';
+          flagImg.src = site.flagUrl;
+          flagImg.alt = `${site.name} Flag`;
+          flagImg.onerror = function() { this.src = '/images/flags/placeholder.png'; };
+          
+          countryItem.appendChild(flagImg);
+          countryItem.appendChild(document.createTextNode(site.name));
+          
+          link.appendChild(countryItem);
+          dropdown.appendChild(link);
+        });
+      }
+    })
+    .catch(error => {
+      console.error('[International] Error fetching country sites:', error);
+    });
+}

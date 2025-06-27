@@ -1,4 +1,6 @@
 ---
+import { getTemplate, getInternationalPartners } from "../db/mongodb.js";
+import { getImageUrl } from "../utils/image-helper.js";
 import Jumbotron from "../components/Home/Jumbotron.astro";
 import Layout from "../layouts/Layout.astro";
 import Join from "../components/Home/Joinrobo.astro";
@@ -8,19 +10,45 @@ import Highlights from "@/components/Home/Highlights.astro";
 import FrequentlyAsk from "@/components/Home/FrequentlyAsk.astro";
 import Partners from "@/components/Home/Partners";
 import NewsAndUpdate from "@/components/Home/NewsAndUpdate.astro";
+
+// Get country info from headers, passed by Express middleware
+const countrySiteHeader = Astro.request.headers.get('x-country-site');
+const countrySite = countrySiteHeader ? JSON.parse(countrySiteHeader) : { slug: 'default' };
+
+const template = await getTemplate(countrySite.slug);
+const content = template?.config?.Contents || {};
+const internationalPartners = await getInternationalPartners();
+
+// Extract content for each component based on the new structure
+const homeContent = content.Home || {};
+const heroContent = homeContent.hero || {};
+const robolutionContent = homeContent.Robolution || {};
+const partnersContent = content.Partners || {};
+
+// These sections are not in the provided JSON, so they will receive empty objects
+// The components should handle this gracefully.
+const packageContent = content.Package || {};
+const joinContent = content.Join || {};
+const newsContent = content.News || {};
+const faqContent = content.FrequentlyAsk || {};
+
+const layoutContent = {
+    nav: content.Navbar || {},
+    footer: content.Footer || {},
+    banner: content.Banner || {},
+};
 ---
 
-<Layout title="Erovoutika Dubai - Home">
-    <!-- <Hero/> -->
-    <Jumbotron />
-    <Robolution />
-    <Package />
-    <Highlights />
-    <Join />
-    <!-- <Admin /> -->
-    <NewsAndUpdate />
-    <FrequentlyAsk />
-    <Partners />
+<Layout
+    title="Erovoutika International"
+    content={layoutContent}
+>
+    <Jumbotron content={heroContent} />
+    <Robolution content={robolutionContent} />
+    <Package content={packageContent} />
+    <Join content={joinContent} />
+    <FrequentlyAsk content={faqContent} />
+    <Partners partners={internationalPartners} />
 </Layout>
 
 <style>

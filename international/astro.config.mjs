@@ -1,5 +1,5 @@
 import { defineConfig } from 'astro/config';
-import tailwindcss from '@tailwindcss/vite';
+import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 import node from '@astrojs/node';
 
@@ -13,13 +13,12 @@ const isProd = process.env.NODE_ENV === 'production';
 export default defineConfig({
   // Set base path for production mode to '/dubai'
   base: '/dubai',
-  integrations: [react()],
+  integrations: [react(), tailwind()],
   output: 'server',
   adapter: node({
     mode: 'standalone',
   }),
   vite: {
-    plugins: [tailwindcss()],
     define: {
       'process.env.PUBLIC_SUPABASE_URL': JSON.stringify(process.env.PUBLIC_SUPABASE_URL),
       'process.env.PUBLIC_SUPABASE_ANON_KEY': JSON.stringify(process.env.PUBLIC_SUPABASE_ANON_KEY),

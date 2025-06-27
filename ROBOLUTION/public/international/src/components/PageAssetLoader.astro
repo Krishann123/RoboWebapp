@@ -1,0 +1,86 @@
+---
+// Determine the current page type based on the URL
+const pathname = Astro.url.pathname;
+const pagePath = pathname.toLowerCase();
+
+// Detect page type
+const isNews = pagePath.includes('news');
+const isTrainings = pagePath.includes('trainings');
+const isTournament = pagePath.includes('tournament');
+const isAwards = pagePath.includes('awards');
+
+// Get background image path - use the same for all headers
+const headerBgImage = '/international/src/assets/images/backgrounds/Herobg.png';
+---
+
+<!-- Import global CSS -->
+<link rel="stylesheet" href="/international/src/styles/global.css" />
+
+<!-- Import page-specific CSS -->
+{isNews && <link rel="stylesheet" href="/international/src/styles/global.css" />}
+{isTrainings && <link rel="stylesheet" href="/international/src/styles/global.css" />}
+{isTournament && <link rel="stylesheet" href="/international/src/styles/global.css" />}
+{isAwards && <link rel="stylesheet" href="/international/src/styles/global.css" />}
+
+<!-- Add UI component scripts -->
+<script>
+  // Dynamically load UI component scripts
+  document.addEventListener('DOMContentLoaded', function() {
+    const uiComponents = ['button', 'card', 'carousel', 'dialog', 'accordion', 'command'];
+    
+    // Check if we need to load any UI components
+    const needsComponents = 
+      document.querySelector('[data-component]') || 
+      document.querySelector('.card') || 
+      document.querySelector('.carousel') || 
+      document.querySelector('.dialog') || 
+      document.querySelector('.accordion') || 
+      document.querySelector('.command');
+    
+    if (needsComponents) {
+      uiComponents.forEach(component => {
+        const script = document.createElement('script');
+        script.src = `/international/src/components/ui/${component}.tsx`;
+        script.type = 'module';
+        document.body.appendChild(script);
+      });
+    }
+  });
+</script>
+
+<!-- Add header background styles -->
+<style>
+  .news-hero,
+  .trainings-header,
+  .tournament-header,
+  .awards-header {
+    background-image: url('{headerBgImage}') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  }
+</style>
+
+<!-- Inject direct style tag for header backgrounds -->
+<script define:vars={{ headerBgImage }}>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Create a style element for header backgrounds
+    const styleEl = document.createElement('style');
+    styleEl.textContent = `
+      .news-hero,
+      .trainings-header,
+      .tournament-header,
+      .awards-header {
+        background-image: url('${headerBgImage}') !important;
+        background-size: cover !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+        color: white;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+      }
+    `;
+    document.head.appendChild(styleEl);
+  });
+</script> 

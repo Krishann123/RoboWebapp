@@ -1,0 +1,201 @@
+---
+// Get country slug from the current URL
+const pathname = Astro.url.pathname;
+const parts = pathname.split('/');
+let countrySlug = 'dubai'; // Default fallback
+
+// Extract country from URL if available
+if (parts.length > 1 && parts[1]) {
+  // If we're in a country route like /dubai/... or /singapore/...
+  countrySlug = parts[1];
+}
+
+// Define the header background image path
+const headerBgImage = '/international/src/assets/images/backgrounds/Herobg.png';
+---
+
+<script define:vars={{ countrySlug, headerBgImage }}>
+// Fix URLs when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+  const baseUrl = `/${countrySlug}`;
+  
+  // Fix links that should be prefixed with country slug
+  document.querySelectorAll('a').forEach(link => {
+    const href = link.getAttribute('href');
+    
+    // Skip external links, absolute URLs, or links that already have the country prefix
+    if (!href || 
+        href.startsWith('http') || 
+        href.startsWith('//') || 
+        href.startsWith('#') || 
+        href.startsWith(`/${countrySlug}`) ||
+        href === '/home') {
+      return;
+    }
+    
+    // Fix internal links by adding country prefix
+    if (href.startsWith('/')) {
+      link.setAttribute('href', `${baseUrl}${href}`);
+    } else {
+      link.setAttribute('href', `${baseUrl}/${href}`);
+    }
+  });
+  
+  // Fix forms
+  document.querySelectorAll('form').forEach(form => {
+    const action = form.getAttribute('action');
+    
+    // Skip forms without action or with external/absolute URLs
+    if (!action || 
+        action.startsWith('http') || 
+        action.startsWith('//') ||
+        action.startsWith(`/${countrySlug}`)) {
+      return;
+    }
+    
+    // Fix form action
+    if (action.startsWith('/')) {
+      form.setAttribute('action', `${baseUrl}${action}`);
+    } else {
+      form.setAttribute('action', `${baseUrl}/${action}`);
+    }
+  });
+  
+  // Fix images, scripts, stylesheets and other resources
+  document.querySelectorAll('img, script, link[rel="stylesheet"]').forEach(el => {
+    const srcAttr = el.tagName === 'LINK' ? 'href' : 'src';
+    const src = el.getAttribute(srcAttr);
+    
+    // Skip elements without src, with absolute URLs, or that already start with /international
+    if (!src || 
+        src.startsWith('http') || 
+        src.startsWith('//') ||
+        src.startsWith('/international/')) {
+      return;
+    }
+    
+    // If it's a local asset starting with /src, /public, or any other static asset
+    if (src.startsWith('/src/') || src.startsWith('/public/') || 
+        src.match(/\.(css|js|png|jpg|jpeg|gif|svg|webp|avif|woff|woff2|ttf|eot)$/)) {
+      el.setAttribute(srcAttr, `/international${src}`);
+    }
+  });
+  
+  // Fix CSS background images in style attributes
+  document.querySelectorAll('[style*="background-image"]').forEach(el => {
+    const style = el.getAttribute('style');
+    if (!style) return;
+    
+    // Replace URLs in background-image that should point to /international
+    const updatedStyle = style.replace(/url\(['"](\/[^'"]*)['"]\)/g, (match, url) => {
+      if (url.startsWith('/international')) return match;
+      return `url('/international${url}')`;
+    });
+    
+    if (style !== updatedStyle) {
+      el.setAttribute('style', updatedStyle);
+    }
+  });
+  
+  // Fix background images in stylesheets
+  try {
+    Array.from(document.styleSheets).forEach(styleSheet => {
+      try {
+        // Only process same-origin stylesheets
+        if (!styleSheet.href || styleSheet.href.startsWith('http')) return;
+        
+        Array.from(styleSheet.cssRules || []).forEach(rule => {
+          if (rule.style && rule.style.backgroundImage) {
+            const bgImage = rule.style.backgroundImage;
+            if (bgImage.includes('url(') && bgImage.includes('/src/')) {
+              // Fix the background image URL
+              const fixedBgImage = bgImage.replace(/url\(['"](\/[^'"]*)['"]\)/g, (match, url) => {
+                if (url.startsWith('/international')) return match;
+                return `url('/international${url}')`;
+              });
+              
+              if (bgImage !== fixedBgImage) {
+                rule.style.backgroundImage = fixedBgImage;
+              }
+            }
+          }
+        });
+      } catch (e) {
+        // CORS errors when accessing cross-origin stylesheets are expected
+        console.log('Could not process stylesheet (likely CORS):', e);
+      }
+    });
+  } catch (e) {
+    console.log('Error processing stylesheets:', e);
+  }
+  
+  // Inject additional CSS fixes for common background images
+  const styleFixElement = document.createElement('style');
+  styleFixElement.textContent = `
+    /* Fix footer background */
+    footer[class*="bg-[url(/src/assets/images/footer-images/Foots.png)"] {
+      background-image: url('/international/src/assets/images/footer-images/Foots.png') !important;
+    }
+    
+    /* Fix other common background images */
+    [class*="bg-[url(/src/assets"] {
+      background-image: var(--fixed-bg-url) !important;
+    }
+    
+    /* Fix header backgrounds */
+    .news-hero, 
+    .trainings-header,
+    .tournament-header,
+    .awards-header {
+      background-image: url('${headerBgImage}') !important;
+      background-size: cover !important;
+      background-position: center !important;
+    }
+    
+    /* Ensure text is readable on dark backgrounds */
+    .news-hero-title,
+    .trainings-header h1,
+    .tournament-header h1,
+    .awards-header h1 {
+      color: white !important;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5) !important;
+    }
+  `;
+  document.head.appendChild(styleFixElement);
+  
+  // Fix Tailwind classes with background image URLs
+  document.querySelectorAll('[class*="bg-[url("]').forEach(el => {
+    const classNames = el.className.split(' ');
+    classNames.forEach(className => {
+      if (className.includes('bg-[url(') && className.includes('/src/')) {
+        // Extract the URL
+        const match = className.match(/bg-\[url\(['"]?(\/[^'"]+)['"]?\)\]/);
+        if (match) {
+          const originalUrl = match[1];
+          const fixedUrl = `/international${originalUrl}`;
+          // Set as a CSS variable to be used by our style fix above
+          el.style.setProperty('--fixed-bg-url', `url('${fixedUrl}')`);
+        }
+      }
+    });
+  });
+  
+  // Ensure UI components are loaded
+  const uiComponentsNeeded = document.querySelectorAll('.card, .carousel, .dialog, .accordion, .button, .command').length > 0;
+  
+  if (uiComponentsNeeded) {
+    const uiComponents = ['button', 'card', 'carousel', 'dialog', 'accordion', 'command'];
+    
+    uiComponents.forEach(component => {
+      if (!document.querySelector(`script[src*="${component}.tsx"]`)) {
+        const script = document.createElement('script');
+        script.src = `/international/src/components/ui/${component}.tsx`;
+        script.type = 'module';
+        document.body.appendChild(script);
+      }
+    });
+  }
+  
+  console.log(`Enhanced URL and asset fixes applied for country: ${countrySlug}`);
+});
+</script> 

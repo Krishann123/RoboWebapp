@@ -1,0 +1,534 @@
+---
+import Layout from "../layouts/Layout.astro";
+import "@/styles/style.css";
+import "@/styles/global.css";
+import { fetchPageContent } from "@/components/db";
+import Hero from "@/components/Tournament/Hero.astro";
+
+const copyTheme = await fetchPageContent("Tournament");
+console.log("Tournament content:", copyTheme);
+const { erobot, eromath, freestyle, cybersecurity } = copyTheme.Pictures || {}
+---
+
+<Layout title="Erovoutika Dubai - Tournament">
+    <Hero />
+    <div class="overview" id="OverView">
+        <div>
+            <h1 class="subhead" set:html={copyTheme.Overview.subheadings} />
+            <h1
+                class="head tracking-wider"
+                set:html={copyTheme.Overview.Headings}
+            />
+            <p class="info md:w-190" set:html={copyTheme.Overview.info} />
+        </div>
+        <!-- PICTURE SECTION -->
+        <div
+            class="grid grid-cols-1 sm:grid-cols-1 place-items-center md:grid-cols-2 bg-transparent"
+        >
+            <a id="erobot-link" class="transition hover:scale-120" href="#"
+                ><img src={erobot} /></a
+            >
+            <div
+                id="erobot-modal"
+                class="fixed inset-0 z-50 flex items-center justify-center bg-black/30 hidden"
+            >
+                <div
+                    class="bg-white p-8 rounded shadow-lg relative w-auto lg:w-200 h-auto"
+                >
+                    <button
+                        id="close-erobot-modal"
+                        class="absolute top-2 right-2 text-2xl">&times;</button
+                    >
+                    <img src={erobot} class="max-w-xs mx-auto" />
+                    <ul class="list-disc">
+                        <li class="m-4 text-justify">
+                            Teachers from elementary to college across all
+                            disciplines or industry practitioners can form teams
+                            to represent their school or company. Each team must
+                            consist of a minimum of two (2) and a maximum of
+                            five (5) members. Participants will utilize
+                            EROVOUTIKA (Robotics & Automation) kits to compete
+                            in the Robotics & Automation for Research and
+                            Innovation, EROVOUTHON Category. The tournament
+                            serves as the culminating activity, showcasing the
+                            skills and knowledge gained during the training
+                            camp.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <a id="freestyle-link" class="transition hover:scale-120" href="#">
+                <img src={freestyle} />
+            </a>
+            <div
+                id="freestyle-modal"
+                class="fixed inset-0 z-50 flex items-center justify-center bg-black/30 hidden"
+            >
+                <div
+                    class="bg-white p-8 rounded shadow-lg relative w-auto lg:w-200 h-auto"
+                >
+                    <button
+                        id="close-freestyle-modal"
+                        class="absolute top-2 right-2 text-2xl">&times;</button
+                    >
+                    <img src={freestyle} class="max-w-xs mx-auto" />
+                    <ul class="list-disc">
+                        <li class="m-4 text-justify">
+                            A team can consist of high school or college
+                            students, with a minimum of two (2) and a maximum of
+                            five (5) members. Each team will showcase their
+                            projects and deliver a five-minute presentation to
+                            the panel of judges. Their presentation must feature
+                            an innovative, functional prototype demonstrating
+                            its purpose, design, and application effectively.
+                        </li>
+                        <hr class="solid" />
+                        <li class="m-4 text-justify">
+                            Additionally, teams are required to prepare a
+                            roll-up poster size to visually present their
+                            project. The poster should include the project
+                            title, objectives, methodology, key features, and
+                            real-world applications, ensuring clarity and
+                            professionalism in their presentation.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <a id="eromath-link" class="transition hover:scale-120" href="#">
+                <img src={eromath} />
+            </a>
+            <div
+                id="eromath-modal"
+                class="fixed inset-0 z-50 flex items-center justify-center bg-black/30 hidden"
+            >
+                <div
+                    class="bg-white p-8 rounded shadow-lg relative w-auto lg:w-200 h-auto"
+                >
+                    <button
+                        id="close-eromath-modal"
+                        class="absolute top-2 right-2 text-2xl">&times;</button
+                    >
+                    <img src={eromath} class="max-w-xs mx-auto" />
+                    <ul class="list-disc">
+                        <li class="m-4 text-justify">
+                            A team can consist of high school or college
+                            students, with a minimum of two (2) and a maximum of
+                            five (5) members.
+                        </li>
+                        <hr class="solid" />
+                        <li class="m-4 text-justify">
+                            Additionally, teams are required to prepare a
+                            roll-up poster size to visually present their
+                            project. The poster should include the project
+                            title, objectives, methodology, key features, and
+                            real-world applications, ensuring clarity and
+                            professionalism in their presentation.
+                        </li>
+                        <hr class="solid" />
+                        <li class="m-4 text-justify">
+                            The robotics kit to be used is the ERovoutika robot,
+                            except for the Erobot v3 (open category), which you
+                            can build on your own. This is upon the approval of
+                            Erovoutika team.
+                        </li>
+                        <hr class="solid" />
+                        <li class="m-4 text-justify">
+                            The robot's ranking is based on the time it takes to
+                            complete one lap.
+                        </li>
+                        <hr class="solid" />
+                        <li class="m-4 text-justify">
+                            To complete one lap, the robot must traverse the
+                            entire track from start to finish.
+                        </li>
+                        <hr class="solid" />
+                        <li class="m-4 text-justify">
+                            3 attempts to record their time are provided for
+                            each team. The best time in the 3 attempts is taken
+                            as the final time.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <a
+                id="cybersecurity-link"
+                class="transition hover:scale-120"
+                href="#"
+            >
+                <img src={cybersecurity} />
+            </a>
+            <div
+                id="cybersecurity-modal"
+                class="fixed inset-0 z-50 flex items-center justify-center bg-black/30 hidden"
+            >
+                <div
+                    class="bg-white p-8 rounded shadow-lg relative w-auto lg:w-200 h-auto"
+                >
+                    <button
+                        id="close-cybersecurity-modal"
+                        class="absolute top-2 right-2 text-2xl">&times;</button
+                    >
+                    <img src={cybersecurity} class="max-w-xs mx-auto" />
+                    <ul class="list-disc">
+                        <li class="m-4 text-justify">
+                            A team can consist of high school or college
+                            students, with a minimum of two (2) and a maximum of
+                            five (5) members.
+                        </li>
+                        <hr class="solid" />
+                        <li class="m-4 text-justify">
+                            The team can build their own robot for EMega Sumo
+                            but this is subject to prior approval from the
+                            Erovoutika team to ensure that it meets the
+                            competition standards and specifications.
+                        </li>
+                        <hr class="solid" />
+                        <li class="m-4 text-justify">
+                            Maximum dimensions: the robot must fit in a square
+                            10cm x 10cm.
+                        </li>
+                        <hr class="solid" />
+                        <li class="m-4 text-justify">
+                            The maximum mass of the robot must not exceed 500g.
+                        </li>
+                        <hr class="solid" />
+                        <li class="m-4 text-justify">
+                            The robot should have a start-and-stop module for
+                            the referee's control.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WHO CAN PARTICIPATE SECTION -->
+    <!-- Teacher -->
+    <div>
+        <div class="h-fit p-4 justify-items-center">
+            <h1
+                class="font-bold text-center text-5xl lg:text-[96px] font-bebas tracking-wider text-black mt-10"
+                set:html={copyTheme.Teachers.title}
+            />
+        </div>
+
+        <div class="Teachers">
+            <div class="md:p-30 p-5">
+                <div
+                    class="grid md:grid-cols-2 grid-cols-1 place-items-center md:gap-10 gap-5"
+                >
+                    <img
+                        class="w-fit h-auto shadow-sm"
+                        src={copyTheme.Teachers.image}
+                    />
+                    <div class="self-start w-full md:py-13">
+                        <h1
+                            class="md:text-5xl text-4xl md:mb-10 mb-5 text-black text-center bg-amber-200 w-fit rounded-md p-3 roboto-extra-bold"
+                            set:html={copyTheme.Teachers.header}
+                        />
+                        <p
+                            class="text-black inter md:pr-20 text-justify"
+                            set:html={copyTheme.Teachers.subtext}
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student -->
+    <div class="Students">
+        <div class="md:p-30 p-5">
+            <div
+                class="grid md:grid-cols-2 grid-cols-1 place-items-center md:gap-10 gap-5"
+            >
+                <div class="self-start w-full md:py-13">
+                    <h1
+                        class="md:text-5xl text-4xl md:mb-10 mb-5 text-white text-left bg-[#2562FF] w-fit rounded-md p-3 roboto-extra-bold"
+                        set:html={copyTheme.Students.header}
+                    />
+                    <p
+                        class="text-black inter md:pr-20 text-justify"
+                        set:html={copyTheme.Students.subtext}
+                    />
+                </div>
+                <div>
+                    <img
+                        class="h-auto w-full shadow-sm rounded-md"
+                        src={copyTheme.Students.image}
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compete-->
+
+    <div class="place-items-center p-20 bg-white grid grid-cols-1">
+        <p
+            class="my-4 text-5xl lg:text-[96px] text-center font-bebas font-bold text-black tracking-wider"
+            set:html={copyTheme.Compete.header}
+        />
+
+        <p
+            class="flex max-w-[700px] my-10 roboto text-center text-black text-lg"
+            set:html={copyTheme.Compete.subtext}
+        />
+
+        <a
+            class="text-center text-2xl roboto-bold inline-block rounded-full bg-gradient-to-r from-BlueStart via-purple-600 to-PinkEnd px-8 py-3 text-white transition hover:scale-110 hover:shadow-xl focus:ring-3 focus:outline-hidden"
+            href={copyTheme.Compete.buttonLink}
+            target="_blank"
+        >
+            {copyTheme.Compete.buttonText}
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Modal logic for all images
+            const modals = [
+                {
+                    link: "erobot-link",
+                    modal: "erobot-modal",
+                    close: "close-erobot-modal",
+                },
+                {
+                    link: "freestyle-link",
+                    modal: "freestyle-modal",
+                    close: "close-freestyle-modal",
+                },
+                {
+                    link: "eromath-link",
+                    modal: "eromath-modal",
+                    close: "close-eromath-modal",
+                },
+                {
+                    link: "cybersecurity-link",
+                    modal: "cybersecurity-modal",
+                    close: "close-cybersecurity-modal",
+                },
+            ];
+
+            modals.forEach(({ link, modal, close }) => {
+                const linkEl = document.getElementById(link);
+                const modalEl = document.getElementById(modal);
+                const closeEl = document.getElementById(close);
+
+                if (linkEl && modalEl && closeEl) {
+                    linkEl.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        modalEl.classList.remove("hidden");
+                    });
+                    closeEl.addEventListener("click", () => {
+                        modalEl.classList.add("hidden");
+                    });
+                    modalEl.addEventListener("click", (e) => {
+                        if (e.target === modalEl) {
+                            modalEl.classList.add("hidden");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</Layout>
+<style>
+    .page {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+        width: 100%;
+    }
+    /* Hero Section */
+    .hero {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        padding: 20px;
+        color: white;
+        text-align: center;
+    }
+    /* Hero Title */
+    .hero-title {
+        font-family: "Bebas Neue";
+        font-size: 6rem;
+        line-height: 1.2;
+        margin-bottom: 1.2rem;
+    }
+
+    .hero-title .underline {
+        text-decoration: underline;
+        text-decoration-thickness: 0.5px;
+        text-underline-offset: 2px;
+    }
+    /* Hero Subtitle */
+    .hero-subtitle {
+        font-family: "Poppins", sans-serif;
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+    }
+    /* Hero Button */
+    .hero-button {
+        background-color: #ffffff;
+        color: black;
+        padding: 15px 30px;
+        font-size: 1rem;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 50px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        transition:
+            background-color 0.3s,
+            transform 0.2s;
+    }
+    .hero-button:hover {
+        background-color: #f0f0f0;
+        transform: scale(1.1);
+    }
+
+    .overview {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        padding: 20px;
+        text-align: center;
+        background-color: white;
+    }
+
+    .subhead {
+        font-family: "Inter";
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 1.2;
+        /* margin-bottom: 1.2rem; */
+        color: #6941c6;
+    }
+    .head {
+        font-family: "bebas neue";
+        font-size: 5rem;
+        line-height: 1.2;
+        margin-bottom: 1.2rem;
+        font-weight: bold;
+        color: black;
+    }
+    .info {
+        font-family: Roboto, sans-serif;
+        font-size: 1.2rem;
+        line-height: 1.6;
+        margin-bottom: 1.2rem;
+        color: black;
+    }
+
+    .Teachers {
+        /* background-image: url("./ParticipateImages/teachersBg.PNG"); */
+        background-size: cover;
+        background-position: center;
+    }
+
+    .Students {
+        /* background-image: url("./ParticipateImages/studentsBg.PNG"); */
+        background-color: #f3f4f6;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .overview,
+    .Teachers,
+    .Students,
+    .place-items-center.p-20.bg-white.grid.grid-cols-1 {
+        opacity: 0;
+        transform: translateY(40px);
+        transition:
+            opacity 0.8s ease,
+            transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .overview.visible,
+    .Teachers.visible,
+    .Students.visible,
+    .place-items-center.p-20.bg-white.grid.grid-cols-1.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Add tournament-specific styles */
+    :global(.tournament-header) {
+        background-image: url('/international/src/assets/images/backgrounds/Herobg.png') !important;
+        background-size: cover !important;
+        background-position: center !important;
+    }
+    
+    :global(.tournament-header h1) {
+        color: white !important;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5) !important;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const learnMoreButton = document.querySelector(".hero-button");
+        if (learnMoreButton) {
+            learnMoreButton.addEventListener("click", () => {
+                const introSection = document.getElementById("OverView");
+                if (introSection) {
+                    introSection.scrollIntoView({ behavior: "smooth" });
+                } else {
+                    console.error("Introduction section not found.");
+                }
+            });
+        } else {
+            console.error("Learn More button not found.");
+        }
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const toggle = document.getElementById("menu-toggle");
+        const menu = document.getElementById("mobile-menu");
+
+        if (toggle && menu) {
+            toggle.addEventListener("click", () => {
+                menu.classList.toggle("hidden");
+            });
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+        // Existing modal logic...
+
+        // Animation for main sections
+        const sections = [
+            document.querySelector(".overview"),
+            document.querySelector(".Teachers"),
+            document.querySelector(".Students"),
+            document.querySelector(
+                ".place-items-center.p-20.bg-white.grid.grid-cols-1"
+            ),
+        ].filter(Boolean);
+
+        const observer = new IntersectionObserver(
+            (entries, obs) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                        obs.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.2 }
+        );
+        sections.forEach((section) => observer.observe(section));
+    });
+</script>

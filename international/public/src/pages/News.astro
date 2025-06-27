@@ -1,0 +1,285 @@
+---
+import Layout from "../layouts/Layout.astro";
+import "../styles/global.css";
+import Cardnav from "../components/Cardnav.astro";
+import { supabase } from "@/lib/supabase-client";
+
+// Fetch the Default template from Supabase
+const { data: templateData, error: templateError } = await supabase
+    .from('Templates')
+    .select('config')
+    .eq('Name', 'Default')
+    .single();
+
+if (templateError) {
+    console.error('Error fetching template:', templateError);
+}
+
+// Extract the News content from the template
+const Hero = templateData?.config?.Contents?.News?.Hero || {};
+const latestnews = templateData?.config?.Contents?.News["latest-news"] || [];
+const events = templateData?.config?.Contents?.News["latest-events"] || [];
+const web = templateData?.config?.Contents?.News["latest-webinar"] || [];
+const cards = templateData?.config?.Contents?.News["latest-cards"] || [];
+
+const getImageUrl = (imagePath) => {
+    if (typeof imagePath !== 'string') return '/images/placeholder.png'; // Return placeholder if path is not a string
+
+    // If it's an external URL, use it directly
+    if (imagePath.startsWith('http')) {
+        return imagePath;
+    }
+
+    // Handle new image uploads directly to the public directory
+    if (imagePath.startsWith('/image-')) {
+        // These should be served directly from the public directory
+        return imagePath;
+    }
+
+    // For local assets, construct the path relative to the Robolution public directory
+    // based on the monorepo build process.
+    if (imagePath.startsWith('/src/assets/')) {
+        return `/international${imagePath}`;
+    }
+    
+    // Handle older /public/ paths if they exist
+    if (imagePath.startsWith('/public/')) {
+         return `/international${imagePath}`;
+    }
+
+    // Handle images that start with /images (uploaded through the admin panel)
+    if (imagePath.startsWith('/images/')) {
+        return imagePath;
+    }
+
+    // Fallback for any other path format
+    return `/international/${imagePath}`;
+};
+
+const formatUrl = (url) => {
+    if (typeof url !== 'string' || url.trim() === '' || url.trim() === '#') {
+        return '#';
+    }
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+        return url;
+    }
+    if (url.startsWith('/')) { // Internal link
+        return url;
+    }
+    return `https://${url}`;
+}
+---
+
+<Layout title="Erovoutika Dubai - News">
+    <section class="news-hero">
+        <h1 class="news-hero-title">{Hero?.title}</h1>
+    </section>
+
+    <div class="page-container">
+        <section class="latest-news-section">
+            <h2 class="section-title">Latest News</h2>
+            <div class="scalable-news-grid">
+                {latestnews.map(newsItem => (
+                    <div class="news-item-card">
+                        <a href={formatUrl(newsItem.NewsCard.link)}>
+                            <img src={getImageUrl(newsItem.NewsCard.image)} alt={newsItem.NewsCard.alt} />
+                        </a>
+                        <div class="news-item-card-content">
+                            <p class="news-date">{newsItem.NewsCard.date}</p>
+                            <h5 class="news-item-title">{newsItem.NewsCard.description || newsItem.NewsCard.title}</h5>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </section>
+
+        <section class="events-section">
+            <h2 class="section-title">{events?.[0]?.NewsCard?.events || 'Events'}</h2>
+            <div class="events-grid">
+                {events.map(event => (
+                    <div class="event-card">
+                        <a href={formatUrl(event.NewsCard.link)}>
+                            <img src={getImageUrl(event.NewsCard.image)} alt={event.NewsCard.alt} />
+                        </a>
+                        <div class="event-card-content">
+                            <p class="news-date">{event.NewsCard.date}</p>
+                            <h5 class="event-title">{event.NewsCard.title}</h5>
+                            <p class="event-description">{event.NewsCard.description}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </section>
+
+        <section class="webinar-section">
+            <h2 class="section-title">{web?.[0]?.NewsCard?.name || 'Webinars'}</h2>
+             <div class="webinar-grid">
+                {web.map(item => (
+                    <a href={formatUrl(item.NewsCard.link)} class="webinar-card">
+                        <img src={getImageUrl(item.NewsCard.image)} alt={item.NewsCard.alt} />
+                        <div class="webinar-card-content">
+                            <p class="news-date">{item.NewsCard.date}</p>
+                            <h5 class="webinar-title">{item.NewsCard.title}</h5>
+                            <p class="webinar-description">{item.NewsCard.description}</p>
+                        </div>
+                    </a>
+                ))}
+            </div>
+        </section>
+        
+        <section class="more-news-section">
+             <div class="cardnav-grid">
+                {cards.map(card => (
+                    <Cardnav image={getImageUrl(card.image)} icon={card.icon} text={card.text} source={card.source} link={formatUrl(card.link)} date={card.date} />
+                ))}
+            </div>
+        </section>
+    </div>
+</Layout>
+
+<style>
+    .page-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .news-hero {
+        text-align: center;
+        padding: 4rem 2rem;
+        background-color: #f8f9fa;
+        background-image: url('/international/src/assets/images/backgrounds/Herobg.png') !important;
+        background-size: cover !important;
+        background-position: center !important;
+    }
+
+    .news-hero-title {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 5rem;
+        font-weight: bold;
+        color: white !important;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5) !important;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        font-family: 'Bebas Neue', sans-serif;
+        margin-bottom: 2rem;
+        margin-top: 3rem;
+        color: #343a40;
+    }
+
+    /* NEW SCALABLE NEWS GRID */
+    .scalable-news-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .news-item-card {
+        background: #ffffff;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+    .news-item-card:hover {
+        transform: translateY(-5px);
+    }
+    .news-item-card img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+    }
+    .news-item-card-content {
+        padding: 1.5rem;
+    }
+    .news-item-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+        margin-top: 0.5rem;
+    }
+    
+    .news-date {
+        font-size: 0.9rem;
+        font-weight: 300;
+        margin-bottom: 0.5rem;
+    }
+
+    .events-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .event-card {
+        background: #ffffff;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+
+    .event-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .event-card-content {
+        padding: 1.5rem;
+    }
+
+    .event-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin: 0.5rem 0;
+    }
+
+    .event-description {
+        font-size: 1rem;
+        color: #6c757d;
+    }
+
+    .webinar-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .webinar-card {
+        display: flex;
+        background: #ffffff;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        overflow: hidden;
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .webinar-card img {
+        width: 300px;
+        height: auto;
+        object-fit: cover;
+    }
+
+    .webinar-card-content {
+        padding: 1.5rem;
+    }
+
+    .webinar-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin: 0.5rem 0;
+    }
+
+    .webinar-description {
+        font-size: 1rem;
+        color: #6c757d;
+    }
+    
+    .cardnav-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+</style>

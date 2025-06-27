@@ -1,0 +1,19 @@
+<!-- WEBINARS - EDIT -->
+<!DOCTYPE html>
+<html>
+<head><title>Edit Webinar</title><link rel="stylesheet" href="/css/style.css"></head>
+<body>
+<div class="container">
+    <h1>Edit Webinar in <%= countrySite.name %></h1>
+    <form action="/admin/country-sites/<%= countrySite._id %>/webinars/<%= webinar._id %>" method="POST" enctype="multipart/form-data">
+        <div class="form-group"><label>Title</label><input type="text" name="title" class="form-control" value="<%= webinar.title %>" required></div>
+        <div class="form-group"><label>Description</label><textarea name="description" class="form-control" rows="5"><%= webinar.description %></textarea></div>
+        <div class="form-group"><label>Date</label><input type="date" name="date" class="form-control" value="<%= webinar.date ? webinar.date.toISOString().split('T')[0] : '' %>"></div>
+        <div class="form-group"><label>Banner Image</label><input type="file" name="bannerImage" class="form-control">
+        <% if (webinar.bannerImage) { %><img src="<%= webinar.bannerImage %>" width="200"><% } %></div>
+        <div class="form-group"><label>Registration Link</label><input type="url" name="registrationLink" class="form-control" value="<%= webinar.registrationLink %>"></div>
+        <button type="submit" class="btn btn-primary">Update Webinar</button>
+    </form>
+</div>
+</body>
+</html> 

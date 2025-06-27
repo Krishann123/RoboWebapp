@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Robolution Countries</title>
+    <link rel="shortcut icon" href="/images/ROBOLUTION_ICON.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    <script src="/js/script.js" defer></script>
+    <script src="/js/mobile.js" defer></script>
+    <script src="/js/international-dropdown.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        main {
+            flex-grow: 1;
+            padding: 40px 20px;
+        }
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+            margin-top: 20px;
+            padding-top: 40px;
+        }
+        .page-header h1 {
+            font-size: 2.8rem;
+            color: #00008b;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .page-header p {
+            font-size: 1.2rem;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .countries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .country-card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #e9ecef;
+        }
+        .country-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+        .card-image-wrapper {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .country-card:hover .card-image {
+            transform: scale(1.05);
+        }
+        .card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-content h2 {
+            margin: 0 0 15px;
+            font-size: 1.6rem;
+            color: #00008b;
+            font-weight: 600;
+        }
+        .card-content p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0;
+            color: #495057;
+            flex-grow: 1;
+        }
+        .card-footer {
+            padding: 20px 25px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+            text-align: right;
+            margin-top: auto;
+        }
+        .view-btn {
+            background: linear-gradient(45deg, #00008b, #0033cc);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s ease, transform 0.2s ease;
+            display: inline-block;
+        }
+        .view-btn:hover {
+            background: linear-gradient(45deg, #0033cc, #00008b);
+            transform: scale(1.05);
+        }
+        .view-btn i {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+        .country-card:hover .view-btn i {
+            transform: translateX(5px);
+        }
+        .message {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Dropdown styles from home.ejs */
+        .dropdown {
+          position: relative;
+          display: inline-block;
+        }
+        .dropdown-btn {
+          cursor: pointer;
+        }
+        .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: #f9f9f9;
+          min-width: 220px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 1001; /* Ensure it's above other content */
+          border-radius: 4px;
+          padding: 8px 0;
+        }
+        .dropdown-content a {
+          color: black;
+          padding: 12px 16px;
+          text-decoration: none;
+          display: block;
+          text-align: left;
+          transition: background-color 0.2s ease;
+        }
+        .dropdown-content a:hover {
+          background-color: #f1f1f1;
+        }
+        .dropdown:hover .dropdown-content {
+          display: block;
+        }
+        .dropdown-empty {
+          padding: 12px 16px;
+          color: #666;
+          font-style: italic;
+          text-align: center;
+        }
+        .dropdown-divider {
+          height: 1px;
+          margin: 5px 0;
+          background-color: #e9e9e9;
+        }
+        .country-item {
+          display: flex;
+          align-items: center;
+          padding: 8px 16px;
+          transition: background-color 0.2s ease;
+        }
+        .country-item:hover {
+          background-color: #f1f1f1;
+        }
+        .country-flag {
+          width: 24px;
+          height: 16px;
+          margin-right: 10px;
+          object-fit: cover;
+          border: 1px solid #eee;
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            .page-header p {
+                font-size: 1rem;
+            }
+            main {
+                padding: 20px 15px;
+            }
+            .countries-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<script>
+    window.CUR_USER = <%- typeof user !== 'undefined' && user ? JSON.stringify(user) : 'null' %>;
+</script>
+<div class="content-wrapper">
+    <header>
+      <div class="header-content">
+        <a href="/home"><img src="/images/LOGO.webp" alt="Robolution Logo" class="logo"></a>
+        <nav class="header-nav">
+          <div class="dropdown">
+            <button class="nav-button dropdown-btn" style="display: flex; align-items: center;">News <span style="margin-left: 5px; font-size: 0.8em;">▼</span></button>
+            <div class="dropdown-content">
+              <a href="/home">All News</a>
+              <!-- JS will populate years here if needed, but for now it's static -->
+            </div>
+          </div>
+          <a href="/user-categories" class="nav-button">Categories</a>
+          <div class="dropdown">
+            <button class="nav-button dropdown-btn" style="display: flex; align-items: center;">International <span style="margin-left: 5px; font-size: 0.8em;">▼</span></button>
+            <div class="dropdown-content">
+              <a href="/country/gallery">View All Countries</a>
+              <div class="dropdown-divider"></div>
+              <!-- Country sites will be added dynamically via international-dropdown.js -->
+            </div>
+          </div>
+          <div class="dropdown">
+            <button class="nav-button dropdown-btn" style="display: flex; align-items: center;">Regional <span style="margin-left: 5px; font-size: 0.8em;">▼</span></button>
+            <div class="dropdown-content">
+              <a href="/regional?region=All">All Regions</a>
+               <!-- JS will populate regions here if needed -->
+            </div>
+          </div>
+          <a href="/registration" class="nav-button registration-button">Registration</a>
+          <a href="/login" class="nav-button login-button">Login</a>
+          <a href="/signup" class="nav-button signup-button">Sign Up</a>
+          <a href="/profile" class="nav-button profile-button" style="display: none;">
+            <i class="fas fa-user-circle"></i> Profile
+          </a>
+          <a href="/logout" class="nav-button logout-button" style="display: none;">Logout</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h1>Our Global Robolution Communities</h1>
+            <p>Explore robotics and innovation from our country sites around the world.</p>
+        </div>
+
+        <% if (locals.successMessage && locals.successMessage.length > 0) { %>
+            <div class="message success"><%= locals.successMessage %></div>
+        <% } %>
+        <% if (locals.errorMessage && locals.errorMessage.length > 0) { %>
+            <div class="message error"><%= locals.errorMessage %></div>
+        <% } %>
+
+        <div class="countries-grid">
+            <% if (countrySites && countrySites.length > 0) { %>
+                <% countrySites.forEach(site => { %>
+                    <a href="/<%= site.slug === 'default' ? 'dubai' : site.slug %>" class="country-card">
+                        <div class="card-image-wrapper">
+                            <img src="<%= site.flagUrl %>" alt="<%= site.name %> Flag" class="card-image" onerror="this.onerror=null;this.src='/images/placeholder_image.png';">
+                        </div>
+                        <div class="card-content">
+                            <h2><%= site.name %></h2>
+                            <p><%= site.description.substring(0, 150) %><% if (site.description.length > 150) { %>...<% } %></p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="view-btn">Visit Site <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </a>
+                <% }); %>
+            <% } else { %>
+                <p style="text-align: center; grid-column: 1 / -1;">No country sites are available at the moment. Please check back later.</p>
+            <% } %>
+        </div>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-left">
+          <p>Powered by Erovoutika</p>
+        </div>
+        <div class="footer-right">
+          <p>Unit 703, PARC HOUSE II, Epifanio de los Santos Ave, Makati, 1212 Metro Manila</p>
+          <p><strong>Contact us via:</strong> 0974 423 1557 || erovoutika@gmail.com</p>
+          <div class="social-icons">
+            <a href="https://www.facebook.com/erovoutika" target="_blank" class="social-icon">f</a>
+            <a href="https://www.erovoutika.ph" target="_blank" class="social-icon">↗</a>
+            <a href="https://www.linkedin.com/company/erovoutika/" target="_blank" class="social-icon">in</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+</div>
+
+<a href="#" class="back-to-top" id="backToTop">↑</a>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentUser = <%- locals.user ? JSON.stringify(locals.user) : 'null' %>;
+
+        function checkLoginStatus() {
+            const loginButton = document.querySelector('.login-button');
+            const signupButton = document.querySelector('.signup-button');
+            const logoutButton = document.querySelector('.logout-button');
+            const profileButton = document.querySelector('.profile-button');
+
+            if (currentUser) {
+                if (loginButton) loginButton.style.display = 'none';
+                if (signupButton) signupButton.style.display = 'none';
+                if (logoutButton) logoutButton.style.display = 'inline-block';
+                if (profileButton) profileButton.style.display = 'inline-block';
+            } else {
+                if (loginButton) loginButton.style.display = 'inline-block';
+                if (signupButton) signupButton.style.display = 'inline-block';
+                if (logoutButton) logoutButton.style.display = 'none';
+                if (profileButton) profileButton.style.display = 'none';
+            }
+        }
+        checkLoginStatus();
+
+        const backToTopButton = document.getElementById('backToTop');
+        if (backToTopButton) {
+          window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+              backToTopButton.classList.add('show');
+            } else {
+              backToTopButton.classList.remove('show');
+            }
+          });
+          backToTopButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        }
+    });
+</script>
+
+</body>
+</html> 

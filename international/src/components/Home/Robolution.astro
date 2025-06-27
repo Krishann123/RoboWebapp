@@ -1,6 +1,29 @@
 ---
-import { fetchPageContent } from "../db";
-const content = await fetchPageContent("Home");
+import { getImageUrl } from '@/utils/image-helper';
+
+export interface Props {
+    content?: {
+        title1?: {
+            intro1: string;
+            sub1: string;
+            image1: string;
+            textColor1: string;
+            textColor2: string;
+            containerColor1: string;
+        };
+        title2?: {
+            intro2: string;
+            sub2: string;
+            image2: string;
+            textColor1: string;
+            textColor2: string;
+            containerColor2: string;
+        };
+    }
+}
+
+const { content = {} } = Astro.props;
+const { title1 = {}, title2 = {} } = content;
 ---
 
 <style>
@@ -70,52 +93,56 @@ const content = await fetchPageContent("Home");
 
 <div class="flex justify-center bg-white my-[54px]">
     <div class="grid lg:grid-cols-1 gap-10 w-full min-w-fit max-w-[600px] p-5">
+        {title1 && title1.intro1 && (
         <div
-            style={`background-color: ${content.Robolution.title1.containerColor1}`}
+                style={`background-color: ${title1.containerColor1 || '#f5f5f5'}`}
             class="grid grid-cols-1 lg:grid-cols-2 items-center justify-center rounded-lg mx-auto gap-5 lg:gap-30 w-auto p-12 slide-in-left"
         >
             <div class="flex flex-wrap w-full max-w-[610px]">
                 <h3
-                    style={`color: ${content.Robolution.title1.textColor1}`}
+                        style={`color: ${title1.textColor1 || '#000000'}`}
                     class="text-5xl lg:text-[86px] font-bebas tracking-wider mb-4"
-                    set:html={content.Robolution.title1.intro1}
+                        set:html={title1.intro1}
                 />
                 <h4
-                    style={`color: ${content.Robolution.title1.textColor2}`}
+                        style={`color: ${title1.textColor2 || '#666666'}`}
                     class="text-xs lg:text-base mt-4"
-                    set:html={content.Robolution.title1.sub1}
+                        set:html={title1.sub1}
                 />
             </div>
             <div class="place-items-center">
                 <img
-                    src={content.Robolution.title1.image1}
+                        src={getImageUrl(title1.image1)}
                     class="h-auto lg:h-[300px] w-full max-w-[540px] rounded-md opacity-80 shadow-md shadow-gray-200 object-cover img-hover-scale"
                 />
             </div>
         </div>
+        )}
 
+        {title2 && title2.intro2 && (
         <div
-            style={`background-color: ${content.Robolution.title2.containerColor2}`}
+                style={`background-color: ${title2.containerColor2 || '#e9e9e9'}`}
             class="grid grid-cols-1 lg:grid-cols-2 items-center justify-center rounded-lg mx-auto gap-5 lg:gap-30 w-auto p-12 slide-in-right"
         >
             <div class="place-items-center">
                 <img
-                    src={content.Robolution.title2.image2}
+                        src={getImageUrl(title2.image2)}
                     class="h-auto lg:h-[300px] w-auto rounded-md opacity-80 shadow-md shadow-gray-200 img-hover-scale"
                 />
             </div>
             <div class="flex flex-wrap w-full max-w-[610px]">
                 <h3
-                    style={`color: ${content.Robolution.title2.textColor1}`}
+                        style={`color: ${title2.textColor1 || '#000000'}`}
                     class="text-5xl lg:text-[86px] font-bebas tracking-wider mb-4"
-                    set:html={content.Robolution.title2.intro2}
+                        set:html={title2.intro2}
                 />
                 <h4
-                    style={`color: ${content.Robolution.title2.textColor2}`}
+                        style={`color: ${title2.textColor2 || '#666666'}`}
                     class="text-xs lg:text-base mt-4"
-                    set:html={content.Robolution.title2.sub2}
+                        set:html={title2.sub2}
                 />
             </div>
         </div>
+        )}
     </div>
 </div>

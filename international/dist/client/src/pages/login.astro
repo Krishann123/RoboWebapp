@@ -1,0 +1,394 @@
+---
+import Layout from "../layouts/Layout.astro";
+import logo from "../assets/images/Erovoutika Dubai logo.png";
+import show_password_icon from "../assets/images/utility-icons/show-password.png";
+import hide_password_icon from "../assets/images/utility-icons/hide-password.png";
+
+const { cookies, redirect } = Astro;
+
+const accessToken = cookies.get("sb-access-token");
+const refreshToken = cookies.get("sb-refresh-token");
+
+if (accessToken && refreshToken) {
+    return redirect("/admin");
+}
+---
+
+<Layout title="Erovoutika Dubai - Login">
+    <section class="hero-background">
+        <div class="form-container">
+            <img class="erovoutika-logo" src={logo.src} />
+            <div class="form-content">
+                <h1 class="admin-login">Admin Login</h1>
+                <form
+                    class="admin-form"
+                    action="/api/auth/signin"
+                    method="post"
+                >
+                    <div class="username">
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="email"
+                            id="email"
+                            required
+                        />
+                    </div>
+                    <div class="password">
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            id="password"
+                            required
+                        />
+                        <img
+                            src={show_password_icon.src}
+                            id="show-pass"
+                            alt="show eye icon"
+                        />
+                        <img
+                            src={hide_password_icon.src}
+                            id="hide-pass"
+                            alt="hide eye icon"
+                            style="display: none;"
+                        />
+
+                        <!--<div class="have_account">
+                            <p>Didn't have an account? <a href ="/Admin_SignUp"><u>Sign Up</u></a></p>
+                        </div>-->
+                    </div>
+                    <div class="w-full text-right mt-1">
+                        <a
+                            href="#"
+                            id="forgot-password-link"
+                            class="text-[#233876] text-sm hover:underline hover:text-blue-700"
+                            >Forgot Password?</a
+                        >
+                    </div>
+                    <button
+                        type="submit"
+                        class="login-button"
+                        id="login_button"
+                    >
+                        <span>Log In</span>
+                    </button>
+                </form>
+                <div
+                    id="forgot-password-modal"
+                    class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 bg-opacity-40 hidden"
+                >
+                    <div
+                        class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative"
+                    >
+                        <button
+                            id="close-modal"
+                            class="absolute top-2 right-2 text-gray-400 hover:text-gray-600 text-2xl"
+                            >&times;</button
+                        >
+                        <h2
+                            class="text-xl text-center font-semibold mb-4 text-[#233876]"
+                        >
+                            Forgot Password
+                        </h2>
+                        <form
+                            id="forgot-password-form"
+                            method="POST"
+                            action="/api/auth/forgot-password"
+                        >
+                            <label
+                                for="forgot-email"
+                                class="block mb-2 text-sm text-center font-medium text-gray-700"
+                                >Enter your email address:</label
+                            >
+                            <input
+                                type="email"
+                                id="forgot-email"
+                                name="forgot-email"
+                                required
+                                class="w-full px-4 py-2 mb-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#233876]"
+                            />
+                            <button
+                                type="submit"
+                                class="w-full py-2 bg-[#233876] text-white rounded-full hover:bg-gray-300 hover:text-[#233876] transition"
+                            >
+                                Send Reset Link
+                            </button>
+                            <div
+                                id="forgot-password-message"
+                                class="mt-4 text-green-600 text-center hidden"
+                            >
+                                If this email is registered, a reset link has
+                                been sent.
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</Layout>
+
+<style>
+    .hero-background {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: url("/backgrounds/Trainings.png") no-repeat;
+        background-size: cover;
+        text-align: center;
+        height: 100vh;
+    }
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        border-radius: 10px;
+        align-items: center;
+        width: 80%;
+        height: fit-content;
+        gap: 40px;
+    }
+    .erovoutika-logo {
+        width: 180px;
+        height: 68px;
+    }
+    .form-content {
+        display: flex;
+        width: fit-content;
+        height: fit-content;
+        padding: 40px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+        border-radius: 20px;
+        background: #f3f3fb;
+    }
+    .admin-login {
+        color: #181d27;
+        text-align: center;
+        font: normal 600 32px Inter;
+        line-height: 44px;
+    }
+    .admin-form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+    .form-content input {
+        position: relative;
+        width: 100%;
+        padding: 10px 15px 10px 15px;
+        border-radius: 40px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        font-family: Inter;
+    }
+    .form-content img {
+        position: absolute;
+        right: 15px;
+        top: calc(30%);
+        cursor: pointer;
+    }
+    .username {
+        position: relative;
+        width: 330px;
+    }
+    .password {
+        position: relative;
+        width: 330px;
+    }
+
+    .login-button {
+        width: 50%;
+        padding: 10px;
+        background-color: #233876;
+        color: #fff;
+        border: none;
+        border-radius: 40px;
+        font-size: 16px;
+        cursor: pointer;
+        font-family: Inter;
+    }
+
+    .login-button:hover {
+        background-color: #ccc;
+        color: #233876;
+        transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+        .hero-background {
+            background-size: cover;
+            background-position: center;
+        }
+        .form-container {
+            min-height: fit-content;
+            width: auto;
+            margin: 10px;
+        }
+    }
+    @media (max-width: 425px) {
+        .hero-background {
+            background-size: cover;
+            background-position: center;
+            width: max-content;
+            height: 140vh;
+        }
+        .form-container {
+            min-height: fit-content;
+            justify-content: center;
+            width: auto;
+            margin: 10px;
+        }
+        .username {
+            position: relative;
+            width: 300px;
+        }
+        .password {
+            position: relative;
+            width: 300px;
+        }
+    }
+    @media (max-width: 375px) {
+        .hero-background {
+            background-size: cover;
+            background-position: center;
+            width: max-content;
+            height: 140vh;
+        }
+        .form-container {
+            width: min(90%, fit-content);
+            margin: 10px;
+        }
+        .username {
+            position: relative;
+            width: 300px;
+        }
+        .password {
+            position: relative;
+            width: 300px;
+        }
+    }
+
+    @media (max-width: 320px) {
+        .hero-background {
+            background-size: cover;
+            background-position: center;
+            width: max-content;
+            height: 140vh;
+        }
+        .form-container {
+            min-height: fit-content;
+            width: auto;
+
+            margin: 10px;
+        }
+        .username {
+            position: relative;
+            width: 300px;
+        }
+        .password {
+            position: relative;
+            width: 300px;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Validation if username and password are correct
+
+        // Event Listener for the show/hide password icons
+        const showIcon = document.getElementById(
+            "show-pass"
+        ) as HTMLImageElement | null;
+        const hideIcon = document.getElementById(
+            "hide-pass"
+        ) as HTMLImageElement | null;
+        const passwordInput = document.getElementById(
+            "password"
+        ) as HTMLInputElement | null;
+
+        if (showIcon && hideIcon && passwordInput) {
+            showIcon.addEventListener("click", () => {
+                if (passwordInput.type === "password") {
+                    passwordInput.type = "text";
+                    showIcon.style.display = "none";
+                    hideIcon.style.display = "inline";
+                }
+            });
+
+            hideIcon.addEventListener("click", () => {
+                if (passwordInput.type === "text") {
+                    passwordInput.type = "password";
+                    hideIcon.style.display = "none";
+                    showIcon.style.display = "inline";
+                }
+            });
+        }
+
+        // Tentative: Add a click event listener to the "Forgot Password?" link
+        // code here --
+
+        // Event Liestener for the login button
+        const loginButton = document.getElementById(
+            "login_button"
+        ) as HTMLButtonElement | null;
+
+        if (loginButton) {
+            loginButton.addEventListener("click", async () => {
+                const email = (
+                    document.querySelector(
+                        ".username input"
+                    ) as HTMLInputElement
+                ).value;
+                const password = (
+                    document.querySelector(
+                        ".password input"
+                    ) as HTMLInputElement
+                ).value;
+
+                if (!email || !password) {
+                    alert("Please fill in both fields.");
+                    return;
+                }
+            });
+        }
+    });
+
+    const forgotLink = document.getElementById("forgot-password-link");
+    const modal = document.getElementById("forgot-password-modal");
+    const closeModal = document.getElementById("close-modal");
+    const forgotForm = document.getElementById("forgot-password-form");
+    const forgotMsg = document.getElementById("forgot-password-message");
+
+    if (forgotLink && modal && closeModal) {
+        forgotLink.addEventListener("click", (e) => {
+            e.preventDefault();
+            modal.classList.remove("hidden");
+            if (forgotMsg) forgotMsg.classList.add("hidden");
+            if (forgotForm) (forgotForm as HTMLFormElement).reset();
+        });
+        closeModal.addEventListener("click", () => {
+            modal.classList.add("hidden");
+        });
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.classList.add("hidden");
+            }
+        });
+    }
+
+    // Show message on forgot password submit
+    if (forgotForm && forgotMsg) {
+        forgotForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            forgotMsg.classList.remove("hidden");
+        });
+    }
+</script>

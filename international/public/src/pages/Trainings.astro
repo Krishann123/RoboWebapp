@@ -1,0 +1,717 @@
+---
+import { fetchPageContent } from "@/components/db";
+import Layout from "@/layouts/Layout.astro";
+import Hero from "@/components/Tournament/Hero.astro";
+import "../styles/global.css";
+
+const content = await fetchPageContent("Trainings");
+console.log("Trainings content:", content)
+---
+
+<Layout title="Erovoutika Dubai - Training">
+    <!-- <section
+        class="hero"
+        style={`background-image: url(${content.Hero.background});`}
+    >
+        <div class="hero-content">
+            <h1 class="hero-title" set:html={content.Hero.title} />
+            <p class="hero-subtitle">{content.Hero.subtitle}</p>
+            <button class="hero-button" onclick="scrollToIntroduction()"
+                >{content.Hero.buttonText}</button
+            >
+        </div>
+    </section> -->
+
+    <Hero />
+    <section class="introduction" id="introduction">
+        <div class="introduction-content">
+            <h1
+                class="tracking-wider intro-title"
+                set:html={content.Introduction.title}
+            />
+            <p class="intro-subtitle">{content.Introduction.subtitle}</p>
+        </div>
+    </section>
+
+    <section class="content-1">
+        <div class="content-1-container">
+            <div class="content-1-text">
+                <div class="content-1-title">{content.Content_1.title}</div>
+                <p class="content-1-subtitle">{content.Content_1.subtitle}</p>
+            </div>
+            <div class="content-1-image">
+                <img
+                    src={content.Content_1.ImageDirectory}
+                    alt="Robotics & Automation"
+                />
+            </div>
+        </div>
+    </section>
+
+    <section class="content-2">
+        <div class="content-2-container">
+            <div class="content-2-image">
+                <img
+                    src={content.Content_2.ImageDirectory}
+                    alt="Cybersecurity"
+                />
+            </div>
+            <div class="content-2-text">
+                <div class="content-2-title">{content.Content_2.title}</div>
+                <p class="content-2-subtitle">{content.Content_2.subtitle}</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-3">
+        <div class="content-3-container">
+            <div class="content-3-text">
+                <div class="content-3-title">{content.Content_3.title}</div>
+                <p class="content-3-subtitle">{content.Content_3.subtitle}</p>
+            </div>
+            <div class="content-3-image">
+                <img
+                    src={content.Content_3.ImageDirectory}
+                    alt="Research & Development"
+                />
+            </div>
+        </div>
+    </section>
+
+    <section class="content-4">
+        <div class="content-4-container">
+            <h5
+                class="content-4-minititle"
+                set:html={content.Content_1.minititle}
+            />
+            <h1
+                class="content-4-title tracking-wider"
+                set:html={content.Content_4.title}
+            />
+            <p class="content-4-subtitle">{content.Content_4.subtitle}</p>
+            <a
+                href={content.Content_4.buttonLink}
+                class="inline-block content-4-button"
+                target="_blank"
+            >
+                {content.Content_4.buttonText}
+            </a>
+        </div>
+    </section>
+</Layout>
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap");
+
+    /* Hero Section */
+    .hero {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        padding: 20px;
+        color: white;
+        text-align: center;
+        background-image: url('/international/src/assets/images/backgrounds/Herobg.png') !important;
+    }
+    /* Hero Title */
+    .hero-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 6rem;
+        line-height: 1.2;
+        margin-bottom: 1.2rem;
+    }
+
+    .hero-title .underline {
+        text-decoration: underline;
+        text-decoration-thickness: 0.5px;
+        text-underline-offset: 2px;
+        color: #ffffff;
+    }
+    /* Hero Subtitle */
+    .hero-subtitle {
+        font-family: "Poppins", sans-serif;
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+    }
+    /* Hero Button */
+    .hero-button {
+        background-color: #ffffff;
+        color: black;
+        padding: 15px 30px;
+        font-size: 1rem;
+        font-family: "Poppins", sans-serif;
+        text-transform: uppercase;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 50px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        transition:
+            background-color 0.3s,
+            transform 0.2s;
+    }
+    .hero-button:hover {
+        background-color: #f0f0f0;
+        transform: scale(1.05);
+    }
+    /* Introduction */
+    .introduction {
+        background: white;
+        height: fit-content;
+        padding: 40px 20px;
+        text-align: center;
+        align-items: center;
+        border-radius: 8px;
+        margin: 20px auto;
+        max-width: 750px;
+    }
+    .intro-title {
+        font-family: "bebas neue", sans-serif;
+        font-size: 5rem;
+        font-weight: bold;
+        color: #212529;
+        margin-bottom: 16px;
+    }
+    .intro-subtitle {
+        font-family: Roboto, sans-serif;
+        font-size: 1.2rem;
+        color: #475569;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .content-1 {
+        background-color: #f3f4f6;
+        padding: 30px;
+        height: 65vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+    }
+
+    .content-1-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        max-width: 1100px;
+        height: fit-content;
+        gap: 50px;
+    }
+
+    .content-1-text {
+        font-family: Roboto, sans-serif;
+        flex: 1;
+        color: black;
+        max-height: 80%;
+        padding: auto 20px;
+    }
+
+    .content-1-title {
+        font-size: 2.2rem;
+        font-family: 8Roboto, sans-serif;
+        font-weight: bold;
+        color: white;
+        background: #2562ff;
+        padding: 10px 15px;
+        border-radius: 5px;
+        display: inline-block;
+        margin-bottom: 2.5rem;
+    }
+
+    .content-1-subtitle {
+        font-family: Roboto, sans-serif;
+        font-size: 1.2rem;
+        margin-top: 10px;
+        line-height: 1.5;
+    }
+
+    .content-1-image {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #233876;
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .content-1-image img {
+        margin: 0;
+        border-radius: 10px;
+    }
+
+    @media (max-width: 1024px) {
+        .content-1-container {
+            flex-direction: column;
+            text-align: center;
+            height: fit-content;
+        }
+
+        .content-1 {
+            padding: 20px;
+            min-height: fit-content;
+        }
+
+        .content-1-text {
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        .content-1-title {
+            font-size: 2rem;
+        }
+
+        .content-1-subtitle {
+            font-size: 1.3rem;
+        }
+
+        .content-1-image {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .content-1-image {
+            width: 100%;
+            max-width: 400px;
+        }
+    }
+    @media (max-width: 768px) {
+        .content-1-container {
+            flex-direction: column;
+            text-align: center;
+            align-items: center;
+            height: fit-content;
+        }
+
+        .content-1 {
+            padding: 20px;
+            min-height: fit-content;
+        }
+
+        .content-1-title {
+            font-size: 1.8rem;
+        }
+
+        .content-1-subtitle {
+            font-size: 1.2rem;
+        }
+
+        .content-1-image {
+            width: 100%;
+            height: fit-content;
+            padding: 15px;
+            max-width: 400px;
+        }
+    }
+
+    .content-2 {
+        background-color: #ffffff;
+        padding: 30px;
+        height: 65vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+    }
+
+    .content-2-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        max-width: 1100px;
+        height: fit-content;
+        gap: 50px;
+    }
+
+    .content-2-text {
+        flex: 1;
+        color: #212529;
+        padding: auto 20px;
+    }
+
+    .content-2-title {
+        font-size: 2.2rem;
+        font-family: Roboto, sans-serif;
+        font-weight: bold;
+        color: #212529;
+        background: #ffb366;
+        padding: 10px 15px;
+        border-radius: 5px;
+        display: inline-block;
+        margin-bottom: 2.5rem;
+    }
+
+    .content-2-subtitle {
+        font-family: Roboto, sans-serif;
+        font-size: 1.2rem;
+        margin-top: 10px;
+        line-height: 1.5;
+    }
+
+    .content-2-image {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #ffb366;
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .content-2-image img {
+        margin: 0;
+        border-radius: 10px;
+    }
+
+    @media (max-width: 1024px) {
+        .content-2-container {
+            flex-direction: column-reverse;
+            text-align: center;
+            height: fit-content;
+        }
+
+        .content-2 {
+            padding: 20px;
+            min-height: fit-content;
+        }
+
+        .content-2-text {
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        .content-2-title {
+            font-size: 2rem;
+        }
+
+        .content-2-subtitle {
+            font-size: 1.3rem;
+        }
+
+        .content-2-image {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .content-2-image {
+            width: 100%;
+            max-width: 400px;
+            padding: 15px;
+        }
+    }
+    @media (max-width: 768px) {
+        .content-2-container {
+            flex-direction: column-reverse;
+            text-align: center;
+            height: fit-content;
+        }
+
+        .content-2 {
+            padding: 20px;
+            min-height: fit-content;
+        }
+
+        .content-2-image {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .content-2-text {
+            width: 100%;
+        }
+
+        .content-2-title {
+            margin-bottom: 3rem;
+        }
+    }
+
+    .content-3 {
+        background-color: #f3f4f6;
+        padding: 30px;
+        height: 65vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+    }
+
+    .content-3-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        max-width: 1100px;
+        height: fit-content;
+        gap: 60px;
+    }
+
+    .content-3-text {
+        font-family: Roboto, sans-serif;
+        flex: 1;
+        color: black;
+        padding: auto 20px;
+    }
+
+    .content-3-title {
+        font-size: 2.2rem;
+        font-family: Roboto, sans-serif;
+        font-weight: bold;
+        color: white;
+        background: #2562ff;
+        padding: 10px 15px;
+        border-radius: 5px;
+        display: inline-block;
+        margin-bottom: 2.5rem;
+    }
+
+    .content-3-subtitle {
+        font-size: 1.2rem;
+        margin-top: 10px;
+        line-height: 1.5;
+    }
+
+    .content-3-image {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #233876;
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .content-3-image img {
+        margin: 0;
+        border-radius: 10px;
+    }
+
+    @media (max-width: 1024px) {
+        .content-3-container {
+            flex-direction: column;
+            text-align: center;
+            height: fit-content;
+        }
+
+        .content-3 {
+            padding: 20px;
+            min-height: fit-content;
+        }
+
+        .content-3-text {
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        .content-3-title {
+            font-size: 2rem;
+        }
+
+        .content-3-subtitle {
+            font-size: 1.3rem;
+        }
+
+        .content-3-image {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .content-3-image {
+            width: 100%;
+            max-width: 400px;
+        }
+    }
+    @media (max-width: 768px) {
+        .content-3-container {
+            flex-direction: column;
+            text-align: center;
+            align-items: center;
+            height: fit-content;
+        }
+
+        .content-3 {
+            padding: 20px;
+            min-height: fit-content;
+        }
+
+        .content-3-title {
+            font-size: 1.8rem;
+        }
+
+        .content-3-subtitle {
+            font-size: 1.2rem;
+        }
+
+        .content-3-image {
+            width: 100%;
+            max-width: 400px;
+        }
+    }
+
+    .content-4 {
+        background: white;
+        height: 55vh;
+        padding: 40px 20px;
+        text-align: center;
+        align-items: center;
+        border-radius: 8px;
+        margin: 20px auto;
+        max-width: 750px;
+        height: fit-content;
+    }
+
+    .content-4-minititle {
+        font-family: Roboto, sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #fea400;
+        margin-bottom: 16px;
+    }
+
+    .content-4-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 6.2rem;
+        font-weight: bold;
+        margin-bottom: 16px;
+        letter-spacing: 2px;
+        background: linear-gradient(
+            90deg,
+            #102347 0%,
+            #1e335c 40%,
+            #2562ff 80%,
+            #00cfff 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: transparent;
+    }
+    .content-4-subtitle {
+        font-family: Roboto, sans-serif;
+        font-size: 1.2rem;
+        color: #0b0221;
+        line-height: 1.6;
+        margin-bottom: 2rem;
+    }
+
+    .content-4-button {
+        background-color: #2562ff;
+        color: white;
+        padding: 15px 30px;
+        font-size: 1.4rem;
+        font-family: Roboto, sans-serif;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 50px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        transition:
+            background-color 0.3s,
+            transform 0.2s;
+    }
+    .content-4-button:hover {
+        /* background-color: #f0f0f0;
+        color: black; */
+        transform: scale(1.1);
+    }
+    @media (max-width: 786px) {
+        .content-4 {
+            height: fit-content;
+        }
+    }
+
+    .content-1,
+    .content-2,
+    .content-3,
+    .content-4 {
+        opacity: 0;
+        transform: translateY(40px);
+        transition:
+            opacity 0.8s ease,
+            transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .content-1.visible,
+    .content-2.visible,
+    .content-3.visible,
+    .content-4.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+
+<script>
+    const learnMoreButton = document.querySelector(".hero-button");
+
+    if (learnMoreButton) {
+        learnMoreButton.addEventListener("click", () => {
+            const introSection = document.getElementById("introduction");
+            if (introSection) {
+                const navbarHeight = document.querySelector("nav").offsetHeight;
+                window.scrollTo({
+                    top: introSection.offsetTop - navbarHeight,
+                    behavior: "smooth",
+                });
+            } else {
+                console.error("Introduction section not found.");
+            }
+        });
+    } else {
+        console.error("Hero button not found.");
+    }
+
+    if (learnMoreButton) {
+        learnMoreButton.addEventListener("click", () => {
+            const introSection = document.getElementById("introduction");
+            if (introSection) {
+                const navbarHeight = document.querySelector("nav").offsetHeight;
+                window.scrollTo({
+                    top: introSection.offsetTop - navbarHeight,
+                    behavior: "smooth",
+                });
+            } else {
+                console.error("Introduction section not found.");
+            }
+        });
+    } else {
+        console.error("Hero button not found.");
+    }
+
+    // Animation for all main content sections
+    document.addEventListener("DOMContentLoaded", () => {
+        const sections = document.querySelectorAll(
+            ".content-1, .content-2, .content-3, .content-4"
+        );
+        const observer = new IntersectionObserver(
+            (entries, obs) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                        obs.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.2 }
+        );
+        sections.forEach((section) => observer.observe(section));
+    });
+</script>
+
+<!-- Ensure UI components are loaded -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Load required UI components
+        const components = ['button', 'card'];
+        components.forEach(component => {
+            const script = document.createElement('script');
+            script.src = `/international/src/components/ui/${component}.tsx`;
+            script.type = 'module';
+            document.body.appendChild(script);
+        });
+    });
+</script>

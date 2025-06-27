@@ -1,0 +1,348 @@
+---
+import { getCountryInfo } from "../lib/country-context";
+
+// Get country information
+const countryInfo = getCountryInfo();
+const { name: countryName } = countryInfo;
+
+// Get current year for copyright
+const currentYear = new Date().getFullYear();
+
+// Footer columns - can be customized per country
+const footerColumns = [
+  {
+    title: "About Us",
+    links: [
+      { text: "About Robolution", url: "/about" },
+      { text: "Our Mission", url: "/mission" },
+      { text: "Our Team", url: "/team" },
+      { text: "Partners", url: "/partners" },
+    ]
+  },
+  {
+    title: "Programs",
+    links: [
+      { text: "Trainings", url: "/trainings" },
+      { text: "Tournaments", url: "/tournament" },
+      { text: "Awards", url: "/awards" },
+      { text: "Nominations", url: "/nominations" },
+    ]
+  },
+  {
+    title: "Resources",
+    links: [
+      { text: "News & Updates", url: "/news" },
+      { text: "FAQs", url: "/faqs" },
+      { text: "Gallery", url: "/gallery" },
+      { text: "Downloads", url: "/downloads" },
+    ]
+  }
+];
+
+// Social media links
+const socialLinks = [
+  { icon: "fa-facebook-f", url: "https://facebook.com/robolution" },
+  { icon: "fa-twitter", url: "https://twitter.com/robolution" },
+  { icon: "fa-instagram", url: "https://instagram.com/robolution" },
+  { icon: "fa-linkedin-in", url: "https://linkedin.com/company/robolution" },
+  { icon: "fa-youtube", url: "https://youtube.com/c/robolution" },
+];
+
+// Contact information
+const contactInfo = {
+  address: "Unit 703, PARC HOUSE II, Epifanio de los Santos Ave, Makati, 1212 Metro Manila",
+  phone: "+63 974 423 1557",
+  email: "info@robolution.org"
+};
+---
+
+<footer class="footer">
+  <div class="footer-main">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand Column -->
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="/images/LOGO.webp" alt="Robolution Logo" class="footer-logo-img" />
+            <span class="footer-logo-text">Robolution {countryName}</span>
+          </div>
+          
+          <p class="footer-tagline">
+            Empowering future generations through robotics education and innovation.
+          </p>
+          
+          <div class="footer-social">
+            {socialLinks.map(social => (
+              <a href={social.url} class="social-link" target="_blank" rel="noopener noreferrer">
+                <i class={`fab ${social.icon}`}></i>
+              </a>
+            ))}
+          </div>
+        </div>
+        
+        <!-- Footer Columns -->
+        {footerColumns.map(column => (
+          <div class="footer-column">
+            <h3 class="footer-heading">{column.title}</h3>
+            <ul class="footer-links">
+              {column.links.map(link => (
+                <li class="footer-link-item">
+                  <a href={link.url} class="footer-link">{link.text}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+        
+        <!-- Contact Column -->
+        <div class="footer-column">
+          <h3 class="footer-heading">Contact Us</h3>
+          <ul class="footer-contact">
+            <li class="footer-contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>{contactInfo.address}</span>
+            </li>
+            <li class="footer-contact-item">
+              <i class="fas fa-phone"></i>
+              <span>{contactInfo.phone}</span>
+            </li>
+            <li class="footer-contact-item">
+              <i class="fas fa-envelope"></i>
+              <span>{contactInfo.email}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Footer Bottom -->
+  <div class="footer-bottom">
+    <div class="container">
+      <div class="footer-bottom-content">
+        <p class="copyright">
+          &copy; {currentYear} Robolution. All Rights Reserved.
+        </p>
+        <div class="footer-bottom-links">
+          <a href="/privacy" class="footer-bottom-link">Privacy Policy</a>
+          <a href="/terms" class="footer-bottom-link">Terms of Service</a>
+          <a href="/sitemap" class="footer-bottom-link">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+.footer {
+  background-color: var(--footer-background);
+  color: var(--footer-text);
+  padding-top: 4rem;
+  margin-top: 3rem;
+}
+
+.footer-main {
+  padding-bottom: 3rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.footer-brand {
+  grid-column: 1 / 2;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.footer-logo-img {
+  height: 48px;
+  width: auto;
+}
+
+.footer-logo-text {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.footer-tagline {
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.footer-social {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  background-color: var(--accent-color);
+  transform: translateY(-3px);
+}
+
+.footer-heading {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.footer-heading::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background-color: var(--accent-color);
+}
+
+.footer-links,
+.footer-contact {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-link-item {
+  margin-bottom: 0.75rem;
+}
+
+.footer-link {
+  color: var(--footer-text);
+  opacity: 0.8;
+  transition: all 0.2s ease;
+}
+
+.footer-link:hover {
+  opacity: 1;
+  color: var(--accent-color);
+  padding-left: 5px;
+}
+
+.footer-contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  opacity: 0.8;
+}
+
+.footer-contact-item i {
+  margin-top: 5px;
+  color: var(--accent-color);
+}
+
+.footer-bottom {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 1.5rem 0;
+}
+
+.footer-bottom-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.copyright {
+  opacity: 0.7;
+}
+
+.footer-bottom-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer-bottom-link {
+  color: var(--footer-text);
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.footer-bottom-link:hover {
+  opacity: 1;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .footer-brand {
+    grid-column: 1 / -1;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .footer-bottom-content {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .footer-logo {
+    justify-content: center;
+  }
+  
+  .footer-tagline {
+    text-align: center;
+  }
+  
+  .footer-social {
+    justify-content: center;
+  }
+  
+  .footer-heading {
+    text-align: center;
+  }
+  
+  .footer-heading::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .footer-link-item {
+    text-align: center;
+  }
+  
+  .footer-contact-item {
+    justify-content: center;
+  }
+  
+  .footer-bottom-links {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+</style> 

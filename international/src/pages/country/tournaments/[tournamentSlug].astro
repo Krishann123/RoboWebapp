@@ -1,0 +1,28 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+
+const { countryData } = Astro.locals;
+const { tournamentSlug } = Astro.params;
+
+if (!countryData) {
+  return Astro.redirect('/404');
+}
+
+const tournament = countryData.tournaments.find(t => t.slug === tournamentSlug);
+
+if (!tournament) {
+  return Astro.redirect('/404');
+}
+---
+<Layout title={`${tournament.title} - ${countryData.name}`}>
+  <div class="container">
+    <img src={tournament.bannerImage} alt={tournament.title} class="banner-image">
+    <h1>{tournament.title}</h1>
+    <p>{tournament.description}</p>
+    <ul>
+      <li><strong>Date:</strong> {new Date(tournament.date).toLocaleDateString()}</li>
+      <li><strong>Venue:</strong> {tournament.venue}</li>
+    </ul>
+    <a href={tournament.registrationLink} class="btn btn-primary">Register Now</a>
+  </div>
+</Layout> 

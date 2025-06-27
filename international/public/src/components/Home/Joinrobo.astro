@@ -1,0 +1,89 @@
+---
+import { fetchPageContent } from "@/components/db";
+
+const content = await fetchPageContent("Home");
+const joinContent = content.joinContent;
+---
+
+<style>
+    @keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .joinrobo-animate {
+        opacity: 0;
+    }
+    .joinrobo-animate.visible {
+        opacity: 1;
+        animation: fadeInUp 0.8s cubic-bezier(0.4, 2, 0.6, 1) forwards;
+    }
+</style>
+
+<script type="module" is:inline>
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        },
+        { threshold: 0.2 }
+    );
+
+    document.addEventListener("DOMContentLoaded", () => {
+        document
+            .querySelectorAll(".joinrobo-animate")
+            .forEach((el) => observer.observe(el));
+    });
+</script>
+
+<!-- Font style roboto link -->
+<link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+    rel="stylesheet"
+/>
+
+<div
+    class="bg-[#F3F3F3] flex flex-col items-center justify-center min-h-[437px] px-10 py-20"
+>
+    <section
+        class="w-full max-w-[1280px] flex flex-col items-center gap-8 text-center joinrobo-animate"
+    >
+        <!-- Title -->
+        <h2
+            class="text-5xl bg-dar p-2 font-bebas rounded-lg md:text-5xl lg:text-[96px] font-bold tracking-wider leading-tight text-[#212529]"
+        >
+            {joinContent.title}
+        </h2>
+
+        <!-- Body -->
+        <p
+            class="text-xs md:text-lg lg:text-xl max-w-[790px] leading-relaxed text-black-700 dark:text-black-100 font-[Roboto]"
+        >
+            {joinContent.body}
+        </p>
+
+        <!-- Button -->
+        <div
+            class="flex flex-row justify-center items-center gap-4 font-[Roboto]"
+        >
+            <a
+                href={joinContent.buttonLink}
+                target="_blank"
+                class="flex flex-row justify-center items-center w-[247px] h-[64px] text-white bg-[#2562ff] border-2 border-[#1A5CB5] rounded-full shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25),0_0_15px_rgba(0,0,0,0.07)] transition-all duration-300 hover:scale-110 hover:border-[#2562ff] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25),0_0_15px_rgba(0,0,0,0.07)]"
+            >
+                <span class="text-xl lg:text-[24px] font-bold tracking-wide">
+                    {joinContent.button}
+                </span>
+            </a>
+        </div>
+    </section>
+</div>

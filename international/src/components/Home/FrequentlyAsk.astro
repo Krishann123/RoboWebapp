@@ -1,6 +1,11 @@
 ---
-import { fetchPageContent } from "../db";
-const content = await fetchPageContent("Home");
+const { content } = Astro.props;
+const {
+    background = "bg-gray-800",
+    title = "Frequently Asked Questions",
+    subtitle,
+    items = [],
+} = content || {};
 ---
 
 <style>
@@ -43,113 +48,50 @@ const content = await fetchPageContent("Home");
     });
 </script>
 
-<div class="p-10 bg-DarkBlue">
-    <div class="text-center mb-16 faq-animate">
+<div class:list={["p-10", background]}>
+    <div class="text-center mb-12">
         <h3
-            class="mb-8 text-5xl lg:text-[56px] font-bebas tracking-wider text-white"
-            set:html={content.FrequentlyAsk.Title}
-        />
-        <h5
-            class="text-white text-xs lg:text-base font-roboto"
-            set:html={content.FrequentlyAsk.description1}
-        />
+            class="mb-4 text-5xl lg:text-[56px] font-bebas tracking-wider text-white"
+        >
+            {title}
+        </h3>
+        {
+            subtitle && (
+                <h5 class="text-white text-xs lg:text-base font-roboto">
+                    {subtitle}
+                </h5>
+            )
+        }
     </div>
 
-    <div class="flex flex-col space-y-4 items-center">
-        <details
-            class="w-full max-w-400 group [&_summary::-webkit-details-marker]:hidden faq-animate"
-        >
-            <summary
-                class="flex cursor-pointer items-center justify-between gap-1.5 rounded-lg bg-gray-50 p-4 text-gray-900"
-            >
-                <h2
-                    class="font-medium"
-                    set:html={content.FrequentlyAsk.Question1}
-                />
+    <div class="flex flex-col space-y-4 items-center max-w-4xl mx-auto">
+        {
+            items.map((faq) => (
+                <details class="w-full group [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-lg bg-gray-50 p-4 text-gray-900">
+                        <h2 class="font-medium text-left">{faq.question}</h2>
 
-                <svg
-                    class="size-5 shrink-0 transition duration-300 group-open:-rotate-180"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M19 9l-7 7-7-7"></path>
-                </svg>
-            </summary>
+                        <svg
+                            class="size-5 shrink-0 transition duration-300 group-open:-rotate-180"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M19 9l-7 7-7-7"
+                            />
+                        </svg>
+                    </summary>
 
-            <p
-                class="mt-4 px-4 leading-relaxed text-gray-100"
-                set:html={content.FrequentlyAsk.Answer1}
-            />
-        </details>
-
-        <details
-            class="w-full max-w-400 group [&_summary::-webkit-details-marker]:hidden faq-animate"
-        >
-            <summary
-                class="flex cursor-pointer items-center justify-between gap-1.5 rounded-lg bg-gray-50 p-4 text-gray-900"
-            >
-                <h2
-                    class="font-medium"
-                    set:html={content.FrequentlyAsk.Question2}
-                />
-
-                <svg
-                    class="size-5 shrink-0 transition duration-300 group-open:-rotate-180"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M19 9l-7 7-7-7"></path>
-                </svg>
-            </summary>
-
-            <p
-                class="mt-4 px-4 leading-relaxed text-gray-100"
-                set:html={content.FrequentlyAsk.Answer2}
-            />
-        </details>
-
-        <details
-            class="w-full max-w-400 group [&_summary::-webkit-details-marker]:hidden faq-animate"
-        >
-            <summary
-                class="flex cursor-pointer items-center justify-between gap-1.5 rounded-lg bg-gray-50 p-4 text-gray-900"
-            >
-                <h2
-                    class="font-medium"
-                    set:html={content.FrequentlyAsk.Question3}
-                />
-
-                <svg
-                    class="size-5 shrink-0 transition duration-300 group-open:-rotate-180"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M19 9l-7 7-7-7"></path>
-                </svg>
-            </summary>
-
-            <p
-                class="mt-4 px-4 leading-relaxed text-gray-100"
-                set:html={content.FrequentlyAsk.Answer3}
-            />
-        </details>
+                    <p class="mt-4 px-4 leading-relaxed text-gray-100 text-left">
+                        {faq.answer}
+                    </p>
+                </details>
+            ))
+        }
     </div>
 </div>

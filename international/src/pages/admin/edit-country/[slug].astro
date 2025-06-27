@@ -1,0 +1,532 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import { supabase } from "../../../lib/supabase-client";
+import { getCountryContent } from "../../../components/db";
+
+// Get the country slug from the URL
+const { slug } = Astro.params;
+
+// Fetch the country site data
+const countryData = await getCountryContent(slug);
+
+if (!countryData) {
+  return Astro.redirect('/admin/country-sites');
+}
+
+// Fetch template data for reference
+const { data: templates } = await supabase
+  .from("Templates")
+  .select("Name")
+  .order("Name");
+
+const templateNames = templates?.map(t => t.Name) || [];
+
+// Get the default content structure from the template
+const { data: defaultTemplate } = await supabase
+  .from("Templates")
+  .select("config")
+  .eq("Name", templateNames[countryData.templateIndex || 0])
+  .single();
+
+// Extract editable content sections for the form
+const templateContent = defaultTemplate?.config?.Contents || {};
+---
+
+<Layout title={`Edit ${countryData.name} Site`}>
+  <main class="container mx-auto px-4 py-8">
+    <div class="mb-6">
+      <a href="/admin/country-sites" class="text-indigo-600 hover:text-indigo-900">
+        &larr; Back to Country Sites
+      </a>
+    </div>
+    
+    <h1 class="text-3xl font-bold mb-8 text-center">Edit {countryData.name} Site</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Country Settings -->
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-semibold mb-4">Basic Settings</h2>
+        
+        <form id="basicSettingsForm" class="space-y-4">
+          <input type="hidden" id="countryId" value={countryData.id} />
+          
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700">Country Name</label>
+            <input type="text" id="name" name="name" value={countryData.name} required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+          </div>
+          
+          <div>
+            <label for="slug" class="block text-sm font-medium text-gray-700">Slug (URL Path)</label>
+            <div class="mt-1 flex rounded-md shadow-sm">
+              <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+                /
+              </span>
+              <input type="text" id="slug" name="slug" value={countryData.slug} required class="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+            </div>
+          </div>
+          
+          <div>
+            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+            <textarea id="description" name="description" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{countryData.description}</textarea>
+          </div>
+          
+          <div>
+            <label for="flagUrl" class="block text-sm font-medium text-gray-700">Flag URL</label>
+            <input type="url" id="flagUrl" name="flagUrl" value={countryData.flagUrl} class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+          </div>
+          
+          <div>
+            <label for="templateIndex" class="block text-sm font-medium text-gray-700">Template</label>
+            <select id="templateIndex" name="templateIndex" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+              {templateNames.map((name, index) => (
+                <option value={index} selected={index === countryData.templateIndex}>{name}</option>
+              ))}
+            </select>
+          </div>
+          
+          <div class="flex items-center">
+            <input type="checkbox" id="active" name="active" checked={countryData.active} class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
+            <label for="active" class="ml-2 block text-sm text-gray-900">Active</label>
+          </div>
+          
+          <div class="pt-4">
+            <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              Save Basic Settings
+            </button>
+          </div>
+        </form>
+        
+        <div id="basicFormMessage" class="mt-4 hidden">
+          <!-- Form messages will be displayed here -->
+        </div>
+        
+        <!-- Custom Styles -->
+        <h2 class="text-xl font-semibold mt-8 mb-4">Custom Styles</h2>
+        <form id="stylesForm" class="space-y-4">
+          <div>
+            <label for="primaryColor" class="block text-sm font-medium text-gray-700">Primary Color</label>
+            <div class="mt-1 flex items-center">
+              <input type="color" id="primaryColor" name="primaryColor" value={countryData.customStyles?.primaryColor || '#00008b'} class="h-8 w-8 rounded-md border border-gray-300 mr-2" />
+              <input type="text" id="primaryColorText" value={countryData.customStyles?.primaryColor || '#00008b'} class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+            </div>
+          </div>
+          
+          <div>
+            <label for="secondaryColor" class="block text-sm font-medium text-gray-700">Secondary Color</label>
+            <div class="mt-1 flex items-center">
+              <input type="color" id="secondaryColor" name="secondaryColor" value={countryData.customStyles?.secondaryColor || '#FFB366'} class="h-8 w-8 rounded-md border border-gray-300 mr-2" />
+              <input type="text" id="secondaryColorText" value={countryData.customStyles?.secondaryColor || '#FFB366'} class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+            </div>
+          </div>
+          
+          <div>
+            <label for="accentColor" class="block text-sm font-medium text-gray-700">Accent Color</label>
+            <div class="mt-1 flex items-center">
+              <input type="color" id="accentColor" name="accentColor" value={countryData.customStyles?.accentColor || '#6AAAFF'} class="h-8 w-8 rounded-md border border-gray-300 mr-2" />
+              <input type="text" id="accentColorText" value={countryData.customStyles?.accentColor || '#6AAAFF'} class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+            </div>
+          </div>
+          
+          <div>
+            <label for="backgroundColor" class="block text-sm font-medium text-gray-700">Background Color</label>
+            <div class="mt-1 flex items-center">
+              <input type="color" id="backgroundColor" name="backgroundColor" value={countryData.customStyles?.backgroundColor || '#FFFFFF'} class="h-8 w-8 rounded-md border border-gray-300 mr-2" />
+              <input type="text" id="backgroundColorText" value={countryData.customStyles?.backgroundColor || '#FFFFFF'} class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+            </div>
+          </div>
+          
+          <div class="pt-4">
+            <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              Save Custom Styles
+            </button>
+          </div>
+        </form>
+        
+        <div id="stylesFormMessage" class="mt-4 hidden">
+          <!-- Form messages will be displayed here -->
+        </div>
+      </div>
+      
+      <!-- Content Editor -->
+      <div class="md:col-span-2 bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-semibold mb-4">Content Editor</h2>
+        
+        <div class="mb-6">
+          <div class="flex space-x-1">
+            <button id="heroTab" class="px-4 py-2 bg-indigo-600 text-white rounded-t-md">Hero</button>
+            <button id="robolutionTab" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-t-md">Robolution</button>
+            <button id="highlightsTab" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-t-md">Highlights</button>
+            <button id="faqTab" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-t-md">FAQ</button>
+          </div>
+          <div class="border border-gray-300 rounded-b-md rounded-tr-md p-4">
+            <!-- Hero Content -->
+            <div id="heroContent" class="space-y-4">
+              <div>
+                <label for="heroMainText" class="block text-sm font-medium text-gray-700">Main Title</label>
+                <input type="text" id="heroMainText" name="hero.mainText" value={countryData.content?.hero?.mainText || templateContent.Home?.hero?.mainText} class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+              </div>
+              
+              <div>
+                <label for="heroSubText" class="block text-sm font-medium text-gray-700">Subtitle</label>
+                <textarea id="heroSubText" name="hero.subText" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{countryData.content?.hero?.subText || templateContent.Home?.hero?.subText}</textarea>
+              </div>
+              
+              <div>
+                <label for="heroButtonText" class="block text-sm font-medium text-gray-700">Button Text</label>
+                <input type="text" id="heroButtonText" name="hero.buttonText" value={countryData.content?.hero?.buttonText || templateContent.Home?.hero?.buttonText} class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+              </div>
+              
+              <div>
+                <label for="heroVideoDirectory" class="block text-sm font-medium text-gray-700">Video URL</label>
+                <input type="text" id="heroVideoDirectory" name="hero.videoDirectory" value={countryData.content?.hero?.videoDirectory || templateContent.Home?.hero?.videoDirectory} class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+              </div>
+            </div>
+            
+            <!-- Robolution Content -->
+            <div id="robolutionContent" class="hidden space-y-4">
+              <div>
+                <label for="robolutionIntro1" class="block text-sm font-medium text-gray-700">Section 1 Title</label>
+                <input type="text" id="robolutionIntro1" name="Robolution.title1.intro1" value={countryData.content?.Robolution?.title1?.intro1 || templateContent.Home?.Robolution?.title1?.intro1} class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+              </div>
+              
+              <div>
+                <label for="robolutionSub1" class="block text-sm font-medium text-gray-700">Section 1 Content</label>
+                <textarea id="robolutionSub1" name="Robolution.title1.sub1" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{countryData.content?.Robolution?.title1?.sub1 || templateContent.Home?.Robolution?.title1?.sub1}</textarea>
+              </div>
+              
+              <div>
+                <label for="robolutionImage1" class="block text-sm font-medium text-gray-700">Section 1 Image</label>
+                <input type="text" id="robolutionImage1" name="Robolution.title1.image1" value={countryData.content?.Robolution?.title1?.image1 || templateContent.Home?.Robolution?.title1?.image1} class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+              </div>
+              
+              <div>
+                <label for="robolutionIntro2" class="block text-sm font-medium text-gray-700">Section 2 Title</label>
+                <input type="text" id="robolutionIntro2" name="Robolution.title2.intro2" value={countryData.content?.Robolution?.title2?.intro2 || templateContent.Home?.Robolution?.title2?.intro2} class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+              </div>
+              
+              <div>
+                <label for="robolutionSub2" class="block text-sm font-medium text-gray-700">Section 2 Content</label>
+                <textarea id="robolutionSub2" name="Robolution.title2.sub2" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{countryData.content?.Robolution?.title2?.sub2 || templateContent.Home?.Robolution?.title2?.sub2}</textarea>
+              </div>
+              
+              <div>
+                <label for="robolutionImage2" class="block text-sm font-medium text-gray-700">Section 2 Image</label>
+                <input type="text" id="robolutionImage2" name="Robolution.title2.image2" value={countryData.content?.Robolution?.title2?.image2 || templateContent.Home?.Robolution?.title2?.image2} class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+              </div>
+            </div>
+            
+            <!-- Highlights Content -->
+            <div id="highlightsContent" class="hidden space-y-4">
+              <div>
+                <label for="highlightsTitle" class="block text-sm font-medium text-gray-700">Highlights Title</label>
+                <input type="text" id="highlightsTitle" name="Highlights.Title" value={countryData.content?.Highlights?.Title || templateContent.Home?.Highlights?.Title} class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+              </div>
+              
+              <!-- First highlight -->
+              <div class="border-t border-gray-200 pt-4">
+                <label class="block text-sm font-medium text-gray-700">Highlight 1</label>
+                <div class="mt-2 space-y-2">
+                  <input type="text" name="Highlights.Highlight1.Highlight1" value={countryData.content?.Highlights?.Highlight1?.Highlight1 || templateContent.Home?.Highlights?.Highlight1?.Highlight1} placeholder="Title" class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                  <textarea name="Highlights.Highlight1.description1" placeholder="Description" rows="2" class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{countryData.content?.Highlights?.Highlight1?.description1 || templateContent.Home?.Highlights?.Highlight1?.description1}</textarea>
+                </div>
+              </div>
+              
+              <!-- Second highlight -->
+              <div class="border-t border-gray-200 pt-4">
+                <label class="block text-sm font-medium text-gray-700">Highlight 2</label>
+                <div class="mt-2 space-y-2">
+                  <input type="text" name="Highlights.Highlight2.Highlight2" value={countryData.content?.Highlights?.Highlight2?.Highlight2 || templateContent.Home?.Highlights?.Highlight2?.Highlight2} placeholder="Title" class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                  <textarea name="Highlights.Highlight2.description2" placeholder="Description" rows="2" class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{countryData.content?.Highlights?.Highlight2?.description2 || templateContent.Home?.Highlights?.Highlight2?.description2}</textarea>
+                </div>
+              </div>
+              
+              <!-- Third highlight -->
+              <div class="border-t border-gray-200 pt-4">
+                <label class="block text-sm font-medium text-gray-700">Highlight 3</label>
+                <div class="mt-2 space-y-2">
+                  <input type="text" name="Highlights.Highlight3.Highlight3" value={countryData.content?.Highlights?.Highlight3?.Highlight3 || templateContent.Home?.Highlights?.Highlight3?.Highlight3} placeholder="Title" class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                  <textarea name="Highlights.Highlight3.description3" placeholder="Description" rows="2" class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{countryData.content?.Highlights?.Highlight3?.description3 || templateContent.Home?.Highlights?.Highlight3?.description3}</textarea>
+                </div>
+              </div>
+            </div>
+            
+            <!-- FAQ Content -->
+            <div id="faqContent" class="hidden space-y-4">
+              <div>
+                <label for="faqTitle" class="block text-sm font-medium text-gray-700">FAQ Title</label>
+                <input type="text" id="faqTitle" name="FrequentlyAsk.Title" value={countryData.content?.FrequentlyAsk?.Title || templateContent.Home?.FrequentlyAsk?.Title} class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+              </div>
+              
+              <div>
+                <label for="faqDescription" class="block text-sm font-medium text-gray-700">FAQ Description</label>
+                <input type="text" id="faqDescription" name="FrequentlyAsk.description1" value={countryData.content?.FrequentlyAsk?.description1 || templateContent.Home?.FrequentlyAsk?.description1} class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+              </div>
+              
+              <!-- First FAQ -->
+              <div class="border-t border-gray-200 pt-4">
+                <label class="block text-sm font-medium text-gray-700">FAQ 1</label>
+                <div class="mt-2 space-y-2">
+                  <input type="text" name="FrequentlyAsk.Question1" value={countryData.content?.FrequentlyAsk?.Question1 || templateContent.Home?.FrequentlyAsk?.Question1} placeholder="Question" class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                  <textarea name="FrequentlyAsk.Answer1" placeholder="Answer" rows="2" class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{countryData.content?.FrequentlyAsk?.Answer1 || templateContent.Home?.FrequentlyAsk?.Answer1}</textarea>
+                </div>
+              </div>
+              
+              <!-- Second FAQ -->
+              <div class="border-t border-gray-200 pt-4">
+                <label class="block text-sm font-medium text-gray-700">FAQ 2</label>
+                <div class="mt-2 space-y-2">
+                  <input type="text" name="FrequentlyAsk.Question2" value={countryData.content?.FrequentlyAsk?.Question2 || templateContent.Home?.FrequentlyAsk?.Question2} placeholder="Question" class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                  <textarea name="FrequentlyAsk.Answer2" placeholder="Answer" rows="2" class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{countryData.content?.FrequentlyAsk?.Answer2 || templateContent.Home?.FrequentlyAsk?.Answer2}</textarea>
+                </div>
+              </div>
+              
+              <!-- Third FAQ -->
+              <div class="border-t border-gray-200 pt-4">
+                <label class="block text-sm font-medium text-gray-700">FAQ 3</label>
+                <div class="mt-2 space-y-2">
+                  <input type="text" name="FrequentlyAsk.Question3" value={countryData.content?.FrequentlyAsk?.Question3 || templateContent.Home?.FrequentlyAsk?.Question3} placeholder="Question" class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                  <textarea name="FrequentlyAsk.Answer3" placeholder="Answer" rows="2" class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{countryData.content?.FrequentlyAsk?.Answer3 || templateContent.Home?.FrequentlyAsk?.Answer3}</textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <button id="saveContentBtn" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+          Save All Content Changes
+        </button>
+        
+        <div id="contentFormMessage" class="mt-4 hidden">
+          <!-- Form messages will be displayed here -->
+        </div>
+        
+        <div class="mt-8">
+          <h3 class="text-lg font-medium text-gray-900 mb-4">Preview Your Changes</h3>
+          <a href={`/${countryData.slug}`} target="_blank" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Preview Site
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script define:vars={{ countrySlug: slug }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Tab switching
+    const tabs = {
+      heroTab: document.getElementById('heroTab'),
+      robolutionTab: document.getElementById('robolutionTab'),
+      highlightsTab: document.getElementById('highlightsTab'),
+      faqTab: document.getElementById('faqTab')
+    };
+    
+    const contentPanels = {
+      heroContent: document.getElementById('heroContent'),
+      robolutionContent: document.getElementById('robolutionContent'),
+      highlightsContent: document.getElementById('highlightsContent'),
+      faqContent: document.getElementById('faqContent')
+    };
+    
+    // Function to switch tabs
+    function switchTab(tabId) {
+      // Reset all tabs and content panels
+      Object.values(tabs).forEach(tab => {
+        tab.classList.remove('bg-indigo-600', 'text-white');
+        tab.classList.add('bg-gray-200', 'text-gray-700');
+      });
+      
+      Object.values(contentPanels).forEach(panel => {
+        panel.classList.add('hidden');
+      });
+      
+      // Activate the selected tab and panel
+      tabs[tabId].classList.remove('bg-gray-200', 'text-gray-700');
+      tabs[tabId].classList.add('bg-indigo-600', 'text-white');
+      
+      const contentId = tabId.replace('Tab', 'Content');
+      contentPanels[contentId].classList.remove('hidden');
+    }
+    
+    // Set up tab click handlers
+    Object.keys(tabs).forEach(tabId => {
+      tabs[tabId].addEventListener('click', () => switchTab(tabId));
+    });
+    
+    // Color input synchronization
+    const colorInputs = [
+      { color: 'primaryColor', text: 'primaryColorText' },
+      { color: 'secondaryColor', text: 'secondaryColorText' },
+      { color: 'accentColor', text: 'accentColorText' },
+      { color: 'backgroundColor', text: 'backgroundColorText' }
+    ];
+    
+    colorInputs.forEach(({ color, text }) => {
+      const colorInput = document.getElementById(color);
+      const textInput = document.getElementById(text);
+      
+      colorInput.addEventListener('input', () => {
+        textInput.value = colorInput.value;
+      });
+      
+      textInput.addEventListener('input', () => {
+        // Check if the value is a valid hex color
+        const isValidHex = /^#([0-9A-F]{3}){1,2}$/i.test(textInput.value);
+        if (isValidHex) {
+          colorInput.value = textInput.value;
+        }
+      });
+    });
+    
+    // Basic settings form submission
+    const basicSettingsForm = document.getElementById('basicSettingsForm');
+    const basicFormMessage = document.getElementById('basicFormMessage');
+    
+    basicSettingsForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(basicSettingsForm);
+      const data = {
+        id: document.getElementById('countryId').value,
+        name: formData.get('name'),
+        slug: formData.get('slug'),
+        description: formData.get('description'),
+        flagUrl: formData.get('flagUrl'),
+        active: formData.get('active') === 'on',
+        templateIndex: parseInt(formData.get('templateIndex') || '0', 10)
+      };
+      
+      try {
+        basicFormMessage.innerHTML = '<p class="text-gray-500">Saving settings...</p>';
+        basicFormMessage.classList.remove('hidden');
+        
+        const response = await fetch('/api/countries', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok) {
+          basicFormMessage.innerHTML = `<p class="text-green-600">${result.message}</p>`;
+          
+          // If slug was changed, redirect to the new URL after a short delay
+          if (data.slug !== countrySlug) {
+            basicFormMessage.innerHTML += '<p class="text-gray-500">Redirecting to updated page...</p>';
+            setTimeout(() => {
+              window.location.href = `/admin/edit-country/${data.slug}`;
+            }, 1500);
+          }
+        } else {
+          basicFormMessage.innerHTML = `<p class="text-red-600">Error: ${result.error}</p>`;
+        }
+      } catch (error) {
+        basicFormMessage.innerHTML = `<p class="text-red-600">Error: ${error.message}</p>`;
+      }
+    });
+    
+    // Styles form submission
+    const stylesForm = document.getElementById('stylesForm');
+    const stylesFormMessage = document.getElementById('stylesFormMessage');
+    
+    stylesForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const customStyles = {
+        primaryColor: document.getElementById('primaryColorText').value,
+        secondaryColor: document.getElementById('secondaryColorText').value,
+        accentColor: document.getElementById('accentColorText').value,
+        backgroundColor: document.getElementById('backgroundColorText').value
+      };
+      
+      try {
+        stylesFormMessage.innerHTML = '<p class="text-gray-500">Saving styles...</p>';
+        stylesFormMessage.classList.remove('hidden');
+        
+        const response = await fetch('/api/countries', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: document.getElementById('countryId').value,
+            customStyles
+          })
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok) {
+          stylesFormMessage.innerHTML = `<p class="text-green-600">${result.message}</p>`;
+        } else {
+          stylesFormMessage.innerHTML = `<p class="text-red-600">Error: ${result.error}</p>`;
+        }
+      } catch (error) {
+        stylesFormMessage.innerHTML = `<p class="text-red-600">Error: ${error.message}</p>`;
+      }
+    });
+    
+    // Content form submission
+    const saveContentBtn = document.getElementById('saveContentBtn');
+    const contentFormMessage = document.getElementById('contentFormMessage');
+    
+    saveContentBtn.addEventListener('click', async () => {
+      try {
+        contentFormMessage.innerHTML = '<p class="text-gray-500">Saving content...</p>';
+        contentFormMessage.classList.remove('hidden');
+        
+        // Collect all input values from the content editor
+        const content = {};
+        
+        // Function to add a value to the content object using dot notation path
+        function setNestedValue(obj, path, value) {
+          const parts = path.split('.');
+          let current = obj;
+          
+          for (let i = 0; i < parts.length - 1; i++) {
+            const part = parts[i];
+            if (!current[part]) {
+              current[part] = {};
+            }
+            current = current[part];
+          }
+          
+          current[parts[parts.length - 1]] = value;
+        }
+        
+        // Get all inputs and textareas from the content panels
+        const inputs = document.querySelectorAll('#heroContent input, #heroContent textarea, #robolutionContent input, #robolutionContent textarea, #highlightsContent input, #highlightsContent textarea, #faqContent input, #faqContent textarea');
+        
+        inputs.forEach(input => {
+          if (input.name) {
+            setNestedValue(content, input.name, input.value);
+          }
+        });
+        
+        const response = await fetch('/api/country-content', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            slug: countrySlug,
+            content
+          })
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok) {
+          contentFormMessage.innerHTML = `<p class="text-green-600">${result.message}</p>`;
+        } else {
+          contentFormMessage.innerHTML = `<p class="text-red-600">Error: ${result.error}</p>`;
+        }
+      } catch (error) {
+        contentFormMessage.innerHTML = `<p class="text-red-600">Error: ${error.message}</p>`;
+      }
+    });
+  });
+</script> 

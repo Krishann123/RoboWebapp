@@ -7,6 +7,7 @@ const fs = require('fs');
 const multer = require('multer');
 const { createClient } = require('@supabase/supabase-js');
 const { ensureAuthenticated, ensureAdmin } = require('../middleware/auth');
+const mongoose = require('mongoose');
 
 // --- Supabase Client Setup ---
 const supabaseUrl = process.env.PUBLIC_SUPABASE_URL;
@@ -187,19 +188,155 @@ router.delete('/international/news/:category/:index', ensureAuthenticated, ensur
 // Get active country sites
 router.get('/country-sites', async (req, res) => {
   try {
-    const countrySites = await CountrySite.find({ active: true }).select('name slug flagUrl').sort({ name: 1 });
+    // Use the MongoDB test.templates collection
+    const testDb = mongoose.connection.useDb('test');
+    const Templates = testDb.collection('templates');
+    
+    const templates = await Templates.find({}).sort({ Name: 1 }).toArray();
+    
+    const countrySites = templates.map(t => ({
+      name: t.Name === 'default' ? 'Dubai' : t.Name.charAt(0).toUpperCase() + t.Name.slice(1),
+      slug: t.Name,
+      flagUrl: t.config?.Contents?.Navbar?.Content?.button?.image || '/images/flags/placeholder.png'
+    }));
+    
+    console.log(`[API] Returning ${countrySites.length} country sites from templates collection`);
     
     res.json({
       success: true,
       countrySites
     });
   } catch (error) {
-    console.error('Error fetching country sites:', error);
+    console.error('Error fetching country sites from templates:', error);
     res.status(500).json({
       success: false,
       message: 'Error fetching country sites',
       error: error.message
     });
+  }
+});
+
+// --- Country Site API Endpoints ---
+
+/**
+ * @route GET /api/countries
+ * @description Get all active country sites
+ * @access Public
+ */
+router.get('/countries', async (req, res) => {
+  try {
+    const countries = await CountrySite.find({ active: true })
+      .select('name slug flagUrl logoUrl')
+      .sort({ name: 1 });
+    
+    res.json(countries);
+  } catch (error) {
+    console.error('Error fetching countries:', error);
+    res.status(500).json({ error: 'Failed to fetch countries' });
+  }
+});
+
+/**
+ * @route GET /api/country/:slug
+ * @description Get country site by slug
+ * @access Public
+ */
+router.get('/country/:slug', async (req, res) => {
+  try {
+    const country = await CountrySite.findOne({ 
+      slug: req.params.slug.toLowerCase(),
+      active: true
+    });
+    
+    if (!country) {
+      return res.status(404).json({ error: 'Country not found' });
+    }
+    
+    res.json(country);
+  } catch (error) {
+    console.error('Error fetching country:', error);
+    res.status(500).json({ error: 'Failed to fetch country' });
+  }
+});
+
+/**
+ * @route GET /api/country/:slug/tournament
+ * @description Get country-specific tournament information
+ * @access Public
+ */
+router.get('/country/:slug/tournament', async (req, res) => {
+  try {
+    const country = await CountrySite.findOne({ 
+      slug: req.params.slug.toLowerCase(),
+      active: true
+    }).select('tournamentInfo name slug');
+    
+    if (!country) {
+      return res.status(404).json({ error: 'Country not found' });
+    }
+    
+    res.json({
+      countryName: country.name,
+      countrySlug: country.slug,
+      ...country.tournamentInfo
+    });
+  } catch (error) {
+    console.error('Error fetching tournament info:', error);
+    res.status(500).json({ error: 'Failed to fetch tournament information' });
+  }
+});
+
+/**
+ * @route GET /api/country/:slug/training
+ * @description Get country-specific training information
+ * @access Public
+ */
+router.get('/country/:slug/training', async (req, res) => {
+  try {
+    const country = await CountrySite.findOne({ 
+      slug: req.params.slug.toLowerCase(),
+      active: true
+    }).select('trainingInfo name slug');
+    
+    if (!country) {
+      return res.status(404).json({ error: 'Country not found' });
+    }
+    
+    res.json({
+      countryName: country.name,
+      countrySlug: country.slug,
+      ...country.trainingInfo
+    });
+  } catch (error) {
+    console.error('Error fetching training info:', error);
+    res.status(500).json({ error: 'Failed to fetch training information' });
+  }
+});
+
+/**
+ * @route GET /api/country/:slug/gallery
+ * @description Get country-specific gallery
+ * @access Public
+ */
+router.get('/country/:slug/gallery', async (req, res) => {
+  try {
+    const country = await CountrySite.findOne({ 
+      slug: req.params.slug.toLowerCase(),
+      active: true
+    }).select('galleryImages name slug');
+    
+    if (!country) {
+      return res.status(404).json({ error: 'Country not found' });
+    }
+    
+    res.json({
+      countryName: country.name,
+      countrySlug: country.slug,
+      images: country.galleryImages || []
+    });
+  } catch (error) {
+    console.error('Error fetching gallery:', error);
+    res.status(500).json({ error: 'Failed to fetch gallery' });
   }
 });
 

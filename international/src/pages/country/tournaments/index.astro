@@ -1,0 +1,24 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+
+const { countryData } = Astro.locals;
+
+if (!countryData) {
+  return Astro.redirect('/404');
+}
+---
+<Layout title={`Tournaments - ${countryData.name}`}>
+  <div class="container">
+    <h1>Tournaments in {countryData.name}</h1>
+    <div class="tournament-list">
+      {countryData.tournaments.map(tournament => (
+        <div class="tournament-card">
+          <h2><a href={`/country/${countryData.slug}/tournaments/${tournament.slug}`}>{tournament.title}</a></h2>
+          <p>{tournament.description}</p>
+          <p><strong>Date:</strong> {new Date(tournament.date).toLocaleDateString()}</p>
+          <p><strong>Venue:</strong> {tournament.venue}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</Layout> 

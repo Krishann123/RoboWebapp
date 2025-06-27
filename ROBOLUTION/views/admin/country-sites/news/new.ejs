@@ -1,0 +1,16 @@
+<!-- NEWS - NEW -->
+<!DOCTYPE html>
+<html>
+<head><title>Add News</title><link rel="stylesheet" href="/css/style.css"></head>
+<body>
+<div class="container">
+    <h1>Add News Article to <%= countrySite.name %></h1>
+    <form action="/admin/country-sites/<%= countrySite._id %>/news" method="POST" enctype="multipart/form-data">
+        <div class="form-group"><label>Title</label><input type="text" name="title" class="form-control" required></div>
+        <div class="form-group"><label>Content</label><textarea name="content" class="form-control" rows="10"></textarea></div>
+        <div class="form-group"><label>Image</label><input type="file" name="imageUrl" class="form-control"></div>
+        <button type="submit" class="btn btn-primary">Add Article</button>
+    </form>
+</div>
+</body>
+</html> 

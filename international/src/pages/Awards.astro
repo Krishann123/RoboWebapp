@@ -2,8 +2,27 @@
 // filepath: d:\Data\Astro\Erovoutika-Dubai-Web-app\src\pages\awards.astro
 import Hero from "@/components/Awards/Hero.astro";
 import Layout from "../layouts/Layout.astro";
+import { getTemplate } from "@/db/mongodb.js";
+
+// Get country info from headers, passed by Express middleware
+const countrySiteHeader = Astro.request.headers.get('x-country-site');
+const countrySite = countrySiteHeader ? JSON.parse(countrySiteHeader) : { slug: 'default' };
+
+// Fetch the entire template
+const template = await getTemplate(countrySite.slug);
+const content = template?.config?.Contents || {};
+
+// Extract shared layout content
+const layoutContent = {
+    nav: content.Navbar || {},
+    footer: content.Footer || {},
+    banner: content.Banner || {},
+};
 ---
 
-<Layout title="Erovoutika Dubai - Awards">
+<Layout 
+    title="Erovoutika International - Awards"
+    content={layoutContent}
+>
     <Hero />
 </Layout>

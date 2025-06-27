@@ -808,9 +808,37 @@ app.set('layout extractStyles', true);
 const dubaiRoutes = require('./routes/dubai');
 const countrySitesRoutes = require('./routes/country-sites');
 const internationalSitesRoutes = require('./routes/international-sites');
+const CountrySite = require('./models/CountrySite');
 
-// Mount the Dubai routes at /dubai
-app.use('/dubai', dubaiRoutes);
+// Middleware to check if a country site is active
+const checkCountrySiteActive = async (req, res, next) => {
+  try {
+    const slug = req.originalUrl.split('/')[1]; // Get the first part of the path (e.g., 'dubai')
+    
+    if (slug === 'dubai') {
+      // Check if Dubai site is active
+      const dubaiSite = await CountrySite.findOne({ slug: 'dubai' });
+      
+      if (!dubaiSite || !dubaiSite.active) {
+        console.log(`[Dubai Route] Access denied - Dubai site is inactive or not found`);
+        return res.status(404).render('error', { 
+          message: 'The Dubai site is currently unavailable',
+          error: { status: 404, stack: '' }
+        });
+      }
+      
+      console.log(`[Dubai Route] Access granted - Dubai site is active`);
+    }
+    
+    next();
+  } catch (error) {
+    console.error('Error checking country site status:', error);
+    next(); // Continue anyway to avoid breaking the application
+  }
+};
+
+// Mount the Dubai routes at /dubai, but check if active first
+app.use('/dubai', checkCountrySiteActive, dubaiRoutes);
 
 // Mount the country sites admin routes
 app.use('/country-sites', countrySitesRoutes);
@@ -818,14 +846,92 @@ app.use('/country-sites', countrySitesRoutes);
 // Mount the international sites routes 
 app.use('/country', internationalSitesRoutes);
 
-// Add a redirect from the old /international path to the new /dubai path
-app.get('/international', (req, res) => {
-  res.redirect('/dubai');
-});
+// Configure proxy to Astro SSR server for country sites
+// Configure proxy to Astro SSR server for country sites
+const astroServerPath = path.join(__dirname, '../international/dist/server/entry.mjs');
+if (fs.existsSync(astroServerPath)) {
+  console.log('Initializing Astro SSR handler for country sites');
+  
+  // Convert to proper file:// URL for ESM imports (fix for Windows paths)
+  const astroServerUrl = `file://${astroServerPath.replace(/\\/g, '/')}`;
+  console.log(`Loading Astro SSR from: ${astroServerUrl}`);
+  
+  // Dynamically import the Astro SSR handler
+  import(astroServerUrl).then(astroSSR => {
+    // Load our custom middleware that prepares the request for Astro
+    const createAstroMiddleware = require('./middleware/astro-middleware');
+    
+    // Mount the middleware chain for country sites
+    app.use('/country/:slug', ...createAstroMiddleware(astroSSR));
+    
+    console.log('Astro SSR handler initialized and mounted on /country/:slug');
+  }).catch(err => {
+    console.error('Failed to initialize Astro SSR handler:', err);
+  });
+} else {
+  console.warn('Astro SSR entry point not found at:', astroServerPath);
+}
 
-app.get('/international/*', (req, res) => {
-  const newPath = req.originalUrl.replace('/international', '/dubai');
-  res.redirect(newPath);
+// Add direct access to country sites by slug (e.g., /singapore/)
+app.use('/:countrySlug', async (req, res, next) => {
+  const slug = req.params.countrySlug;
+  
+  // Skip this middleware for known routes and static files
+  if (slug === 'images' || 
+      slug === 'public' || 
+      slug === 'admin' || 
+      slug === 'api' ||
+      slug === 'login' ||
+      slug === 'home' ||
+      slug === 'videos' ||
+      slug === 'dubai' ||
+      slug === 'password-reset' ||
+      slug === 'favicon.ico' ||
+      slug === 'robots.txt' ||
+      slug.startsWith('_') ||
+      slug.includes('.')) {
+    return next();
+  }
+  
+  try {
+    // Check if this is a valid country site
+    const CountrySite = require('./models/CountrySite');
+    const countrySite = await CountrySite.findOne({ slug, active: true });
+    
+    if (countrySite) {
+      console.log(`[International Sites] GET /${slug}/ | Session Auth: ${!!req.session?.user}`);
+      console.log(`[International Sites] Forwarding to Astro SSR for ${countrySite.name}`);
+      
+      // Store country site info in request object for the middleware to use
+      req.countrySite = countrySite;
+      
+      // Pass request to the /country/:slug route for processing
+      // Ensure we preserve pathname and query string correctly
+      const originalUrl = req.url;
+      const urlPath = req.path;
+      const pathSuffix = urlPath.length > slug.length + 1 ? 
+                        urlPath.substring(slug.length + 1) : 
+                        ''; // Handle both /singapore and /singapore/
+      
+      console.log(`Rewriting URL from /${slug}${pathSuffix} to /country/${slug}${pathSuffix}`);
+      
+      // Rewrite URL keeping all query parameters intact
+      req.originalUrl = req.originalUrl.replace(new RegExp(`^/${slug}`), `/country/${slug}`);
+      req.url = `/country/${slug}${pathSuffix}${req.url.includes('?') ? req.url.substring(req.url.indexOf('?')) : ''}`;
+      req.baseUrl = '/country';
+      req.path = `/${slug}${pathSuffix}`;
+      
+      // Force router to handle this as a new request
+      app._router.handle(req, res, next);
+      return;
+    }
+    
+    // Not a country site, continue
+    next();
+  } catch (error) {
+    console.error(`Error checking country slug ${slug}:`, error);
+    next();
+  }
 });
 
 // Directly serve the international src/assets folder with highest priority - direct access
@@ -872,6 +978,75 @@ const apiRoutes = require('./routes/api');
 app.use('/password-reset', passwordResetRoutes);
 app.use('/admin', adminRoutes);
 app.use('/api', apiRoutes);
+
+// New endpoint to set the selected country in the session
+app.post('/api/set-country/:slug', (req, res) => {
+  const { slug } = req.params;
+  if (slug) {
+    req.session.selectedCountry = slug;
+    console.log(`[Session] Selected country set to: ${slug}`);
+    req.session.save(err => {
+      if (err) {
+        console.error('[Session] Error saving session:', err);
+        return res.status(500).json({ success: false, message: 'Error saving session' });
+      }
+      return res.json({ success: true, message: `Country set to ${slug}` });
+    });
+  } else {
+    res.status(400).json({ success: false, message: 'No country slug provided' });
+  }
+});
+
+// New route for /international
+const { createProxyMiddleware } = require('http-proxy-middleware');
+app.use('/international', async (req, res, next) => {
+  try {
+    const slug = req.session.selectedCountry || 'default';
+    console.log(`[International Page] Looking up template for slug: ${slug}`);
+
+    const testDb = mongoose.connection.useDb('test');
+    const Templates = testDb.collection('templates');
+    const template = await Templates.findOne({ Name: slug });
+
+    let countryData = null;
+    if (template) {
+      countryData = {
+        name: template.Name === 'default' ? 'Dubai' : template.Name,
+        slug: template.Name,
+        templateName: template.Name,
+        flagUrl: template.config?.Contents?.Navbar?.Content?.button?.image || '',
+        description: template.config?.Contents?.Home?.hero?.subText || ''
+      };
+      console.log(`[International Page] Found template data for: ${countryData.name}`);
+    } else {
+      console.error(`[International Page] Template not found in DB for slug: ${slug}`);
+    }
+
+    const proxy = createProxyMiddleware({
+      target: 'http://localhost:4321', // Astro dev server
+      changeOrigin: true,
+      ws: true,
+      onProxyReq: (proxyReq, req, res) => {
+        // This is now synchronous and safe
+        if (countryData) {
+          proxyReq.setHeader('X-Country-Site', JSON.stringify(countryData));
+        }
+      },
+      pathRewrite: (path, req) => {
+        const finalPath = path.replace(/^\/international/, '/');
+        return finalPath || '/';
+      },
+      logLevel: 'debug'
+    });
+
+    // Execute the proxy with the prepared data
+    proxy(req, res, next);
+  } catch (error) {
+    console.error('[International] Critical error in proxy middleware:', error);
+    next(error); // Pass error to Express's default error handler
+  }
+});
+
 
 // Direct routes for password reset (fallbacks)
 app.get('/password-reset/reset/:token', async (req, res) => {
@@ -2159,7 +2334,7 @@ app.post('/login', async (req, res) => {
             if (adminUser.needs2FASetup) {
                 return res.json({ 
                     success: false, 
-                    requireTwoFactor: true,
+                    requireTwoFactor: true, 
                     needs2FASetup: true,
                     message: 'Your account has been reset. Please set up two-factor authentication.',
                     username: username,

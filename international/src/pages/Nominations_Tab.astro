@@ -1,36 +1,54 @@
 ---
 import NominationForm from "@/components/Nominations/Nominations_Form.astro";
 import Layout from "@/layouts/Layout.astro";
-import { fetchPageContent } from "@/components/db";
+import { getTemplate } from "../db/mongodb.js";
 
-const data = await fetchPageContent("Nomination");
-const content = data.NominationContent;
-const getImageUrl = (path) => {
-    if (typeof path === 'string' && path.startsWith('/')) {
-        return import.meta.env.BASE_URL + path;
-    }
-    return path;
-}
+// Get country info from headers, passed by Express middleware
+const countrySiteHeader = Astro.request.headers.get('x-country-site');
+const countrySite = countrySiteHeader ? JSON.parse(countrySiteHeader) : { slug: 'default', name: 'Dubai' };
+
+// Fetch the entire template
+const template = await getTemplate(countrySite.slug);
+const dbContent = template?.config?.Contents || {};
+
+// Define default content
+const defaultNominationContent = {
+    hero_background: "/backgrounds/Nomination-Banner.jpg",
+    hero_title: "Nominate The Bright Minds Of Tomorrow!",
+    hero_subtitle: "Recognize outstanding individuals and teams in robotics, research, and innovation. Your nomination can inspire the next generation of leaders.",
+    hero_buttonText: "Nominate Now",
+};
+
+// Extract page-specific and layout content, merging with defaults
+const content = { ...defaultNominationContent, ...(dbContent.Nomination || {}) };
+const layoutContent = {
+    nav: dbContent.Navbar || {},
+    footer: dbContent.Footer || {},
+    banner: dbContent.Banner || {},
+};
+
+const pageTitle = content.hero_title || `Erovoutika ${countrySite.name} - Nominations`;
+
 ---
 
-<Layout title="Erovoutika Dubai - Nominations">
-    <body>
-        <section
-            class="nomination-hero"
-            style={`background-image: url(${getImageUrl(content.hero_background)});`}
-        >
-            <div class="hero-content">
-                <h1 class="hero-title">{content.hero_title}</h1>
-                <p class="hero-subtitle">{content.hero_subtitle}</p>
-                <button class="nominate-button"
-                    >{content.hero_buttonText}</button
-                >
-            </div>
-        </section>
-        <section class="nomination-form" id="nominations">
-            <NominationForm />
-        </section>
-    </body>
+
+
+<Layout title={pageTitle} content={layoutContent}>
+    <section
+        class="nomination-hero"
+        style={`background-image: url(${content.hero_background});`}
+    >
+        <div class="hero-content">
+            <h1 class="hero-title">{content.hero_title}</h1>
+            <p class="hero-subtitle">{content.hero_subtitle}</p>
+            <button class="nominate-button"
+                >{content.hero_buttonText}</button
+            >
+        </div>
+    </section>
+    <section class="nomination-form" id="nominations">
+        <NominationForm />
+    </section>
 </Layout>
 
 <style>

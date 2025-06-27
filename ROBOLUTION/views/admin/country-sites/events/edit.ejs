@@ -1,0 +1,20 @@
+<!-- EVENTS - EDIT -->
+<!DOCTYPE html>
+<html>
+<head><title>Edit Event</title><link rel="stylesheet" href="/css/style.css"></head>
+<body>
+<div class="container">
+    <h1>Edit Event in <%= countrySite.name %></h1>
+    <form action="/admin/country-sites/<%= countrySite._id %>/events/<%= event._id %>" method="POST" enctype="multipart/form-data">
+        <div class="form-group"><label>Title</label><input type="text" name="title" class="form-control" value="<%= event.title %>" required></div>
+        <div class="form-group"><label>Description</label><textarea name="description" class="form-control" rows="5"><%= event.description %></textarea></div>
+        <div class="form-group"><label>Date</label><input type="date" name="date" class="form-control" value="<%= event.date ? event.date.toISOString().split('T')[0] : '' %>"></div>
+        <div class="form-group"><label>Location</label><input type="text" name="location" class="form-control" value="<%= event.location %>"></div>
+        <div class="form-group"><label>Banner Image</label><input type="file" name="bannerImage" class="form-control">
+        <% if (event.bannerImage) { %><img src="<%= event.bannerImage %>" width="200"><% } %></div>
+        <div class="form-group"><label>Registration Link</label><input type="url" name="registrationLink" class="form-control" value="<%= event.registrationLink %>"></div>
+        <button type="submit" class="btn btn-primary">Update Event</button>
+    </form>
+</div>
+</body>
+</html> 

@@ -1,18 +1,42 @@
 ---
-import { fetchPageContent } from "../db";
+export interface Props {
+    content?: {
+        mainText?: string;
+        subText?: string;
+        buttonText?: string;
+        videoDirectory?: string;
+        heroImage?: string;
+    };
+    welcomeMessage?: string;
+    description?: string;
+    themeColors?: {
+        primary: string;
+        accent: string;
+    };
+    customCSS?: string;
+}
 
-const data = await fetchPageContent("Home");
+const { content = {}, welcomeMessage = "WELCOME TO EROVOUTIKA INTERNATIONAL", description = "Empowering the future through robotics education and innovation across the globe.", themeColors, customCSS } = Astro.props;
 
-// Get the base URL from Astro's environment variable
-const baseUrl = import.meta.env.BASE_URL.endsWith('/') 
-    ? import.meta.env.BASE_URL 
-    : `${import.meta.env.BASE_URL}/`;
+const mainText = content.mainText || welcomeMessage;
+const subText = content.subText || description;
+const buttonText = content.buttonText || "Explore Programs";
+const videoDirectory = content.videoDirectory;
+const useVideo = !!videoDirectory;
+const heroImage = content.heroImage || "/international/homepage.png";
+
+const primaryColor = themeColors?.primary || "#003399";
+const accentColor = themeColors?.accent || "#ff9900";
 ---
 
 <section
-    style={`background: linear-gradient(to top, rgba(0, 0, 0, 0.3), rgba(0, 0, 139, 0.7) 90%); background-size: cover; background-repeat: no-repeat; background-position: center;`}
-    class={`flex justify-start items-center w-full bg-cover h-full bg-no-repeat bg-center p-[40px]`}
+    style={`background-image: url("${!useVideo ? heroImage : ''}"); background-size: cover; background-repeat: no-repeat; background-position: center;`}
+    class={`flex justify-start items-center w-full bg-cover h-full bg-no-repeat bg-center p-[40px] relative`}
 >
+    <!-- Overlay gradient -->
+    <div class="absolute top-0 left-0 w-full h-full" style={`background: linear-gradient(to top, rgba(0, 0, 0, 0.7), ${primaryColor}99 90%);`}></div>
+    
+    {useVideo && (
     <div class="absolute top-0 left-0 w-full h-full -z-10">
         <video
             autoplay
@@ -21,33 +45,35 @@ const baseUrl = import.meta.env.BASE_URL.endsWith('/')
             playsinline
             class="absolute top-0 left-0 w-full h-full object-cover"
         >
-            <source src={data.hero.videoDirectory} type="video/mp4" />
+                <source src={videoDirectory} type="video/mp4" />
             Your browser does not support the video tag.
         </video>
     </div>
+    )}
 
     <div
-        class="m-15 lg:m-40 flex flex-col lg:h-screen w-[400px] lg:w-full max-w-[784px] py-35 lg:py-56"
+        class="relative z-10 m-15 lg:m-40 flex flex-col lg:h-screen w-[400px] lg:w-full max-w-[784px] py-35 lg:py-56"
     >
         <div class="w-full h-auto">
             <h1
                 id="mainText"
                 class="mb-4 text-6xl leading-none text-white lg:text-[120px] font-bebas"
             >
-                {data.hero.mainText}
+                {mainText}
             </h1>
         </div>
         <div class="w-full h-auto">
             <p class="text-left mb-8 text-lg font-normal text-white lg:text-xl">
-                {data.hero.subText}
+                {subText}
             </p>
         </div>
         <div class="flex items-center justify-start mt-8">
             <a
                 href="#packages"
                 class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-[#212529] rounded-full bg-white hover:scale-105 focus:ring-4 focus:ring-blue-300 transition-all duration-300 ease-in-out"
+                style={`background-color: ${accentColor}; color: #fff;`}
             >
-                {data.hero.buttonText}
+                {buttonText}
                 <svg
                     class="w-3.5 h-3.5 ms-2 rtl:rotate-180"
                     aria-hidden="true"
@@ -66,3 +92,8 @@ const baseUrl = import.meta.env.BASE_URL.endsWith('/')
         </div>
     </div>
 </section>
+
+<!-- Apply any custom CSS from country settings -->
+{customCSS && (
+    <style set:html={customCSS}></style>
+)}

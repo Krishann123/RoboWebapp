@@ -1,0 +1,350 @@
+---
+import { getCountryInfo, getPagePath } from "../lib/country-context";
+
+// Get country information
+const countryInfo = getCountryInfo();
+const { name: countryName, slug: countrySlug } = countryInfo;
+
+// Navigation links - can be customized for each country
+const navLinks = [
+  { name: "Home", path: "" },
+  { name: "News", path: "news" },
+  { name: "Trainings", path: "trainings" },
+  { name: "Tournament", path: "tournament" },
+  { name: "Awards", path: "awards" },
+];
+
+// Check if user is logged in using cookies
+const isLoggedIn = Astro.cookies.has('robolution_session');
+
+// Return to main Robolution site link
+const mainSiteUrl = "/home";
+
+// Helper to create country-specific URLs
+function getNavUrl(path) {
+  if (path === "") {
+    return `/${countrySlug}`;
+  }
+  return getPagePath(path);
+}
+---
+
+<nav class="navbar">
+  <div class="container navbar-container">
+    <div class="navbar-logo">
+      <a href={getNavUrl("")} class="logo-link">
+        <img src="/images/LOGO.webp" alt="Robolution Logo" class="logo-img" />
+        <span class="logo-text">Robolution {countryName}</span>
+      </a>
+    </div>
+    
+    <div class="navbar-links-container">
+      <!-- Main Navigation Links -->
+      <ul class="navbar-links">
+        {navLinks.map(link => (
+          <li class="navbar-item">
+            <a href={getNavUrl(link.path)} class="navbar-link">{link.name}</a>
+          </li>
+        ))}
+        
+        <!-- Back to Main Robolution Site -->
+        <li class="navbar-item">
+          <a href={mainSiteUrl} class="navbar-link back-link">
+            <i class="fas fa-arrow-left"></i> Main Site
+          </a>
+        </li>
+      </ul>
+      
+      <!-- Action Buttons -->
+      <div class="navbar-actions">
+        {isLoggedIn ? (
+          <>
+            <a href="/profile" class="btn btn-secondary">
+              <i class="fas fa-user"></i> Profile
+            </a>
+            <a href="/logout" class="btn btn-outline">Logout</a>
+          </>
+        ) : (
+          <>
+            <a href="/login" class="btn btn-outline">Login</a>
+            <a href={getNavUrl("registration")} class="btn btn-primary">Register</a>
+          </>
+        )}
+      </div>
+      
+      <!-- Mobile Menu Toggle -->
+      <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    
+    <!-- Mobile Menu (hidden by default) -->
+    <div class="mobile-menu" id="mobile-menu">
+      <ul class="mobile-links">
+        {navLinks.map(link => (
+          <li class="mobile-item">
+            <a href={getNavUrl(link.path)} class="mobile-link">{link.name}</a>
+          </li>
+        ))}
+        
+        <li class="mobile-item">
+          <a href={mainSiteUrl} class="mobile-link back-link">
+            <i class="fas fa-arrow-left"></i> Main Site
+          </a>
+        </li>
+        
+        {isLoggedIn ? (
+          <>
+            <li class="mobile-item">
+              <a href="/profile" class="mobile-link">
+                <i class="fas fa-user"></i> Profile
+              </a>
+            </li>
+            <li class="mobile-item">
+              <a href="/logout" class="mobile-link">Logout</a>
+            </li>
+          </>
+        ) : (
+          <>
+            <li class="mobile-item">
+              <a href="/login" class="mobile-link">Login</a>
+            </li>
+            <li class="mobile-item">
+              <a href={getNavUrl("registration")} class="mobile-link">Register</a>
+            </li>
+          </>
+        )}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  
+  if (mobileMenuToggle && mobileMenu) {
+    mobileMenuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('active');
+      mobileMenuToggle.classList.toggle('active');
+      
+      // Update aria-expanded attribute for accessibility
+      const isExpanded = mobileMenu.classList.contains('active');
+      mobileMenuToggle.setAttribute('aria-expanded', isExpanded.toString());
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!mobileMenuToggle.contains(e.target) && !mobileMenu.contains(e.target)) {
+        mobileMenu.classList.remove('active');
+        mobileMenuToggle.classList.remove('active');
+        mobileMenuToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+    
+    // Close menu when window is resized to desktop view
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768 && mobileMenu.classList.contains('active')) {
+        mobileMenu.classList.remove('active');
+        mobileMenuToggle.classList.remove('active');
+        mobileMenuToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+  
+  // Check login status (in case cookie changes)
+  function checkLoginStatus() {
+    const isLoggedIn = document.cookie.split(';').some(item => item.trim().startsWith('robolution_session=')) ||
+                       localStorage.getItem('isLoggedIn') === 'true';
+    
+    // Update UI based on login status if needed
+    document.body.classList.toggle('logged-in', isLoggedIn);
+  }
+  
+  // Check on page load
+  checkLoginStatus();
+  
+  // Periodically check login status
+  setInterval(checkLoginStatus, 60000);
+});
+</script>
+
+<style>
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: var(--header-background);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.75rem 0;
+}
+
+.navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: white;
+  text-decoration: none;
+}
+
+.logo-img {
+  height: 40px;
+  width: auto;
+}
+
+.logo-text {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.navbar-links-container {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navbar-links {
+  display: flex;
+  list-style: none;
+  gap: 1.5rem;
+}
+
+.navbar-link {
+  color: white;
+  font-weight: 500;
+  padding: 0.5rem 0;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.navbar-link:hover {
+  color: var(--accent-color);
+}
+
+.navbar-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--accent-color);
+  transition: width 0.3s ease;
+}
+
+.navbar-link:hover::after {
+  width: 100%;
+}
+
+.back-link {
+  color: var(--secondary-color);
+}
+
+.navbar-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.mobile-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--primary-color);
+  padding: 1rem;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  transform: translateY(-10px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu.active {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mobile-item {
+  margin-bottom: 1rem;
+}
+
+.mobile-link {
+  color: white;
+  font-size: 1.1rem;
+  display: block;
+  padding: 0.5rem 0;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .navbar-links {
+    display: none;
+  }
+  
+  .navbar-actions {
+    display: none;
+  }
+  
+  .mobile-menu-toggle {
+    display: block;
+  }
+  
+  .mobile-menu {
+    display: block;
+  }
+  
+  .logo-text {
+    font-size: 1rem;
+  }
+  
+  .logo-img {
+    height: 32px;
+  }
+}
+</style> 

@@ -251,6 +251,104 @@
         width: 100%;
       }
     }
+
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 20px;
+    }
+    .tab-button {
+      padding: 10px 20px;
+      cursor: pointer;
+      border: none;
+      background-color: transparent;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-dark);
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s;
+    }
+    .tab-button.active {
+      color: var(--primary-color);
+      border-bottom-color: var(--primary-color);
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .sub-section {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #eee;
+    }
+    .item-card {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+    .btn-delete {
+        background-color: var(--danger);
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .btn-delete:hover {
+        opacity: 0.9;
+    }
+    .btn-edit {
+        background-color: var(--secondary-color);
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .btn-edit:hover {
+        opacity: 0.9;
+    }
+    .item-list {
+        margin-top: 2rem;
+    }
+    .item-card {
+        background-color: #fdfdfd;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .item-card h4 {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: var(--text-dark);
+    }
+    .item-actions {
+        display: flex;
+        gap: 10px;
+    }
+    .no-items {
+        color: #6c757d;
+        font-style: italic;
+        margin-top: 1rem;
+    }
   </style>
 </head>
 <body>
@@ -258,127 +356,268 @@
   <div class="dashboard-container">
     <%- include('../../partials/admin-sidebar.ejs') %>
     <main class="main-content">
-      <%- include('../../partials/admin-header.ejs') %>
+      <%- include('../../partials/admin-header', {title}); %>
   <% } %>
       
+      <div class="container-fluid px-4">
+        <h1 class="mt-4">Edit Country Site</h1>
+        <ol class="breadcrumb mb-4">
+          <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+          <li class="breadcrumb-item"><a href="/admin/country-sites">Country Sites</a></li>
+          <li class="breadcrumb-item active">Edit <%= countrySite.name %></li>
+        </ol>
+        
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="card mb-4">
+              <div class="card-header">
+                <i class="fas fa-edit"></i> Edit Country Site
+              </div>
+              <div class="card-body">
       <div class="container">
         <div class="page-header">
-          <h1 class="page-title"><i class="fas fa-edit"></i> Edit Country Site</h1>
-          <a href="/country-sites<%= (typeof dashboard !== 'undefined' && dashboard === true) || (typeof inDashboard !== 'undefined' && inDashboard === true) ? '?dashboard=true' : '' %>" class="back-button">
-            <i class="fas fa-arrow-left"></i> Back to Country Sites
-          </a>
+                        <h1 class="page-title"><i class="fas fa-edit"></i> Edit: <%= countrySite.name %></h1>
+                        <a href="/admin/country-sites" class="back-button"><i class="fas fa-arrow-left"></i> Back to List</a>
         </div>
         
-        <% if (errorMessage && errorMessage.length > 0) { %>
-          <div class="message error">
-            <%= errorMessage %>
-          </div>
+                    <% if (typeof errorMessage !== 'undefined' && errorMessage.length > 0) { %>
+                      <div class="message error"><%= errorMessage %></div>
         <% } %>
         
-        <div class="form-container">
-          <h2 class="form-title">Edit <%= countrySite.name %> Site</h2>
-          
-          <form action="/country-sites/edit/<%= countrySite._id %><%= (typeof dashboard !== 'undefined' && dashboard === true) || (typeof inDashboard !== 'undefined' && inDashboard === true) ? '?dashboard=true' : '' %>" method="POST" enctype="multipart/form-data">
-            <div class="form-group">
-              <label for="name">Country Name</label>
-              <input type="text" id="name" name="name" class="form-control" value="<%= countrySite.name %>" required>
+                    <form action="/admin/country-sites/<%= countrySite._id %>" method="POST" enctype="multipart/form-data" class="form-container">
+                        
+                        <div class="tabs">
+                            <button type="button" class="tab-button active" data-tab="general">General</button>
+                            <button type="button" class="tab-button" data-tab="home">Home Page</button>
+                            <button type="button" class="tab-button" data-tab="tournaments">Tournaments</button>
+                            <button type="button" class="tab-button" data-tab="news">News</button>
+                            <button type="button" class="tab-button" data-tab="events">Events</button>
+                            <button type="button" class="tab-button" data-tab="webinars">Webinars</button>
+                            <a href="/admin/country-sites/<%= countrySite._id %>/gallery" class="tab-button">Gallery</a>
+                        </div>
+
+                        <!-- General Tab -->
+                        <div id="general" class="tab-content active">
+                            <h3 class="form-title">General Settings</h3>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="name" class="form-label">Country Name*</label>
+                                    <input type="text" class="form-control" id="name" name="name" value="<%= countrySite.name %>" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="slug" class="form-label">URL Slug*</label>
+                                    <input type="text" class="form-control" id="slug" name="slug" value="<%= countrySite.slug %>" required>
+                                    <small class="text-muted">This will be used in the URL: /<span id="slugPreview"><%= countrySite.slug %></span>/</small>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea class="form-control" id="description" name="description" rows="3"><%= countrySite.description || '' %></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="flag" class="form-label">Flag Image</label>
+                                    <input type="file" class="form-control" id="flag" name="flag" accept="image/*">
+                                    <% if (countrySite.flagUrl) { %>
+                                        <div class="mt-2">
+                                            <img src="<%= countrySite.flagUrl %>" alt="Current flag" class="img-thumbnail" style="height: 60px; width: auto;">
+                                        </div>
+                                    <% } %>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="logo" class="form-label">Logo Image</label>
+                                    <input type="file" class="form-control" id="logo" name="logo" accept="image/*">
+                                    <% if (countrySite.logoUrl) { %>
+                                        <div class="mt-2">
+                                            <img src="<%= countrySite.logoUrl %>" alt="Current logo" class="img-thumbnail" style="height: 60px; width: auto;">
+                                        </div>
+                                    <% } %>
+                                </div>
             </div>
             
-            <div class="form-group">
-              <label for="slug">URL Slug (used in the country site URL)</label>
-              <input type="text" id="slug" name="slug" class="form-control" value="<%= countrySite.slug %>" required>
-              <small>This will be used in the URL: /country/[slug]</small>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="active" name="active" <%= countrySite.active ? 'checked' : '' %>>
+                                <label class="form-check-label" for="active">Active (site is publicly accessible)</label>
+                            </div>
             </div>
             
+                        <!-- Home Page Tab -->
+                        <div id="home" class="tab-content">
+                            <h3 class="form-title">Home Page Content</h3>
+                            <div class="form-group">
+                                <label for="homeTitle">Home Page Title</label>
+                                <input type="text" id="homeTitle" name="homeContent[title]" value="<%= countrySite.homeContent?.title || '' %>" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="homeText">Home Page Text</label>
+                                <textarea id="homeText" name="homeContent[text]" class="form-control" rows="5"><%= countrySite.homeContent?.text || '' %></textarea>
+                            </div>
             <div class="form-group">
-              <label for="title">Site Title</label>
-              <input type="text" id="title" name="title" class="form-control" value="<%= countrySite.title %>" required>
+                                <label for="homeImage">Home Page Image</label>
+                                <input type="file" id="homeImage" name="homeImage" class="form-control">
+                                <% if (countrySite.homeContent?.imageUrl) { %>
+                                    <img src="<%= countrySite.homeContent.imageUrl %>" alt="Home Image" width="200" style="margin-top: 10px;">
+                                <% } %>
+                            </div>
             </div>
             
-            <div class="form-group">
-              <label for="description">Site Description</label>
-              <textarea id="description" name="description" class="form-control" rows="3"><%= countrySite.description %></textarea>
+                        <!-- Tournaments Tab -->
+                        <div id="tournaments" class="tab-content">
+                            <h3 class="form-title">Tournaments</h3>
+                            <a href="/admin/country-sites/<%= countrySite._id %>/tournaments/new" class="btn btn-primary"><i class="fas fa-plus"></i> Add New Tournament</a>
+                            <div class="item-list">
+                                <% if (countrySite.tournaments?.length > 0) { %>
+                                    <% countrySite.tournaments.forEach(tournament => { %>
+                                        <div class="item-card">
+                                            <h4><%= tournament.name %></h4>
+                                            <div class="item-actions">
+                                                <a href="/admin/country-sites/<%= countrySite._id %>/tournaments/<%= tournament._id %>/edit" class="btn-edit"><i class="fas fa-edit"></i> Edit</a>
+                                                <form action="/admin/country-sites/<%= countrySite._id %>/tournaments/<%= tournament._id %>/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this tournament?');">
+                                                    <button type="submit" class="btn-delete"><i class="fas fa-trash"></i> Delete</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    <% }) %>
+                                <% } else { %>
+                                    <p class="no-items">No tournaments added yet.</p>
+                                <% } %>
+                            </div>
             </div>
             
-            <div class="form-group">
-              <label>Country Flag</label>
-              <% if (countrySite.flagUrl) { %>
-                <div>
-                  <img src="<%= countrySite.flagUrl %>" alt="Flag" class="flag-preview">
+                        <!-- News Tab -->
+                        <div id="news" class="tab-content">
+                            <h3 class="form-title">News & Updates</h3>
+                            <a href="/admin/country-sites/<%= countrySite._id %>/news/new" class="btn btn-primary"><i class="fas fa-plus"></i> Add New Article</a>
+                            <div class="item-list">
+                                <% if (countrySite.news?.length > 0) { %>
+                                    <% countrySite.news.forEach(article => { %>
+                                        <div class="item-card">
+                                            <h4><%= article.title %></h4>
+                                            <div class="item-actions">
+                                                <a href="/admin/country-sites/<%= countrySite._id %>/news/<%= article._id %>/edit" class="btn-edit"><i class="fas fa-edit"></i> Edit</a>
+                                                <form action="/admin/country-sites/<%= countrySite._id %>/news/<%= article._id %>/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this article?');">
+                                                    <button type="submit" class="btn-delete"><i class="fas fa-trash"></i> Delete</button>
+                                                </form>
+                                            </div>
                 </div>
+                                    <% }) %>
+                                <% } else { %>
+                                    <p class="no-items">No news articles added yet.</p>
               <% } %>
-              <input type="file" id="flag" name="flag" accept="image/png, image/jpeg, image/gif">
-              <small>Leave empty to keep the current flag</small>
+                            </div>
             </div>
             
-            <div class="form-group">
-              <label for="templateName">Template</label>
-              <select id="templateName" name="templateName" class="form-control" required>
-                <% templates.forEach(template => { %>
-                  <option value="<%= template.name %>" data-index="<%= template.index %>" <%= countrySite.templateName === template.name ? 'selected' : '' %>><%= template.name %></option>
-                <% }); %>
-              </select>
-              <input type="hidden" id="templateIndex" name="templateIndex" value="<%= countrySite.templateIndex %>">
-            </div>
-            
-            <div class="form-group">
-              <label>Status</label>
-              <div class="form-check">
-                <input type="checkbox" id="active" name="active" class="form-check-input" <%= countrySite.active ? 'checked' : '' %>>
-                <label for="active" class="form-check-label">Active (Country site is visible to users)</label>
+                        <!-- Events Tab -->
+                        <div id="events" class="tab-content">
+                            <h3 class="form-title">Events</h3>
+                            <a href="/admin/country-sites/<%= countrySite._id %>/events/new" class="btn btn-primary"><i class="fas fa-plus"></i> Add New Event</a>
+                            <div class="item-list">
+                                <% if (countrySite.events?.length > 0) { %>
+                                    <% countrySite.events.forEach(event => { %>
+                                        <div class="item-card">
+                                            <h4><%= event.title %></h4>
+                                            <div class="item-actions">
+                                                <a href="/admin/country-sites/<%= countrySite._id %>/events/<%= event._id %>/edit" class="btn-edit"><i class="fas fa-edit"></i> Edit</a>
+                                                <form action="/admin/country-sites/<%= countrySite._id %>/events/<%= event._id %>/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this event?');">
+                                                    <button type="submit" class="btn-delete"><i class="fas fa-trash"></i> Delete</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    <% }) %>
+                                <% } else { %>
+                                    <p class="no-items">No events added yet.</p>
+                                <% } %>
               </div>
             </div>
             
-            <h3>Custom Styles</h3>
-            <div class="form-group">
-              <label for="primaryColor">Primary Color</label>
-              <input type="color" id="primaryColor" name="primaryColor" value="<%= countrySite.customStyles?.primaryColor || '#00008b' %>">
-              <span class="color-preview" style="background-color: <%= countrySite.customStyles?.primaryColor || '#00008b' %>"></span>
-            </div>
-            
-            <div class="form-group">
-              <label for="secondaryColor">Secondary Color</label>
-              <input type="color" id="secondaryColor" name="secondaryColor" value="<%= countrySite.customStyles?.secondaryColor || '#FFB366' %>">
-              <span class="color-preview" style="background-color: <%= countrySite.customStyles?.secondaryColor || '#FFB366' %>"></span>
-            </div>
-            
-            <div class="form-group">
-              <label for="accentColor">Accent Color</label>
-              <input type="color" id="accentColor" name="accentColor" value="<%= countrySite.customStyles?.accentColor || '#6AAAFF' %>">
-              <span class="color-preview" style="background-color: <%= countrySite.customStyles?.accentColor || '#6AAAFF' %>"></span>
-            </div>
+                        <!-- Webinars Tab -->
+                        <div id="webinars" class="tab-content">
+                            <h3 class="form-title">Webinars</h3>
+                            <a href="/admin/country-sites/<%= countrySite._id %>/webinars/new" class="btn btn-primary"><i class="fas fa-plus"></i> Add New Webinar</a>
+                            <div class="item-list">
+                                <% if (countrySite.webinars?.length > 0) { %>
+                                    <% countrySite.webinars.forEach(webinar => { %>
+                                        <div class="item-card">
+                                            <h4><%= webinar.title %></h4>
+                                            <div class="item-actions">
+                                                <a href="/admin/country-sites/<%= countrySite._id %>/webinars/<%= webinar._id %>/edit" class="btn-edit"><i class="fas fa-edit"></i> Edit</a>
+                                                <form action="/admin/country-sites/<%= countrySite._id %>/webinars/<%= webinar._id %>/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this webinar?');">
+                                                    <button type="submit" class="btn-delete"><i class="fas fa-trash"></i> Delete</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    <% }) %>
+                                <% } else { %>
+                                    <p class="no-items">No webinars added yet.</p>
+                                <% } %>
+                            </div>
+                        </div>
             
             <div class="form-buttons">
-              <a href="/country-sites<%= (typeof dashboard !== 'undefined' && dashboard === true) || (typeof inDashboard !== 'undefined' && inDashboard === true) ? '?dashboard=true' : '' %>" class="btn btn-cancel">Cancel</a>
               <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <a href="/admin/country-sites" class="btn btn-outline">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+              </div>
             </div>
-          </form>
+          </div>
         </div>
       </div>
       
       <% if (typeof dashboard === 'undefined' && typeof inDashboard === 'undefined') { %>
-      <%- include('../../partials/admin-footer.ejs') %>
+      <%- include('../../partials/admin-footer'); %>
     </main>
   </div>
   <% } %>
 
+  <!-- Initialize rich text editors -->
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Update template index when template name changes
-      const templateSelect = document.getElementById('templateName');
-      const templateIndexInput = document.getElementById('templateIndex');
-      
-      templateSelect.addEventListener('change', function() {
-        const selectedOption = templateSelect.options[templateSelect.selectedIndex];
-        templateIndexInput.value = selectedOption.dataset.index || '0';
+    $(document).ready(function() {
+      // Initialize rich text editors if available
+      if (typeof ClassicEditor !== 'undefined') {
+        document.querySelectorAll('.rich-editor').forEach(editor => {
+          ClassicEditor
+            .create(editor)
+            .catch(error => {
+              console.error(error);
       });
+        });
+      }
       
-      // Update color preview when color input changes
-      const colorInputs = document.querySelectorAll('input[type="color"]');
-      colorInputs.forEach(input => {
-        input.addEventListener('change', function() {
-          const preview = input.nextElementSibling;
-          preview.style.backgroundColor = input.value;
+      // Auto update slug preview when name changes
+      $('#name').on('input', function() {
+        const slug = $(this).val()
+          .toLowerCase()
+          .replace(/[^a-z0-9]/g, '-')
+          .replace(/-+/g, '-')
+          .replace(/^-|-$/g, '');
+        
+        $('#slugPreview').text(slug);
+      });
+    });
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const tabs = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                if (tab.tagName === 'A') return; // Don't prevent navigation for links like Gallery
+
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(tab.dataset.tab).classList.add('active');
         });
       });
     });

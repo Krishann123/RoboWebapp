@@ -1,45 +1,46 @@
 ---
-import { fetchPageContent } from "@/components/db";
+import { getPath } from '@/utils/path-helper';
+import { getImageUrl } from '@/utils/image-helper';
 
-const data = await fetchPageContent("Navbar");
-const { links, button } = data.Content;
-const { image, buttonText, buttonLink } = button;
+export interface Props {
+    content?: {
+        Content?: {
+            links?: {
+                path: string;
+                name: string;
+            }[];
+            button?: {
+                buttonText: string;
+                buttonLink: string;
+                image: string; // This is the logo
+            };
+        }
+    }
+}
 
-// Get the base path from Astro's environment
-const basePath = import.meta.env.BASE_URL || '/dubai';
+const { content = {} } = Astro.props;
+const navData = content.Content || {};
+const { links = [], button = {} } = navData;
+const logoImage = button.image;
 
-// Check if user is logged in (by checking for robolution session cookie)
 const { cookies } = Astro;
 const isLoggedIn = cookies.has('robolution_session');
-
-// Helper function to create internal links with the correct base path
-function getPath(path) {
-    // Don't add prefix to external links or paths to the main app
-    if (path && (path.startsWith('http') || path.startsWith('//') || path === '/home')) {
-        return path;
-    }
-    
-    // For internal links, ensure they have the base path
-    return basePath + (path.startsWith('/') ? path : `/${path}`);
-}
 ---
 
 <nav class="absolute w-full bg-[#2F1573]/30 backdrop-blur-md z-50">
     <div class="container mx-auto flex items-center justify-between py-3">
         <!-- Logo -->
         <div class="flex items-center">
-            <!-- Logo Link - Now goes to Main Robolution Site -->
             <a href="/home" class="flex items-center md:gap-x-3 ml-5">
-                <img src={image} alt="Logo" class="h-15 w-auto" />
+                <img src={getImageUrl(logoImage)} alt="Logo" class="navbar-logo" />
             </a>
         </div>
 
         <!-- Navigation Links -->
         <div class="flex items-center gap-x-6">
-            <ul class="hidden md:flex space-x-6 text-white font-medium">
-                <!-- Home Link for International Webapp -->
+            <ul class="hidden md:flex space-x-6 text-white font-medium items-center">
                 <li>
-                    <a href={getPath('/home')} class="flex items-center text-yellow-300 hover:text-yellow-100 transition">
+                    <a href="/home" class="flex items-center text-yellow-300 hover:text-yellow-100 transition">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>
@@ -47,43 +48,52 @@ function getPath(path) {
                     </a>
                 </li>
                 
-                {
-                    links.map(
-                        (item: {
-                            path: string | URL | null | undefined;
-                            name: unknown;
-                        }) => (
+                {links.map((item) => (
                             <li>
-                                <a
-                                    href={getPath(item.path)}
-                                    class=" hover:text-[#C084FC] transition"
-                                >
+                        <a href={getPath(item.path)} class=" hover:text-[#C084FC] transition">
                                     {item.name}
                                 </a>
                             </li>
-                        )
-                    )
-                }
+                ))}
 
+                <!-- Country Switcher Dropdown -->
+                <li>
+                    <div class="relative" id="country-switcher">
+                        <button class="flex items-center hover:text-[#C084FC] transition">
+                            <span>Countries</span>
+                             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="country-dropdown-menu" class="absolute hidden bg-[#2F1573]/90 backdrop-blur-lg rounded-md shadow-lg mt-2 py-1 w-48 z-50 left-0">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </li>
             </ul>
 
             <!-- CTA Button and Profile Button -->
             <div class="flex items-center gap-4 mr-5">
                 <div class="flex sm:gap-4">
-                    {isLoggedIn && (
-                        <a
-                            href="/profile"
-                            class="bg-blue-500 text-white text-center text-xs lg:text-lg font-medium rounded-full px-4 py-2 hover:bg-blue-600 shadow-2xl transition mr-2"
-                            id="profile-button"
-                        >
-                            Profile
-                        </a>
-                    )}
                     <a
-                        href={getPath('/registration')}
+                        href="/profile"
+                        class="bg-blue-500 text-white text-center text-xs lg:text-lg font-medium rounded-full px-4 py-2 hover:bg-blue-600 shadow-2xl transition"
+                        id="profile-button"
+                        style="display: none;"
+                    >
+                        Profile
+                    </a>
+                    <a
+                        href="/login"
+                        class="bg-gray-200 text-gray-800 text-center text-xs lg:text-lg font-medium rounded-full px-4 py-2 hover:bg-gray-300 shadow-lg transition"
+                        id="login-button"
+                        style="display: none;"
+                    >
+                        Login
+                    </a>
+                    <a
+                        href={getPath(button.buttonLink)}
                         class="bg-white text-blue-900 text-center text-xs lg:text-lg font-medium rounded-full px-4 py-2 hover:bg-indigo-400 hover:text-white shadow-2xl transition"
                     >
-                        Register Now
+                        {button.buttonText || 'Register Now'}
                     </a>
                 </div>
             </div>
@@ -114,31 +124,46 @@ function getPath(path) {
             class="fixed top-14 right-0 p-3 z-50 md:hidden hidden mt-5 text-center shadow-lg bg-[#2F1573]/60 backdrop-blur-md"
         >
             <ul class="space-y-2 text-white font-medium">
-                <!-- Dynamic page links -->
-                {
-                    links.map((item) => (
+                {links.map((item) => (
                         <li>
-                            <a
-                                href={getPath(item.path)}
-                                class="block hover:text-[#C084FC] hover:scale-120"
-                            >
+                        <a href={getPath(item.path)} class="block hover:text-[#C084FC] hover:scale-120">
                                 {item.name}
                             </a>
                         </li>
-                    ))
-                }
+                ))}
 
-                <!-- Profile Link for Mobile (when logged in) -->
-                {isLoggedIn && (
-                    <li>
-                        <a
-                            href="/profile"
-                            class="block text-blue-300 hover:text-blue-100 hover:scale-120 font-bold"
-                        >
-                            Profile
-                        </a>
-                    </li>
-                )}
+                <!-- Mobile Country Switcher -->
+                 <li class="relative" id="mobile-country-switcher">
+                    <button class="w-full text-left flex justify-between items-center hover:text-[#C084FC]">
+                        <span>Countries</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div id="mobile-country-dropdown-menu" class="hidden mt-2 space-y-2 pl-4">
+                        <!-- Populated by JS -->
+                    </div>
+                </li>
+
+                <!-- Profile/Login Link for Mobile -->
+                <li>
+                    <a
+                        href="/profile"
+                        class="block text-blue-300 hover:text-blue-100 hover:scale-120 font-bold"
+                        id="mobile-profile-link"
+                        style="display: none;"
+                    >
+                        Profile
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="/login"
+                        class="block text-gray-300 hover:text-white hover:scale-120 font-bold"
+                        id="mobile-login-link"
+                        style="display: none;"
+                    >
+                        Login
+                    </a>
+                </li>
                 <!-- Back to Main Site Link (Mobile) -->
                 <li>
                     <a
@@ -161,66 +186,150 @@ function getPath(path) {
         if (menuToggle && mobileMenu) {
             menuToggle.addEventListener("click", () => {
                 mobileMenu.classList.toggle("hidden");
-                // Log the width of the mobile menu when toggled
-                if (!mobileMenu.classList.contains("hidden")) {
-                    console.log("Mobile menu width:", mobileMenu.offsetWidth + "px");
-                }
-            });
-
-            // Optional: Hide menu when clicking outside
-            document.addEventListener("click", (e) => {
-                if (
-                    !menuToggle.contains(e.target) &&
-                    !mobileMenu.contains(e.target)
-                ) {
-                    mobileMenu.classList.add("hidden");
-                }
             });
         }
 
-        // Check if user is logged in by checking the cookie or localStorage
-        async function checkLoginStatus() {
-            // First check cookie
-            const isLoggedInCookie = document.cookie.split(';').some(item => 
-                item.trim().startsWith('robolution_session=')
-            );
-            
-            // Also check localStorage which is used by the main app
-            const isLoggedInLocalStorage = localStorage.getItem('isLoggedIn') === 'true';
-            
-            // Also check with our session-check API
-            let isLoggedInAPI = false;
-            try {
-                const response = await fetch('/api/session-check?t=' + new Date().getTime(), {
-                    credentials: 'include',
-                    headers: { 'Cache-Control': 'no-cache' }
-                });
-                const data = await response.json();
-                isLoggedInAPI = data.authenticated;
-                console.log('Session check response:', data);
-            } catch (error) {
-                console.error('Error checking session:', error);
-            }
-            
-            // Consider user logged in if any of these is true
-            const isLoggedIn = isLoggedInCookie || isLoggedInLocalStorage || isLoggedInAPI;
-            
-            const profileButton = document.getElementById('profile-button');
-            const mobileProfileLink = document.querySelector('a[href="/profile"]');
-            
-            if (isLoggedIn) {
-                if (profileButton) profileButton.style.display = 'inline-block';
-                if (mobileProfileLink) mobileProfileLink.style.display = 'block';
-            } else {
-                if (profileButton) profileButton.style.display = 'none';
-                if (mobileProfileLink) mobileProfileLink.style.display = 'none';
-            }
-        }
-        
-        // Run on page load
+        // Login status check
         checkLoginStatus();
-        
-        // Also check every minute in case user logs in/out in another tab
         setInterval(checkLoginStatus, 60000);
+
+        // Country Switcher Logic
+        const desktopSwitcher = document.getElementById('country-switcher');
+        const desktopDropdown = document.getElementById('country-dropdown-menu');
+        if (desktopSwitcher && desktopDropdown) {
+            desktopSwitcher.querySelector('button').addEventListener('click', (e) => {
+                e.stopPropagation();
+                desktopDropdown.classList.toggle('hidden');
+            });
+        }
+
+        const mobileSwitcher = document.getElementById('mobile-country-switcher');
+        const mobileDropdown = document.getElementById('mobile-country-dropdown-menu');
+        if (mobileSwitcher && mobileDropdown) {
+            mobileSwitcher.querySelector('button').addEventListener('click', (e) => {
+                e.stopPropagation();
+                mobileDropdown.classList.toggle('hidden');
+            });
+        }
+
+        async function handleCountrySelect(event) {
+            const link = event.target.closest('a.country-link');
+            if (!link) return;
+
+            event.preventDefault();
+            const slug = link.dataset.slug;
+            if (!slug) return;
+
+            try {
+                const response = await fetch(`/api/set-country/${slug}`, { method: 'POST' });
+                if (!response.ok) throw new Error('Failed to set country via API');
+                
+                const result = await response.json();
+                if (result.success) {
+                    window.location.reload();
+                } else {
+                    console.error('Failed to switch country template:', result.message);
+                    alert('Error: Could not switch country.');
+                }
+            } catch (error) {
+                console.error('Error switching country:', error);
+                alert('An error occurred while switching countries.');
+            }
+        }
+
+        async function populateCountrySwitchers() {
+            try {
+                const response = await fetch('/country/api/sites');
+                if (!response.ok) throw new Error('Failed to fetch country sites');
+                
+                const data = await response.json();
+
+                if (data.success && data.countrySites) {
+                    const sites = data.countrySites;
+                    const dropdowns = [desktopDropdown, mobileDropdown];
+                    
+                    dropdowns.forEach(dropdown => {
+                        if (!dropdown) return;
+                        dropdown.innerHTML = '';
+                        
+                        sites.forEach(site => {
+                            const link = document.createElement('a');
+                            link.href = `#`;
+                            link.dataset.slug = site.slug;
+                            link.className = 'block px-4 py-2 text-sm text-gray-200 hover:bg-[#4A2E8B] hover:text-white country-link';
+                            link.textContent = site.name;
+                            dropdown.appendChild(link);
+                        });
+                    });
+                }
+            } catch (error) {
+                console.error("Error populating country switchers:", error);
+            }
+        }
+        
+        if (desktopDropdown) desktopDropdown.addEventListener('click', handleCountrySelect);
+        if (mobileDropdown) mobileDropdown.addEventListener('click', handleCountrySelect);
+
+        populateCountrySwitchers();
+
+        // Hide desktop dropdown when clicking outside
+        document.addEventListener('click', () => {
+            if (desktopDropdown && !desktopDropdown.classList.contains('hidden')) {
+                desktopDropdown.classList.add('hidden');
+            }
+        });
     });
+
+    // Check if user is logged in by checking the cookie or localStorage
+    async function checkLoginStatus() {
+        // First check cookie
+        const isLoggedInCookie = document.cookie.split(';').some(item => 
+            item.trim().startsWith('robolution_session=')
+        );
+        
+        // Also check localStorage which is used by the main app
+        const isLoggedInLocalStorage = localStorage.getItem('isLoggedIn') === 'true';
+        
+        // Also check with our session-check API
+        let isLoggedInAPI = false;
+        try {
+            const response = await fetch('/api/session-check?t=' + new Date().getTime(), {
+                credentials: 'include',
+                headers: { 'Cache-Control': 'no-cache' }
+            });
+            const data = await response.json();
+            isLoggedInAPI = data.authenticated;
+        } catch (error) {
+            console.error('Error checking session:', error);
+        }
+        
+        // Consider user logged in if any of these is true
+        const isLoggedIn = isLoggedInCookie || isLoggedInLocalStorage || isLoggedInAPI;
+        
+        const profileButton = document.getElementById('profile-button');
+        const loginButton = document.getElementById('login-button');
+        const mobileProfileLink = document.getElementById('mobile-profile-link');
+        const mobileLoginLink = document.getElementById('mobile-login-link');
+        
+        if (isLoggedIn) {
+            if (profileButton) profileButton.style.display = 'inline-block';
+            if (loginButton) loginButton.style.display = 'none';
+            if (mobileProfileLink) mobileProfileLink.style.display = 'block';
+            if (mobileLoginLink) mobileLoginLink.style.display = 'none';
+        } else {
+            if (profileButton) profileButton.style.display = 'none';
+            if (loginButton) loginButton.style.display = 'inline-block';
+            if (mobileProfileLink) mobileProfileLink.style.display = 'none';
+            if (mobileLoginLink) mobileLoginLink.style.display = 'block';
+        }
+    }
 </script>
+
+<style>
+    .navbar-logo {
+        max-width: 200px;
+        height: auto;
+        max-height: 80px;
+        object-fit: contain;
+    }
+</style>

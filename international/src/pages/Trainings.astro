@@ -1,13 +1,61 @@
 ---
-import { fetchPageContent } from "@/components/db";
+import { getTemplate } from "@/db/mongodb.js";
 import Layout from "@/layouts/Layout.astro";
 import Hero from "@/components/Tournament/Hero.astro";
+import { getImageUrl } from "@/utils/image-helper.js";
 
-const content = await fetchPageContent("Trainings");
-console.log("Trainings content:", content)
+// Get country info from headers, passed by Express middleware
+const countrySiteHeader = Astro.request.headers.get("x-country-site");
+const countrySite = countrySiteHeader
+    ? JSON.parse(countrySiteHeader)
+    : { slug: "default" };
+
+const template = await getTemplate(countrySite.slug);
+const dbContent = template?.config?.Contents || {};
+
+const layoutContent = {
+    nav: dbContent.Navbar || {},
+    footer: dbContent.Footer || {},
+    banner: dbContent.Banner || {},
+};
+
+// Hardcoded content for the Trainings page body, made generic
+const content = {
+    Introduction: {
+        title: "International Training Program",
+        subtitle:
+            "Enhance your skills with our comprehensive training programs in Robotics, Automation, and Cybersecurity, designed for global participants.",
+    },
+    Content_1: {
+        title: "Robotics & Automation",
+        subtitle:
+            "Our Robotics and Automation training provides hands-on experience with the latest technologies, from industrial robots to autonomous systems. Learn to design, build, and program robots for various applications.",
+        ImageDirectory: "/images/training/robotics.png",
+    },
+    Content_2: {
+        title: "Cybersecurity",
+        subtitle:
+            "In our Cybersecurity track, you'll dive into network security, ethical hacking, and threat analysis. Gain the skills to protect digital assets and infrastructure from cyber threats.",
+        ImageDirectory: "/images/training/cybersecurity.png",
+    },
+    Content_3: {
+        title: "Research & Development",
+        subtitle:
+            "Join our R&D training to work on cutting-edge projects. This program focuses on innovation, problem-solving, and contributing to new advancements in technology.",
+        ImageDirectory: "/images/training/research.png",
+    },
+    Content_4: {
+        minititle: "Join the Global Innovators",
+        title: "Register for Training",
+        subtitle:
+            "Ready to advance your career? Enroll in our international training programs and become an expert in your field.",
+        buttonText: "Register Now",
+        buttonLink: "/international/registration",
+    },
+};
 ---
 
-<Layout title="Erovoutika Dubai - Training">
+<Layout title="Erovoutika International - Training" content={layoutContent}>
     <!-- <section
         class="hero"
         style={`background-image: url(${content.Hero.background});`}
@@ -40,7 +88,7 @@ console.log("Trainings content:", content)
             </div>
             <div class="content-1-image">
                 <img
-                    src={content.Content_1.ImageDirectory}
+                    src={getImageUrl(content.Content_1.ImageDirectory)}
                     alt="Robotics & Automation"
                 />
             </div>
@@ -51,7 +99,7 @@ console.log("Trainings content:", content)
         <div class="content-2-container">
             <div class="content-2-image">
                 <img
-                    src={content.Content_2.ImageDirectory}
+                    src={getImageUrl(content.Content_2.ImageDirectory)}
                     alt="Cybersecurity"
                 />
             </div>
@@ -70,7 +118,7 @@ console.log("Trainings content:", content)
             </div>
             <div class="content-3-image">
                 <img
-                    src={content.Content_3.ImageDirectory}
+                    src={getImageUrl(content.Content_3.ImageDirectory)}
                     alt="Research & Development"
                 />
             </div>

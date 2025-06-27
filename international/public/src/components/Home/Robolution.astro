@@ -1,0 +1,133 @@
+---
+import { fetchPageContent } from "../db";
+const content = await fetchPageContent("Home");
+
+const fixAssetUrl = (url) => {
+    if (!url || typeof url !== 'string') return '';
+    if (url.startsWith('http') || url.startsWith('/international')) return url;
+    if (url.startsWith('/')) return `/international${url}`;
+    return `/international/${url}`;
+};
+
+const joinCommunityBg = fixAssetUrl(content.Robolution.title2.bgImage);
+---
+
+<style>
+    @keyframes slideInLeft {
+        0% {
+            opacity: 0;
+            transform: translateX(-40px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    @keyframes slideInRight {
+        0% {
+            opacity: 0;
+            transform: translateX(40px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    .slide-in-left {
+        opacity: 0;
+    }
+    .slide-in-right {
+        opacity: 0;
+    }
+    .slide-in-left.animate {
+        opacity: 1;
+        animation: slideInLeft 1s ease forwards;
+    }
+    .slide-in-right.animate {
+        opacity: 1;
+        animation: slideInRight 1s 0.3s ease forwards;
+    }
+    .img-hover-scale {
+        transition: transform 0.3s;
+    }
+    .img-hover-scale:hover {
+        transform: scale(1.05);
+    }
+    .join-community-bg {
+        background-image: url(${joinCommunityBg});
+    }
+</style>
+
+<script type="module" is:inline>
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("animate");
+                    observer.unobserve(entry.target);
+                }
+            });
+        },
+        { threshold: 0.2 }
+    );
+
+    document.addEventListener("DOMContentLoaded", () => {
+        document
+            .querySelectorAll(".slide-in-left, .slide-in-right")
+            .forEach((el) => {
+                observer.observe(el);
+            });
+    });
+</script>
+
+<div class="flex justify-center bg-white my-[54px]">
+    <div class="grid lg:grid-cols-1 gap-10 w-full min-w-fit max-w-[600px] p-5">
+        <div
+            style={`background-color: ${content.Robolution.title1.containerColor1}`}
+            class="grid grid-cols-1 lg:grid-cols-2 items-center justify-center rounded-lg mx-auto gap-5 lg:gap-30 w-auto p-12 slide-in-left"
+        >
+            <div class="flex flex-wrap w-full max-w-[610px]">
+                <h3
+                    style={`color: ${content.Robolution.title1.textColor1}`}
+                    class="text-5xl lg:text-[86px] font-bebas tracking-wider mb-4"
+                    set:html={content.Robolution.title1.intro1}
+                />
+                <h4
+                    style={`color: ${content.Robolution.title1.textColor2}`}
+                    class="text-xs lg:text-base mt-4"
+                    set:html={content.Robolution.title1.sub1}
+                />
+            </div>
+            <div class="place-items-center">
+                <img
+                    src={fixAssetUrl(content.Robolution.title1.image1)}
+                    class="h-auto lg:h-[300px] w-full max-w-[540px] rounded-md opacity-80 shadow-md shadow-gray-200 object-cover img-hover-scale"
+                />
+            </div>
+        </div>
+
+        <div
+            style={`background-color: ${content.Robolution.title2.containerColor2}`}
+            class="grid grid-cols-1 lg:grid-cols-2 items-center justify-center rounded-lg mx-auto gap-5 lg:gap-30 w-auto p-12 slide-in-right join-community-bg bg-cover bg-center"
+        >
+            <div class="place-items-center">
+                <img
+                    src={fixAssetUrl(content.Robolution.title2.image2)}
+                    class="h-auto lg:h-[300px] w-auto rounded-md opacity-80 shadow-md shadow-gray-200 img-hover-scale"
+                />
+            </div>
+            <div class="flex flex-wrap w-full max-w-[610px]">
+                <h3
+                    style={`color: ${content.Robolution.title2.textColor1}`}
+                    class="text-5xl lg:text-[86px] font-bebas tracking-wider mb-4"
+                    set:html={content.Robolution.title2.intro2}
+                />
+                <h4
+                    style={`color: ${content.Robolution.title2.textColor2}`}
+                    class="text-xs lg:text-base mt-4"
+                    set:html={content.Robolution.title2.sub2}
+                />
+            </div>
+        </div>
+    </div>
+</div>

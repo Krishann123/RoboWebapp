@@ -36,6 +36,39 @@ const connectionInfo = {
     status: false,
 };
 
+/**
+ * Get country-specific content based on the country slug
+ * @param {string} countrySlug - The URL slug for the country (e.g., "singapore")
+ * @returns {Promise<Object|null>} - The country data or null if not found
+ */
+async function getCountryContent(countrySlug) {
+  try {
+    // For SSR mode, use Astro.locals if available
+    if (import.meta.env.SSR) {
+      // Pull the countryData from Astro.locals if it was passed by Express middleware
+      const response = await fetch(`/api/country/${countrySlug}`);
+      if (!response.ok) {
+        console.error(`Failed to fetch country data: ${response.status}`);
+        return null;
+      }
+      
+      return await response.json();
+    } else {
+      // Client-side, make API call to fetch country data
+      const response = await fetch(`/api/country/${countrySlug}`);
+      if (!response.ok) {
+        console.error(`Failed to fetch country data: ${response.status}`);
+        return null;
+      }
+      
+      return await response.json();
+    }
+  } catch (error) {
+    console.error('Error fetching country data:', error);
+    return null;
+  }
+}
+
 async function getDbData() {
     const tdata = readFile();
 
@@ -300,15 +333,100 @@ function setSelectedIndex(index) {
     fileData.selectedIndex = index;
     writeFile(jsonPath, fileData);
 }
-export default getDbData;
+
+/**
+ * Get all country sites
+ * @returns {Promise<Array>} - An array of country sites
+ */
+export async function getAllCountrySites() {
+  try {
+    const response = await fetch('/api/countries');
+    if (!response.ok) {
+      console.error(`Failed to fetch countries: ${response.status}`);
+      return [];
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching countries:', error);
+    return [];
+  }
+}
+
+/**
+ * Get country-specific tournament information
+ * @param {string} countrySlug - The URL slug for the country
+ * @returns {Promise<Object|null>} - Tournament information or null if not found
+ */
+export async function getCountryTournament(countrySlug) {
+  try {
+    const response = await fetch(`/api/country/${countrySlug}/tournament`);
+    if (!response.ok) {
+      console.error(`Failed to fetch tournament data: ${response.status}`);
+      return null;
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching tournament data:', error);
+    return null;
+  }
+}
+
+/**
+ * Get country-specific training information
+ * @param {string} countrySlug - The URL slug for the country
+ * @returns {Promise<Object|null>} - Training information or null if not found
+ */
+export async function getCountryTraining(countrySlug) {
+  try {
+    const response = await fetch(`/api/country/${countrySlug}/training`);
+    if (!response.ok) {
+      console.error(`Failed to fetch training data: ${response.status}`);
+      return null;
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching training data:', error);
+    return null;
+  }
+}
+
+/**
+ * Get country-specific gallery images
+ * @param {string} countrySlug - The URL slug for the country
+ * @returns {Promise<Array>} - An array of gallery images
+ */
+export async function getCountryGallery(countrySlug) {
+  try {
+    const response = await fetch(`/api/country/${countrySlug}/gallery`);
+    if (!response.ok) {
+      console.error(`Failed to fetch gallery data: ${response.status}`);
+      return [];
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching gallery data:', error);
+    return [];
+  }
+}
+
+// Export all functions
 export {
+    getCountryContent,
+    getDbData,
+    readFile,
+    writeFile,
+    deleteFileContents,
     fetchPageContent,
     getPageDetails,
-    readFile,
     updateContent,
     addNewsCard,
-    getData,
     createNewData,
+    getData,
+    getSelectedTemplate,
     getSelectedIndex,
-    setSelectedIndex,
+    setSelectedIndex
 };

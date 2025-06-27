@@ -1,0 +1,287 @@
+---
+
+---
+<div class="hero">
+    <div class="nom-container">
+      <h1 class="nom-title">NOMINATION FORM</h1>
+      <form class="nom-form" id="nomination-form">
+        <!-- First Name and Last Name -->
+        <div class="fname-lname-div">
+          <div class="fname-div">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" name="firstName" placeholder="Enter your first name" required />
+          </div>
+          <div class="lname-div">
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" name="lastName" placeholder="Enter your last name" required />
+          </div>
+        </div>
+  
+        <!-- School and Phone Number -->
+        <div class="school-phone-div">
+          <div class="school-div">
+            <label for="school">School Name</label>
+            <input type="text" id="school" name="schoolName" placeholder="Enter your school name" required />
+          </div>
+          <div class="phone-div">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="contact" placeholder="Enter your phone number" required />
+          </div>
+        </div>
+  
+        <!-- Email and Designation -->
+        <div class="email-designation-div">
+          <div class="email-div">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required />
+          </div>
+          <div class="designation-div">
+            <label for="designation">Designation</label>
+            <select id="designation" name="designation" required>
+              <option value="" selected>Select a designation</option>
+              <option value="Player">Designation 1</option>
+              <option value="Coach">Designation 2</option>
+              <option value="Manager">Designation 3</option>
+            </select>
+          </div>
+        </div>
+  
+        <!-- Award Category -->
+        <div class="award-div">
+          <label for="award">Which award category do you want to apply for?</label>
+          <select id="award" name="awardCategory" required>
+            <option value="" selected>Select an award</option>
+            <option value="Best Player">Award 1</option>
+            <option value="Best Team">Award 2</option>
+            <option value="Best Coach">Award 3</option>
+          </select>
+        </div>
+  
+        <!-- Description -->
+        <div class="description-div">
+          <label for="description">Brief description about yourself or your institution.</label>
+          <textarea id="description" name="description" rows="4" placeholder="Write your description here" required></textarea>
+        </div>
+  
+        <!-- International Award -->
+        <div class="international-award-div">
+          <label for="international-award">What would an International Award mean to you?</label>
+          <textarea id="international-award" name="awardMeaning" rows="4" placeholder="Write your response here" required></textarea>
+        </div>
+  
+        <!-- Shortlisted -->
+        <div class="shortlisted-div">
+          <label>Would you travel to Dubai to receive the award if shortlisted?</label>
+          <div>
+            <input type="radio" id="shortlisted-yes" name="shortlisted" value="yes" required />
+            <label for="shortlisted-yes">Yes</label>
+          </div>
+          <div>
+            <input type="radio" id="shortlisted-no" name="shortlisted" value="no" />
+            <label for="shortlisted-no">No</label>
+          </div>
+        </div>
+  
+        <!-- Address and Region -->
+        <div class="address-region-div">
+          <div class="address-div">
+            <label for="address">Address (Unit/Block No./Street/City)</label>
+            <input type="text" id="address" name="address" placeholder="Enter your address" required />
+          </div>
+          <div class="region-div">
+            <label for="region">Region</label>
+            <input type="text" id="region" name="region" placeholder="Enter your region" required />
+          </div>
+        </div>
+  
+        <!-- Country and School Website -->
+        <div class="country-schoolweb-div">
+          <div class="country-div">
+            <label for="country">Country</label>
+            <select id="country" name="country" required>
+              <option value="" selected>Select a country</option>
+              <option value="India">India</option>
+              <option value="USA">USA</option>
+              <option value="UK">UK</option>
+            </select>
+          </div>
+          <div class="school-website-div">
+            <label for="school-website">School Website</label>
+            <input type="url" id="school-website" name="schoolWebsite" placeholder="Enter the school website" required />
+          </div>
+        </div>
+  
+        <!-- Social Media -->
+        <div class="social-media-div">
+          <label>Social Media Platforms:</label>
+          <div>
+            <input type="checkbox" id="facebook" name="socialMedia" value="Facebook" />
+            <label for="facebook">Facebook</label>
+          </div>
+          <div>
+            <input type="checkbox" id="instagram" name="socialMedia" value="Instagram" />
+            <label for="instagram">Instagram</label>
+          </div>
+          <div>
+            <input type="checkbox" id="x" name="socialMedia" value="X" />
+            <label for="x">X</label>
+          </div>
+          <div>
+            <input type="checkbox" id="linkedin" name="socialMedia" value="LinkedIn" />
+            <label for="linkedin">LinkedIn</label>
+          </div>
+          <input type="text" id="social-media-other" name="socialMediaOther" placeholder="Other platforms" />
+        </div>
+  
+        <!-- Past Achievements -->
+        <div class="past-achievements-div">
+          <label for="achievements">Past Achievements (if any)</label>
+          <textarea id="achievements" name="achievements" rows="4" placeholder="Write about your achievements"></textarea>
+        </div>
+  
+        <!-- Submit Button -->
+        <div class="submit-button-div">
+          <button class="submit-button" id="submit-button" type="submit">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script type="module" src="/src/components/Nominations/nomination-data.js"></script>
+  <style>
+      @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap');
+      .hero {
+          display: flex;
+          flex-direction: column;
+          background: url("/backgrounds/Nominations.png") no-repeat center;
+          width: 100%;
+          background-size: cover;
+          align-items: center;
+          padding: 20px;
+      }
+      .nom-title{
+          font: 300 5rem 'Bebas Neue', sans-serif;
+          color: #233876;
+          text-align: center;
+          margin: 10px 0px 10px 0px;
+      }
+      .nom-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          height: auto;
+          width: 45%;
+          background-color: #F3F3FB;
+          border: 2px solid #233876;
+          border-radius: 20px;
+          padding: 30px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          margin: 20px;
+          
+      }
+      .nom-form {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          gap: 20px;
+          margin: 20px;
+      }
+      .nom-form input, .nom-form select, .nom-form textarea{
+          padding: 10px;
+          border-radius: 5px;
+          border: 1px solid #ccc;
+          font: 16px 'Inter', sans-serif;
+          color: #233876;
+          resize: none;
+      }
+      .nom-form input::placeholder {
+          color: #23387669;
+          font: 16px 'Inter', sans-serif;
+      }
+      .nom-form input[type="radio"], .nom-form input[type="checkbox"]{
+          margin: 10px;
+          font: 16px 'Inter', sans-serif;
+          color: #233876;
+      }
+      .nom-form textarea:focus, .nom-form input:focus{
+          padding: 10px;
+          border-radius: 5px;
+          border: 1px solid #ccc;
+          font: 16px 'Inter', sans-serif;
+          color: #233876;
+          outline: 1px solid #233876;
+      }
+      .fname-lname-div, .school-phone-div, .email-designation-div, .address-region-div, .country-schoolweb-div {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          gap: 30px;
+      }
+      @media (min-width: 320px) AND (max-width: 1440px) {
+          .nom-container {
+              width: 70%;
+          }
+          .nom-title{
+              font: 300 4rem 'Bebas Neue', sans-serif;
+          }
+          .fname-div, .lname-div, .school-div, .phone-div, .email-div, .designation-div, .description-di, .international-award-div, .address-div, .region-div, .country-div, .school-website-div{
+              width: 100%;
+          }
+          .fname-lname-div, .school-phone-div, .email-designation-div, .address-region-div, .country-schoolweb-div {
+              flex-direction: column;
+              justify-content: center;
+              gap: 10px;
+          }
+  
+      }
+      .award-div, .description-div, .international-award-div, .social-media-div, .past-achievements-div{
+          display: flex;
+          flex-direction: column;
+      }
+      .award-div select, .award-div select option[selected], .designation-div select, .designation-div select option[selected], .country-schoolweb-div select, .country-schoolweb-div select option[selected]{
+          font: 16px 'Inter', sans-serif;
+          color: #23387669;
+          outline: none;
+      }
+      .award-div select option, .award-div select:valid, .designation-div select option, .designation-div select:valid, .country-school-div select option, .country-schoolweb-div select:valid{
+          color: #233876;
+          outline: 1px solid #233876;
+      }
+      .fname-lname-div label, .school-phone-div label, .award-div label, .email-designation-div label, .description-div label, .international-award-div label, .shortlisted-div label, .address-region-div label, .country-schoolweb-div label, .social-media-div label, .past-achievements-div label{ 
+          font: 16px 'Inter', sans-serif;
+          margin-left: 1px;
+          margin-bottom: 10px;
+          color: #233876;
+      }
+      .fname-div, .lname-div, .school-div, .phone-div, .email-div, .designation-div, .description-di, .international-award-div, .address-div, .region-div, .country-div, .school-website-div{
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+      }
+      .submit-button-div {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          margin-top: 20px;
+      }
+      .submit-button {
+          width:20%;
+          padding: 10px;
+          background-color: #233876;
+          color: #fff;
+          border: none;
+          border-radius: 10px;
+          font-size: 16px;
+          cursor: pointer;
+          font-family: Inter;
+      }
+      
+      .submit-button:hover {
+          background-color: #ccc;
+          color: #233876;
+          transform: scale(1.05)
+      }
+  
+  </style>

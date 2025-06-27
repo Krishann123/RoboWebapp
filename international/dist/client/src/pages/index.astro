@@ -1,0 +1,50 @@
+---
+// Import components needed for the Dubai site
+import Jumbotron from "../components/Home/Jumbotron.astro";
+import Layout from "../layouts/Layout.astro";
+import Join from "../components/Home/Joinrobo.astro";
+import Package from "../components/Home/Package.astro";
+import Robolution from "@/components/Home/Robolution.astro";
+import Highlights from "@/components/Home/Highlights.astro";
+import FrequentlyAsk from "@/components/Home/FrequentlyAsk.astro";
+import Partners from "@/components/Home/Partners";
+import NewsAndUpdate from "@/components/Home/NewsAndUpdate.astro";
+import UrlFixer from "@/components/UrlFixer.astro";
+
+// Set country info for Dubai (default site)
+Astro.response.headers.set('x-country-site', JSON.stringify({
+  name: 'Dubai',
+  slug: 'dubai',
+  customStyles: {
+    primaryColor: '#00008b',
+    secondaryColor: '#FFB366',
+    accentColor: '#6AAAFF',
+    backgroundColor: '#FFFFFF'
+  }
+}));
+
+// Add header to prevent redirect loops
+Astro.response.headers.set('X-Forwarded-From-Astro', 'true');
+---
+
+<Layout title="Erovoutika Dubai - Home">
+    <Jumbotron />
+    <Robolution />
+    <Package />
+    <Highlights />
+    <Join />
+    <NewsAndUpdate />
+    <FrequentlyAsk />
+    <Partners />
+    <UrlFixer />
+</Layout>
+
+<style>
+    #background {
+        background-image: url("/international/homepage.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        background-color: transparent;
+    }
+</style>

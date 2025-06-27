@@ -2,25 +2,32 @@
 import Layout from "../layouts/Layout.astro";
 import "../styles/global.css";
 import Cardnav from "../components/Cardnav.astro";
-import { supabase } from "@/lib/supabase-client";
+import { getTemplate } from "../db/mongodb.js";
 
-// Fetch the Default template from Supabase
-const { data: templateData, error: templateError } = await supabase
-    .from('Templates')
-    .select('config')
-    .eq('Name', 'Default')
-    .single();
+// Get country info from headers, passed by Express middleware
+const countrySiteHeader = Astro.request.headers.get('x-country-site');
+const countrySite = countrySiteHeader ? JSON.parse(countrySiteHeader) : { slug: 'default' };
 
-if (templateError) {
-    console.error('Error fetching template:', templateError);
-}
+// Fetch the entire template
+const template = await getTemplate(countrySite.slug);
+const content = template?.config?.Contents || {};
 
 // Extract the News content from the template
-const Hero = templateData?.config?.Contents?.News?.Hero || {};
-const latestnews = templateData?.config?.Contents?.News["latest-news"] || [];
-const events = templateData?.config?.Contents?.News["latest-events"] || [];
-const web = templateData?.config?.Contents?.News["latest-webinar"] || [];
-const cards = templateData?.config?.Contents?.News["latest-cards"] || [];
+const newsContent = content.News || {};
+
+// Extract shared layout content
+const layoutContent = {
+    nav: content.Navbar || {},
+    footer: content.Footer || {},
+    banner: content.Banner || {},
+};
+
+// Extract the content, with fallbacks to empty objects/arrays
+const Hero = newsContent?.Hero || {};
+const latestnews = newsContent?.["latest-news"] || [];
+const events = newsContent?.["latest-events"] || [];
+const web = newsContent?.["latest-webinar"] || [];
+const cards = newsContent?.["latest-cards"] || [];
 
 const getImageUrl = (imagePath) => {
     if (typeof imagePath !== 'string') return '/images/placeholder.png'; // Return placeholder if path is not a string
@@ -30,16 +37,9 @@ const getImageUrl = (imagePath) => {
         return imagePath;
     }
 
-    // Handle new image uploads directly to the public directory
-    if (imagePath.startsWith('/image-')) {
-        // These should be served directly from the public directory
-        return imagePath;
-    }
-
-    // For local assets, construct the path relative to the Robolution public directory
-    // based on the monorepo build process.
+    // Handle images uploaded to the astro assets folder
     if (imagePath.startsWith('/src/assets/')) {
-        return `/international${imagePath}`;
+        return imagePath;
     }
     
     // Handle older /public/ paths if they exist
@@ -70,16 +70,19 @@ const formatUrl = (url) => {
 }
 ---
 
-<Layout title="Erovoutika Dubai - News">
+<Layout 
+    title="Erovoutika International - News"
+    content={layoutContent}
+>
     <section class="news-hero">
-        <h1 class="news-hero-title">{Hero?.title}</h1>
+        <h1 class="news-hero-title">{Hero?.title || 'News'}</h1>
     </section>
 
     <div class="page-container">
         <section class="latest-news-section">
             <h2 class="section-title">Latest News</h2>
             <div class="scalable-news-grid">
-                {latestnews.map(newsItem => (
+                {latestnews.length > 0 ? latestnews.map(newsItem => (
                     <div class="news-item-card">
                         <a href={formatUrl(newsItem.NewsCard.link)}>
                             <img src={getImageUrl(newsItem.NewsCard.image)} alt={newsItem.NewsCard.alt} />
@@ -89,14 +92,14 @@ const formatUrl = (url) => {
                             <h5 class="news-item-title">{newsItem.NewsCard.description || newsItem.NewsCard.title}</h5>
                         </div>
                     </div>
-                ))}
+                )) : <p>No latest news available.</p>}
             </div>
         </section>
 
         <section class="events-section">
             <h2 class="section-title">{events?.[0]?.NewsCard?.events || 'Events'}</h2>
             <div class="events-grid">
-                {events.map(event => (
+                {events.length > 0 ? events.map(event => (
                     <div class="event-card">
                         <a href={formatUrl(event.NewsCard.link)}>
                             <img src={getImageUrl(event.NewsCard.image)} alt={event.NewsCard.alt} />
@@ -107,14 +110,14 @@ const formatUrl = (url) => {
                             <p class="event-description">{event.NewsCard.description}</p>
                         </div>
                     </div>
-                ))}
+                )) : <p>No events to display.</p>}
             </div>
         </section>
 
         <section class="webinar-section">
             <h2 class="section-title">{web?.[0]?.NewsCard?.name || 'Webinars'}</h2>
              <div class="webinar-grid">
-                {web.map(item => (
+                {web.length > 0 ? web.map(item => (
                     <a href={formatUrl(item.NewsCard.link)} class="webinar-card">
                         <img src={getImageUrl(item.NewsCard.image)} alt={item.NewsCard.alt} />
                         <div class="webinar-card-content">
@@ -123,15 +126,15 @@ const formatUrl = (url) => {
                             <p class="webinar-description">{item.NewsCard.description}</p>
                         </div>
                     </a>
-                ))}
+                )) : <p>No webinars to display.</p>}
             </div>
         </section>
         
         <section class="more-news-section">
              <div class="cardnav-grid">
-                {cards.map(card => (
+                {cards.length > 0 ? cards.map(card => (
                     <Cardnav image={getImageUrl(card.image)} icon={card.icon} text={card.text} source={card.source} link={formatUrl(card.link)} date={card.date} />
-                ))}
+                )) : <p>No additional content available.</p>}
             </div>
         </section>
     </div>

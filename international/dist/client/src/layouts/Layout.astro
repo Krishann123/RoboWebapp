@@ -1,0 +1,247 @@
+---
+// import getDbData from "@/components/db";
+// await getDbData();
+
+import Nav from "../components/navbar.astro";
+import Banner from "../components/Home/Banner.astro";
+import Footer1 from "../components/Home/Footer1.astro";
+import "../styles/global.css";
+import { getCountryName, getCountrySlug, getCountryCssVariables, initializeCountry } from "../lib/country-context";
+import PageAssetLoader from "../components/PageAssetLoader.astro";
+
+const { title } = Astro.props;
+
+// Get request headers to extract country information if available
+const countryHeader = Astro.request.headers.get('x-country-site');
+let countryInfo = null;
+
+try {
+  if (countryHeader) {
+    countryInfo = JSON.parse(countryHeader);
+    console.log('Country info from headers:', countryInfo);
+  }
+} catch (error) {
+  console.error('Error parsing country header:', error);
+}
+
+// Use country name in title if available
+const countryName = countryInfo?.name || getCountryName();
+const countrySlug = countryInfo?.slug || getCountrySlug();
+
+// Define global site URL helper functions
+// Use direct country paths for navigation
+const basePath = `/${countrySlug}`;
+
+// Original title or country-specific title
+const siteTitle = title || `Erovoutika ${countryName}`;
+
+// Get the custom CSS variables for this country
+const countryCssVars = getCountryCssVariables();
+
+// Make helper functions available globally through the window object
+const script = `
+window.sitePath = {
+  base: "${basePath}",
+  asset: (path) => "/international" + (path.startsWith('/') ? path : '/' + path),
+  page: (path) => "${basePath}" + (path.startsWith('/') ? path : '/' + path)
+};
+window.countryInfo = ${countryInfo ? JSON.stringify(countryInfo) : 'null'};
+console.log("Site path utilities initialized with base: ${basePath}");
+`;
+
+// Inline the country context initialization
+const countryContextScript = `
+// Initialize country context
+document.addEventListener('DOMContentLoaded', function() {
+  // Default configuration
+  const defaultCountryConfig = {
+    name: 'Dubai',
+    slug: 'dubai',
+    templateName: 'test',
+    templateIndex: 0,
+    customStyles: {
+      primaryColor: '#00008b',
+      secondaryColor: '#FFB366',
+      accentColor: '#6AAAFF',
+      backgroundColor: '#FFFFFF'
+    }
+  };
+
+  // Country configurations
+  const countryConfigs = {
+    dubai: {
+      name: 'Dubai',
+      slug: 'dubai',
+      templateName: 'default',
+      customStyles: {
+        primaryColor: '#00008b',
+        secondaryColor: '#FFB366',
+        accentColor: '#6AAAFF',
+        backgroundColor: '#FFFFFF'
+      }
+    },
+    singapore: {
+      name: 'Singapore',
+      slug: 'singapore',
+      templateName: 'default',
+      customStyles: {
+        primaryColor: '#E31C79', // Bright pink
+        secondaryColor: '#FF4500', // Red-orange
+        accentColor: '#7C65B2', // Purple
+        backgroundColor: '#FFFFFF'
+      }
+    }
+    // More countries can be added here
+  };
+
+  // Get country info from meta tag
+  function getCountryInfo() {
+    try {
+      // First check meta tag (highest priority)
+      const countryHeader = document.head.querySelector('meta[name="x-country-site"]');
+      if (countryHeader) {
+        return JSON.parse(countryHeader.getAttribute('content'));
+      }
+      
+      // Extract from URL path - supports multiple formats
+      const pathParts = window.location.pathname.split('/');
+      
+      // Direct country URL: /{country}/*
+      if (pathParts[1] && countryConfigs[pathParts[1]]) {
+        return countryConfigs[pathParts[1]];
+      }
+      
+      // Legacy country URL: /country/{slug}/*
+      if (pathParts[1] === 'country' && pathParts[2]) {
+        const slug = pathParts[2];
+        return countryConfigs[slug] || {
+          ...defaultCountryConfig,
+          name: slug.charAt(0).toUpperCase() + slug.slice(1),
+          slug: slug
+        };
+      }
+      
+      return defaultCountryConfig;
+    } catch (error) {
+      console.error('Error parsing country info:', error);
+      return defaultCountryConfig;
+    }
+  }
+
+  // Apply country-specific styles
+  function injectCountryStyles() {
+    const countryInfo = getCountryInfo();
+    const styles = countryInfo.customStyles || defaultCountryConfig.customStyles;
+    
+    const styleElement = document.createElement('style');
+    styleElement.textContent = \`
+      :root {
+        --primary-color: \${styles.primaryColor};
+        --secondary-color: \${styles.secondaryColor};
+        --accent-color: \${styles.accentColor};
+        --background-color: \${styles.backgroundColor};
+      }
+    \`;
+    document.head.appendChild(styleElement);
+    
+    // Update page title with country name if not already set
+    if (document.title.indexOf(countryInfo.name) === -1) {
+      document.title = 'Erovoutika ' + countryInfo.name + ' - ' + document.title;
+    }
+  }
+
+  // Initialize
+  injectCountryStyles();
+});
+`;
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/international/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+        <meta name="description" content={`Erovoutika International Site for ${countryName}`} />
+        {countryInfo && <meta name="x-country-site" content={JSON.stringify(countryInfo)} />}
+        <title>{siteTitle}</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css"
+            rel="stylesheet"
+        />
+        <!-- Ensure assets are loaded from the correct path -->
+        <base href="/" />
+        <!-- Define global path helpers -->
+        <script set:html={script} />
+        <!-- Add country-specific styles -->
+        <style is:inline set:html={`
+          :root {
+            ${countryCssVars}
+          }
+        `}></style>
+        <!-- Country context initialization -->
+        <script set:html={countryContextScript}></script>
+        <!-- Page asset loader for CSS, scripts, header backgrounds -->
+        <PageAssetLoader />
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const toggleButton =
+                    document.getElementById("toggleBannerButton");
+                const banner = document.getElementById("banner");
+                const bannerState = localStorage.getItem("bannerVisibility");
+
+                if (banner) {
+                    // Apply the saved state from localStorage
+                    if (bannerState === "hidden") {
+                        banner.style.display = "none";
+                        if (toggleButton)
+                            toggleButton.style.backgroundColor = "red"; // Off state
+                    } else {
+                        banner.style.display = "block";
+                        if (toggleButton)
+                            toggleButton.style.backgroundColor = "green"; // On state
+                    }
+                }
+
+                if (toggleButton && banner) {
+                    toggleButton.addEventListener("click", () => {
+                        if (banner.style.display === "none") {
+                            banner.style.display = "block";
+                            toggleButton.style.backgroundColor = "green"; // On state
+                            localStorage.setItem("bannerVisibility", "visible"); // Save state
+                        } else {
+                            banner.style.display = "none";
+                            toggleButton.style.backgroundColor = "red"; // Off state
+                            localStorage.setItem("bannerVisibility", "hidden"); // Save state
+                        }
+                    });
+                } else {
+                    console.error("Toggle button or banner not found.");
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <div id="banner">
+            <Banner />
+        </div>
+        <Nav />
+        <slot />
+        <!-- <button onclick=`${connectDB}`>button </button> -->
+        <Footer1 />
+    </body>
+    <script
+        is:inline
+        src="https://cdn.jsdelivr.net/npm/flowbite@3.0.0/dist/flowbite.min.js"
+    ></script>
+</html>
+
+<style>
+    html,
+    body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>

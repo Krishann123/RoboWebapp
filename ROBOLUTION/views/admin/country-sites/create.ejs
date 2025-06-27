@@ -782,7 +782,7 @@
         
         <form action="/country-sites/create<%= (typeof dashboard !== 'undefined' && dashboard === true) || (typeof inDashboard !== 'undefined' && inDashboard === true) ? '?dashboard=true' : '' %>" method="POST" enctype="multipart/form-data">
           <div class="form-section">
-            <h2 class="form-section-title">Basic Information</h2>
+            <h2 class="form-section-title">Country Site Information</h2>
             
             <div class="form-group">
               <label for="name" class="form-label required-field">Country Name</label>
@@ -793,7 +793,7 @@
             <div class="form-group">
               <label for="slug" class="form-label required-field">URL Slug</label>
               <input type="text" id="slug" name="slug" class="form-input" required placeholder="e.g. dubai, malaysia, singapore">
-              <p class="form-instructions">This will be used in the URL: /country/<strong>slug</strong>. Use lowercase letters, numbers, and hyphens only.</p>
+              <p class="form-instructions">This will be used in the URL: /<strong>slug</strong>. Use lowercase letters, numbers, and hyphens only.</p>
             </div>
             
             <div class="form-group">
@@ -806,11 +806,7 @@
               <label for="description" class="form-label">Description</label>
               <textarea id="description" name="description" class="form-textarea" placeholder="Brief description of this country site..."></textarea>
               <p class="form-instructions">A brief description of this country site (optional).</p>
-            </div>
           </div>
-          
-          <div class="form-section">
-            <h2 class="form-section-title">Flag & Branding</h2>
             
             <div class="form-group">
               <label class="form-label">Country Flag</label>
@@ -824,56 +820,12 @@
               <p class="form-instructions">Upload a flag image for this country. Recommended size: 300x200px, JPG or PNG format.</p>
             </div>
             
-            <div class="form-group">
-              <label for="primaryColor" class="form-label">Primary Color</label>
-              <div style="display: flex; align-items: center;">
-                <input type="color" id="primaryColor" name="primaryColor" value="#00008b" style="margin-right: 10px;">
-                <input type="text" class="form-input" style="width: 120px;" id="primaryColorText" value="#00008b" onchange="updateColorPicker('primaryColor')">
-                <div class="color-preview" id="primaryColorPreview" style="background-color: #00008b;"></div>
-              </div>
-              <p class="form-instructions">Main color used throughout the site.</p>
-            </div>
-            
-            <div class="form-group">
-              <label for="secondaryColor" class="form-label">Secondary Color</label>
-              <div style="display: flex; align-items: center;">
-                <input type="color" id="secondaryColor" name="secondaryColor" value="#FFB366" style="margin-right: 10px;">
-                <input type="text" class="form-input" style="width: 120px;" id="secondaryColorText" value="#FFB366" onchange="updateColorPicker('secondaryColor')">
-                <div class="color-preview" id="secondaryColorPreview" style="background-color: #FFB366;"></div>
-              </div>
-              <p class="form-instructions">Accent color for buttons, highlights, etc.</p>
-            </div>
-            
-            <div class="form-group">
-              <label for="accentColor" class="form-label">Accent Color</label>
-              <div style="display: flex; align-items: center;">
-                <input type="color" id="accentColor" name="accentColor" value="#6AAAFF" style="margin-right: 10px;">
-                <input type="text" class="form-input" style="width: 120px;" id="accentColorText" value="#6AAAFF" onchange="updateColorPicker('accentColor')">
-                <div class="color-preview" id="accentColorPreview" style="background-color: #6AAAFF;"></div>
-              </div>
-              <p class="form-instructions">Used for links and other interactive elements.</p>
-            </div>
-          </div>
-          
-          <div class="form-section">
-            <h2 class="form-section-title">Content Template</h2>
-            
-            <div class="form-group">
-              <label class="form-label required-field">Select Template</label>
-              
-              <% if (templates && templates.length > 0) { %>
-                <% templates.forEach(template => { %>
-                  <div class="template-selection" onclick="selectTemplate('<%=template.name%>', <%=template.index%>)">
-                    <input type="radio" name="templateName" value="<%=template.name%>" id="template_<%=template.index%>" required <%= template.name === 'test' ? 'checked' : '' %>>
-                    <input type="hidden" name="templateIndex" value="<%=template.index%>" id="templateIndex_<%=template.index%>" <%= template.name === 'test' ? 'checked' : '' %>>
-                    <label for="template_<%=template.index%>"><%=template.name%> (Template #<%=template.index+1%>)</label>
-                    <p class="form-instructions">Template ID: <%=template.index%></p>
-                  </div>
-                <% }) %>
-              <% } else { %>
-                <p>No templates available. Please create a template in the default.json file.</p>
-              <% } %>
-            </div>
+            <!-- Hidden fields with default values -->
+            <input type="hidden" name="templateName" value="Default">
+            <input type="hidden" name="templateIndex" value="0">
+            <input type="hidden" name="primaryColor" value="#00008b">
+            <input type="hidden" name="secondaryColor" value="#FFB366">
+            <input type="hidden" name="accentColor" value="#6AAAFF">
           </div>
           
           <div class="form-actions">

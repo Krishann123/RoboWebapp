@@ -1,0 +1,502 @@
+[
+  {
+    "_id": "683600523cd5e2c933f79069",
+    "name": "AMA University Colleges",
+    "type": "regular",
+    "url": "https://ama.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748369490/partners/rviiglutmveijzx1z46z.jpg",
+    "cloudinaryId": "partners/rviiglutmveijzx1z46z",
+    "createdAt": "2025-05-27T18:11:30.806Z",
+    "__v": 0
+  },
+  {
+    "_id": "683602903cd5e2c933f79079",
+    "name": "Don Honorio Ventura State University",
+    "type": "regular",
+    "url": "https://dhvsu.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748370063/partners/pvsckee5qhngx54dx05u.png",
+    "cloudinaryId": "partners/pvsckee5qhngx54dx05u",
+    "createdAt": "2025-05-27T18:21:04.296Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836b7576afdde376353039b",
+    "name": "westmead academy of science and technology foundation inc",
+    "type": "regular",
+    "url": "https://westmead-is.edu.ph/?page_id=3202",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748416342/partners/g7xn96bfgqlftoa5e4aj.jpg",
+    "cloudinaryId": "partners/g7xn96bfgqlftoa5e4aj",
+    "createdAt": "2025-05-28T07:12:23.994Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836b9cef0b10a41829e078b",
+    "name": "Quezon City University",
+    "type": "regular",
+    "url": "https://qcu.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748416973/partners/c7vncmlxt9gilc1rw34h.png",
+    "cloudinaryId": "partners/c7vncmlxt9gilc1rw34h",
+    "createdAt": "2025-05-28T07:22:54.220Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836ba1ff0b10a41829e0790",
+    "name": "Jsumo Ultimate Robot Parts",
+    "type": "international",
+    "url": "https://www.jsumo.com",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748417055/partners/a5fybnriwgggbguygt5x.png",
+    "cloudinaryId": "partners/a5fybnriwgggbguygt5x",
+    "createdAt": "2025-05-28T07:24:15.885Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836deac5358d731d4ef35fb",
+    "name": "LA CONSOLACION UNIVERSITY PHILIPPINES",
+    "type": "regular",
+    "url": "https://lcup.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748426411/partners/lsyspd0otp1dpe8ulflg.png",
+    "cloudinaryId": "partners/lsyspd0otp1dpe8ulflg",
+    "createdAt": "2025-05-28T10:00:12.354Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836df4c5358d731d4ef3605",
+    "name": "University Of Batangas",
+    "type": "regular",
+    "url": "https://ub.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748426571/partners/xeuhdhhtnp9q5qqww6h3.png",
+    "cloudinaryId": "partners/xeuhdhhtnp9q5qqww6h3",
+    "createdAt": "2025-05-28T10:02:52.278Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e0595358d731d4ef3618",
+    "name": "Cavite State University",
+    "type": "regular",
+    "url": "https://cvsu.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748426840/partners/pr2p1pfgl3huvvz33zks.png",
+    "cloudinaryId": "partners/pr2p1pfgl3huvvz33zks",
+    "createdAt": "2025-05-28T10:07:21.130Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e0d55358d731d4ef3621",
+    "name": "Systems Plus College Foundation",
+    "type": "regular",
+    "url": "https://www.spcf.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748426965/partners/bvpnk5jcuwijb4y8mtos.png",
+    "cloudinaryId": "partners/bvpnk5jcuwijb4y8mtos",
+    "createdAt": "2025-05-28T10:09:25.906Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e1045358d731d4ef3624",
+    "name": "Technological Institute of the Philippines",
+    "type": "regular",
+    "url": "https://www.tip.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748427011/partners/mpihdw6rzw0ixgvy0tvf.png",
+    "cloudinaryId": "partners/mpihdw6rzw0ixgvy0tvf",
+    "createdAt": "2025-05-28T10:10:12.649Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e1815358d731d4ef362b",
+    "name": "Lyceum of the Philippines University",
+    "type": "regular",
+    "url": "https://www.lpu.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748427137/partners/qzo4cuxjaztrwgogg8oz.png",
+    "cloudinaryId": "partners/qzo4cuxjaztrwgogg8oz",
+    "createdAt": "2025-05-28T10:12:17.645Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e2135358d731d4ef3634",
+    "name": "Southern Luzon State University",
+    "type": "regular",
+    "url": "https://www.slsu.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748427282/partners/lprhgrvaxvlxfkjoc9mt.png",
+    "cloudinaryId": "partners/lprhgrvaxvlxfkjoc9mt",
+    "createdAt": "2025-05-28T10:14:43.395Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e3005358d731d4ef3642",
+    "name": "PNC",
+    "type": "regular",
+    "url": "https://pnc.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748427519/partners/jihjht7pb6vykuy7mdhm.jpg",
+    "cloudinaryId": "partners/jihjht7pb6vykuy7mdhm",
+    "createdAt": "2025-05-28T10:18:40.437Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e60b5358d731d4ef3676",
+    "name": "ZMROBO Education Robot",
+    "type": "international",
+    "url": "https://www.stemtown.com",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748428299/partners/dxx5lkgymk0xovh1vq83.jpg",
+    "cloudinaryId": "partners/dxx5lkgymk0xovh1vq83",
+    "createdAt": "2025-05-28T10:31:39.744Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e63d5358d731d4ef3679",
+    "name": "RoboRAVE International",
+    "type": "international",
+    "url": "https://roboraveinternational.org",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748428349/partners/rhcz8aykcxsuomveguv0.png",
+    "cloudinaryId": "partners/rhcz8aykcxsuomveguv0",
+    "createdAt": "2025-05-28T10:32:29.462Z",
+    "__v": 0
+  },
+  {
+    "_id": "6835f1c9c89af2f7a745b05d",
+    "name": "Mapua University",
+    "type": "regular",
+    "url": "https://www.mapua.edu.ph/pages/about-mapua/the-university/the-logo",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748365767/partners/jq0rcnupvvpzdcg6hoxa.png",
+    "cloudinaryId": "partners/jq0rcnupvvpzdcg6hoxa",
+    "createdAt": "2025-05-27T17:09:29.563Z",
+    "__v": 0
+  },
+  {
+    "_id": "6835ff7b3cd5e2c933f7905f",
+    "name": "Saint Louis University",
+    "type": "regular",
+    "url": "https://www.slu.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748369275/partners/grlbiz6xvi7bqu2fio4h.png",
+    "cloudinaryId": "partners/grlbiz6xvi7bqu2fio4h",
+    "createdAt": "2025-05-27T18:07:55.766Z",
+    "__v": 0
+  },
+  {
+    "_id": "6835ffbf3cd5e2c933f79062",
+    "name": "Adamson University",
+    "type": "regular",
+    "url": "https://www.adamson.edu.ph/2018/",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748369342/partners/are79di6gm6uk95rg94a.jpg",
+    "cloudinaryId": "partners/are79di6gm6uk95rg94a",
+    "createdAt": "2025-05-27T18:09:03.051Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e3f85358d731d4ef364b",
+    "name": "San Rafael National High School",
+    "type": "regular",
+    "url": "https://srtvhs.depednavotas.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748427767/partners/k5i3jzywpmgjagckzukk.jpg",
+    "cloudinaryId": "partners/k5i3jzywpmgjagckzukk",
+    "createdAt": "2025-05-28T10:22:48.326Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e4ae5358d731d4ef3658",
+    "name": "DLSU-D",
+    "type": "regular",
+    "url": "https://www.dlsud.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748427949/partners/eb1fdpsjoptjwq3srtzd.png",
+    "cloudinaryId": "partners/eb1fdpsjoptjwq3srtzd",
+    "createdAt": "2025-05-28T10:25:50.544Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e59c5358d731d4ef3670",
+    "name": "UBTECH Robotics",
+    "type": "international",
+    "url": "https://robog.ubtrobot.com",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748428187/partners/ehzjld6fpuez3hud1xwd.png",
+    "cloudinaryId": "partners/ehzjld6fpuez3hud1xwd",
+    "createdAt": "2025-05-28T10:29:48.215Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836ebb5f6f834d419fd9856",
+    "name": "World Robot Contest",
+    "type": "international",
+    "url": "https://www.worldrobotconference.com",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748429749/partners/pfr1etu0varc4omcydg2.jpg",
+    "cloudinaryId": "partners/pfr1etu0varc4omcydg2",
+    "createdAt": "2025-05-28T10:55:49.639Z",
+    "__v": 0
+  },
+  {
+    "_id": "6835f212c89af2f7a745b060",
+    "name": "De Lasalle University Manila",
+    "type": "regular",
+    "url": "https://www.dlsu.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748365840/partners/cvnpukara4ejrveana6v.png",
+    "cloudinaryId": "partners/cvnpukara4ejrveana6v",
+    "createdAt": "2025-05-27T17:10:42.530Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836de5f5358d731d4ef35f8",
+    "name": "Lyceum Subic Bay",
+    "type": "regular",
+    "url": "https://lsb.pinnacle.com.ph/lsb/students/",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748426334/partners/gmote0pty48yadqt0inx.jpg",
+    "cloudinaryId": "partners/gmote0pty48yadqt0inx",
+    "createdAt": "2025-05-28T09:58:55.279Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836dedc5358d731d4ef35ff",
+    "name": "STI College",
+    "type": "regular",
+    "url": "https://www.sti.edu",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748426459/partners/apg0rm9n1jotwmjozgbe.png",
+    "cloudinaryId": "partners/apg0rm9n1jotwmjozgbe",
+    "createdAt": "2025-05-28T10:01:00.373Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836df725358d731d4ef3608",
+    "name": "UMAK",
+    "type": "regular",
+    "url": "https://www.umak.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748426609/partners/kxc1bs1ffyrhecdhvk9s.png",
+    "cloudinaryId": "partners/kxc1bs1ffyrhecdhvk9s",
+    "createdAt": "2025-05-28T10:03:30.271Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836dfc75358d731d4ef360e",
+    "name": "University Of the EAST",
+    "type": "regular",
+    "url": "https://www.ue.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748426693/partners/gmq9dzu1ufx4yfganqdx.png",
+    "cloudinaryId": "partners/gmq9dzu1ufx4yfganqdx",
+    "createdAt": "2025-05-28T10:04:55.286Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836dffd5358d731d4ef3611",
+    "name": "Pamantasan ng Lungsod ng Pasig",
+    "type": "regular",
+    "url": "https://plpasig.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748426749/partners/iylb6qyttr55rdan1i2h.png",
+    "cloudinaryId": "partners/iylb6qyttr55rdan1i2h",
+    "createdAt": "2025-05-28T10:05:49.740Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e0ac5358d731d4ef361e",
+    "name": "Mariano Marcos State University",
+    "type": "regular",
+    "url": "https://www.mmsu.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748426924/partners/tjrxsokqd7hfbb9bcofj.jpg",
+    "cloudinaryId": "partners/tjrxsokqd7hfbb9bcofj",
+    "createdAt": "2025-05-28T10:08:44.485Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e1e55358d731d4ef3631",
+    "name": "Our Lady of Fatima University",
+    "type": "regular",
+    "url": "https://www.fatima.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748427237/partners/cmodtlqrly9isrfdxtko.png",
+    "cloudinaryId": "partners/cmodtlqrly9isrfdxtko",
+    "createdAt": "2025-05-28T10:13:57.706Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e23f5358d731d4ef3637",
+    "name": "Rizal Technological University (RTU)",
+    "type": "regular",
+    "url": "https://www.rtu.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748427326/partners/kuvhfpzxp3fmbjxk2kq0.jpg",
+    "cloudinaryId": "partners/kuvhfpzxp3fmbjxk2kq0",
+    "createdAt": "2025-05-28T10:15:27.309Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e26a5358d731d4ef363a",
+    "name": "Perpetual Help",
+    "type": "regular",
+    "url": "https://perpetualdalta.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748427369/partners/n2qfojpzs8ayrsw5r9gm.jpg",
+    "cloudinaryId": "partners/n2qfojpzs8ayrsw5r9gm",
+    "createdAt": "2025-05-28T10:16:10.471Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e2985358d731d4ef363d",
+    "name": "PATEROS TECHNOLOGICAL COLLEGE",
+    "type": "regular",
+    "url": "https://www.paterostechnologicalcollege.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748427416/partners/ala4yhutmgtkmzcjqo2c.png",
+    "cloudinaryId": "partners/ala4yhutmgtkmzcjqo2c",
+    "createdAt": "2025-05-28T10:16:56.721Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e4275358d731d4ef364e",
+    "name": "Ateneo de Davao University",
+    "type": "regular",
+    "url": "https://www.addu.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748427814/partners/pwye0jsaljwj4kdxarov.png",
+    "cloudinaryId": "partners/pwye0jsaljwj4kdxarov",
+    "createdAt": "2025-05-28T10:23:35.221Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e4775358d731d4ef3655",
+    "name": "University of Cebu",
+    "type": "regular",
+    "url": "https://www.universityofcebu.net",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748427895/partners/c6xistql8dxdedczkltb.jpg",
+    "cloudinaryId": "partners/c6xistql8dxdedczkltb",
+    "createdAt": "2025-05-28T10:24:55.930Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e4f75358d731d4ef3662",
+    "name": "UUBTECH Robotics",
+    "type": "international",
+    "url": "https://www.ubtrobot.com",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748428022/partners/sa1cpz00jzuby7xxuwlr.png",
+    "cloudinaryId": "partners/sa1cpz00jzuby7xxuwlr",
+    "createdAt": "2025-05-28T10:27:03.361Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e5425358d731d4ef366c",
+    "name": "Virtual Robot Simulator",
+    "type": "international",
+    "url": "https://vrobotsim.com",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748428098/partners/b2spngbwaqs3shjfglcm.png",
+    "cloudinaryId": "partners/b2spngbwaqs3shjfglcm",
+    "createdAt": "2025-05-28T10:28:18.800Z",
+    "__v": 0
+  },
+  {
+    "_id": "6835ff2d3cd5e2c933f7905b",
+    "name": "Xavier University Ateneo De Cagayan",
+    "type": "regular",
+    "url": "https://www.xu.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748369197/partners/kycnniqbujwdiziqcq3i.png",
+    "cloudinaryId": "partners/kycnniqbujwdiziqcq3i",
+    "createdAt": "2025-05-27T18:06:37.842Z",
+    "__v": 0
+  },
+  {
+    "_id": "6835fffc3cd5e2c933f79066",
+    "name": "Technological University Of the Philippines",
+    "type": "regular",
+    "url": "https://www.tup.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748369403/partners/iqhjd9quo5muc0z5s43r.png",
+    "cloudinaryId": "partners/iqhjd9quo5muc0z5s43r",
+    "createdAt": "2025-05-27T18:10:04.179Z",
+    "__v": 0
+  },
+  {
+    "_id": "683602063cd5e2c933f79073",
+    "name": "Polytechnic University Of The Philippines",
+    "type": "regular",
+    "url": "https://www.pup.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748369926/partners/tentknwzgvsotpotarru.png",
+    "cloudinaryId": "partners/tentknwzgvsotpotarru",
+    "createdAt": "2025-05-27T18:18:46.920Z",
+    "__v": 0
+  },
+  {
+    "_id": "683602593cd5e2c933f79076",
+    "name": "DR. Yanga's Colleges Inc.",
+    "type": "regular",
+    "url": "https://dyci.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748370008/partners/ymrs9azeiec0fa1ahbpq.webp",
+    "cloudinaryId": "partners/ymrs9azeiec0fa1ahbpq",
+    "createdAt": "2025-05-27T18:20:09.114Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836df1e5358d731d4ef3602",
+    "name": "Pamantasan ng Lungsod ng Maynila",
+    "type": "regular",
+    "url": "https://plm.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748426526/partners/dx0g23vylfybkkv69wy0.png",
+    "cloudinaryId": "partners/dx0g23vylfybkkv69wy0",
+    "createdAt": "2025-05-28T10:02:06.897Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836df955358d731d4ef360b",
+    "name": "Universidad de Manila",
+    "type": "regular",
+    "url": "https://udmwebsite.udm.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748426645/partners/qyykgdd9gbmai0ghmyzg.png",
+    "cloudinaryId": "partners/qyykgdd9gbmai0ghmyzg",
+    "createdAt": "2025-05-28T10:04:05.863Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e02f5358d731d4ef3615",
+    "name": "Laguna State Polytechnic University",
+    "type": "regular",
+    "url": "https://lspu.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748426798/partners/vaavikppbncjykf7f3j3.jpg",
+    "cloudinaryId": "partners/vaavikppbncjykf7f3j3",
+    "createdAt": "2025-05-28T10:06:39.252Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e07e5358d731d4ef361b",
+    "name": "Colegio de Muntinlupa",
+    "type": "regular",
+    "url": "https://www.cdm.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748426878/partners/cmf7uta9oo6p6894h84o.jpg",
+    "cloudinaryId": "partners/cmf7uta9oo6p6894h84o",
+    "createdAt": "2025-05-28T10:07:58.832Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e12c5358d731d4ef3627",
+    "name": "Rogationist College",
+    "type": "regular",
+    "url": "https://rog.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748427052/partners/ptfyeyx6qldv3iheqe2n.jpg",
+    "cloudinaryId": "partners/ptfyeyx6qldv3iheqe2n",
+    "createdAt": "2025-05-28T10:10:52.723Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e1bf5358d731d4ef362e",
+    "name": "earist official",
+    "type": "regular",
+    "url": "https://earist.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748427199/partners/h900djetl2bny0nvakmz.jpg",
+    "cloudinaryId": "partners/h900djetl2bny0nvakmz",
+    "createdAt": "2025-05-28T10:13:19.803Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e3495358d731d4ef3645",
+    "name": "Imus Institute",
+    "type": "regular",
+    "url": "https://iist.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748427593/partners/dqhqhn0rufqcir7kodr6.png",
+    "cloudinaryId": "partners/dqhqhn0rufqcir7kodr6",
+    "createdAt": "2025-05-28T10:19:53.688Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e3795358d731d4ef3648",
+    "name": "Occidental Mindoro State College",
+    "type": "regular",
+    "url": "https://www.omsc.edu.ph",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748427640/partners/erzybcog4ol9syq12o2f.jpg",
+    "cloudinaryId": "partners/erzybcog4ol9syq12o2f",
+    "createdAt": "2025-05-28T10:20:41.638Z",
+    "__v": 0
+  },
+  {
+    "_id": "6836e4515358d731d4ef3652",
+    "name": "University Of Baguio",
+    "type": "regular",
+    "url": "https://ubaguio.edu",
+    "imageUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1748427856/partners/pflwcrkl8dhgzh0c33pe.png",
+    "cloudinaryId": "partners/pflwcrkl8dhgzh0c33pe",
+    "createdAt": "2025-05-28T10:24:17.725Z",
+    "__v": 0
+  }
+]

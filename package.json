@@ -20,7 +20,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "express-ejs-layouts": "^2.5.1"
   },
   "devDependencies": {
     "rimraf": "^5.0.5"

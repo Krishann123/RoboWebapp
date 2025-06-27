@@ -156,6 +156,11 @@ router.get('/edit/:id', requireAdmin, async (req, res) => {
       return res.redirect('/country-sites');
     }
     
+    // REDIRECT to new template-based edit interface
+    if (req.query.useNewInterface === 'true' || process.env.USE_TEMPLATE_SYSTEM === 'true') {
+      return res.redirect(`/country/${countrySite.slug}/edit`);
+    }
+    
     // Read the templates from the default.json file
     const internationalDir = path.join(__dirname, '../../international');
     const defaultJsonPath = path.join(internationalDir, 'default.json');
@@ -211,7 +216,14 @@ router.post('/edit/:id', requireAdmin, upload.single('flag'), async (req, res) =
     countrySite.slug = req.body.slug;
     countrySite.title = req.body.title;
     countrySite.description = req.body.description;
-    countrySite.active = !!req.body.active;
+    
+    // For checkboxes, we need to explicitly check if the field exists in the request
+    // When a checkbox is unchecked, it's not included in the form data at all
+    countrySite.active = req.body.active === 'on';
+    
+    // Log the active state for debugging
+    console.log(`[Country Sites] Setting '${countrySite.name}' active status to: ${countrySite.active} (raw value: '${req.body.active}')`);
+    
     countrySite.templateName = req.body.templateName;
     countrySite.templateIndex = parseInt(req.body.templateIndex, 10);
     
@@ -271,30 +283,7 @@ router.post('/delete', requireAdmin, async (req, res) => {
   }
 });
 
-// GET - Form to manage country site content
-router.get('/content/:id', requireAdmin, async (req, res) => {
-  try {
-    const countrySite = await CountrySite.findById(req.params.id);
-    if (!countrySite) {
-      req.flash('error', 'Country site not found');
-      return res.redirect('/country-sites');
-    }
-    
-    // Check if we're being loaded in the dashboard iframe
-    const inDashboard = req.query.dashboard === 'true';
-    
-    res.render('admin/country-sites/content', { 
-      countrySite,
-      user: req.session.user,
-      errorMessage: req.flash('error'),
-      inDashboard // Pass this flag to the view
-    });
-  } catch (error) {
-    console.error('Error loading content management form:', error);
-    req.flash('error', 'Error loading country site content form');
-    res.redirect('/country-sites');
-  }
-});
+// Content management routes removed as requested
 
 // Export the router
 module.exports = router; 

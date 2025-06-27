@@ -1,9 +1,10 @@
-import { e as createComponent, r as renderTemplate, m as maybeRenderHead, k as renderComponent, h as addAttribute } from '../chunks/astro/server_C-kESatQ.mjs';
+/* empty css                                  */
+import { e as createComponent, r as renderTemplate, m as maybeRenderHead, f as createAstro, k as renderComponent, h as addAttribute } from '../chunks/astro/server_DhKVb5AT.mjs';
 import 'kleur/colors';
 import 'clsx';
 /* empty css                                           */
-import { $ as $$Layout } from '../chunks/Layout_hV_SdrMw.mjs';
-import { f as fetchPageContent } from '../chunks/db_BLiRlGFB.mjs';
+import { $ as $$Layout } from '../chunks/Layout_Bie1TBNq.mjs';
+import { g as getTemplate } from '../chunks/mongodb_DJrNPHw-.mjs';
 export { renderers } from '../renderers.mjs';
 
 var __freeze$1 = Object.freeze;
@@ -18,17 +19,30 @@ var __freeze = Object.freeze;
 var __defProp = Object.defineProperty;
 var __template = (cooked, raw) => __freeze(__defProp(cooked, "raw", { value: __freeze(cooked.slice()) }));
 var _a;
+const $$Astro = createAstro();
 const $$NominationsTab = createComponent(async ($$result, $$props, $$slots) => {
-  const data = await fetchPageContent("Nomination");
-  const content = data.NominationContent;
-  const getImageUrl = (path) => {
-    if (typeof path === "string" && path.startsWith("/")) {
-      return "/dubai" + path;
-    }
-    return path;
+  const Astro2 = $$result.createAstro($$Astro, $$props, $$slots);
+  Astro2.self = $$NominationsTab;
+  const countrySiteHeader = Astro2.request.headers.get("x-country-site");
+  const countrySite = countrySiteHeader ? JSON.parse(countrySiteHeader) : { slug: "default", name: "Dubai" };
+  const template = await getTemplate(countrySite.slug);
+  const dbContent = template?.config?.Contents || {};
+  const defaultNominationContent = {
+    hero_background: "/backgrounds/Nomination-Banner.jpg",
+    hero_title: "Nominate The Bright Minds Of Tomorrow!",
+    hero_subtitle: "Recognize outstanding individuals and teams in robotics, research, and innovation. Your nomination can inspire the next generation of leaders.",
+    hero_buttonText: "Nominate Now"
   };
-  return renderTemplate(_a || (_a = __template(["", '  <script>\n    const nominateButton = document.querySelector(".nominate-button");\n    nominateButton.addEventListener("click", () => {\n        const introSection = document.getElementById("nomination-form");\n        if (introSection) {\n            introSection.scrollIntoView({ behavior: "smooth" });\n        } else {\n            console.error("Introduction section not found.");\n        }\n    });\n</script>'])), renderComponent($$result, "Layout", $$Layout, { "title": "Erovoutika Dubai - Nominations", "data-astro-cid-g56mpxfz": true }, { "default": async ($$result2) => renderTemplate` ${maybeRenderHead()}<section class="nomination-hero"${addAttribute(`background-image: url(${getImageUrl(content.hero_background)});`, "style")} data-astro-cid-g56mpxfz> <div class="hero-content" data-astro-cid-g56mpxfz> <h1 class="hero-title" data-astro-cid-g56mpxfz>${content.hero_title}</h1> <p class="hero-subtitle" data-astro-cid-g56mpxfz>${content.hero_subtitle}</p> <button class="nominate-button" data-astro-cid-g56mpxfz>${content.hero_buttonText}</button> </div> </section> <section class="nomination-form" id="nominations" data-astro-cid-g56mpxfz> ${renderComponent($$result2, "NominationForm", $$NominationsForm, { "data-astro-cid-g56mpxfz": true })} </section> ` }));
+  const content = { ...defaultNominationContent, ...dbContent.Nomination || {} };
+  const layoutContent = {
+    nav: dbContent.Navbar || {},
+    footer: dbContent.Footer || {},
+    banner: dbContent.Banner || {}
+  };
+  const pageTitle = content.hero_title || `Erovoutika ${countrySite.name} - Nominations`;
+  return renderTemplate(_a || (_a = __template(["", '  <script>\n    const nominateButton = document.querySelector(".nominate-button");\n    nominateButton.addEventListener("click", () => {\n        const introSection = document.getElementById("nomination-form");\n        if (introSection) {\n            introSection.scrollIntoView({ behavior: "smooth" });\n        } else {\n            console.error("Introduction section not found.");\n        }\n    });\n<\/script>'])), renderComponent($$result, "Layout", $$Layout, { "title": pageTitle, "content": layoutContent, "data-astro-cid-g56mpxfz": true }, { "default": async ($$result2) => renderTemplate` ${maybeRenderHead()}<section class="nomination-hero"${addAttribute(`background-image: url(${content.hero_background});`, "style")} data-astro-cid-g56mpxfz> <div class="hero-content" data-astro-cid-g56mpxfz> <h1 class="hero-title" data-astro-cid-g56mpxfz>${content.hero_title}</h1> <p class="hero-subtitle" data-astro-cid-g56mpxfz>${content.hero_subtitle}</p> <button class="nominate-button" data-astro-cid-g56mpxfz>${content.hero_buttonText}</button> </div> </section> <section class="nomination-form" id="nominations" data-astro-cid-g56mpxfz> ${renderComponent($$result2, "NominationForm", $$NominationsForm, { "data-astro-cid-g56mpxfz": true })} </section> ` }));
 }, "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/Nominations_Tab.astro", void 0);
+
 const $$file = "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/Nominations_Tab.astro";
 const $$url = "/dubai/Nominations_Tab";
 

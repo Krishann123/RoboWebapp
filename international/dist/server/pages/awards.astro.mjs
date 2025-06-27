@@ -1,8 +1,10 @@
-import { e as createComponent, m as maybeRenderHead, r as renderTemplate, f as createAstro, k as renderComponent } from '../chunks/astro/server_C-kESatQ.mjs';
+/* empty css                                  */
+import { e as createComponent, m as maybeRenderHead, r as renderTemplate, f as createAstro, k as renderComponent } from '../chunks/astro/server_DhKVb5AT.mjs';
 import 'kleur/colors';
 import 'clsx';
-import { f as fetchPageContent } from '../chunks/db_BLiRlGFB.mjs';
-import { $ as $$Layout } from '../chunks/Layout_hV_SdrMw.mjs';
+import { f as fetchPageContent } from '../chunks/db_BgTuE01l.mjs';
+import { $ as $$Layout } from '../chunks/Layout_Bie1TBNq.mjs';
+import { g as getTemplate } from '../chunks/mongodb_DJrNPHw-.mjs';
 export { renderers } from '../renderers.mjs';
 
 const $$Hero = createComponent(async ($$result, $$props, $$slots) => {
@@ -11,10 +13,19 @@ const $$Hero = createComponent(async ($$result, $$props, $$slots) => {
 }, "C:/Users/Krishann/Desktop/Robo-combined/international/src/components/Awards/Hero.astro", void 0);
 
 const $$Astro = createAstro();
-const $$Awards = createComponent(($$result, $$props, $$slots) => {
+const $$Awards = createComponent(async ($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro, $$props, $$slots);
   Astro2.self = $$Awards;
-  return renderTemplate`${renderComponent($$result, "Layout", $$Layout, { "title": "Erovoutika Dubai - Awards" }, { "default": ($$result2) => renderTemplate` ${renderComponent($$result2, "Hero", $$Hero, {})} ` })}`;
+  const countrySiteHeader = Astro2.request.headers.get("x-country-site");
+  const countrySite = countrySiteHeader ? JSON.parse(countrySiteHeader) : { slug: "default" };
+  const template = await getTemplate(countrySite.slug);
+  const content = template?.config?.Contents || {};
+  const layoutContent = {
+    nav: content.Navbar || {},
+    footer: content.Footer || {},
+    banner: content.Banner || {}
+  };
+  return renderTemplate`${renderComponent($$result, "Layout", $$Layout, { "title": "Erovoutika International - Awards", "content": layoutContent }, { "default": async ($$result2) => renderTemplate` ${renderComponent($$result2, "Hero", $$Hero, {})} ` })}`;
 }, "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/Awards.astro", void 0);
 
 const $$file = "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/Awards.astro";

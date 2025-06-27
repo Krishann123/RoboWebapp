@@ -1,0 +1,16 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+const { countryData } = Astro.locals;
+const { newsSlug } = Astro.params;
+if (!countryData) { return Astro.redirect('/404'); }
+const item = countryData.news.find(i => i.slug === newsSlug);
+if (!item) { return Astro.redirect('/404'); }
+---
+<Layout title={`${item.title} - ${countryData.name}`}>
+    <div class="container">
+        <img src={item.imageUrl} alt={item.title}>
+        <h1>{item.title}</h1>
+        <p><em>Published: {new Date(item.publishedAt).toLocaleDateString()}</em></p>
+        <div set:html={item.content}></div>
+    </div>
+</Layout> 

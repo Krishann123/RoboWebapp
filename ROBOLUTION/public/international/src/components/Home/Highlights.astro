@@ -1,0 +1,168 @@
+---
+//import shadcn
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { fetchPageContent } from "@/components/db";
+
+const content = await fetchPageContent("Home");
+
+const fixAssetUrl = (url) => {
+    if (!url || typeof url !== 'string') return '';
+    if (url.startsWith('http') || url.startsWith('/international')) return url;
+    if (url.startsWith('/')) return `/international${url}`;
+    return `/international/${url}`;
+};
+---
+
+<style>
+    @keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .highlight-animate {
+        opacity: 0;
+    }
+    .highlight-animate.visible {
+        opacity: 1;
+        animation: fadeInUp 0.8s cubic-bezier(0.4, 2, 0.6, 1) forwards;
+    }
+</style>
+
+<script type="module" is:inline>
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        },
+        { threshold: 0.2 }
+    );
+
+    document.addEventListener("DOMContentLoaded", () => {
+        document
+            .querySelectorAll(".highlight-animate")
+            .forEach((el) => observer.observe(el));
+    });
+</script>
+
+<div>
+    <h2
+        class="font-bold text-center m-5 text-5xl lg:text-[96px] p-5 text-[#212529] font-bebas tracking-wider"
+        set:html={content.Highlights.Title}
+    />
+
+    <div class="grid md:grid-cols-5 grid-cols-1 gap-4 p-5 lg:px-20">
+        <Card
+            className="border-transparent bg-transparent shadow-none py-2 lg:py-6 gap-2 lg:gap-6 highlight-animate"
+        >
+            <CardHeader className="place-items-center">
+                <img
+                    src={fixAssetUrl(content.Highlights.Highlight1.Icon1)}
+                    class="h-14 w-auto"
+                />
+            </CardHeader>
+            <CardContent>
+                <h2
+                    class="font-semibold text-lg text-center mb-2 text-black"
+                    set:html={content.Highlights.Highlight1.Highlight1}
+                />
+                <h4
+                    class="text-center text-xs lg:text-base text-zinc-800"
+                    set:html={content.Highlights.Highlight1.description1}
+                />
+            </CardContent>
+        </Card>
+
+        <Card
+            className="border-transparent bg-transparent shadow-none py-2 lg:py-6 gap-2 lg:gap-6 highlight-animate"
+        >
+            <CardHeader className="place-items-center">
+                <img
+                    src={fixAssetUrl(content.Highlights.Highlight2.Icon2)}
+                    class="h-14 w-auto"
+                />
+            </CardHeader>
+            <CardContent>
+                <h2
+                    class="font-semibold text-lg text-center mb-2 text-black"
+                    set:html={content.Highlights.Highlight2.Highlight2}
+                />
+                <h4
+                    class="text-center text-xs lg:text-base text-zinc-800"
+                    set:html={content.Highlights.Highlight2.description2}
+                />
+            </CardContent>
+        </Card>
+
+        <Card
+            className="border-transparent bg-transparent shadow-none py-2 lg:py-6 gap-2 lg:gap-6 highlight-animate"
+        >
+            <CardHeader className="place-items-center">
+                <img
+                    src={fixAssetUrl(content.Highlights.Highlight3.Icon3)}
+                    class="h-14 w-auto"
+                />
+            </CardHeader>
+            <CardContent>
+                <h2
+                    class="font-semibold text-lg text-center mb-2 text-black"
+                    set:html={content.Highlights.Highlight3.Highlight3}
+                />
+                <h4
+                    class="text-center text-xs lg:text-base text-zinc-800"
+                    set:html={content.Highlights.Highlight3.description3}
+                />
+            </CardContent>
+        </Card>
+
+        <Card
+            className="border-transparent bg-transparent shadow-none py-2 lg:py-6 gap-2 lg:gap-6 highlight-animate"
+        >
+            <CardHeader className="place-items-center">
+                <img
+                    src={fixAssetUrl(content.Highlights.Highlight4.Icon4)}
+                    class="h-14 w-auto"
+                />
+            </CardHeader>
+            <CardContent>
+                <h2
+                    class="font-semibold text-lg text-center mb-2 text-black"
+                    set:html={content.Highlights.Highlight4.Highlight4}
+                />
+                <h4
+                    class="text-center text-xs lg:text-base text-zinc-800"
+                    set:html={content.Highlights.Highlight4.description4}
+                />
+            </CardContent>
+        </Card>
+
+        <Card
+            className="border-transparent bg-transparent shadow-none py-2 lg:py-6 gap-2 lg:gap-6 highlight-animate"
+        >
+            <CardHeader className="place-items-center ">
+                <img
+                    src={fixAssetUrl(content.Highlights.Highlight5.Icon5)}
+                    class="h-14 w-auto"
+                />
+            </CardHeader>
+            <CardContent>
+                <h2
+                    class="font-semibold text-lg text-center mb-2 text-black"
+                    set:html={content.Highlights.Highlight5.Highlight5}
+                />
+                <h4
+                    class="text-center text-xs lg:text-base text-zinc-800"
+                    set:html={content.Highlights.Highlight5.description5}
+                />
+            </CardContent>
+        </Card>
+    </div>
+</div>

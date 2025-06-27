@@ -1,113 +1,49 @@
 ---
-// import getDbData from "@/components/db";
-// await getDbData();
-
 import Nav from "../components/navbar.astro";
 import Banner from "../components/Home/Banner.astro";
 import Footer1 from "../components/Home/Footer1.astro";
 import "../styles/global.css";
-import { getCountryName, getCountrySlug, getCountryCssVariables, initializeCountry } from "../lib/country-context";
 
-const { title } = Astro.props;
+const { title, content = {} } = Astro.props;
+const { nav = {}, banner = {}, footer = {}, customStyles: pageCustomStyles = {} } = content;
 
-// Get request headers to extract country information if available
-const countryHeader = Astro.request.headers.get('x-country-site');
-let countryInfo = null;
+const defaultStyles = {
+    primaryColor: '#00008b',
+    secondaryColor: '#FFB366',
+    accentColor: '#6AAAFF',
+    backgroundColor: '#FFFFFF'
+};
 
-try {
-  if (countryHeader) {
-    countryInfo = JSON.parse(countryHeader);
-    console.log('Country info from headers:', countryInfo);
-  }
-} catch (error) {
-  console.error('Error parsing country header:', error);
-}
+const customStyles = { ...defaultStyles, ...pageCustomStyles };
 
-// Use country name in title if available
-const countryName = countryInfo?.name || getCountryName();
-const countrySlug = countryInfo?.slug || getCountrySlug();
+const siteTitle = title || "Robolution International";
 
-// Define global site URL helper functions - use country path if available
-const basePath = import.meta.env.BASE_URL || `/country/${countrySlug}`;
+const countryCssVars = Object.entries(customStyles)
+  .map(([key, value]) => `--${key.replace(/([A-Z])/g, '-$1').toLowerCase()}: ${value};`)
+  .join(';');
 
-// Original title or country-specific title
-const siteTitle = title || `Erovoutika ${countryName}`;
-
-// Get the custom CSS variables for this country
-const countryCssVars = getCountryCssVariables();
-
-// Make helper functions available globally through the window object
 const script = `
 window.sitePath = {
-  base: "${basePath}",
-  asset: (path) => "${basePath}" + (path.startsWith('/') ? path : '/' + path),
-  page: (path) => "${basePath}" + (path.startsWith('/') ? path : '/' + path)
+  base: "${import.meta.env.BASE_URL || '/'}",
+  asset: (path) => "${import.meta.env.BASE_URL || '/'}" + (path.startsWith('/') ? path.slice(1) : path),
+  page: (path) => "${import.meta.env.BASE_URL || '/'}" + (path.startsWith('/') ? path.slice(1) : path)
 };
-window.countryInfo = ${countryInfo ? JSON.stringify(countryInfo) : 'null'};
-console.log("Site path utilities initialized with base: ${basePath}");
+console.log("Site path utilities initialized with base: ${import.meta.env.BASE_URL || '/'}");
 `;
 
-// Inline the country context initialization
 const countryContextScript = `
-// Initialize country context
 document.addEventListener('DOMContentLoaded', function() {
-  // Default configuration
-  const defaultCountryConfig = {
-    name: 'Dubai',
-    slug: 'dubai',
-    templateName: 'test',
-    templateIndex: 0,
-    customStyles: {
-      primaryColor: '#00008b',
-      secondaryColor: '#FFB366',
-      accentColor: '#6AAAFF',
-      backgroundColor: '#FFFFFF'
+  const styles = ${JSON.stringify(customStyles)};
+  const styleElement = document.createElement('style');
+  styleElement.textContent = \`
+    :root {
+      --primary-color: \${styles.primaryColor};
+      --secondary-color: \${styles.secondaryColor};
+      --accent-color: \${styles.accentColor};
+      --background-color: \${styles.backgroundColor};
     }
-  };
-
-  // Get country info from meta tag
-  function getCountryInfo() {
-    try {
-      const countryHeader = document.head.querySelector('meta[name="x-country-site"]');
-      if (countryHeader) {
-        return JSON.parse(countryHeader.getAttribute('content'));
-      }
-      
-      // Otherwise extract from URL path
-      const pathParts = window.location.pathname.split('/');
-      if (pathParts[1] === 'country' && pathParts[2]) {
-        return {
-          ...defaultCountryConfig,
-          slug: pathParts[2]
-        };
-      }
-      
-      return defaultCountryConfig;
-    } catch (error) {
-      console.error('Error parsing country info:', error);
-      return defaultCountryConfig;
-    }
-  }
-
-  // Apply country-specific styles
-  function injectCountryStyles() {
-    const countryInfo = getCountryInfo();
-    const styles = countryInfo.customStyles || defaultCountryConfig.customStyles;
-    
-    const styleElement = document.createElement('style');
-    styleElement.textContent = \`
-      :root {
-        --primary-color: \${styles.primaryColor};
-        --secondary-color: \${styles.secondaryColor};
-        --accent-color: \${styles.accentColor};
-        --background-color: \${styles.backgroundColor};
-      }
-    \`;
-    document.head.appendChild(styleElement);
-  }
-
-  // Initialize
-  injectCountryStyles();
+  \`;
+  document.head.appendChild(styleElement);
 });
 `;
 ---
@@ -117,24 +53,20 @@ document.addEventListener('DOMContentLoaded', function() {
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
-        <link rel="icon" type="image/svg+xml" href={`${basePath}/favicon.svg`} />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="generator" content={Astro.generator} />
-        <meta name="description" content={`Erovoutika International Site for ${countryName}`} />
-        {countryInfo && <meta name="x-country-site" content={JSON.stringify(countryInfo)} />}
+        <meta name="description" content={nav?.Content?.description || `Robolution International Site`} />
         <title>{siteTitle}</title>
         <link
             href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css"
             rel="stylesheet"
         />
-        <!-- Define global path helpers -->
         <script set:html={script} />
-        <!-- Add country-specific styles -->
         <style is:inline set:html={`
           :root {
             ${countryCssVars}
           }
         `}></style>
-        <!-- Country context initialization -->
         <script set:html={countryContextScript}></script>
         <script>
             document.addEventListener("DOMContentLoaded", () => {
@@ -144,15 +76,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 const bannerState = localStorage.getItem("bannerVisibility");
 
                 if (banner) {
-                    // Apply the saved state from localStorage
                     if (bannerState === "hidden") {
                         banner.style.display = "none";
                         if (toggleButton)
-                            toggleButton.style.backgroundColor = "red"; // Off state
+                            toggleButton.style.backgroundColor = "red";
                     } else {
                         banner.style.display = "block";
                         if (toggleButton)
-                            toggleButton.style.backgroundColor = "green"; // On state
+                            toggleButton.style.backgroundColor = "green";
                     }
                 }
 
@@ -160,28 +91,25 @@ document.addEventListener('DOMContentLoaded', function() {
                     toggleButton.addEventListener("click", () => {
                         if (banner.style.display === "none") {
                             banner.style.display = "block";
-                            toggleButton.style.backgroundColor = "green"; // On state
-                            localStorage.setItem("bannerVisibility", "visible"); // Save state
+                            toggleButton.style.backgroundColor = "green";
+                            localStorage.setItem("bannerVisibility", "visible");
                         } else {
                             banner.style.display = "none";
-                            toggleButton.style.backgroundColor = "red"; // Off state
-                            localStorage.setItem("bannerVisibility", "hidden"); // Save state
+                            toggleButton.style.backgroundColor = "red";
+                            localStorage.setItem("bannerVisibility", "hidden");
                         }
                     });
-                } else {
-                    console.error("Toggle button or banner not found.");
                 }
             });
         </script>
     </head>
     <body>
         <div id="banner">
-            <Banner />
+            <Banner content={banner} />
         </div>
-        <Nav />
+        <Nav content={nav} />
         <slot />
-        <!-- <button onclick=`${connectDB}`>button </button> -->
-        <Footer1 />
+        <Footer1 content={footer} />
     </body>
     <script
         is:inline

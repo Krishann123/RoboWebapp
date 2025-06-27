@@ -1,0 +1,847 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import { getCountryInfo } from "../lib/country-context";
+
+// Get country information
+const countryInfo = getCountryInfo();
+const { name: countryName } = countryInfo;
+
+// Tournament categories
+const tournamentCategories = [
+  {
+    id: "elementary",
+    title: "Elementary Division",
+    ageRange: "Ages 8-11",
+    description: "Designed for young beginners, introducing basic robotics concepts through simple, engaging challenges.",
+    image: "/images/tournament/elementary.jpg",
+    categories: ["Line Following", "Object Sorting", "Simple Maze"]
+  },
+  {
+    id: "junior",
+    title: "Junior Division",
+    ageRange: "Ages 12-14",
+    description: "For middle school students, focusing on more advanced programming and problem-solving skills.",
+    image: "/images/tournament/junior.jpg",
+    categories: ["Advanced Navigation", "Rescue Mission", "Soccer Challenge"]
+  },
+  {
+    id: "senior",
+    title: "Senior Division",
+    ageRange: "Ages 15-18",
+    description: "High school level competition with complex challenges requiring advanced robotics knowledge.",
+    image: "/images/tournament/senior.jpg",
+    categories: ["Autonomous Navigation", "Industrial Tasks", "Creative Solution"]
+  },
+  {
+    id: "open",
+    title: "Open Division",
+    ageRange: "All Ages",
+    description: "Open to all participants, focusing on innovative robotics solutions to real-world problems.",
+    image: "/images/tournament/open.jpg",
+    categories: ["Innovation Challenge", "Robotics for Good", "Technical Showcase"]
+  }
+];
+
+// Timeline items
+const timelineItems = [
+  {
+    date: "January 15, 2025",
+    title: "Registration Opens",
+    description: "Online registration begins for all divisions and categories."
+  },
+  {
+    date: "March 1, 2025",
+    title: "Early Bird Registration Closes",
+    description: "Last day for discounted early registration fees."
+  },
+  {
+    date: "April 30, 2025",
+    title: "Registration Closes",
+    description: "Final deadline for all tournament registrations."
+  },
+  {
+    date: "May 15, 2025",
+    title: "Qualification Rounds",
+    description: "Regional qualification events held across the country."
+  },
+  {
+    date: "June 10-12, 2025",
+    title: "National Finals",
+    description: `National championship event in ${countryName}.`
+  },
+  {
+    date: "July 25-30, 2025",
+    title: "International Competition",
+    description: "Top teams represent their country at the International Robolution Championship."
+  }
+];
+
+// FAQs about the tournament
+const faqs = [
+  {
+    question: "Who can participate in the tournament?",
+    answer: "The tournament is open to students of all ages, divided into different divisions based on age and experience level."
+  },
+  {
+    question: "Do I need my own robot to participate?",
+    answer: "Yes, participants need to bring their own robots that meet the specifications for their chosen category."
+  },
+  {
+    question: "How much is the registration fee?",
+    answer: "Registration fees vary by division. Early bird registration offers discounted rates. Please check the registration page for current pricing."
+  },
+  {
+    question: "Can teams participate or is it individual only?",
+    answer: "Both team and individual entries are accepted. Teams can have up to 3 members for most categories."
+  },
+  {
+    question: "What programming languages can be used?",
+    answer: "Participants can use any programming language compatible with their robot's platform. Common choices include Scratch, Python, C++, and block-based programming environments."
+  },
+  {
+    question: "How are winners determined?",
+    answer: "Winners are determined based on task completion, time, accuracy, and creative implementation. Detailed scoring criteria will be provided for each category."
+  }
+];
+---
+
+<Layout title={`Tournament | Robolution ${countryName}`}>
+  <Navbar slot="nav" />
+  
+  <!-- Hero Section -->
+  <section class="tournament-hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">Robolution Tournament</h1>
+        <h2 class="hero-subtitle">{countryName} National Robotics Competition</h2>
+        <p class="hero-description">
+          Join the most prestigious robotics competition in {countryName}. Showcase your skills, compete with the best, and qualify for the International Robolution Championship.
+        </p>
+        <div class="hero-buttons">
+          <a href="/registration" class="btn btn-primary">Register Now</a>
+          <a href="#categories" class="btn btn-secondary">View Categories</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Tournament Categories -->
+  <section id="categories" class="tournament-categories">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Competition Categories</h2>
+        <p class="section-subtitle">Explore our various competition divisions and find your perfect challenge</p>
+      </div>
+      
+      <div class="categories-grid">
+        {tournamentCategories.map(category => (
+          <div class="category-card">
+            <div class="category-image">
+              <img src={category.image} alt={category.title} />
+              <div class="category-age">{category.ageRange}</div>
+            </div>
+            <div class="category-content">
+              <h3 class="category-title">{category.title}</h3>
+              <p class="category-description">{category.description}</p>
+              <div class="category-challenges">
+                <h4>Challenges:</h4>
+                <ul class="challenge-list">
+                  {category.categories.map(challenge => (
+                    <li class="challenge-item">{challenge}</li>
+                  ))}
+                </ul>
+              </div>
+              <a href={`/tournament/${category.id}`} class="btn btn-outline">Learn More</a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Timeline Section -->
+  <section class="tournament-timeline">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Tournament Timeline</h2>
+        <p class="section-subtitle">Key dates and milestones for the competition</p>
+      </div>
+      
+      <div class="timeline">
+        {timelineItems.map((item, index) => (
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">{item.date}</div>
+              <h3 class="timeline-title">{item.title}</h3>
+              <p class="timeline-description">{item.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Rules & Guidelines - Summary -->
+  <section class="rules-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Rules & Guidelines</h2>
+        <p class="section-subtitle">Essential information for all participants</p>
+      </div>
+      
+      <div class="rules-cards">
+        <div class="rule-card">
+          <div class="rule-icon">
+            <i class="fas fa-robot"></i>
+          </div>
+          <h3 class="rule-title">Robot Specifications</h3>
+          <p class="rule-description">
+            Size, weight, and component restrictions vary by category. All robots must be original creations.
+          </p>
+          <a href="/tournament/rules#specifications" class="rule-link">View Specifications</a>
+        </div>
+        
+        <div class="rule-card">
+          <div class="rule-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <h3 class="rule-title">Team Requirements</h3>
+          <p class="rule-description">
+            Teams may consist of 1-3 members within the same age division. Mixed-age teams compete in the division of the oldest member.
+          </p>
+          <a href="/tournament/rules#teams" class="rule-link">Team Guidelines</a>
+        </div>
+        
+        <div class="rule-card">
+          <div class="rule-icon">
+            <i class="fas fa-trophy"></i>
+          </div>
+          <h3 class="rule-title">Judging Criteria</h3>
+          <p class="rule-description">
+            Robots are judged on task completion, efficiency, design innovation, and programming complexity.
+          </p>
+          <a href="/tournament/rules#judging" class="rule-link">Scoring Details</a>
+        </div>
+        
+        <div class="rule-card">
+          <div class="rule-icon">
+            <i class="fas fa-clipboard-list"></i>
+          </div>
+          <h3 class="rule-title">Competition Process</h3>
+          <p class="rule-description">
+            The competition includes qualification rounds, semi-finals, and finals with different challenges at each stage.
+          </p>
+          <a href="/tournament/rules#process" class="rule-link">Process Overview</a>
+        </div>
+      </div>
+      
+      <div class="rules-cta">
+        <a href="/tournament/rules" class="btn btn-primary">View Complete Rulebook</a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- FAQ Section -->
+  <section class="faq-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Find answers to common questions about the tournament</p>
+      </div>
+      
+      <div class="faq-accordion">
+        {faqs.map((faq, index) => (
+          <div class="faq-item">
+            <button class="faq-question" id={`faq-${index}`} aria-expanded="false">
+              {faq.question}
+              <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+            </button>
+            <div class="faq-answer" id={`faq-answer-${index}`} aria-hidden="true">
+              <p>{faq.answer}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      
+      <div class="faq-contact">
+        <p>Don't see your question answered here? Contact us at <a href="mailto:tournament@robolution.org">tournament@robolution.org</a></p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- CTA Section -->
+  <section class="tournament-cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2 class="cta-title">Ready to Showcase Your Robotics Skills?</h2>
+        <p class="cta-text">Join hundreds of talented participants in the {countryName} National Robotics Tournament.</p>
+        <div class="cta-buttons">
+          <a href="/registration" class="btn btn-primary">Register Now</a>
+          <a href="/contact" class="btn btn-outline">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <Footer slot="footer" />
+</Layout>
+
+<script>
+  // FAQ Accordion Functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const faqButtons = document.querySelectorAll('.faq-question');
+    
+    faqButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const isExpanded = button.getAttribute('aria-expanded') === 'true';
+        const answerId = button.id.replace('faq-', 'faq-answer-');
+        const answerElement = document.getElementById(answerId);
+        
+        // Toggle the current item
+        button.setAttribute('aria-expanded', !isExpanded);
+        answerElement.setAttribute('aria-hidden', isExpanded);
+        
+        // Optionally close other open items
+        /*
+        faqButtons.forEach(otherButton => {
+          if (otherButton !== button) {
+            const otherAnswerId = otherButton.id.replace('faq-', 'faq-answer-');
+            const otherAnswerElement = document.getElementById(otherAnswerId);
+            
+            otherButton.setAttribute('aria-expanded', 'false');
+            otherAnswerElement.setAttribute('aria-hidden', 'true');
+          }
+        });
+        */
+      });
+    });
+  });
+</script>
+
+<style>
+/* Hero Section Styles */
+.tournament-hero {
+  background: linear-gradient(rgba(0, 0, 139, 0.85), rgba(0, 0, 139, 0.85)), url('/images/tournament/hero-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 8rem 0 5rem;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.hero-subtitle {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  opacity: 0.9;
+}
+
+.hero-description {
+  font-size: 1.1rem;
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* Section Headers */
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.section-subtitle {
+  font-size: 1.2rem;
+  color: #6c757d;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Tournament Categories Section */
+.tournament-categories {
+  padding: 5rem 0;
+  background-color: #f8f9fa;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.category-card {
+  background-color: white;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+}
+
+.category-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.category-image {
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.category-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.category-age {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.category-content {
+  padding: 1.5rem;
+}
+
+.category-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.category-description {
+  color: #6c757d;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.category-challenges {
+  margin-bottom: 1.5rem;
+}
+
+.category-challenges h4 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-color);
+}
+
+.challenge-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.challenge-item {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+}
+
+.challenge-item:before {
+  content: '\f00c';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  color: var(--primary-color);
+  margin-right: 0.75rem;
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Timeline Section */
+.tournament-timeline {
+  padding: 5rem 0;
+  background-color: white;
+}
+
+.timeline {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.timeline:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  background-color: var(--primary-color);
+  transform: translateX(-50%);
+  border-radius: 2px;
+  opacity: 0.3;
+}
+
+.timeline-item {
+  position: relative;
+  padding: 2rem 0;
+}
+
+.timeline-marker {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.timeline-content {
+  width: 45%;
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.timeline-item:nth-child(even) .timeline-content {
+  margin-left: auto;
+}
+
+.timeline-item:nth-child(odd) .timeline-content:after,
+.timeline-item:nth-child(even) .timeline-content:after {
+  content: '';
+  position: absolute;
+  top: 2rem;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+}
+
+.timeline-item:nth-child(odd) .timeline-content:after {
+  right: -20px;
+  border-left-color: white;
+}
+
+.timeline-item:nth-child(even) .timeline-content:after {
+  left: -20px;
+  border-right-color: white;
+}
+
+.timeline-date {
+  font-size: 0.9rem;
+  color: var(--primary-color);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-color);
+}
+
+.timeline-description {
+  color: #6c757d;
+  line-height: 1.6;
+}
+
+/* Rules & Guidelines Section */
+.rules-section {
+  padding: 5rem 0;
+  background-color: #f8f9fa;
+}
+
+.rules-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.rule-card {
+  background-color: white;
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.rule-card:hover {
+  transform: translateY(-10px);
+}
+
+.rule-icon {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+}
+
+.rule-title {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+}
+
+.rule-description {
+  color: #6c757d;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.rule-link {
+  color: var(--primary-color);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rule-link:after {
+  content: '\f054';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: 0.8rem;
+}
+
+.rules-cta {
+  text-align: center;
+}
+
+/* FAQ Section Styles */
+.faq-section {
+  padding: 5rem 0;
+  background-color: white;
+}
+
+.faq-accordion {
+  max-width: 800px;
+  margin: 0 auto 3rem;
+}
+
+.faq-item {
+  margin-bottom: 1rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.faq-question {
+  width: 100%;
+  padding: 1.25rem 1.5rem;
+  background-color: white;
+  border: none;
+  text-align: left;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-color);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.faq-question:hover {
+  background-color: #f8f9fa;
+}
+
+.faq-icon {
+  font-size: 0.9rem;
+  transition: transform 0.3s ease;
+}
+
+.faq-question[aria-expanded="true"] .faq-icon {
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.faq-answer[aria-hidden="false"] {
+  padding: 0 1.5rem 1.25rem;
+  max-height: 500px;
+}
+
+.faq-answer p {
+  margin: 0;
+  color: #6c757d;
+  line-height: 1.6;
+}
+
+.faq-contact {
+  text-align: center;
+  color: #6c757d;
+}
+
+.faq-contact a {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* CTA Section Styles */
+.tournament-cta {
+  padding: 5rem 0;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  color: white;
+  text-align: center;
+}
+
+.cta-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cta-title {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.cta-text {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.cta-buttons .btn-outline {
+  border-color: white;
+  color: white;
+}
+
+.cta-buttons .btn-outline:hover {
+  background-color: white;
+  color: var(--primary-color);
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .rules-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.5rem;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .timeline:before {
+    left: 30px;
+  }
+  
+  .timeline-marker {
+    left: 30px;
+  }
+  
+  .timeline-content {
+    width: calc(100% - 60px);
+    margin-left: 60px !important;
+  }
+  
+  .timeline-item:nth-child(odd) .timeline-content:after,
+  .timeline-item:nth-child(even) .timeline-content:after {
+    display: none;
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .tournament-hero,
+  .tournament-categories,
+  .tournament-timeline,
+  .rules-section,
+  .faq-section {
+    padding: 3rem 0;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.25rem;
+  }
+  
+  .hero-buttons {
+    flex-direction: column;
+    max-width: 250px;
+    margin: 0 auto;
+  }
+  
+  .categories-grid,
+  .rules-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .rule-card {
+    padding: 1.5rem;
+  }
+}
+</style> 

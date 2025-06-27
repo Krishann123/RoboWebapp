@@ -1,0 +1,78 @@
+---
+import { Accordion } from "@/components/admin/Accordion";
+import Layout from "../layouts/Layout.astro";
+import { getPageDetails, fetchPageContent } from "@/components/db";
+import Admin_Nominations from "@/components/Nominations/Admin_Nominations.astro";
+import { DialogDemo } from "@/components/admin/newsForm";
+const pageDetails = await getPageDetails();
+const data = await fetchPageContent("News");
+const content = data.newsContent;
+import { supabase } from "@/lib/supabase-client";
+import { getData, getSelectedIndex, setSelectedIndex } from "@/components/db";
+const templateData = await getData();
+const accessToken = Astro.cookies.get("sb-access-token");
+const refreshToken = Astro.cookies.get("sb-refresh-token");
+import TemplateSelect from "@/components/admin/TemplateSelect.tsx";
+Astro.response.headers.set("Cache-Control", "no-store");
+
+if (!accessToken || !refreshToken) {
+    return Astro.redirect("/login");
+}
+
+let session;
+try {
+    session = await supabase.auth.setSession({
+        refresh_token: refreshToken.value,
+        access_token: accessToken.value,
+    });
+    if (session.error) {
+        Astro.cookies.delete("sb-access-token", {
+            path: "/",
+        });
+        Astro.cookies.delete("sb-refresh-token", {
+            path: "/",
+        });
+        return Astro.redirect("/login");
+    }
+} catch (error) {
+    Astro.cookies.delete("sb-access-token", {
+        path: "/",
+    });
+    Astro.cookies.delete("sb-refresh-token", {
+        path: "/",
+    });
+    return Astro.redirect("/login");
+}
+
+const email = session.data.user?.email
+---
+
+<Layout title="Erovoutika Dubai - Admin">
+    <div class="bg-violet-800 w-full h-20"></div>
+
+    <div class="flex flex-col justify-center items-center mx-60 w-auto h-auto">
+        <div class="flex justify-end gap-4 text-center my-5 w-full">
+            <TemplateSelect
+                templateData={templateData}
+                selectedIndex={getSelectedIndex()}
+                client:load
+            />
+            <button
+                id="toggleBannerButton"
+                class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+            >
+                Toggle Banner
+            </button>
+            <DialogDemo client:idle />
+            <form action="/api/auth/signout">
+                <button
+                    type="submit"
+                    class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+                    >Sign out</button
+                >
+            </form>
+        </div>
+        <Accordion pageDetails={pageDetails} client:idle />
+        <Admin_Nominations />
+    </div>
+</Layout>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Tournament</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Tournament in <%= countrySite.name %></h1>
+        <form action="/admin/country-sites/<%= countrySite._id %>/tournaments/<%= tournament._id %>" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" class="form-control" value="<%= tournament.title %>" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" class="form-control" rows="5"><%= tournament.description %></textarea>
+            </div>
+            <div class="form-group">
+                <label for="venue">Venue</label>
+                <input type="text" id="venue" name="venue" class="form-control" value="<%= tournament.venue %>">
+            </div>
+            <div class="form-group">
+                <label for="date">Date</label>
+                <input type="date" id="date" name="date" class="form-control" value="<%= tournament.date ? tournament.date.toISOString().split('T')[0] : '' %>">
+            </div>
+            <div class="form-group">
+                <label for="bannerImage">Banner Image</label>
+                <input type="file" id="bannerImage" name="bannerImage" class="form-control">
+                <% if (tournament.bannerImage) { %>
+                    <img src="<%= tournament.bannerImage %>" alt="Current Banner" width="200" style="margin-top: 10px;">
+                <% } %>
+            </div>
+            <div class="form-group">
+                <label for="registrationLink">Registration Link</label>
+                <input type="url" id="registrationLink" name="registrationLink" class="form-control" value="<%= tournament.registrationLink %>">
+            </div>
+            <button type="submit" class="btn btn-primary">Update Tournament</button>
+            <a href="/admin/country-sites/<%= countrySite._id %>" class="btn btn-outline">Cancel</a>
+        </form>
+    </div>
+</body>
+</html> 

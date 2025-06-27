@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="/css/responsive.css">
   <script src="/js/script.js" defer></script>
   <script src="/js/mobile.js" defer></script>
+  <script src="/js/international-dropdown.js" defer></script>
   <!-- Add Font Awesome for the upvote button and icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <style>
@@ -522,9 +523,8 @@
           </div>
         </div>
         <a href="/user-categories" class="nav-button">Categories</a>
-        <a href="/international" class="nav-button">International</a>
         <div class="dropdown">
-          <button class="nav-button dropdown-btn">Regional</button>
+          <button class="nav-button dropdown-btn" style="display: flex; align-items: center;">Regional <span style="margin-left: 5px; font-size: 0.8em;">▼</span></button>
           <div class="dropdown-content">
             <a href="/regional?region=All">All Regions</a>
             <% 
@@ -547,6 +547,15 @@
             <% }); %>
           </div>
         </div>
+        
+        <div class="dropdown">
+          <button class="nav-button dropdown-btn" style="display: flex; align-items: center;">International <span style="margin-left: 5px; font-size: 0.8em;">▼</span></button>
+          <div class="dropdown-content">
+            <a href="/country">View All Countries</a>
+            <!-- Country sites will be added dynamically via international-dropdown.js -->
+          </div>
+        </div>
+        
         <a href="/registration" class="nav-button registration-button" target="_blank">Registration</a>
         <a href="/login" class="nav-button login-button">Login</a>
         <a href="/signup" class="nav-button signup-button">Sign Up</a>

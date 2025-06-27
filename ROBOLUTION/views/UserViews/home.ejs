@@ -828,10 +828,8 @@
         <div class="dropdown">
           <button class="nav-button dropdown-btn" style="display: flex; align-items: center;">International <span style="margin-left: 5px; font-size: 0.8em;">▼</span></button>
           <div class="dropdown-content">
-            <a href="/country">View All Countries</a>
-            <div class="dropdown-divider"></div>
-            <a href="/dubai">Dubai</a>
-            <!-- Other countries will be added dynamically -->
+            <a href="/country/gallery">View All Countries</a>
+            <!-- Country sites will be added dynamically via international-dropdown.js -->
           </div>
         </div>
         <div class="dropdown">
@@ -1212,7 +1210,8 @@
     }
     console.log('Partners data received and parsed from script tag in home.ejs:', partnersDataFromServer);
     
-    const currentUser = <%- typeof user !== 'undefined' && user ? JSON.stringify(user) : 'null' %>;
+    window.CUR_USER = <%- typeof user !== 'undefined' && user ? JSON.stringify(user) : 'null' %>;
+    const currentUser = window.CUR_USER;
 
     function checkLoginStatus() {
       const loginButton = document.querySelector('.login-button');

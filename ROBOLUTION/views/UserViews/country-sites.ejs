@@ -3,59 +3,280 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>International Robolution Sites</title>
+  <title>International Sites Management | Robolution Admin</title>
   <link rel="shortcut icon" href="/images/ROBOLUTION_ICON.ico" type="image/x-icon">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/admin.css">
   <script src="/js/script.js" defer></script>
-  <script src="/js/mobile.js" defer></script>
-  <script src="/js/international-dropdown.js" defer></script>
   <!-- Add Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <style>
-    body, main {
-      background-color: #f8f9fa;
+    :root {
+      --primary-color: #00008b;
+      --primary-light: #1a1a9e;
+      --primary-dark: #000066;
+      --secondary-color: #4CAF50;
+      --secondary-hover: #45a049;
+      --text-light: #f8f9fa;
+      --text-dark: #343a40;
+      --bg-light: #ffffff;
+      --bg-dark: #212529;
+      --bg-gray: #f8f9fa;
+      --border-color: #dee2e6;
+      --sidebar-width: 250px;
+      --header-height: 70px;
+      --danger: #dc3545;
+      --warning: #ffc107;
+      --info: #17a2b8;
+      --success: #28a745;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-gray);
+      color: var(--text-dark);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Dashboard Layout */
+    .dashboard-container {
+      display: flex;
+      min-height: 100vh;
     }
     
+    /* Sidebar */
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--primary-color);
+      color: var(--text-light);
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar.collapsed {
+      width: 70px;
+    }
+    
+    .sidebar.collapsed .sidebar-logo h1 {
+      display: none;
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .sidebar.collapsed .sidebar-header {
+      padding: 20px 10px;
+      justify-content: center;
+    }
+    
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .sidebar-logo img {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+    
+    .sidebar.collapsed .sidebar-logo img {
+      margin-right: 0;
+    }
+
+    .sidebar-logo h1 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    
+    .sidebar-toggle {
+      background: none;
+      border: none;
+      color: var(--text-light);
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 4px;
+    }
+    
+    .sidebar.collapsed .sidebar-toggle {
+      position: absolute;
+      right: 10px;
+      top: 20px;
+    }
+    
+    .sidebar-toggle:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .sidebar.collapsed .sidebar-toggle {
+      transform: rotate(180deg);
+    }
+    
+    .sidebar.collapsed .sidebar-text,
+    .sidebar.collapsed .sidebar-heading {
+      display: none;
+    }
+    
+    .sidebar.collapsed .sidebar-item {
+      display: flex;
+      justify-content: center;
+    }
+    
+    .sidebar.collapsed .sidebar-link {
+      padding: 12px;
+      justify-content: center;
+    }
+    
+    .sidebar.collapsed .sidebar-icon {
+      margin-right: 0;
+    }
+    
+    .sidebar.collapsed .sidebar-dropdown-toggle::after {
+      display: none;
+    }
+    
+    .sidebar.collapsed .sidebar-dropdown.active .sidebar-dropdown-menu {
+      display: none; /* Always hide dropdown when collapsed */
+    }
+
+    .sidebar-menu {
+      padding: 20px 0;
+    }
+
+    .sidebar-heading {
+      padding: 10px 20px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .sidebar-item {
+      position: relative;
+      display: block;
+    }
+    
+    .sidebar-link {
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.8);
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-link:hover {
+      background-color: var(--primary-light);
+      color: white;
+    }
+
+    .sidebar-link.active {
+      background-color: var(--primary-light);
+      color: white;
+      border-left: 4px solid var(--secondary-color);
+    }
+
+    .sidebar-icon {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      padding: 20px;
+      transition: margin-left 0.3s ease;
+    }
+    
+    .main-content.expanded {
+      margin-left: 70px;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .header-title {
+      font-size: 1.8rem;
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    /* Countries Grid */
     .countries-container {
+      padding: 20px;
       max-width: 1200px;
-      margin: 40px auto;
-      padding: 0 20px;
+      margin: 0 auto;
     }
     
     .countries-header {
-      text-align: center;
       margin-bottom: 40px;
+      text-align: center;
     }
     
     .countries-title {
-      font-size: 2.5rem;
-      color: #00008b;
-      margin-bottom: 10px;
+      font-size: 2.2rem;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      font-weight: 700;
     }
     
     .countries-subtitle {
-      font-size: 1.2rem;
-      color: #666;
-      max-width: 700px;
-      margin: 0 auto 30px;
+      color: var(--text-dark);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+      font-size: 1.1rem;
     }
     
     .countries-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 25px;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
     }
     
     .country-card {
-      background-color: white;
+      background-color: var(--bg-light);
       border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
     }
     
     .country-card:hover {
@@ -64,28 +285,24 @@
     }
     
     .country-banner {
-      height: 150px;
-      background-size: cover;
-      background-position: center;
+      height: 120px;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       position: relative;
     }
     
     .country-flag-container {
-      position: absolute;
-      bottom: -20px;
-      left: 20px;
       width: 80px;
-      height: 50px;
-      border-radius: 4px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      height: 80px;
+      border-radius: 50%;
       overflow: hidden;
-      background-color: white;
+      border: 3px solid white;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
+      background-color: white;
     }
     
     .country-flag {
@@ -95,58 +312,56 @@
     }
     
     .country-content {
-      padding: 30px 20px 20px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
+      padding: 25px;
+      text-align: center;
     }
     
     .country-name {
       font-size: 1.5rem;
+      color: var(--primary-color);
+      margin-bottom: 15px;
       font-weight: 600;
-      margin-bottom: 10px;
-      color: #333;
     }
     
     .country-description {
       color: #666;
       margin-bottom: 20px;
-      flex: 1;
+      line-height: 1.5;
+      font-size: 0.95rem;
+      min-height: 70px;
     }
     
     .country-link {
       display: inline-block;
-      background-color: #007bff;
+      background-color: var(--primary-color);
       color: white;
       padding: 10px 20px;
       border-radius: 4px;
       text-decoration: none;
-      text-align: center;
-      transition: background-color 0.2s ease;
       font-weight: 500;
+      transition: background-color 0.2s;
+      margin-bottom: 15px;
     }
     
     .country-link:hover {
-      background-color: #0056b3;
+      background-color: var(--primary-light);
     }
     
     .no-countries {
-      padding: 60px 20px;
       text-align: center;
+      padding: 50px 0;
     }
     
     .no-countries-message {
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       color: #666;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
     
-    /* Message styling */
     .message {
       padding: 15px;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       border-radius: 4px;
-      text-align: center;
     }
     
     .success {
@@ -161,80 +376,319 @@
       border: 1px solid #f5c6cb;
     }
     
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-      .countries-grid {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      }
-      
-      .countries-title {
-        font-size: 2rem;
-      }
+    /* User Dropdown */
+    .user-dropdown {
+      position: relative;
     }
     
-    @media (max-width: 480px) {
-      .countries-grid {
-        grid-template-columns: 1fr;
+    .user-dropdown-btn {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 4px;
+      transition: background-color 0.2s;
+    }
+    
+    .user-dropdown-btn:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin-right: 10px;
+    }
+
+    .user-info {
+      margin-right: 10px;
+    }
+    
+    .user-name {
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .user-role {
+      font-size: 0.8rem;
+      color: rgba(0, 0, 0, 0.6);
+    }
+    
+    .user-dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 200px;
+      background-color: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      display: none;
+      z-index: 100;
+    }
+    
+    .user-dropdown.active .user-dropdown-menu {
+      display: block;
+    }
+    
+    .user-dropdown-item {
+      padding: 12px 15px;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: var(--text-dark);
+      transition: background-color 0.2s;
+    }
+    
+    .user-dropdown-item:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+    
+    .user-dropdown-item i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+    }
+
+    .admin-controls {
+      background-color: #f8f9fa;
+      padding: 25px;
+      border-radius: 8px;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
       }
+      
+    /* For dropdowns in sidebar */
+    .sidebar-dropdown-menu {
+      padding-left: 20px;
+        max-height: 0;
+        overflow: hidden;
+      transition: max-height 0.3s ease;
+      }
+      
+    .sidebar-dropdown.active .sidebar-dropdown-menu {
+        max-height: 500px;
+    }
+    
+    .sidebar-dropdown-link {
+      padding: 8px 10px 8px 50px;
+      display: block;
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+    
+    .sidebar-dropdown-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      }
+      
+    .sidebar-dropdown-toggle::after {
+      content: '\f107';
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      margin-left: auto;
+      transition: transform 0.3s ease;
+      }
+      
+    .sidebar-dropdown.active .sidebar-dropdown-toggle::after {
+      transform: rotate(180deg);
     }
   </style>
 </head>
 <body>
-  <div class="content-wrapper">
-    <!-- Header -->
-    <header>
-      <div class="header-container">
-        <a href="/" class="logo">
-          <img src="/images/ROBOLUTION_2.png" alt="ROBOLUTION Logo" width="60px" height="60px">
-        </a>
-        <a href="/" class="title">ROBOLUTION</a>
-        
-        <!-- Toggle button for mobile menu -->
-        <div class="menu-toggle" id="mobile-menu">
-          <span class="bar"></span>
-          <span class="bar"></span>
-          <span class="bar"></span>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img src="/images/ADMIN_LOGO.png" alt="Robolution Logo">
+          <h1>Robolution</h1>
+        </div>
+        <button class="sidebar-toggle" id="sidebar-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+
+      <div class="sidebar-menu">
+        <div class="sidebar-heading">Main</div>
+        <div class="sidebar-item">
+          <a href="#dashboard" class="sidebar-link" data-page="dashboard">
+            <i class="fas fa-tachometer-alt sidebar-icon"></i>
+            <span class="sidebar-text">Dashboard</span>
+          </a>
+        </div>
+        <div class="sidebar-item">
+          <a href="#posts" class="sidebar-link" data-page="posts">
+            <i class="fas fa-newspaper sidebar-icon"></i>
+            <span class="sidebar-text">Posts</span>
+          </a>
+        </div>
+        <div class="sidebar-item">
+          <a href="#create-post" class="sidebar-link" data-page="create-post">
+            <i class="fas fa-plus-circle sidebar-icon"></i>
+            <span class="sidebar-text">Create Post</span>
+          </a>
         </div>
         
-        <!-- Navigation links -->
-        <nav id="navbar">
-          <a href="/" class="nav-button">Home</a>
-          
-          <div class="dropdown">
-            <button class="nav-button dropdown-btn" style="display: flex; align-items: center;">Regional <span style="margin-left: 5px; font-size: 0.8em;">▼</span></button>
-            <div class="dropdown-content">
-              <a href="/regional?region=All">All Regions</a>
-              <% /* regions would be rendered here */ %>
+        <div class="sidebar-heading">Content</div>
+        <div class="sidebar-item">
+          <a href="#categories" class="sidebar-link" data-page="categories">
+            <i class="fas fa-layer-group sidebar-icon"></i>
+            <span class="sidebar-text">Categories</span>
+          </a>
+        </div>
+        <div class="sidebar-item">
+          <a href="#manage-categories" class="sidebar-link" data-page="manage-categories">
+            <i class="fas fa-tasks sidebar-icon"></i>
+            <span class="sidebar-text">Manage Categories</span>
+          </a>
+        </div>
+
+        <div class="sidebar-heading">Users</div>
+        <% if (user && user.role === 'superadmin') { %>
+        <div class="sidebar-item">
+          <a href="#manage-accounts" class="sidebar-link" data-page="manage-accounts">
+            <i class="fas fa-users-cog sidebar-icon"></i>
+            <span class="sidebar-text">Manage Accounts</span>
+          </a>
             </div>
+        <% } %>
+        <div class="sidebar-item">
+          <a href="#user-profiles" class="sidebar-link" data-page="user-profiles">
+            <i class="fas fa-id-card sidebar-icon"></i>
+            <span class="sidebar-text">User Profiles</span>
+          </a>
           </div>
           
-          <a href="/user-categories" class="nav-button">Categories</a>
-          <% if (user && user.role === 'judge') { %>
-            <a href="/scoresheet" class="nav-button">Scoresheet</a>
+        <div class="sidebar-heading">Registrations</div>
+        <div class="sidebar-item">
+          <a href="#manage-registrations" class="sidebar-link" data-page="manage-registrations">
+            <i class="fas fa-clipboard-list sidebar-icon"></i>
+            <span class="sidebar-text">Manage Registrations</span>
+          </a>
+            </div>
+
+        <div class="sidebar-item sidebar-dropdown">
+          <a href="#regional" class="sidebar-link sidebar-dropdown-toggle" data-page="regional">
+            <i class="fas fa-map-marker-alt sidebar-icon"></i>
+            <span class="sidebar-text">Regional</span>
+          </a>
+          <div class="sidebar-dropdown-menu">
+            <a href="#regional-all" class="sidebar-dropdown-link" data-region="All">All Regions</a>
+            <% if (typeof uniqueRegions !== 'undefined' && uniqueRegions.length > 0) { %>
+              <% uniqueRegions.forEach(function(region) { %>
+                <a href="#regional-<%= region.toLowerCase().replace(/\s+/g, '-') %>" class="sidebar-dropdown-link" data-region="<%= region %>"><%= region %></a>
+              <% }); %>
+            <% } else { %>
+              <!-- Optional: Message if no specific regions beyond 'All' -->
+            <% } %>
+          </div>
+        </div>
+
+        <div class="sidebar-heading">Scoring</div>
+        <div class="sidebar-item">
+          <a href="#leaderboard" class="sidebar-link" data-page="leaderboard">
+            <i class="fas fa-trophy sidebar-icon"></i>
+            <span class="sidebar-text">Competition Leaderboard</span>
+          </a>
+          </div>
+          
+        <div class="sidebar-heading">System</div>
+        <% if (user && user.role === 'superadmin') { %>
+        <div class="sidebar-item">
+          <a href="#backups" class="sidebar-link" data-page="backups">
+            <i class="fas fa-database sidebar-icon"></i>
+            <span class="sidebar-text">Backups</span>
+          </a>
+        </div>
           <% } %>
           
-          <a href="/country" class="nav-button selected">International</a>
-          
-          <div class="dropdown">
-            <button class="nav-button dropdown-btn">Account</button>
-            <div class="dropdown-content">
-              <% if (user) { %>
-                <a href="/profile">Profile</a>
-                <a href="/logout">Logout</a>
-                <% if (user.isAdmin) { %>
-                  <a href="/admin/dashboard">Admin Dashboard</a>
+        <div class="sidebar-item">
+          <a href="/admin/year-videos" class="sidebar-link">
+            <i class="fas fa-calendar-alt sidebar-icon"></i>
+            <span class="sidebar-text">Year Videos</span>
+          </a>
+        </div>
+        
+        <div class="sidebar-heading">INTERNATIONAL SITES</div>
+        <div class="sidebar-item">
+          <a href="/country" class="sidebar-link active">
+            <i class="fas fa-globe-americas sidebar-icon"></i>
+            <span class="sidebar-text">Country Sites</span>
+          </a>
+        </div>
+        <div class="sidebar-item">
+          <a href="/admin/international/news" class="sidebar-link">
+            <i class="fas fa-newspaper sidebar-icon"></i>
+            <span class="sidebar-text">Manage News</span>
+          </a>
+        </div>
+        <div class="sidebar-item">
+          <a href="#manage-partners" class="sidebar-link" data-page="manage-partners">
+            <i class="fas fa-handshake sidebar-icon"></i>
+            <span class="sidebar-text">Manage Partners</span>
+          </a>
+        </div>
+        <div class="sidebar-item">
+          <a href="/logout" class="sidebar-link">
+            <i class="fas fa-sign-out-alt sidebar-icon"></i>
+            <span class="sidebar-text">Logout</span>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="main-content">
+      <div class="header">
+        <h1 class="header-title">International Sites Management</h1>
+        <div class="header-actions">
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-dropdown-btn" id="user-dropdown-btn">
+              <div class="user-avatar">
+                <% if (locals.user && user.username) { %>
+                  <%= user.username.charAt(0).toUpperCase() %>
+                <% } else { %>
+                  A
                 <% } %>
-              <% } else { %>
-                <a href="/login">Login</a>
-                <a href="/register">Register</a>
-              <% } %>
+              </div>
+              <div class="user-info">
+                <div class="user-name">
+                  <% if (locals.user && user.username) { %>
+                    <%= user.username %>
+                  <% } else { %>
+                    Admin
+                  <% } %>
+                </div>
+                <div class="user-role">
+                  <% if (locals.user && user.role) { %>
+                    <%= user.role %>
+                  <% } else { %>
+                    Administrator
+                  <% } %>
+                </div>
+              </div>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="user-dropdown-menu">
+              <a href="/logout" class="user-dropdown-item">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </a>
             </div>
           </div>
-        </nav>
+        </div>
       </div>
-    </header>
     
-    <main>
       <div class="countries-container">
         <div class="countries-header">
           <h1 class="countries-title">International Robolution Sites</h1>
@@ -252,26 +706,81 @@
             <%= errorMessage %>
           </div>
         <% } %>
+
+        <% if (user && user.isAdmin) { %>
+          <div class="admin-controls">
+            <h3 style="font-size: 1.6rem; color: #333; margin-top:0; margin-bottom: 15px; font-weight: 600; text-align: center;">Administrator Panel</h3>
+            <p style="text-align: center; margin-bottom: 20px; color: #555;">Create, edit, and manage country sites for Robolution international.</p>
+            
+            <div style="background-color: #e9f7fe; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+              <h4 style="color: #0c5460; margin-top: 0; margin-bottom: 10px; font-size: 1.1rem;">Important Information</h4>
+              <ul style="margin-bottom: 0; padding-left: 20px; color: #0c5460;">
+                <li>Each country site uses the same template structure but can have unique content.</li>
+                <li>The "Dubai" template serves as the base for all new country sites.</li>
+                <li>You can upload images directly from the edit page - no need to manually add files to the server.</li>
+                <li>Changes to content will be reflected immediately on the site.</li>
+              </ul>
+            </div>
+            
+            <form action="/country/create" method="POST" style="background-color: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+              <h4 style="margin-top: 0; margin-bottom: 15px; color: #333; font-size: 1.2rem;">Create New Country Site</h4>
+              <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end;">
+                <div style="flex-grow: 1;">
+                  <label for="countryName" style="display: block; margin-bottom: 5px; font-weight: 500; color: #333;">Country Name:</label>
+                  <input type="text" id="countryName" name="countryName" placeholder="e.g., Singapore, Malaysia, Philippines" required style="width: 100%; padding: 12px; border-radius: 4px; border: 1px solid #ddd; font-size: 1rem;">
+                </div>
+                <button type="submit" style="background-color: #00008b; color: white; padding: 12px 24px; border-radius: 4px; border: none; cursor: pointer; font-weight: 500; font-size: 1rem; transition: background-color 0.2s;">Create New Site</button>
+              </div>
+              <p style="margin-top: 10px; margin-bottom: 0; font-size: 0.9rem; color: #666;">This will create a new country site based on the "default" template.</p>
+            </form>
+          </div>
+        <% } %>
         
         <% if (countrySites && countrySites.length > 0) { %>
           <div class="countries-grid">
             <% countrySites.forEach(site => { %>
-              <div class="country-card">
-                <div class="country-banner" style="background-color: <%= site.customStyles?.primaryColor || '#00008b' %>">
-                  <div class="country-flag-container">
-                    <img src="<%= site.flagUrl || '/images/flags/placeholder.png' %>" alt="<%= site.name %> Flag" class="country-flag">
+              <div class="country-card" style="<%= site.slug === 'default' ? 'border: 2px solid #4285F4; box-shadow: 0 6px 15px rgba(66, 133, 244, 0.15);' : '' %>">
+                <% if (site.slug === 'default') { %>
+                  <div style="background-color: #4285F4; color: white; text-align: center; padding: 5px; font-weight: 500; font-size: 0.9rem;">
+                    Dubai Template
                   </div>
+                <% } %>
+                <div class="country-card-header">
+                  <div class="country-card-flag-container">
+                    <img src="<%= site.flagUrl %>" alt="<%= site.name %> Flag" class="country-card-flag" onerror="this.onerror=null; this.src='/images/flags/placeholder.png';">
+                  </div>
+                  <h3 class="country-card-title"><%= site.name %></h3>
                 </div>
-                <div class="country-content">
-                  <h2 class="country-name"><%= site.name %></h2>
+                <div class="country-card-body">
                   <p class="country-description">
                     <% if (site.description && site.description.length > 0) { %>
                       <%= site.description %>
                     <% } else { %>
-                      Explore Robolution events in <%= site.name %>. Join our community and discover robotics innovation.
+                      Explore Robolution events in <%= site.name === 'default' ? 'Dubai' : site.name %>. Join our community and discover robotics innovation.
                     <% } %>
                   </p>
                   <a href="/country/<%= site.slug %>" class="country-link">Visit Site</a>
+                  <% if (user && user.isAdmin) { %>
+                    <div class="admin-actions" style="margin-top: 15px; display: flex; gap: 10px; justify-content: center;">
+                      <a href="/country/<%= site.slug %>/edit" style="flex: 1; text-align: center; background-color: #28a745; color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; gap: 5px;">
+                        <i class="fas fa-edit"></i> Edit
+                      </a>
+                      <a href="/country/<%= site.slug %>/news" style="flex: 1; text-align: center; background-color: #17a2b8; color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; gap: 5px;">
+                        <i class="fas fa-newspaper"></i> News
+                      </a>
+                      <% if (site.slug !== 'default') { %>
+                        <form action="/country/<%= site.slug %>/delete" method="POST" style="flex: 1; display:inline;" onsubmit="return confirm('Are you sure you want to delete the <%= site.name %> site? This action cannot be undone.');">
+                          <button type="submit" style="width: 100%; background-color: #dc3545; color: white; padding: 10px 15px; border-radius: 4px; border: none; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; gap: 5px;">
+                            <i class="fas fa-trash-alt"></i> Delete
+                          </button>
+                        </form>
+                      <% } else { %>
+                        <div style="flex: 1; background-color: #6c757d; color: white; padding: 10px 15px; border-radius: 4px; text-align: center; font-size: 0.9rem; opacity: 0.6; display: flex; align-items: center; justify-content: center; gap: 5px;">
+                          <i class="fas fa-lock"></i> Protected
+                        </div>
+                      <% } %>
+                    </div>
+                  <% } %>
                 </div>
               </div>
             <% }); %>
@@ -284,37 +793,45 @@
         <% } %>
       </div>
     </main>
-    
-    <!-- Footer -->
-    <footer>
-      <div class="footer-container">
-        <div class="footer-section about">
-          <h3>About Us</h3>
-          <p>ROBOLUTION promotes robotics education through competitions, training, and community building.</p>
-        </div>
-        <div class="footer-section links">
-          <h3>Quick Links</h3>
-          <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/regional?region=All">Regional</a></li>
-            <li><a href="/user-categories">Categories</a></li>
-            <li><a href="/country">International</a></li>
-          </ul>
-        </div>
-        <div class="footer-section contact">
-          <h3>Contact Us</h3>
-          <p>Email: info@robolution.org</p>
-          <div class="social-icons">
-            <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
-            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2023 ROBOLUTION. All rights reserved.</p>
-      </div>
-    </footer>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const userDropdownBtn = document.getElementById('user-dropdown-btn');
+      const userDropdown = document.getElementById('user-dropdown');
+      const sidebarToggle = document.getElementById('sidebar-toggle');
+      const sidebar = document.getElementById('sidebar');
+      const mainContent = document.getElementById('main-content');
+      
+      if (userDropdownBtn) {
+        userDropdownBtn.addEventListener('click', function() {
+          userDropdown.classList.toggle('active');
+        });
+      }
+      
+      if (sidebarToggle) {
+        sidebarToggle.addEventListener('click', function() {
+          sidebar.classList.toggle('collapsed');
+          mainContent.classList.toggle('expanded');
+        });
+      }
+      
+      // Handle sidebar dropdowns
+      const dropdownToggles = document.querySelectorAll('.sidebar-dropdown-toggle');
+      dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          const parent = this.parentElement;
+          parent.classList.toggle('active');
+        });
+      });
+      
+      document.addEventListener('click', function(event) {
+        if (userDropdown && !userDropdown.contains(event.target)) {
+          userDropdown.classList.remove('active');
+        }
+      });
+    });
+  </script>
 </body>
 </html> 
