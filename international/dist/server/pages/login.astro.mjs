@@ -1,7 +1,7 @@
 /* empty css                                  */
 import { e as createComponent, f as createAstro, k as renderComponent, l as renderScript, r as renderTemplate, m as maybeRenderHead, h as addAttribute } from '../chunks/astro/server_DhKVb5AT.mjs';
 import 'kleur/colors';
-import { $ as $$Layout } from '../chunks/Layout_Bie1TBNq.mjs';
+import { $ as $$Layout } from '../chunks/Layout_D6Llifn7.mjs';
 /* empty css                                 */
 export { renderers } from '../renderers.mjs';
 
@@ -11,7 +11,7 @@ const logo = new Proxy({"src":"/dubai/_astro/Erovoutika Dubai logo.DqaA4qgV.png"
 								return structuredClone(target);
 							}
 							if (name === 'fsPath') {
-								return "C:/Users/Krishann/Desktop/Robo-combined/international/src/assets/images/Erovoutika Dubai logo.png";
+								return "C:/Users/Leo Office PC/Desktop/RoboWebapp/international/src/assets/images/Erovoutika Dubai logo.png";
 							}
 							
 							return target[name];
@@ -24,7 +24,7 @@ const show_password_icon = new Proxy({"src":"/dubai/_astro/show-password.JZZGCVa
 								return structuredClone(target);
 							}
 							if (name === 'fsPath') {
-								return "C:/Users/Krishann/Desktop/Robo-combined/international/src/assets/images/utility-icons/show-password.png";
+								return "C:/Users/Leo Office PC/Desktop/RoboWebapp/international/src/assets/images/utility-icons/show-password.png";
 							}
 							
 							return target[name];
@@ -37,7 +37,7 @@ const hide_password_icon = new Proxy({"src":"/dubai/_astro/hide-password.CycqiXU
 								return structuredClone(target);
 							}
 							if (name === 'fsPath') {
-								return "C:/Users/Krishann/Desktop/Robo-combined/international/src/assets/images/utility-icons/hide-password.png";
+								return "C:/Users/Leo Office PC/Desktop/RoboWebapp/international/src/assets/images/utility-icons/hide-password.png";
 							}
 							
 							return target[name];
@@ -63,10 +63,10 @@ Send Reset Link
 </button> <div id="forgot-password-message" class="mt-4 text-green-600 text-center hidden" data-astro-cid-sgpqyurt>
 If this email is registered, a reset link has
                                 been sent.
-</div> </form> </div> </div> </div> </div> </section> ` })}  ${renderScript($$result, "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/login.astro?astro&type=script&index=0&lang.ts")}`;
-}, "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/login.astro", void 0);
+</div> </form> </div> </div> </div> </div> </section> ` })}  ${renderScript($$result, "C:/Users/Leo Office PC/Desktop/RoboWebapp/international/src/pages/login.astro?astro&type=script&index=0&lang.ts")}`;
+}, "C:/Users/Leo Office PC/Desktop/RoboWebapp/international/src/pages/login.astro", void 0);
 
-const $$file = "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/login.astro";
+const $$file = "C:/Users/Leo Office PC/Desktop/RoboWebapp/international/src/pages/login.astro";
 const $$url = "/dubai/login";
 
 const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({

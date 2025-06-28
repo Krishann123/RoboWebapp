@@ -1,7 +1,7 @@
 /* empty css                                  */
 import { e as createComponent, f as createAstro, k as renderComponent, r as renderTemplate, m as maybeRenderHead, u as unescapeHTML, l as renderScript, h as addAttribute } from '../chunks/astro/server_DhKVb5AT.mjs';
 import 'kleur/colors';
-import { $ as $$Layout } from '../chunks/Layout_Bie1TBNq.mjs';
+import { $ as $$Layout } from '../chunks/Layout_D6Llifn7.mjs';
 import { s as supabase } from '../chunks/supabase-client_BrwR6F9D.mjs';
 import { g as getTemplate } from '../chunks/mongodb_DJrNPHw-.mjs';
 /* empty css                                        */
@@ -169,10 +169,10 @@ const $$Registration = createComponent(async ($$result, $$props, $$slots) => {
 Upload Payment Proof
 </label> <input type="file" id="paymentProof" name="paymentProof" accept="image/*,.pdf" class="hidden" data-astro-cid-6ubmnb5e> </div> <p class="text-xs text-gray-500 text-center" data-astro-cid-6ubmnb5e>Max file size: 10MB. Accepted formats: JPEG, PNG, PDF</p> <p id="fileName" class="text-sm text-center text-gray-700" data-astro-cid-6ubmnb5e></p> </div> </div> <p class="text-sm mt-2" data-astro-cid-6ubmnb5e>You can also submit your payment proof later by emailing it to <a href="mailto:erovoutika@gmail.com" class="text-blue-600 hover:underline" data-astro-cid-6ubmnb5e>erovoutika@gmail.com</a></p> </div> <div class="mb-6" data-astro-cid-6ubmnb5e> <p class="text-sm" data-astro-cid-6ubmnb5e>By submitting this form, you agree to our <a href="#" class="text-blue-600 hover:underline" data-astro-cid-6ubmnb5e>Terms and Conditions</a>.</p> </div> <div class="flex justify-center" data-astro-cid-6ubmnb5e> <button type="submit" class="px-6 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" data-astro-cid-6ubmnb5e>
 Submit Registration
-</button> </div> ${renderScript($$result2, "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/registration.astro?astro&type=script&index=0&lang.ts")} </form> </main> ` })} `;
-}, "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/registration.astro", void 0);
+</button> </div> ${renderScript($$result2, "C:/Users/Leo Office PC/Desktop/RoboWebapp/international/src/pages/registration.astro?astro&type=script&index=0&lang.ts")} </form> </main> ` })} `;
+}, "C:/Users/Leo Office PC/Desktop/RoboWebapp/international/src/pages/registration.astro", void 0);
 
-const $$file = "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/registration.astro";
+const $$file = "C:/Users/Leo Office PC/Desktop/RoboWebapp/international/src/pages/registration.astro";
 const $$url = "/dubai/registration";
 
 const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({

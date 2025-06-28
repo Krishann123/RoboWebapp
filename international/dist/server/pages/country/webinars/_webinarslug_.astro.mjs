@@ -1,7 +1,7 @@
 /* empty css                                        */
 import { e as createComponent, f as createAstro, k as renderComponent, r as renderTemplate, m as maybeRenderHead, h as addAttribute } from '../../../chunks/astro/server_DhKVb5AT.mjs';
 import 'kleur/colors';
-import { $ as $$Layout } from '../../../chunks/Layout_Bie1TBNq.mjs';
+import { $ as $$Layout } from '../../../chunks/Layout_D6Llifn7.mjs';
 export { renderers } from '../../../renderers.mjs';
 
 const $$Astro = createAstro();
@@ -18,9 +18,9 @@ const $$webinarSlug = createComponent(($$result, $$props, $$slots) => {
     return Astro2.redirect("/404");
   }
   return renderTemplate`${renderComponent($$result, "Layout", $$Layout, { "title": `${item.title} - ${countryData.name}` }, { "default": ($$result2) => renderTemplate` ${maybeRenderHead()}<div class="container"> <img${addAttribute(item.bannerImage, "src")}${addAttribute(item.title, "alt")}> <h1>${item.title}</h1> <p>${item.description}</p> <p><strong>Date:</strong> ${new Date(item.date).toLocaleDateString()}</p> <a${addAttribute(item.registrationLink, "href")}>Register</a> </div> ` })}`;
-}, "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/country/webinars/[webinarSlug].astro", void 0);
+}, "C:/Users/Leo Office PC/Desktop/RoboWebapp/international/src/pages/country/webinars/[webinarSlug].astro", void 0);
 
-const $$file = "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/country/webinars/[webinarSlug].astro";
+const $$file = "C:/Users/Leo Office PC/Desktop/RoboWebapp/international/src/pages/country/webinars/[webinarSlug].astro";
 const $$url = "/dubai/country/webinars/[webinarSlug]";
 
 const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({

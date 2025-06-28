@@ -1,7 +1,7 @@
 /* empty css                                     */
 import { e as createComponent, k as renderComponent, l as renderScript, r as renderTemplate, m as maybeRenderHead, h as addAttribute } from '../../chunks/astro/server_DhKVb5AT.mjs';
 import 'kleur/colors';
-import { $ as $$Layout } from '../../chunks/Layout_Bie1TBNq.mjs';
+import { $ as $$Layout } from '../../chunks/Layout_D6Llifn7.mjs';
 import { s as supabase } from '../../chunks/supabase-client_BrwR6F9D.mjs';
 export { renderers } from '../../renderers.mjs';
 
@@ -16,10 +16,10 @@ Error loading country sites: ${error.message} </div>`} <div class="overflow-x-au
 Only use lowercase letters, numbers, and hyphens. This will be the URL path.
 </p> </div> <div> <label for="description" class="block text-sm font-medium text-gray-700">Description</label> <textarea id="description" name="description" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea> </div> <div> <label for="flagUrl" class="block text-sm font-medium text-gray-700">Flag URL</label> <input type="url" id="flagUrl" name="flagUrl" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="https://example.com/flag.png"> </div> <div> <label for="templateIndex" class="block text-sm font-medium text-gray-700">Template</label> <select id="templateIndex" name="templateIndex" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"> ${templateNames.map((name, index) => renderTemplate`<option${addAttribute(index, "value")}>${name}</option>`)} </select> </div> <div class="flex items-center"> <input type="checkbox" id="active" name="active" checked class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"> <label for="active" class="ml-2 block text-sm text-gray-900">Active</label> </div> <div class="pt-4"> <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
 Create Country Site
-</button> </div> </form> <div id="formMessage" class="mt-4 hidden"> <!-- Form messages will be displayed here --> </div> </div> </div> </main> ` })} ${renderScript($$result, "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/admin/country-sites.astro?astro&type=script&index=0&lang.ts")}`;
-}, "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/admin/country-sites.astro", void 0);
+</button> </div> </form> <div id="formMessage" class="mt-4 hidden"> <!-- Form messages will be displayed here --> </div> </div> </div> </main> ` })} ${renderScript($$result, "C:/Users/Leo Office PC/Desktop/RoboWebapp/international/src/pages/admin/country-sites.astro?astro&type=script&index=0&lang.ts")}`;
+}, "C:/Users/Leo Office PC/Desktop/RoboWebapp/international/src/pages/admin/country-sites.astro", void 0);
 
-const $$file = "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/admin/country-sites.astro";
+const $$file = "C:/Users/Leo Office PC/Desktop/RoboWebapp/international/src/pages/admin/country-sites.astro";
 const $$url = "/dubai/admin/country-sites";
 
 const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({

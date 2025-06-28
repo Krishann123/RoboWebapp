@@ -167,12 +167,14 @@ const formatUrl = (url) => {
         margin-top: 3rem;
         color: #343a40;
     }
-
-    /* NEW SCALABLE NEWS GRID */
     .scalable-news-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .scalable-news-grid > .news-item-card:last-child:first-child{
+    width: 400px;
     }
 
     .news-item-card {

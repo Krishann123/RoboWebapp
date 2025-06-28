@@ -8,7 +8,7 @@ import { ChevronDownIcon, XIcon } from 'lucide-react';
 import { c as cn } from '../chunks/utils_B05Dmz_H.mjs';
 import { Slot } from '@radix-ui/react-slot';
 import { cva } from 'class-variance-authority';
-import { $ as $$Layout } from '../chunks/Layout_Bie1TBNq.mjs';
+import { $ as $$Layout } from '../chunks/Layout_D6Llifn7.mjs';
 import { a as getPageDetails, f as fetchPageContent, b as getData, c as getSelectedIndex } from '../chunks/db_BgTuE01l.mjs';
 import 'clsx';
 /* empty css                                 */
@@ -286,7 +286,7 @@ const $$AdminNominations = createComponent(($$result, $$props, $$slots) => {
     import { initNominations } from '/src/components/Nominations/view_nomination_data.js';
     initNominations();
 <\/script>`])), maybeRenderHead());
-}, "C:/Users/Krishann/Desktop/Robo-combined/international/src/components/Nominations/Admin_Nominations.astro", void 0);
+}, "C:/Users/Leo Office PC/Desktop/RoboWebapp/international/src/components/Nominations/Admin_Nominations.astro", void 0);
 
 function Dialog({
   ...props
@@ -663,9 +663,9 @@ const $$Admin = createComponent(async ($$result, $$props, $$slots) => {
   return renderTemplate`${renderComponent($$result, "Layout", $$Layout, { "title": "Erovoutika Dubai - Admin" }, { "default": async ($$result2) => renderTemplate` ${maybeRenderHead()}<div class="bg-violet-800 w-full h-20"></div> <div class="flex flex-col justify-center items-center mx-60 w-auto h-auto"> <div class="flex justify-end gap-4 text-center my-5 w-full"> ${renderComponent($$result2, "TemplateSelect", TemplateSelect, { "templateData": templateData, "selectedIndex": getSelectedIndex(), "client:load": true, "client:component-hydration": "load", "client:component-path": "@/components/admin/TemplateSelect.tsx", "client:component-export": "default" })} <button id="toggleBannerButton" class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
 Toggle Banner
 </button> ${renderComponent($$result2, "DialogDemo", DialogDemo, { "client:idle": true, "client:component-hydration": "idle", "client:component-path": "@/components/admin/newsForm", "client:component-export": "DialogDemo" })} <form action="/api/auth/signout"> <button type="submit" class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">Sign out</button> </form> </div> ${renderComponent($$result2, "Accordion", Accordion, { "pageDetails": pageDetails, "client:idle": true, "client:component-hydration": "idle", "client:component-path": "@/components/admin/Accordion", "client:component-export": "Accordion" })} ${renderComponent($$result2, "Admin_Nominations", $$AdminNominations, {})} </div> ` })}`;
-}, "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/admin.astro", void 0);
+}, "C:/Users/Leo Office PC/Desktop/RoboWebapp/international/src/pages/admin.astro", void 0);
 
-const $$file = "C:/Users/Krishann/Desktop/Robo-combined/international/src/pages/admin.astro";
+const $$file = "C:/Users/Leo Office PC/Desktop/RoboWebapp/international/src/pages/admin.astro";
 const $$url = "/dubai/admin";
 
 const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
