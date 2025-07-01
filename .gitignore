@@ -1,0 +1,69 @@
+# Node modules
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.yarn/
+.bun/
+*.log
+
+# Dependency lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.jwt_secret
+
+# Editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Build output (general)
+/dist/
+/build/
+/out/
+
+# Runtime files
+.next/ # For Next.js (example)
+.nuxt/ # For Nuxt.js (example)
+
+# Specific to your setup
+/ROBOLUTION/node_modules/
+/international/node_modules/
+
+# IMPORTANT: ONLY IGNORE international/dist if you are NOT intentionally committing it.
+# If you ARE intentionally committing international/dist, then DO NOT add /international/dist/ here.
+# Given your last comment, you *are* committing it, so let's allow it for now.
+
+# However, these look like temporary build artifacts inside ROBOLUTION/public/international
+# These should almost certainly be ignored:
+/ROBOLUTION/public/international/
+# This ^ will ignore everything inside ROBOLUTION/public/international
+# unless ROBOLUTION/public/international IS your main server's static content root.
+# If ROBOLUTION/public/international is meant to contain ONLY the copied Astro files,
+# then ignoring it like this might be tricky.
+
+# Let's be more precise with temporary build artifacts:
+# General server entry/manifest files that get rebuilt
+ROBOLUTION/public/international/server/entry.mjs
+ROBOLUTION/public/international/server/manifest_*.mjs
+international/dist/server/entry.mjs
+international/dist/server/manifest_*.mjs
+
+# Specific untracked folders you mentioned
+ROBOLUTION/public/international/client/images/gallery/ # If these are generated, ignore
+international/dist/client/images/gallery/ # If these are generated, ignore
+
+# These look like dependency-related internal folders, should be ignored
+international/node_modules/erouvotika-dubai-web-app/
+international/node_modules/robo-combined/
+ROBOLUTION/node_modules/robo-combined/

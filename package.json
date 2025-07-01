@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node start.js",
     "build": "cd international && npm run build && cd ../ROBOLUTION && npm run build",
-    "start": "cross-env NODE_ENV=production node start.js",
+    "start": "npx cross-env NODE_ENV=production node start.js",
     "postinstall": "cd international && npm install && cd ../ROBOLUTION && npm install",
     "clean": "rimraf international/dist ROBOLUTION/public/international"
   },
@@ -20,7 +20,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cross-env": "^7.0.3",
+    "cross-env": "^7.0.3", // Ensure cross-env is here
     "express-ejs-layouts": "^2.5.1"
   },
   "devDependencies": {
