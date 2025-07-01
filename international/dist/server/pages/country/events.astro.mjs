@@ -1,7 +1,7 @@
 /* empty css                                     */
-import { e as createComponent, f as createAstro, k as renderComponent, r as renderTemplate, m as maybeRenderHead, h as addAttribute } from '../../chunks/astro/server_DhKVb5AT.mjs';
+import { e as createComponent, f as createAstro, k as renderComponent, r as renderTemplate, m as maybeRenderHead, h as addAttribute } from '../../chunks/astro/server_6Vm7kAO5.mjs';
 import 'kleur/colors';
-import { $ as $$Layout } from '../../chunks/Layout_D6Llifn7.mjs';
+import { $ as $$Layout } from '../../chunks/Layout_BALE1YAg.mjs';
 export { renderers } from '../../renderers.mjs';
 
 const $$Astro = createAstro();
@@ -13,9 +13,9 @@ const $$Index = createComponent(($$result, $$props, $$slots) => {
     return Astro2.redirect("/404");
   }
   return renderTemplate`${renderComponent($$result, "Layout", $$Layout, { "title": `Events - ${countryData.name}` }, { "default": ($$result2) => renderTemplate` ${maybeRenderHead()}<div class="container"> <h1>Events in ${countryData.name}</h1> <div class="list"> ${countryData.events.map((item) => renderTemplate`<div class="card"> <h2><a${addAttribute(`/country/${countryData.slug}/events/${item.slug}`, "href")}>${item.title}</a></h2> <p>Date: ${new Date(item.date).toLocaleDateString()}</p> </div>`)} </div> </div> ` })}`;
-}, "C:/Users/Leo Office PC/Desktop/RoboWebapp/international/src/pages/country/events/index.astro", void 0);
+}, "C:/Users/Krishann/Desktop/RoboWebapp/international/src/pages/country/events/index.astro", void 0);
 
-const $$file = "C:/Users/Leo Office PC/Desktop/RoboWebapp/international/src/pages/country/events/index.astro";
+const $$file = "C:/Users/Krishann/Desktop/RoboWebapp/international/src/pages/country/events/index.astro";
 const $$url = "/dubai/country/events";
 
 const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({

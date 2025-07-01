@@ -645,121 +645,7 @@
 <body>
   <% if (typeof dashboard === 'undefined' && typeof inDashboard === 'undefined') { %>
   <div class="dashboard-container">
-    <!-- Admin Sidebar -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-header">
-        <a href="/admin" class="sidebar-logo">
-          <img src="/images/ADMIN_LOGO.png" alt="Robolution Logo">
-          <h1>Robolution</h1>
-        </a>
-        <button class="sidebar-toggle" id="sidebar-toggle">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
-
-      <div class="sidebar-menu">
-        <div class="sidebar-heading">Main</div>
-        <div class="sidebar-item">
-          <a href="/admin#dashboard" class="sidebar-link" data-page="dashboard">
-            <i class="fas fa-tachometer-alt sidebar-icon"></i>
-            <span class="sidebar-text">Dashboard</span>
-          </a>
-        </div>
-        <div class="sidebar-item">
-          <a href="/admin#posts" class="sidebar-link" data-page="posts">
-            <i class="fas fa-newspaper sidebar-icon"></i>
-            <span class="sidebar-text">Posts</span>
-          </a>
-        </div>
-        <div class="sidebar-item">
-          <a href="/admin#create-post" class="sidebar-link" data-page="create-post">
-            <i class="fas fa-plus-circle sidebar-icon"></i>
-            <span class="sidebar-text">Create Post</span>
-          </a>
-        </div>
-        
-        <div class="sidebar-heading">Content</div>
-        <div class="sidebar-item">
-          <a href="/admin#categories" class="sidebar-link" data-page="categories">
-            <i class="fas fa-layer-group sidebar-icon"></i>
-            <span class="sidebar-text">Categories</span>
-          </a>
-        </div>
-        <div class="sidebar-item">
-          <a href="/admin#manage-categories" class="sidebar-link" data-page="manage-categories">
-            <i class="fas fa-tasks sidebar-icon"></i>
-            <span class="sidebar-text">Manage Categories</span>
-          </a>
-        </div>
-
-        <div class="sidebar-heading">Users</div>
-        <% if (locals.user && user.role === 'superadmin') { %>
-        <div class="sidebar-item">
-          <a href="/admin#manage-accounts" class="sidebar-link" data-page="manage-accounts">
-            <i class="fas fa-users-cog sidebar-icon"></i>
-            <span class="sidebar-text">Manage Accounts</span>
-          </a>
-        </div>
-        <% } %>
-        <div class="sidebar-item">
-          <a href="/admin#user-profiles" class="sidebar-link" data-page="user-profiles">
-            <i class="fas fa-id-card sidebar-icon"></i>
-            <span class="sidebar-text">User Profiles</span>
-          </a>
-        </div>
-        
-        <div class="sidebar-heading">Registrations</div>
-        <div class="sidebar-item">
-          <a href="/admin#manage-registrations" class="sidebar-link" data-page="manage-registrations">
-            <i class="fas fa-clipboard-list sidebar-icon"></i>
-            <span class="sidebar-text">Manage Registrations</span>
-          </a>
-        </div>
-
-        <div class="sidebar-item sidebar-dropdown">
-          <a href="#regional" class="sidebar-link sidebar-dropdown-toggle" data-page="regional">
-            <i class="fas fa-map-marker-alt sidebar-icon"></i>
-            <span class="sidebar-text">Regional</span>
-          </a>
-          <div class="sidebar-dropdown-menu">
-            <a href="/admin#regional-all" class="sidebar-dropdown-link" data-region="All">All Regions</a>
-            <% if (typeof uniqueRegions !== 'undefined' && uniqueRegions.length > 0) { %>
-              <% uniqueRegions.forEach(function(region) { %>
-                <a href="/admin#regional-<%= region.toLowerCase().replace(/\s+/g, '-') %>" class="sidebar-dropdown-link" data-region="<%= region %>"><%= region %></a>
-              <% }); %>
-            <% } else { %>
-              <!-- Optional: Message if no specific regions beyond 'All' -->
-            <% } %>
-          </div>
-        </div>
-
-        <div class="sidebar-heading">International Sites</div>
-        <div class="sidebar-item">
-          <a href="/country-sites" class="sidebar-link active" data-page="country-sites">
-            <i class="fas fa-globe-americas sidebar-icon"></i>
-            <span class="sidebar-text">Country Sites</span>
-          </a>
-        </div>
-        <div class="sidebar-item">
-          <a href="/admin/international/news" class="sidebar-link">
-            <i class="fas fa-newspaper sidebar-icon"></i>
-            <span class="sidebar-text">Manage News</span>
-          </a>
-        </div>
-        <div class="sidebar-item">
-          <a href="/admin#manage-partners" class="sidebar-link" data-page="manage-partners">
-            <i class="fas fa-handshake sidebar-icon"></i>
-            <span class="sidebar-text">Manage Partners</span>
-          </a>
-        </div>
-        <div class="sidebar-item">
-          <a href="/logout" class="sidebar-link">
-            <i class="fas fa-sign-out-alt sidebar-icon"></i>
-            <span class="sidebar-text">Logout</span>
-          </a>
-        </div>
-      </div>
-    </aside>
+    <%- include('../../partials/admin-sidebar.ejs') %>
     
     <main class="main-content" id="main-content">
       <!-- Header -->
@@ -806,7 +692,7 @@
               <label for="description" class="form-label">Description</label>
               <textarea id="description" name="description" class="form-textarea" placeholder="Brief description of this country site..."></textarea>
               <p class="form-instructions">A brief description of this country site (optional).</p>
-          </div>
+            </div>
             
             <div class="form-group">
               <label class="form-label">Country Flag</label>

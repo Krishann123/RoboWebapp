@@ -1,6 +1,6 @@
 <!-- Admin Header Partial -->
-<header class="header">
-  <h1 class="header-title" id="page-title"><%= typeof pageTitle !== 'undefined' ? pageTitle : 'Admin Dashboard' %></h1>
+<div class="header">
+  <h1 class="header-title"><%= pageTitle || 'Dashboard' %></h1>
   <div class="header-actions">
     <div class="user-dropdown" id="user-dropdown">
       <div class="user-dropdown-btn" id="user-dropdown-btn">
@@ -36,7 +36,7 @@
       </div>
     </div>
   </div>
-</header>
+</div>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {

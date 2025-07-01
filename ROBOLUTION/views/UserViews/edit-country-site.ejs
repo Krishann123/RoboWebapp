@@ -506,19 +506,19 @@
       <div class="sidebar-menu">
         <div class="sidebar-heading">Main</div>
         <div class="sidebar-item">
-          <a href="#dashboard" class="sidebar-link" data-page="dashboard">
+          <a href="/admin-dashboard" class="sidebar-link" data-page="dashboard">
             <i class="fas fa-tachometer-alt sidebar-icon"></i>
             <span class="sidebar-text">Dashboard</span>
           </a>
         </div>
         <div class="sidebar-item">
-          <a href="#posts" class="sidebar-link" data-page="posts">
+          <a href="/admin-dashboard#posts" class="sidebar-link" data-page="posts">
             <i class="fas fa-newspaper sidebar-icon"></i>
             <span class="sidebar-text">Posts</span>
           </a>
         </div>
         <div class="sidebar-item">
-          <a href="#create-post" class="sidebar-link" data-page="create-post">
+          <a href="/admin-dashboard#create-post" class="sidebar-link" data-page="create-post">
             <i class="fas fa-plus-circle sidebar-icon"></i>
             <span class="sidebar-text">Create Post</span>
           </a>
@@ -526,13 +526,13 @@
         
         <div class="sidebar-heading">Content</div>
         <div class="sidebar-item">
-          <a href="#categories" class="sidebar-link" data-page="categories">
+          <a href="/admin-dashboard#categories" class="sidebar-link" data-page="categories">
             <i class="fas fa-layer-group sidebar-icon"></i>
             <span class="sidebar-text">Categories</span>
           </a>
         </div>
         <div class="sidebar-item">
-          <a href="#manage-categories" class="sidebar-link" data-page="manage-categories">
+          <a href="/admin-dashboard#manage-categories" class="sidebar-link" data-page="manage-categories">
             <i class="fas fa-tasks sidebar-icon"></i>
             <span class="sidebar-text">Manage Categories</span>
           </a>
@@ -541,14 +541,14 @@
         <div class="sidebar-heading">Users</div>
         <% if (user && user.role === 'superadmin') { %>
         <div class="sidebar-item">
-          <a href="#manage-accounts" class="sidebar-link" data-page="manage-accounts">
+          <a href="/admin-dashboard#manage-accounts" class="sidebar-link" data-page="manage-accounts">
             <i class="fas fa-users-cog sidebar-icon"></i>
             <span class="sidebar-text">Manage Accounts</span>
           </a>
         </div>
         <% } %>
         <div class="sidebar-item">
-          <a href="#user-profiles" class="sidebar-link" data-page="user-profiles">
+          <a href="/admin-dashboard#user-profiles" class="sidebar-link" data-page="user-profiles">
             <i class="fas fa-id-card sidebar-icon"></i>
             <span class="sidebar-text">User Profiles</span>
           </a>
@@ -556,22 +556,22 @@
         
         <div class="sidebar-heading">Registrations</div>
         <div class="sidebar-item">
-          <a href="#manage-registrations" class="sidebar-link" data-page="manage-registrations">
+          <a href="/admin-dashboard#manage-registrations" class="sidebar-link" data-page="manage-registrations">
             <i class="fas fa-clipboard-list sidebar-icon"></i>
             <span class="sidebar-text">Manage Registrations</span>
           </a>
         </div>
 
         <div class="sidebar-item sidebar-dropdown">
-          <a href="#regional" class="sidebar-link sidebar-dropdown-toggle" data-page="regional">
+          <a href="/admin-dashboard#regional" class="sidebar-link sidebar-dropdown-toggle" data-page="regional">
             <i class="fas fa-map-marker-alt sidebar-icon"></i>
             <span class="sidebar-text">Regional</span>
           </a>
           <div class="sidebar-dropdown-menu">
-            <a href="#regional-all" class="sidebar-dropdown-link" data-region="All">All Regions</a>
+            <a href="/admin-dashboard#regional-all" class="sidebar-dropdown-link" data-region="All">All Regions</a>
             <% if (typeof uniqueRegions !== 'undefined' && uniqueRegions.length > 0) { %>
               <% uniqueRegions.forEach(function(region) { %>
-                <a href="#regional-<%= region.toLowerCase().replace(/\s+/g, '-') %>" class="sidebar-dropdown-link" data-region="<%= region %>"><%= region %></a>
+                <a href="/admin-dashboard#regional-<%= region.toLowerCase().replace(/\s+/g, '-') %>" class="sidebar-dropdown-link" data-region="<%= region %>"><%= region %></a>
               <% }); %>
             <% } else { %>
               <!-- Optional: Message if no specific regions beyond 'All' -->
@@ -581,7 +581,7 @@
 
         <div class="sidebar-heading">Scoring</div>
         <div class="sidebar-item">
-          <a href="#leaderboard" class="sidebar-link" data-page="leaderboard">
+          <a href="/admin-dashboard#leaderboard" class="sidebar-link" data-page="leaderboard">
             <i class="fas fa-trophy sidebar-icon"></i>
             <span class="sidebar-text">Competition Leaderboard</span>
           </a>
@@ -590,7 +590,7 @@
         <div class="sidebar-heading">System</div>
         <% if (user && user.role === 'superadmin') { %>
         <div class="sidebar-item">
-          <a href="#backups" class="sidebar-link" data-page="backups">
+          <a href="/admin-dashboard#backups" class="sidebar-link" data-page="backups">
             <i class="fas fa-database sidebar-icon"></i>
             <span class="sidebar-text">Backups</span>
           </a>
@@ -612,13 +612,7 @@
           </a>
         </div>
         <div class="sidebar-item">
-          <a href="/admin/international/news" class="sidebar-link">
-            <i class="fas fa-newspaper sidebar-icon"></i>
-            <span class="sidebar-text">Manage News</span>
-          </a>
-        </div>
-        <div class="sidebar-item">
-          <a href="#manage-partners" class="sidebar-link" data-page="manage-partners">
+          <a href="/admin-dashboard#manage-partners" class="sidebar-link" data-page="manage-partners">
             <i class="fas fa-handshake sidebar-icon"></i>
             <span class="sidebar-text">Manage Partners</span>
           </a>
@@ -784,22 +778,32 @@
                 </div>
             </form>
             
+            <div class="gallery-controls" style="margin: 20px 0 10px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <label style="margin-right: 10px;"><input type="checkbox" id="select-all-images"> Select All</label>
+                    <button id="delete-selected" class="btn btn-secondary" style="background-color: var(--danger); display: none;">Delete Selected</button>
+                </div>
+                <div class="gallery-status" style="display: none; color: var(--primary-color);">
+                    <span id="selected-count">0</span> images selected
+                </div>
+            </div>
+            
             <div class="gallery-previews" style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 15px;">
                 <% const galleryImages = template.config.Contents.Package && template.config.Contents.Package.TourGallery ? template.config.Contents.Package.TourGallery : []; %>
                 <% if (galleryImages.length > 0) { %>
                     <% galleryImages.forEach(function(image) { %>
-                        <div class="gallery-item" style="position: relative;">
+                        <div class="gallery-item" data-image-url="<%= image.image %>" style="position: relative;">
+                            <div class="image-select-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background-color: rgba(0,0,0,0.5); opacity: 0; transition: opacity 0.2s; z-index: 1;">
+                                <input type="checkbox" class="gallery-image-checkbox" style="transform: scale(1.5);">
+                            </div>
                             <img src="<%= image.image %>" alt="Gallery Image" style="width: 150px; height: 100px; object-fit: cover; border-radius: 4px;">
-                            <form action="/country/<%= slug %>/gallery/delete" method="POST" style="position: absolute; top: 5px; right: 5px;">
-                                <input type="hidden" name="imageUrl" value="<%= image.image %>">
-                                <button type="submit" class="btn-delete" style="background: rgba(220, 53, 69, 0.8); color: white; border: none; border-radius: 50%; width: 25px; height: 25px; cursor: pointer; font-size: 14px; line-height: 25px; text-align: center;">&times;</button>
-                            </form>
                         </div>
                     <% }); %>
                 <% } else { %>
                     <p>No gallery images have been uploaded yet.</p>
                 <% } %>
             </div>
+            <div id="delete-status" style="margin-top: 15px;"></div>
         </div>
         
         <!-- FAQ Section -->
@@ -928,7 +932,7 @@
     </main>
   </div>
 
-  <script>
+    <script>
     document.addEventListener('DOMContentLoaded', function() {
       const userDropdownBtn = document.getElementById('user-dropdown-btn');
       const userDropdown = document.getElementById('user-dropdown');
@@ -964,6 +968,150 @@
           userDropdown.classList.remove('active');
         }
       });
+
+      // Gallery image management
+      const galleryItems = document.querySelectorAll('.gallery-item');
+      const selectAllCheckbox = document.getElementById('select-all-images');
+      const deleteSelectedBtn = document.getElementById('delete-selected');
+      const galleryStatus = document.querySelector('.gallery-status');
+      const selectedCountDisplay = document.getElementById('selected-count');
+      const deleteStatus = document.getElementById('delete-status');
+      
+      // Show checkbox on hover
+      galleryItems.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+          const overlay = item.querySelector('.image-select-overlay');
+          if (overlay) overlay.style.opacity = '1';
+        });
+        
+        item.addEventListener('mouseleave', () => {
+          const overlay = item.querySelector('.image-select-overlay');
+          const checkbox = item.querySelector('.gallery-image-checkbox');
+          if (overlay && !checkbox.checked) overlay.style.opacity = '0';
+        });
+        
+        // Handle click on the image to toggle checkbox
+        item.addEventListener('click', (e) => {
+          if (e.target.type !== 'checkbox') {
+            const checkbox = item.querySelector('.gallery-image-checkbox');
+            checkbox.checked = !checkbox.checked;
+            updateSelectionStatus();
+          }
+        });
+        
+        // Make sure checkbox click propagates properly
+        const checkbox = item.querySelector('.gallery-image-checkbox');
+        if (checkbox) {
+          checkbox.addEventListener('change', () => {
+            updateSelectionStatus();
+            if (checkbox.checked) {
+              item.querySelector('.image-select-overlay').style.opacity = '1';
+            }
+          });
+        }
+      });
+      
+      // Select all checkbox functionality
+      if (selectAllCheckbox) {
+        selectAllCheckbox.addEventListener('change', () => {
+          const checkboxes = document.querySelectorAll('.gallery-image-checkbox');
+          checkboxes.forEach(box => {
+            box.checked = selectAllCheckbox.checked;
+            const overlay = box.closest('.image-select-overlay');
+            if (overlay) overlay.style.opacity = selectAllCheckbox.checked ? '1' : '0';
+          });
+          updateSelectionStatus();
+        });
+      }
+      
+      // Update the selection status and button visibility
+      function updateSelectionStatus() {
+        const checkboxes = document.querySelectorAll('.gallery-image-checkbox');
+        const checkedBoxes = document.querySelectorAll('.gallery-image-checkbox:checked');
+        const selectedCount = checkedBoxes.length;
+        
+        if (selectedCount > 0) {
+          deleteSelectedBtn.style.display = 'inline-block';
+          galleryStatus.style.display = 'block';
+          selectedCountDisplay.textContent = selectedCount;
+        } else {
+          deleteSelectedBtn.style.display = 'none';
+          galleryStatus.style.display = 'none';
+        }
+        
+        // Update select all checkbox state
+        if (checkboxes.length === checkedBoxes.length && checkboxes.length > 0) {
+          selectAllCheckbox.checked = true;
+          selectAllCheckbox.indeterminate = false;
+        } else if (selectedCount > 0) {
+          selectAllCheckbox.checked = false;
+          selectAllCheckbox.indeterminate = true;
+        } else {
+          selectAllCheckbox.checked = false;
+          selectAllCheckbox.indeterminate = false;
+        }
+      }
+      
+      // Delete selected images
+      if (deleteSelectedBtn) {
+        deleteSelectedBtn.addEventListener('click', async () => {
+          const selectedImages = document.querySelectorAll('.gallery-image-checkbox:checked');
+          if (selectedImages.length === 0) return;
+          
+          if (!confirm(`Are you sure you want to delete ${selectedImages.length} selected image${selectedImages.length > 1 ? 's' : ''}?`)) {
+            return;
+          }
+          
+          deleteStatus.innerHTML = `<div class="message info">Deleting ${selectedImages.length} image${selectedImages.length > 1 ? 's' : ''}...</div>`;
+          deleteSelectedBtn.disabled = true;
+          
+          let successCount = 0;
+          let failCount = 0;
+          
+          for (const checkbox of selectedImages) {
+            const galleryItem = checkbox.closest('.gallery-item');
+            const imageUrl = galleryItem.dataset.imageUrl;
+            
+            try {
+              const response = await fetch(`/country/<%= slug %>/gallery/delete`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `imageUrl=${encodeURIComponent(imageUrl)}`
+              });
+              
+              const result = await response.text();
+              if (response.ok) {
+                galleryItem.remove();
+                successCount++;
+              } else {
+                failCount++;
+                console.error(`Failed to delete image: ${imageUrl}`, result);
+              }
+            } catch (error) {
+              failCount++;
+              console.error(`Error deleting image: ${imageUrl}`, error);
+            }
+          }
+          
+          deleteStatus.innerHTML = `
+            <div class="message ${failCount > 0 ? 'error' : 'success'}">
+                ${successCount} image${successCount !== 1 ? 's' : ''} deleted successfully.
+                ${failCount > 0 ? `${failCount} image${failCount !== 1 ? 's' : ''} failed to delete.` : ''}
+            </div>
+          `;
+          
+          deleteSelectedBtn.disabled = false;
+          updateSelectionStatus();
+          
+          // Update status if all images were deleted
+          const remainingImages = document.querySelectorAll('.gallery-item');
+          if (remainingImages.length === 0) {
+            document.querySelector('.gallery-previews').innerHTML = '<p>No gallery images have been uploaded yet.</p>';
+          }
+        });
+      }
     });
   </script>
 </body>

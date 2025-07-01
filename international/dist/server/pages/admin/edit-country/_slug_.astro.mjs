@@ -1,7 +1,7 @@
 /* empty css                                        */
-import { e as createComponent, f as createAstro, r as renderTemplate, n as defineScriptVars, k as renderComponent, m as maybeRenderHead, h as addAttribute } from '../../../chunks/astro/server_DhKVb5AT.mjs';
+import { e as createComponent, f as createAstro, r as renderTemplate, n as defineScriptVars, k as renderComponent, m as maybeRenderHead, h as addAttribute } from '../../../chunks/astro/server_6Vm7kAO5.mjs';
 import 'kleur/colors';
-import { $ as $$Layout } from '../../../chunks/Layout_D6Llifn7.mjs';
+import { $ as $$Layout } from '../../../chunks/Layout_BALE1YAg.mjs';
 import { s as supabase } from '../../../chunks/supabase-client_BrwR6F9D.mjs';
 import { g as getCountryContent } from '../../../chunks/db_BgTuE01l.mjs';
 export { renderers } from '../../../renderers.mjs';
@@ -36,9 +36,9 @@ Save All Content Changes
 </button> <div id="contentFormMessage" class="mt-4 hidden"> <!-- Form messages will be displayed here --> </div> <div class="mt-8"> <h3 class="text-lg font-medium text-gray-900 mb-4">Preview Your Changes</h3> <a${addAttribute(`/${countryData.slug}`, "href")} target="_blank" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
 Preview Site
 </a> </div> </div> </div> </main> ` }), defineScriptVars({ countrySlug: slug }));
-}, "C:/Users/Leo Office PC/Desktop/RoboWebapp/international/src/pages/admin/edit-country/[slug].astro", void 0);
+}, "C:/Users/Krishann/Desktop/RoboWebapp/international/src/pages/admin/edit-country/[slug].astro", void 0);
 
-const $$file = "C:/Users/Leo Office PC/Desktop/RoboWebapp/international/src/pages/admin/edit-country/[slug].astro";
+const $$file = "C:/Users/Krishann/Desktop/RoboWebapp/international/src/pages/admin/edit-country/[slug].astro";
 const $$url = "/dubai/admin/edit-country/[slug]";
 
 const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({

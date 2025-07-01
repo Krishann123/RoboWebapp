@@ -1,7 +1,7 @@
 /* empty css                                  */
-import { e as createComponent, k as renderComponent, r as renderTemplate, m as maybeRenderHead } from '../chunks/astro/server_DhKVb5AT.mjs';
+import { e as createComponent, k as renderComponent, r as renderTemplate, m as maybeRenderHead } from '../chunks/astro/server_6Vm7kAO5.mjs';
 import 'kleur/colors';
-import { $ as $$Layout } from '../chunks/Layout_D6Llifn7.mjs';
+import { $ as $$Layout } from '../chunks/Layout_BALE1YAg.mjs';
 /* empty css                                                */
 export { renderers } from '../renderers.mjs';
 
@@ -12,9 +12,9 @@ Return to Home
 Register Another Participant
 </a> </div> </div> <div class="mt-8" data-astro-cid-dotyaoyt> <p class="text-sm text-gray-600" data-astro-cid-dotyaoyt>
 If you have any questions, please contact us at <a href="mailto:erovoutika@gmail.com" class="text-blue-600 hover:underline" data-astro-cid-dotyaoyt>erovoutika@gmail.com</a> </p> </div> </main> ` })} `;
-}, "C:/Users/Leo Office PC/Desktop/RoboWebapp/international/src/pages/registration-success.astro", void 0);
+}, "C:/Users/Krishann/Desktop/RoboWebapp/international/src/pages/registration-success.astro", void 0);
 
-const $$file = "C:/Users/Leo Office PC/Desktop/RoboWebapp/international/src/pages/registration-success.astro";
+const $$file = "C:/Users/Krishann/Desktop/RoboWebapp/international/src/pages/registration-success.astro";
 const $$url = "/dubai/registration-success";
 
 const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({

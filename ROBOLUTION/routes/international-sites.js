@@ -576,6 +576,9 @@ router.post('/:slug/update', upload.fields([
     
     if (updatedTemplate.config.Contents.Footer) {
       updatedTemplate.config.Contents.Footer.about = req.body.footerAbout || existingTemplate.config.Contents.Footer.about;
+      updatedTemplate.config.Contents.Footer.address = req.body.footerAddress || existingTemplate.config.Contents.Footer.address;
+      updatedTemplate.config.Contents.Footer.email = req.body.footerEmail || existingTemplate.config.Contents.Footer.email;
+      updatedTemplate.config.Contents.Footer.phone = req.body.footerPhone || existingTemplate.config.Contents.Footer.phone;
     }
     
     // Update the document in the database
@@ -630,6 +633,16 @@ router.post('/create', async (req, res) => {
       newTemplate.config.Contents.News = {};
       newTemplate.config.Contents.Trainings = {};
       newTemplate.config.Contents.Tournament = {};
+      
+      // Initialize FrequentlyAsk with empty items array
+      if (newTemplate.config.Contents.FrequentlyAsk) {
+        newTemplate.config.Contents.FrequentlyAsk.items = [];
+      }
+      
+      // Initialize Package.TourGallery with empty array
+      if (newTemplate.config.Contents.Package) {
+        newTemplate.config.Contents.Package.TourGallery = [];
+      }
     }
 
     newTemplate.Name = slug;

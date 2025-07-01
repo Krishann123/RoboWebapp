@@ -1,0 +1,133 @@
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">
+      <img src="/images/ADMIN_LOGO.png" alt="Robolution Logo">
+      <h1>Robolution</h1>
+    </div>
+    <button class="sidebar-toggle" id="sidebar-toggle">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <div class="sidebar-menu">
+    <div class="sidebar-heading">Main</div>
+    <div class="sidebar-item">
+      <a href="/admin-dashboard" class="sidebar-link" data-page="dashboard">
+        <i class="fas fa-tachometer-alt sidebar-icon"></i>
+        <span class="sidebar-text">Dashboard</span>
+      </a>
+    </div>
+    <div class="sidebar-item">
+      <a href="/admin-dashboard#posts" class="sidebar-link" data-page="posts">
+        <i class="fas fa-newspaper sidebar-icon"></i>
+        <span class="sidebar-text">Posts</span>
+      </a>
+    </div>
+    <div class="sidebar-item">
+      <a href="/admin-dashboard#create-post" class="sidebar-link" data-page="create-post">
+        <i class="fas fa-plus-circle sidebar-icon"></i>
+        <span class="sidebar-text">Create Post</span>
+      </a>
+    </div>
+    
+    <div class="sidebar-heading">Content</div>
+    <div class="sidebar-item">
+      <a href="/admin-dashboard#categories" class="sidebar-link" data-page="categories">
+        <i class="fas fa-layer-group sidebar-icon"></i>
+        <span class="sidebar-text">Categories</span>
+      </a>
+    </div>
+    <div class="sidebar-item">
+      <a href="/admin-dashboard#manage-categories" class="sidebar-link" data-page="manage-categories">
+        <i class="fas fa-tasks sidebar-icon"></i>
+        <span class="sidebar-text">Manage Categories</span>
+      </a>
+    </div>
+
+    <div class="sidebar-heading">Users</div>
+    <% if (user && user.role === 'superadmin') { %>
+    <div class="sidebar-item">
+      <a href="/admin-dashboard#manage-accounts" class="sidebar-link" data-page="manage-accounts">
+        <i class="fas fa-users-cog sidebar-icon"></i>
+        <span class="sidebar-text">Manage Accounts</span>
+      </a>
+    </div>
+    <% } %>
+    <div class="sidebar-item">
+      <a href="/admin-dashboard#user-profiles" class="sidebar-link" data-page="user-profiles">
+        <i class="fas fa-id-card sidebar-icon"></i>
+        <span class="sidebar-text">User Profiles</span>
+      </a>
+    </div>
+    
+    <div class="sidebar-heading">Registrations</div>
+    <div class="sidebar-item">
+      <a href="/admin-dashboard#manage-registrations" class="sidebar-link" data-page="manage-registrations">
+        <i class="fas fa-clipboard-list sidebar-icon"></i>
+        <span class="sidebar-text">Manage Registrations</span>
+      </a>
+    </div>
+
+    <div class="sidebar-item sidebar-dropdown">
+      <a href="/admin-dashboard#regional" class="sidebar-link sidebar-dropdown-toggle" data-page="regional">
+        <i class="fas fa-map-marker-alt sidebar-icon"></i>
+        <span class="sidebar-text">Regional</span>
+      </a>
+      <div class="sidebar-dropdown-menu">
+        <a href="/admin-dashboard#regional-all" class="sidebar-dropdown-link" data-region="All">All Regions</a>
+        <% if (typeof uniqueRegions !== 'undefined' && uniqueRegions.length > 0) { %>
+          <% uniqueRegions.forEach(function(region) { %>
+            <a href="/admin-dashboard#regional-<%= region.toLowerCase().replace(/\s+/g, '-') %>" class="sidebar-dropdown-link" data-region="<%= region %>"><%= region %></a>
+          <% }); %>
+        <% } else { %>
+          <!-- Optional: Message if no specific regions beyond 'All' -->
+        <% } %>
+      </div>
+    </div>
+
+    <div class="sidebar-heading">Scoring</div>
+    <div class="sidebar-item">
+      <a href="/admin-dashboard#leaderboard" class="sidebar-link" data-page="leaderboard">
+        <i class="fas fa-trophy sidebar-icon"></i>
+        <span class="sidebar-text">Competition Leaderboard</span>
+      </a>
+    </div>
+
+    <div class="sidebar-heading">System</div>
+    <% if (user && user.role === 'superadmin') { %>
+    <div class="sidebar-item">
+      <a href="/admin-dashboard#backups" class="sidebar-link" data-page="backups">
+        <i class="fas fa-database sidebar-icon"></i>
+        <span class="sidebar-text">Backups</span>
+      </a>
+    </div>
+    <% } %>
+
+    <div class="sidebar-item">
+      <a href="/admin/year-videos" class="sidebar-link">
+        <i class="fas fa-calendar-alt sidebar-icon"></i>
+        <span class="sidebar-text">Year Videos</span>
+      </a>
+    </div>
+    
+    <div class="sidebar-heading">INTERNATIONAL SITES</div>
+    <div class="sidebar-item">
+      <a href="/country" class="sidebar-link">
+        <i class="fas fa-globe-americas sidebar-icon"></i>
+        <span class="sidebar-text">Country Sites</span>
+      </a>
+    </div>
+    <div class="sidebar-item">
+      <a href="/admin-dashboard#manage-partners" class="sidebar-link" data-page="manage-partners">
+        <i class="fas fa-handshake sidebar-icon"></i>
+        <span class="sidebar-text">Manage Partners</span>
+      </a>
+    </div>
+    <div class="sidebar-item">
+      <a href="/logout" class="sidebar-link">
+        <i class="fas fa-sign-out-alt sidebar-icon"></i>
+        <span class="sidebar-text">Logout</span>
+      </a>
+    </div>
+  </div>
+</aside> 

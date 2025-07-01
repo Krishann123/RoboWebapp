@@ -1,6 +1,6 @@
 import { renderers } from './renderers.mjs';
-import { c as createExports, s as serverEntrypointModule } from './chunks/_@astrojs-ssr-adapter_CFG7DJ9B.mjs';
-import { manifest } from './manifest_CbNPE5gJ.mjs';
+import { c as createExports, s as serverEntrypointModule } from './chunks/_@astrojs-ssr-adapter_baUic0RP.mjs';
+import { manifest } from './manifest_0u2aBlZz.mjs';
 
 const serverIslandMap = new Map();;
 
@@ -84,8 +84,8 @@ const _manifest = Object.assign(manifest, {
 });
 const _args = {
     "mode": "standalone",
-    "client": "file:///C:/Users/Leo%20Office%20PC/Desktop/RoboWebapp/international/dist/client/",
-    "server": "file:///C:/Users/Leo%20Office%20PC/Desktop/RoboWebapp/international/dist/server/",
+    "client": "file:///C:/Users/Krishann/Desktop/RoboWebapp/international/dist/client/",
+    "server": "file:///C:/Users/Krishann/Desktop/RoboWebapp/international/dist/server/",
     "host": false,
     "port": 4321,
     "assets": "_astro"

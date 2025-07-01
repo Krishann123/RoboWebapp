@@ -1001,6 +1001,25 @@ app.post('/api/set-country/:slug', (req, res) => {
 const { createProxyMiddleware } = require('http-proxy-middleware');
 app.use('/international', async (req, res, next) => {
   try {
+    // Check if the country is provided in the query parameters
+    if (req.query.country) {
+      // Set the selected country in the session
+      req.session.selectedCountry = req.query.country;
+      
+      // Save the session
+      await new Promise((resolve, reject) => {
+        req.session.save(err => {
+          if (err) {
+            console.error('[International] Error saving session for country switch:', err);
+            reject(err);
+          } else {
+            console.log(`[International] Session updated with country: ${req.query.country}`);
+            resolve();
+          }
+        });
+      });
+    }
+    
     const slug = req.session.selectedCountry || 'default';
     console.log(`[International Page] Looking up template for slug: ${slug}`);
 

@@ -355,8 +355,10 @@
   <% if (typeof dashboard === 'undefined' && typeof inDashboard === 'undefined') { %>
   <div class="dashboard-container">
     <%- include('../../partials/admin-sidebar.ejs') %>
-    <main class="main-content">
-      <%- include('../../partials/admin-header', {title}); %>
+    
+    <main class="main-content" id="main-content">
+      <!-- Header -->
+      <%- include('../../partials/admin-header.ejs', {pageTitle: 'Edit Country Site'}) %>
   <% } %>
       
       <div class="container-fluid px-4">
