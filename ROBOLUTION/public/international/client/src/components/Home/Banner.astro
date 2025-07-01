@@ -1,0 +1,33 @@
+---
+import { fetchPageContent } from "@/components/db";
+
+const content = await fetchPageContent("Banner");
+const bannerContent = content.bannerContent;
+---
+
+<div
+    class="relative w-auto min-h-[48px] flex flex-col md:flex-row items-center justify-center px-5 py-2 gap-2 md:gap-8 z-50"
+    style={`background-color: ${bannerContent.backgroundColor}`}
+>
+    <div class="w-full md:w-auto flex justify-center items-center px-2">
+        <h2
+            class="text-[16px] sm:text-[18px] md:text-[20px] font-bold text-black capitalize leading-[1.2] text-center"
+        >
+            {bannerContent.message}
+        </h2>
+    </div>
+
+    <div class="w-full md:w-auto flex justify-center items-center relative">
+        <div
+            class="absolute w-[149px] h-[36px] rounded-[42px]"
+            style={`background-color: ${bannerContent.buttonBackground}`}
+        >
+        </div>
+        <a
+            href={bannerContent.buttonHref}
+            class="relative w-[120px] sm:w-[140px] h-[32px] sm:h-[36px] text-white text-[12px] sm:text-[13px] font-medium leading-[16px] flex items-center justify-center rounded-[42px] transition-colors hover:bg-[#0060CC]"
+        >
+            {bannerContent.buttonText}
+        </a>
+    </div>
+</div>
