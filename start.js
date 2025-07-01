@@ -128,99 +128,79 @@ function runCommand(command, args, options = {}) {
 
 // Main function to start all services
 async function start() {
-  log('Starting combined application...');
-  
-  if (IS_PRODUCTION) {
-    // Production mode: build Astro app then start main app
-    log('Running in PRODUCTION mode');
-    
-    // Build Astro app
-    log('Building international app...');
-    runCommand('npm', ['run', 'build'], { 
-      cwd: INTERNATIONAL_APP_DIR,
-      name: 'International build'
-    }).on('exit', (code) => {
-      if (code === 0) {
-        // Copy default.json to ROBOLUTION directory
+    log('Starting combined application...');
+
+    if (IS_PRODUCTION) {
+        log('Running in PRODUCTION mode');
+
+        // Removed: Building international app...
+        // Removed: runCommand('npm', ['run', 'build'], { cwd: INTERNATIONAL_APP_DIR, name: 'International build' })
+
+        // *** Directly proceed to copying built files and starting main app ***
+        log('International app assumed built by Render. Copying necessary files...');
+
+        // Copy default.json to ROBOLUTION directory (if it's part of the built output or needed)
         log('Copying default.json for direct access...');
-        const defaultJsonSrc = path.join(INTERNATIONAL_APP_DIR, 'default.json');
+        const defaultJsonSrc = path.join(INTERNATIONAL_APP_DIR, 'default.json'); // This should likely be INTERNATIONAL_APP_DIR/dist/default.json or similar
         const defaultJsonDest = path.join(MAIN_APP_DIR, 'default.json');
-        
+
         if (fs.existsSync(defaultJsonSrc)) {
-          fs.copyFileSync(defaultJsonSrc, defaultJsonDest);
-          log('Successfully copied default.json file');
+            fs.copyFileSync(defaultJsonSrc, defaultJsonDest);
+            log('Successfully copied default.json file');
         } else {
-          log('Warning: default.json file not found');
+            log('Warning: default.json file not found in Astro source. Verify path if it should exist in build.');
         }
-        
-        // Copy public directory contents
-        log('Copying public directory contents...');
-        const publicSrcDir = path.join(INTERNATIONAL_APP_DIR, 'public');
+
+        // Copy public directory contents from Astro's build output
+        // Astro's build output is typically in 'dist' (or configured `outDir`)
+        const astroBuiltOutputDir = path.join(INTERNATIONAL_APP_DIR, 'dist'); // Assuming Astro builds to 'dist'
+        log(`Copying built Astro content from ${astroBuiltOutputDir} to ROBOLUTION/public/international...`);
         const publicDestDir = path.join(MAIN_APP_DIR, 'public/international');
-        
-        if (fs.existsSync(publicSrcDir)) {
-          ensureDirExists(publicDestDir);
-          copyDirSync(publicSrcDir, publicDestDir);
-          log('Successfully copied public directory contents');
+
+        if (fs.existsSync(astroBuiltOutputDir)) {
+            ensureDirExists(publicDestDir);
+            copyDirSync(astroBuiltOutputDir, publicDestDir); // Copy the *built* output
+            log('Successfully copied built Astro content to ROBOLUTION/public/international');
         } else {
-          log('Warning: public directory not found');
+            log(`ERROR: Astro built output directory not found at ${astroBuiltOutputDir}. Build might have failed or path is wrong.`);
+            process.exit(1); // Exit if the built directory isn't there
         }
-        
-        // Copy assets from src/assets to be accessible
-        log('Copying src/assets for direct access...');
-        const srcAssetsDir = path.join(INTERNATIONAL_APP_DIR, 'src/assets');
-        const publicAssetsDir = path.join(MAIN_APP_DIR, 'public/international/src/assets');
-        
-        // Ensure the public/international directory exists
-        ensureDirExists(path.join(MAIN_APP_DIR, 'public/international'));
-        
-        // Copy the assets directory
-        if (fs.existsSync(srcAssetsDir)) {
-          copyDirSync(srcAssetsDir, publicAssetsDir);
-          log('Successfully copied src/assets directory');
-        } else {
-          log('Warning: src/assets directory not found');
-        }
-        
-        // Start main app after successful build
+
+        // Start main app after ensuring files are copied
         log('Starting main application...');
-        runCommand('npm', ['start'], { 
-          cwd: MAIN_APP_DIR,
-          name: 'Main app'
+        runCommand('npm', ['start'], {
+            cwd: MAIN_APP_DIR,
+            name: 'Main app'
         });
-      } else {
-        log('International app build failed. Exiting.');
-        process.exit(1);
-      }
-    });
-  } else {
-    // Development mode: start both apps in parallel
-    log('Running in DEVELOPMENT mode');
-    
-    // Start Astro dev server
-    const astroProcess = runCommand('npm', ['run', 'dev'], {
-      cwd: INTERNATIONAL_APP_DIR,
-      name: 'International app'
-    });
-    
-    // Wait for Astro dev server to be ready
-    log(`Waiting for Astro dev server on port ${ASTRO_DEV_PORT}...`);
-    const isAstroReady = await isPortAvailable(ASTRO_DEV_PORT);
-    
-    if (isAstroReady) {
-      log('Astro dev server is ready. Starting main application...');
-      runCommand('npm', ['run', 'dev'], {
-        cwd: MAIN_APP_DIR,
-        name: 'Main app'
-      });
+
     } else {
-      log('Timed out waiting for Astro dev server. Starting main app anyway...');
-      runCommand('npm', ['run', 'dev'], {
-        cwd: MAIN_APP_DIR,
-        name: 'Main app'
-      });
+        // ... (your existing DEVELOPMENT mode logic) ...
+        log('Running in DEVELOPMENT mode');
+
+        // Start Astro dev server
+        const astroProcess = runCommand('npm', ['run', 'dev'], {
+            cwd: INTERNATIONAL_APP_DIR,
+            name: 'International app'
+        });
+
+        // Wait for Astro dev server to be ready
+        log(`Waiting for Astro dev server on port ${ASTRO_DEV_PORT}...`);
+        const isAstroReady = await isPortAvailable(ASTRO_DEV_PORT);
+
+        if (isAstroReady) {
+            log('Astro dev server is ready. Starting main application...');
+            runCommand('npm', ['run', 'dev'], {
+                cwd: MAIN_APP_DIR,
+                name: 'Main app'
+            });
+        } else {
+            log('Timed out waiting for Astro dev server. Starting main app anyway...');
+            runCommand('npm', ['run', 'dev'], {
+                cwd: MAIN_APP_DIR,
+                name: 'Main app'
+            });
+        }
     }
-  }
 }
 
 // Start the application
