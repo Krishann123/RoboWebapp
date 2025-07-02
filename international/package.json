@@ -3,10 +3,10 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "npx astro dev",
-    "build": "npx astro build",
-    "preview": "npx astro preview",
-    "astro": "npx astro"
+    "dev": "node ./node_modules/astro/bin/astro.js dev",
+    "build": "node ./node_modules/astro/bin/astro.js build",
+    "preview": "node ./node_modules/astro/bin/astro.js preview",
+    "astro": "node ./node_modules/astro/bin/astro.js"
   },
   "dependencies": {
     "@astrojs/node": "^9.2.2",
