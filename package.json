@@ -5,9 +5,8 @@
   "main": "start.js",
   "scripts": {
     "dev": "node start.js",
-    "build": "cd international && npm run build && cd ../ROBOLUTION && npm run build",
+    "build": "cd international && npm install && npm run build && cd ../ROBOLUTION && npm install && npm run build",
     "start": "npx cross-env NODE_ENV=production node start.js",
-    "postinstall": "cd international && npm install && cd ../ROBOLUTION && npm install",
     "clean": "rimraf international/dist ROBOLUTION/public/international"
   },
   "engines": {
