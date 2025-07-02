@@ -273,13 +273,13 @@
         <div class="dropdown">
           <button class="nav-button dropdown-btn" style="display: flex; align-items: center;">Regional <span style="margin-left: 5px; font-size: 0.8em;">▼</span></button>
           <div class="dropdown-content">
-            <% if (typeof uniqueRegions !== 'undefined' && uniqueRegions.length > 0) { %>
             <a href="/regional?region=All">All Regions</a>
-              <% uniqueRegions.forEach(function(region) { %>
-              <a href="/regional?region=<%= region %>"><%= region %></a>
-            <% }); %>
+            <% if(locals.uniqueRegions && uniqueRegions.length > 0) { %>
+              <% uniqueRegions.forEach(function(regionName) { %>
+                <a href="/regional?region=<%= regionName %>"><%= regionName %></a>
+              <% }); %>
             <% } else { %>
-              <div class="dropdown-empty">No regional posts available</div>
+              <div class="dropdown-empty">No regional content available</div>
             <% } %>
           </div>
         </div>
@@ -291,7 +291,7 @@
             <!-- Country sites will be added dynamically via international-dropdown.js -->
           </div>
         </div>
-        <a href="/registration" class="nav-button registration-button">Registration</a>
+        <a href="/registration" class="nav-button registration-button" target="_blank">Registration</a>
         <a href="/login" class="nav-button login-button">Login</a>
         <a href="/signup" class="nav-button signup-button">Sign Up</a>
         <a href="/logout" class="nav-button logout-button">Logout</a>

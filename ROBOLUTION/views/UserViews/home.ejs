@@ -836,25 +836,12 @@
           <button class="nav-button dropdown-btn" style="display: flex; align-items: center;">Regional <span style="margin-left: 5px; font-size: 0.8em;">▼</span></button>
           <div class="dropdown-content">
             <a href="/regional?region=All">All Regions</a>
-            <% 
-            // Get unique regions with posts
-            let regions = [];
-            posts.forEach(post => {
-              if (post.region && post.region !== 'All' && !regions.includes(post.region)) {
-                regions.push(post.region);
-              }
-            });
-            
-            // Sort regions alphabetically
-            regions.sort();
-            
-            if(regions.length > 0) { 
-              // Display regions with posts
-              regions.forEach(region => { %>
-                <a href="/regional?region=<%= region %>"><%= region %></a>
-              <% });
-            } else { %>
-              <div class="dropdown-empty">No regional posts available</div>
+            <% if(locals.uniqueRegions && uniqueRegions.length > 0) { %>
+              <% uniqueRegions.forEach(function(regionName) { %>
+                <a href="/regional?region=<%= regionName %>"><%= regionName %></a>
+              <% }); %>
+            <% } else { %>
+              <div class="dropdown-empty">No regional content available</div>
             <% } %>
           </div>
         </div>

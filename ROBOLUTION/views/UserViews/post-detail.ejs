@@ -527,24 +527,13 @@
           <button class="nav-button dropdown-btn" style="display: flex; align-items: center;">Regional <span style="margin-left: 5px; font-size: 0.8em;">▼</span></button>
           <div class="dropdown-content">
             <a href="/regional?region=All">All Regions</a>
-            <% 
-            // Get unique regions with posts
-            let validRegions = [];
-            
-            // Extract regions from the available posts (we'll get this from the app.locals or pass it from the controller)
-            if (typeof uniqueRegions !== 'undefined' && uniqueRegions.length > 0) {
-              validRegions = uniqueRegions;
-            } else {
-              // Fallback - current post's region
-              if (post.region && post.region !== 'All' && !validRegions.includes(post.region)) {
-                validRegions.push(post.region);
-              }
-            }
-            
-            // Display regions with posts
-            validRegions.sort().forEach(region => { %>
-              <a href="/regional?region=<%= region %>"><%= region %></a>
-            <% }); %>
+            <% if(locals.uniqueRegions && uniqueRegions.length > 0) { %>
+              <% uniqueRegions.forEach(function(regionName) { %>
+                <a href="/regional?region=<%= regionName %>"><%= regionName %></a>
+              <% }); %>
+            <% } else { %>
+              <div class="dropdown-empty">No regional content available</div>
+            <% } %>
           </div>
         </div>
         

@@ -399,6 +399,59 @@
         font-size: 1.3rem;
       }
     }
+
+    /* Tour Gallery Section */
+    .tour-gallery-section {
+      padding: 40px 20px;
+      background-color: #F3F4F6;
+      text-align: center;
+    }
+
+    .tour-gallery-section h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #212529;
+      text-shadow: none;
+    }
+
+    .tour-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    .tour-gallery-item {
+      aspect-ratio: 1 / 1;
+    }
+
+    .tour-gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 1024px) {
+      .tour-gallery-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .tour-gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .tour-gallery-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 
@@ -471,13 +524,13 @@
         <div class="dropdown">
           <button class="nav-button dropdown-btn">Regional</button>
           <div class="dropdown-content">
-            <% if(uniqueRegions && uniqueRegions.length > 0) { %>
-              <a href="/regional?region=All">All Regions</a>
+            <a href="/regional?region=All">All Regions</a>
+            <% if(locals.uniqueRegions && uniqueRegions.length > 0) { %>
               <% uniqueRegions.forEach(function(regionName) { %>
                 <a href="/regional?region=<%= regionName %>"><%= regionName %></a>
               <% }); %>
             <% } else { %>
-              <div class="dropdown-empty">No regional posts available</div>
+              <div class="dropdown-empty">No regional content available</div>
             <% } %>
           </div>
         </div>
@@ -546,6 +599,19 @@
           </div>
         </div>
       <% }) %>
+    <% } %>
+
+    <% if (region !== 'All' && typeof tourGallery !== 'undefined' && tourGallery.length > 0) { %>
+      <section class="tour-gallery-section" id="packages">
+        <h1>Tour Gallery</h1>
+        <div class="tour-gallery-grid">
+          <% tourGallery.forEach(item => { %>
+            <div class="tour-gallery-item">
+              <img src="<%= item.image %>" alt="Tour Gallery Image">
+            </div>
+          <% }) %>
+        </div>
+      </section>
     <% } %>
   </main>
 

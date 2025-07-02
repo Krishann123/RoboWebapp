@@ -756,6 +756,12 @@
             <span class="sidebar-text">Manage Categories</span>
           </a>
         </div>
+        <div class="sidebar-item">
+          <a href="#manage-tour-gallery" class="sidebar-link" data-page="manage-tour-gallery">
+            <i class="fas fa-images sidebar-icon"></i>
+            <span class="sidebar-text">Manage Tour Gallery</span>
+          </a>
+        </div>
 
         <div class="sidebar-heading">Users</div>
         <% if (user && user.role === 'superadmin') { %>
@@ -1216,6 +1222,7 @@
             'create-post': '/create-post',
             'categories': '/categories',
             'manage-categories': '/manage-categories',
+            'manage-tour-gallery': '/admin/tour-gallery',
             'manage-accounts': '/manage-accounts',
             'user-profiles': '/admin/user-profiles',
             'manage-registrations': '/manage-registrations',

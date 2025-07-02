@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Tour Gallery</title>
+    <!-- Using a more robust stylesheet for a cleaner look -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 1400px;
+        }
+        .card {
+            border: none;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+        .table-responsive {
+            max-height: 60vh;
+        }
+        .img-thumbnail {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+        .table th {
+            white-space: nowrap;
+        }
+        .form-label {
+            font-weight: 500;
+        }
+        /* Custom styles for filter bar */
+        .filter-bar {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        /* Make header sticky */
+        thead th {
+            position: sticky;
+            top: 0;
+            background-color: #fff;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 1050; color: white; text-align: center; flex-direction: column; justify-content: center; align-items: center;">
+        <div class="spinner-border text-light" role="status" style="width: 3rem; height: 3rem;">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <h4 class="mt-3">Uploading Images...</h4>
+        <p>Please wait, this may take a moment.</p>
+    </div>
+
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <h2>Manage Tour Gallery</h2>
+            </div>
+            <div class="card-body">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Add New Gallery Images</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="upload-form" action="/admin/tour-gallery/add" method="POST" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-5 mb-3">
+                                    <label for="region-select" class="form-label">1. Select Region</label>
+                                    <select name="region" id="region-select" class="form-select" required>
+                                        <option value="" disabled selected>Select a Region</option>
+                                        <% if(locals.regions && regions.length > 0) { %>
+                                            <% regions.forEach(function(region) { %>
+                                                <option value="<%= region.value %>"><%= region.name %></option>
+                                            <% }); %>
+                                        <% } %>
+                                    </select>
+                                </div>
+                                <div class="col-md-5 mb-3">
+                                    <label for="image-upload" class="form-label">2. Choose Images (Multiple Allowed)</label>
+                                    <input type="file" name="images" id="image-upload" class="form-control" required multiple>
+                                </div>
+                                <div class="col-md-2 d-flex align-items-end mb-3">
+                                    <button type="submit" class="btn btn-primary w-100">Upload Images</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <h5 class="mt-4">Existing Gallery Images</h5>
+                <div class="filter-bar mb-3">
+                    <div class="flex-grow-1">
+                        <label for="region-filter" class="form-label">Filter by Region</label>
+                        <select id="region-filter" class="form-select" onchange="window.location.href=this.value">
+                            <option value="/admin/tour-gallery" <%= selectedRegion === 'All' ? 'selected' : '' %>>All Regions</option>
+                            <% regions.forEach(region => { %>
+                                <option value="/admin/tour-gallery?region=<%= encodeURIComponent(region.value) %>" <%= selectedRegion === region.value ? 'selected' : '' %>>
+                                    <%= region.name %>
+                                </option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    <div class="align-self-end">
+                        <button id="delete-selected-btn" class="btn btn-danger">Delete Selected</button>
+                    </div>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 5%;"><input type="checkbox" id="select-all-checkbox" class="form-check-input"></th>
+                                <th style="width: 15%;">Image</th>
+                                <th>Region</th>
+                                <th style="width: 15%;">Date Added</th>
+                            </tr>
+                        </thead>
+                        <tbody id="gallery-table-body">
+                            <% if(galleryItems.length > 0) { %>
+                                <% galleryItems.forEach(item => { %>
+                                    <tr id="row-<%= item._id %>">
+                                        <td><input type="checkbox" class="form-check-input item-checkbox" data-id="<%= item._id %>"></td>
+                                        <td><a href="<%= item.image %>" target="_blank"><img src="<%= item.image %>" alt="Gallery Image" class="img-thumbnail"></a></td>
+                                        <td><%= item.region %></td>
+                                        <td><%= new Date(item.createdAt).toLocaleDateString() %></td>
+                                    </tr>
+                                <% }) %>
+                            <% } else { %>
+                                <tr>
+                                    <td colspan="4" class="text-center">No gallery images found for this region.</td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const selectAllCheckbox = document.getElementById('select-all-checkbox');
+        const itemCheckboxes = document.querySelectorAll('.item-checkbox');
+        const deleteSelectedBtn = document.getElementById('delete-selected-btn');
+        const tableBody = document.getElementById('gallery-table-body');
+        const uploadForm = document.getElementById('upload-form');
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const submitButton = uploadForm.querySelector('button[type="submit"]');
+
+        // Show loading indicator on form submission for uploads
+        uploadForm.addEventListener('submit', function(e) {
+            const imageUpload = document.getElementById('image-upload');
+            const regionSelect = document.getElementById('region-select');
+
+            // Prevent submission if fields are empty
+            if (regionSelect.value === "") {
+                alert('Please select a region before uploading.');
+                e.preventDefault();
+                return;
+            }
+            if (imageUpload.files.length === 0) {
+                alert('Please select at least one image to upload.');
+                e.preventDefault();
+                return;
+            }
+
+            // If validation passes, show loading indicator
+            loadingOverlay.style.display = 'flex';
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Uploading...';
+        });
+
+        // Select/Deselect all checkboxes
+        selectAllCheckbox.addEventListener('change', function() {
+            itemCheckboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+        });
+
+        // Bulk delete functionality
+        deleteSelectedBtn.addEventListener('click', async function() {
+            const selectedIds = Array.from(itemCheckboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.dataset.id);
+
+            if (selectedIds.length === 0) {
+                alert('Please select at least one image to delete.');
+                return;
+            }
+
+            if (!confirm(`Are you sure you want to delete ${selectedIds.length} image(s)? This cannot be undone.`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/admin/tour-gallery/delete', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ imageIds: selectedIds })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Remove deleted rows from the table
+                    selectedIds.forEach(id => {
+                        const row = document.getElementById(`row-${id}`);
+                        if (row) {
+                            row.remove();
+                        }
+                    });
+                    // If table is now empty, show a message
+                    if (tableBody.children.length === 0) {
+                        tableBody.innerHTML = '<tr><td colspan="4" class="text-center">All images in this view have been deleted.</td></tr>';
+                    }
+                    alert(result.message);
+                } else {
+                    alert('Error: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Failed to delete images:', error);
+                alert('An unexpected error occurred. Please check the console.');
+            }
+        });
+    });
+    </script>
+</body>
+</html> 

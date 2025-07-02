@@ -29,6 +29,7 @@ const Partner = require('./models/Partner');
 const otpGenerator = require('otp-generator');
 const postmark = require('postmark');
 const YearVideo = require('./models/YearVideo');
+const TourGallery = require('./models/TourGallery');
 
 let postmarkClient;
 if (process.env.POSTMARK_API_TOKEN && process.env.POSTMARK_API_TOKEN !== 'YOUR_POSTMARK_SERVER_API_TOKEN') {
@@ -974,10 +975,12 @@ app.use(express.json());
 const passwordResetRoutes = require('./routes/password-reset');
 const adminRoutes = require('./routes/admin');
 const apiRoutes = require('./routes/api');
+const tourGalleryAdminRoutes = require('./routes/admin/tour-gallery');
 
 app.use('/password-reset', passwordResetRoutes);
 app.use('/admin', adminRoutes);
 app.use('/api', apiRoutes);
+app.use('/admin', tourGalleryAdminRoutes); // Mount tour gallery admin routes
 
 // New endpoint to set the selected country in the session
 app.post('/api/set-country/:slug', (req, res) => {
@@ -1175,22 +1178,28 @@ app.get('/home', async (req, res) => {
     
     const sortDirection = req.query.sort === 'asc' ? 1 : -1;
     
-    // DIRECT COLLECTION ACCESS
-    const postsCollection = robolutionDb.collection('posts');
+    // Fetch all posts, partners, and tour gallery items in parallel
+    const [posts, partners, tourGalleryItems, yearVideos] = await Promise.all([
+      Post.find().sort({ createdAt: sortDirection }).lean(),
+      Partner.find().lean(),
+      TourGallery.find().select('region').lean(),
+      YearVideo.find({ active: true }).lean()
+    ]);
+
+    // Combine regions from both posts and tour gallery
+    const postRegions = posts.map(p => p.region);
+    const galleryRegions = tourGalleryItems.map(item => item.region);
+    const allRegions = [...postRegions, ...galleryRegions];
+
+    // Create a unique, sorted list of regions, filtering out 'All' and any falsy values
+    const uniqueRegions = [...new Set(allRegions)]
+      .filter(region => region && region !== 'All')
+      .sort();
     
-    // Fetch all posts using native MongoDB
-    let posts = await postsCollection.find().sort({ createdAt: sortDirection }).toArray();
     console.log(`Found ${posts.length} posts for user landing`);
-    
-    // Convert MongoDB documents to JavaScript objects
-    posts = JSON.parse(JSON.stringify(posts));
-    
-    // Fetch partners for the carousel sections
-    const partners = await Partner.find().lean();
-    
-    // Fetch year videos
-    const yearVideos = await YearVideo.find({ active: true }).lean();
+    console.log(`Found ${partners.length} partners for carousel`);
     console.log(`Found ${yearVideos.length} year videos`);
+    console.log(`Combined unique regions for nav:`, uniqueRegions);
     
     // Get the default video (used when no specific year is selected)
     const defaultVideo = '/images/Robolution2025.mp4'; // Default fallback video
@@ -1202,7 +1211,8 @@ app.get('/home', async (req, res) => {
       partners,
       selectedYear: 'all',
       yearVideos,
-      currentVideo: defaultVideo
+      currentVideo: defaultVideo,
+      uniqueRegions // Pass the new combined list to the view
     });
   } catch (error) {
     console.error('Error in home route:', error);
@@ -1273,16 +1283,26 @@ app.get('/home/year/:year', async (req, res) => {
     // Convert MongoDB documents to JavaScript objects
     posts = JSON.parse(JSON.stringify(posts));
     
-    // Also fetch all posts to generate the years dropdown
-    let allPosts = await postsCollection.find().toArray();
-    allPosts = JSON.parse(JSON.stringify(allPosts));
+    // Fetch all posts for dropdowns, partners, and tour gallery items in parallel
+    const [allPosts, partners, tourGalleryItems, yearVideos] = await Promise.all([
+      postsCollection.find().toArray(),
+      Partner.find().lean(),
+      TourGallery.find().select('region').lean(),
+      YearVideo.find({ active: true }).lean()
+    ]);
     
-    // Fetch partners for the carousel sections
-    const partners = await Partner.find().lean();
+    // Combine regions from both all posts and tour gallery
+    const postRegions = allPosts.map(p => p.region);
+    const galleryRegions = tourGalleryItems.map(item => item.region);
+    const allCombinedRegions = [...postRegions, ...galleryRegions];
+
+    // Create a unique, sorted list of regions
+    const uniqueRegions = [...new Set(allCombinedRegions)]
+      .filter(region => region && region !== 'All')
+      .sort();
     
-    // Fetch year videos
-    const yearVideos = await YearVideo.find({ active: true }).lean();
-    console.log(`Found ${yearVideos.length} year videos`);
+    // Convert MongoDB documents to JavaScript objects
+    const allPostsParsed = JSON.parse(JSON.stringify(allPosts));
     
     // Find the video for the selected year
     const yearVideo = yearVideos.find(video => video.year === year);
@@ -1293,13 +1313,14 @@ app.get('/home/year/:year', async (req, res) => {
     
     res.render('UserViews/home', { 
       posts, 
-      allPosts, // Pass all posts to generate the years dropdown
+      allPosts: allPostsParsed, // Pass all posts to generate the years dropdown
       sort: req.query.sort || 'desc',
       user: req.session.user,
       partners,
       selectedYear: year,
       yearVideos,
-      currentVideo
+      currentVideo,
+      uniqueRegions // Pass the new combined list to the view
     });
   } catch (error) {
     console.error('Error in home route:', error);
@@ -3352,12 +3373,19 @@ app.get('/regional', async (req, res) => {
     const allPosts = await postsCollection.find().toArray();
     const uniqueRegions = [...new Set(allPosts.map(post => post.region).filter(region => region && region !== 'All'))].sort();
     
+    // Fetch tour gallery images if a specific region is selected
+    let tourGallery = [];
+    if (region !== 'All') {
+        tourGallery = await TourGallery.find({ region: region }).sort({ createdAt: -1 });
+    }
+    
     res.render('UserViews/regional', { 
       posts, 
       region,
       uniqueRegions,
       allPosts, // Pass all posts for the years dropdown
-      sort: req.query.sort || 'desc'
+      sort: req.query.sort || 'desc',
+      tourGallery // Pass tour gallery to the template
     });
   } catch (error) {
     console.error('Error fetching regional posts:', error);
@@ -5042,112 +5070,6 @@ app.post('/verify-login-2fa', async (req, res) => {
 });
 
 // User profile routes
-// Route to view user profile
-app.get('/profile', requireLogin, async (req, res) => { // Added requireLogin
-  try {
-    console.log('Attempting to find user with ID:', req.session.user.id);
-    
-    let user = null;
-    
-    // Try multiple lookup methods for user
-    try {
-      // First try standard mongoose findById
-      user = await User.findById(req.session.user.id);
-      
-      // If not found and ID seems to be a valid MongoDB ObjectId string
-      if (!user && req.session.user.id.match(/^[0-9a-fA-F]{24}$/)) {
-        // Try with new ObjectId
-        const ObjectId = mongoose.Types.ObjectId;
-        try {
-          const userId = new ObjectId(req.session.user.id);
-          user = await User.findOne({ _id: userId });
-        } catch (objIdError) {
-          console.error('Error converting user ID to ObjectId:', objIdError);
-        }
-      }
-      
-      // Try as string ID if still not found
-      if (!user) {
-        user = await User.findOne({ _id: req.session.user.id });
-      }
-      
-      // Try by username if still not found
-      if (!user && req.session.user.username) {
-        console.log('Trying to find user by username:', req.session.user.username);
-        user = await User.findOne({ username: req.session.user.username });
-      }
-    } catch (idError) {
-      console.error('Error looking up user:', idError);
-    }
-    
-    if (!user) {
-      // User not found in database - likely due to database restore
-      console.log('User not found in database but has session:', req.session.user);
-      
-      // Render an error page instead of redirecting to login
-      return res.render('UserViews/user-error', {
-        error: 'Account Not Found',
-        message: 'Your user account could not be found in the database. This may be due to a recent database restore operation. Please sign up for a new account.',
-        actionText: 'Sign Up',
-        actionLink: '/signup',
-        showLogoutButton: true
-      });
-    }
-    
-    // Calculate age from birth date if available
-    let age = null;
-    if (user.birthDate && user.birthDate.month && user.birthDate.year) {
-      const currentDate = new Date();
-      const currentMonth = currentDate.getMonth() + 1; // JavaScript months are 0-indexed
-      const currentYear = currentDate.getFullYear();
-      
-      age = currentYear - user.birthDate.year;
-      
-      // If birth month is after current month, subtract 1 from age
-      if (user.birthDate.month > currentMonth) {
-        age--;
-      }
-    }
-    
-    // Get user's registrations with flexible ObjectId handling
-    let registrations = [];
-    try {
-      // Try with ObjectId
-      if (user._id) {
-        if (typeof user._id === 'string' && user._id.match(/^[0-9a-fA-F]{24}$/)) {
-          const ObjectId = mongoose.Types.ObjectId;
-          try {
-            const userId = new ObjectId(user._id);
-            registrations = await Registration.find({ userId: userId }).sort({ registeredAt: -1 });
-          } catch (err) {
-            console.error('Error converting user._id to ObjectId:', err);
-          }
-        } else {
-          // Direct query with user._id object
-          registrations = await Registration.find({ userId: user._id }).sort({ registeredAt: -1 });
-        }
-        
-        // If no registrations found, try with string ID
-        if (registrations.length === 0) {
-          registrations = await Registration.find({ userId: user._id.toString() }).sort({ registeredAt: -1 });
-        }
-      }
-    } catch (regError) {
-      console.error('Error fetching registrations:', regError);
-    }
-    
-    // Render the profile page with all necessary data
-    res.render('UserViews/profile', { 
-      user,
-      age,
-      registrations,
-      profilePicture: user.profilePicture || '/images/default-profile.jpg'
-    });
-  } catch (error) {
-    console.error('Error fetching user profile:', error);
-    res.status(500).send('Error fetching user profile');
-  }
-});
 
 // Route to update user profile
 app.post('/profile/update', requireLogin, upload.single('profilePicture'), async (req, res) => {
@@ -5502,18 +5424,19 @@ app.get('/manage-backups', requireSuperAdmin, async (req, res) => {
 
     const client = await MongoClient.connect(process.env.MONGODB_URI);
     const db = client.db('robolution');
-    const backups = await db.collection('database_backups')
+    const rawBackups = await db.collection('database_backups')
       .find({})
       .sort({ timestamp: -1 })
-      .toArray()
-      .then(backups => backups.map(backup => ({
-        name: backup.backupId,
-        timestamp: backup.timestamp,
-        size: backup.size ? (backup.size / (1024 * 1024)).toFixed(2) + ' MB' : '0.05 MB',
-        files: backup.files || [],
-        metadataUrl: backup.metadataUrl,
-        _id: backup._id
-      })));
+      .toArray();
+
+    const backups = rawBackups.map(backup => ({
+      name: backup.backupId,
+      timestamp: backup.timestamp,
+      size: backup.size ? (backup.size / (1024 * 1024)).toFixed(2) + ' MB' : '0.05 MB',
+      files: backup.files || [],
+      metadataUrl: backup.metadataUrl,
+      _id: backup._id
+    }));
     
     const posts = await Post.find({}); // For uniqueRegions in header/sidebar if needed
     const uniqueRegions = [...new Set(posts.filter(post => post.region && post.region !== 'All').map(post => post.region))].sort();
@@ -6597,160 +6520,6 @@ app.get('/registration/:id', async (req, res) => {
   }
 });
 
-// Update the route to view user profile with direct MongoDB collection access
-app.get('/profile', requireLogin, async (req, res) => {
-  try {
-    console.log('Attempting to find user with ID:', req.session.user.id);
-    
-    // DIRECT COLLECTION ACCESS
-    const usersCollection = robolutionDb.collection('users');
-    
-    // Try multiple query approaches
-    let user = null;
-    
-    // 1. Try direct string ID lookup
-    user = await usersCollection.findOne({ _id: req.session.user.id });
-    console.log('Direct string ID lookup result:', user ? 'Found' : 'Not found');
-    
-    // 2. Try ObjectID lookup if available
-    if (!user && req.session.user.id.match(/^[0-9a-fA-F]{24}$/)) {
-      try {
-        const ObjectId = require('mongodb').ObjectId;
-        user = await usersCollection.findOne({ _id: new ObjectId(req.session.user.id) });
-        console.log('ObjectId lookup result:', user ? 'Found' : 'Not found');
-      } catch (err) {
-        console.error('Error with ObjectId conversion:', err.message);
-      }
-    }
-    
-    // 3. Try by username if still not found
-    if (!user && req.session.user.username) {
-      user = await usersCollection.findOne({ username: req.session.user.username });
-      console.log('Username lookup result:', user ? 'Found' : 'Not found');
-    }
-    
-    // 4. Try by email if still not found and available
-    if (!user && req.session.user.email) {
-      user = await usersCollection.findOne({ email: req.session.user.email });
-      console.log('Email lookup result:', user ? 'Found' : 'Not found');
-    }
-    
-    if (!user) {
-      // User not found in database - likely due to database restore
-      console.log('User not found in database but has session:', req.session.user);
-      
-      // Log the full database structure
-      console.log('User still not found, checking database structure...');
-      
-      // Get collection structure
-      const userSample = await usersCollection.find().limit(1).toArray();
-      console.log('Sample user structure:', JSON.stringify(userSample, null, 2));
-      
-      // Fetch all posts for the years dropdown
-      const postsCollection = robolutionDb.collection('posts');
-      let allPosts = await postsCollection.find().toArray();
-      allPosts = JSON.parse(JSON.stringify(allPosts));
-      
-      // Get unique regions for the regional dropdown
-      const uniqueRegions = [...new Set(allPosts
-        .map(post => post.region)
-        .filter(region => region && region !== 'All')
-      )].sort();
-      
-      // Render an error page instead of redirecting to login
-      return res.render('UserViews/user-error', {
-        error: 'Account Not Found',
-        message: 'Your user account could not be found in the database. This may be due to a recent database restore operation. Please sign up for a new account.',
-        actionText: 'Sign Up',
-        actionLink: '/signup',
-        showLogoutButton: true,
-        allPosts,
-        uniqueRegions
-      });
-    }
-    
-    // Convert MongoDB document to a JavaScript object
-    const userObject = JSON.parse(JSON.stringify(user));
-    
-    // Calculate age from birth date if available
-    let age = null;
-    if (userObject.birthDate && userObject.birthDate.month && userObject.birthDate.year) {
-      const currentDate = new Date();
-      const currentMonth = currentDate.getMonth() + 1; // JavaScript months are 0-indexed
-      const currentYear = currentDate.getFullYear();
-      
-      age = currentYear - userObject.birthDate.year;
-      
-      // If birth month is after current month, subtract 1 from age
-      if (userObject.birthDate.month > currentMonth) {
-        age--;
-      }
-    }
-    
-    // Get user's registrations with direct collection access
-    let registrations = [];
-    try {
-      console.log(`Looking for registrations with userId: ${userObject._id}`);
-      
-      // Direct collection access
-      const registrationsCollection = robolutionDb.collection('registrations');
-      
-      if (registrationsCollection) {
-        // Try multiple approaches to find registrations
-        const userId = userObject._id;
-        const userIdString = userObject._id.toString ? userObject._id.toString() : userObject._id;
-        const userEmail = userObject.email;
-        
-        let regQuery = { $or: [] };
-        
-        // Add user ID conditions
-        if (userId) regQuery.$or.push({ userId: userId });
-        if (userIdString) regQuery.$or.push({ userId: userIdString });
-        
-        // Try to convert to ObjectId if it's a string in the right format
-        if (typeof userIdString === 'string' && userIdString.match(/^[0-9a-fA-F]{24}$/)) {
-          try {
-            const ObjectId = require('mongodb').ObjectId;
-            regQuery.$or.push({ userId: new ObjectId(userIdString) });
-          } catch (err) {
-            console.error('Error converting userId to ObjectId:', err.message);
-          }
-        }
-        
-        // Add email condition if available
-        if (userEmail) regQuery.$or.push({ email: userEmail });
-        
-        // Only run query if we have at least one condition
-        if (regQuery.$or.length > 0) {
-          console.log('Registration query:', JSON.stringify(regQuery));
-          registrations = await registrationsCollection.find(regQuery).sort({ registeredAt: -1 }).toArray();
-          console.log(`Found ${registrations.length} registrations`);
-          
-          // Convert registrations to plain objects
-          registrations = JSON.parse(JSON.stringify(registrations));
-        } else {
-          console.log('No valid conditions for registration query');
-        }
-      } else {
-        console.log('Registrations collection not found');
-      }
-    } catch (regError) {
-      console.error('Error fetching registrations:', regError);
-    }
-    
-    // Render the profile page with all necessary data
-    res.render('UserViews/profile', { 
-      user: userObject,
-      age,
-      registrations,
-      profilePicture: userObject.profilePicture || '/images/default-profile.jpg'
-    });
-  } catch (error) {
-    console.error('Error fetching user profile:', error);
-    res.status(500).send('Error fetching user profile');
-  }
-});
-
 // Update account/admin/edit route with direct DB access
 app.get('/account/admin/edit/:id', requireSuperAdmin, async (req, res) => {
   try {
@@ -7257,63 +7026,63 @@ app.get('/home/profile', requireLogin, (req, res) => {
   res.redirect('/profile');
 });
 
-// GET route to display user profile page
 app.get('/profile', requireLogin, async (req, res) => {
-    try {
-        // The user object is already populated by requireLogin if successful,
-        // but we need to fetch full details from DB
-        const user = await User.findById(req.session.user.id);
-        if (!user) {
-            req.flash('error', 'User not found.');
-            // If user somehow not found after login, redirect to login.
-            return res.redirect('/login');
-        }
-
-        let age = null;
-        if (user.birthDate && user.birthDate.month && user.birthDate.year) {
-            const birthDate = new Date(user.birthDate.year, user.birthDate.month - 1);
-            const today = new Date();
-            age = today.getFullYear() - birthDate.getFullYear();
-            const m = today.getMonth() - birthDate.getMonth();
-            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-                age--;
-            }
-        }
-
-        const registrations = await Registration.find({ userId: user._id }).sort({ registeredAt: -1 });
-        
-        // Capture referring page information
-        const referrer = req.get('Referrer') || '';
-        const isFromInternational = referrer.includes('international');
-        
-        console.log('Profile accessed from:', referrer, 'Is from international:', isFromInternational);
-
-        // Fetch all posts for the years dropdown
-        const postsCollection = robolutionDb.collection('posts');
-        let allPosts = await postsCollection.find().toArray();
-        allPosts = JSON.parse(JSON.stringify(allPosts));
-        
-        // Get unique regions for the regional dropdown
-        const uniqueRegions = [...new Set(allPosts
-          .map(post => post.region)
-          .filter(region => region && region !== 'All')
-        )].sort();
-        
-        res.render('UserViews/profile', {
-            user,
-            age,
-            registrations,
-            profilePicture: user.profilePicture || '/images/default-profile.jpg',
-            referrer,
-            isFromInternational,
-            allPosts,
-            uniqueRegions
-        });
-    } catch (error) {
-        console.error('Error fetching profile:', error);
-        req.flash('error', 'Error fetching profile.');
-        res.redirect('/home'); // Or a generic error page
+  try {
+    const user = await User.findById(req.session.user.id).lean();
+    if (!user) {
+      req.flash('error', 'User not found.');
+      return res.redirect('/login');
     }
+
+    // --- Start of Merged Logic ---
+
+    // 1. Fetch data for the profile page view (registrations, posts, gallery items)
+    const [registrations, allPosts, tourGalleryItems] = await Promise.all([
+      Registration.find({ userId: user._id }).sort({ registeredAt: -1 }).lean(),
+      Post.find().lean(),
+      TourGallery.find().select('region').lean()
+    ]);
+
+    // 2. Calculate user's age
+    let age = null;
+    if (user.birthDate && user.birthDate.month && user.birthDate.year) {
+      const birthDate = new Date(user.birthDate.year, user.birthDate.month - 1);
+      const today = new Date();
+      age = today.getFullYear() - birthDate.getFullYear();
+      const m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+    }
+
+    // 3. Check if the user is coming from an international site
+    const referrer = req.get('Referrer') || '';
+    const isFromInternational = referrer.includes('international');
+
+    // 4. Create the complete 'uniqueRegions' list for the header
+    const postRegions = allPosts.map(p => p.region);
+    const galleryRegions = tourGalleryItems.map(item => item.region);
+    const combinedRegions = [...new Set([...postRegions, ...galleryRegions])];
+    const uniqueRegions = combinedRegions.filter(region => region && region !== 'All').sort();
+    
+    // --- End of Merged Logic ---
+
+    res.render('UserViews/profile', {
+      user,
+      age,
+      registrations,
+      profilePicture: user.profilePicture || '/images/default-profile.jpg',
+      isFromInternational,
+      allPosts, // For year dropdowns if needed elsewhere on the page
+      uniqueRegions, // For the header dropdown
+      req: req
+    });
+
+  } catch (error) {
+    console.error('Error fetching profile:', error);
+    req.flash('error', 'Error fetching profile.');
+    res.redirect('/home');
+  }
 });
 
 // POST route to update user profile
@@ -8035,7 +7804,7 @@ app.put('/api/scores/:id', requireJudge, async (req, res) => {
 });
 
 // DELETE a score by ID
-app.delete('/api/scores/:id', requireJudge, async (req, res) => {
+app.delete('/api/scores/:id', requireAdmin, async (req, res) => {
     try {
         const scoreId = req.params.id;
         const judgeInfo = req.session.user.username; // For logging/audit if needed
