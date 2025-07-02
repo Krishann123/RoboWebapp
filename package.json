@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node start.js",
     "build": "npm ci --prefix international && npm run build --prefix international && npm ci --prefix ROBOLUTION && npm run build --prefix ROBOLUTION",
-    "start": "npx cross-env NODE_ENV=production node start.js",
+    "start": "node start.js",
     "clean": "rimraf international/dist ROBOLUTION/public/international"
   },
   "engines": {
