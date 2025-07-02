@@ -1,0 +1,975 @@
+[
+  {
+    "_id": "684a887b2297f6df7a4fbba5",
+    "Name": "default",
+    "config": {
+      "Contents": {
+        "Home": {
+          "hero": {
+            "mainText": "ROBOLUTION DUBAI",
+            "subText": "Welcome to Robolution Dubai! This is a default template.",
+            "buttonText": "Explore Packages",
+            "videoDirectory": "/images/videos/hero-video.mp4"
+          },
+          "Robolution": {
+            "title1": {
+              "intro1": "INNOVATION",
+              "sub1": "Embracing cutting-edge technology",
+              "textColor1": "#000000",
+              "textColor2": "#666666",
+              "containerColor1": "#f5f5f5",
+              "image1": "/images/innovation.jpg"
+            },
+            "title2": {
+              "intro2": "EXCELLENCE",
+              "sub2": "Striving for the highest quality in robotics",
+              "textColor1": "#000000",
+              "textColor2": "#666666",
+              "containerColor2": "#e9e9e9",
+              "image2": "/images/excellence.jpg"
+            }
+          },
+          "package": [
+            {
+              "title": "OUR PACKAGES"
+            },
+            {
+              "package": {
+                "name": "COMPETITION PACKAGE",
+                "description": "Join our robotics competitions and showcase your skills on an international stage.",
+                "color": "#ffffff",
+                "containerColor": "#5E17EB",
+                "titleColor": "#6AAAFF",
+                "display": "flex",
+                "image": "/images/competition.jpg",
+                "buttonText": "Learn More",
+                "buttonLink": "/international/competition"
+              }
+            },
+            {
+              "package": {
+                "name": "TRAINING PACKAGE",
+                "description": "Comprehensive robotics training programs for all skill levels.",
+                "color": "#ffffff",
+                "containerColor": "#5E17EB",
+                "titleColor": "#ffffff",
+                "display": "flex",
+                "image": "/images/training.jpg",
+                "buttonText": "Learn More",
+                "buttonLink": "/international/training"
+              }
+            }
+          ],
+          "Partners": {
+            "src": [
+              {
+                "image": "/images/partner1.png"
+              },
+              {
+                "image": "/images/partner2.png"
+              }
+            ]
+          },
+          "Highlights": {
+            "Title": "EVENT HIGHLIGHTS",
+            "Highlight1": {
+              "Icon1": "/images/icons/icon1.png",
+              "Highlight1": "Championships",
+              "description1": "Annual robotics championships"
+            },
+            "Highlight2": {
+              "Icon2": "/images/icons/icon2.png",
+              "Highlight2": "Workshops",
+              "description2": "Hands-on learning experiences"
+            },
+            "Highlight3": {
+              "Icon3": "/images/icons/icon3.png",
+              "Highlight3": "Summits",
+              "description3": "Connect with industry leaders"
+            },
+            "Highlight4": {
+              "Icon4": "/images/icons/icon4.png",
+              "Highlight4": "Competitions",
+              "description4": "Showcase your skills"
+            },
+            "Highlight5": {
+              "Icon5": "/images/icons/icon5.png",
+              "Highlight5": "Exhibitions",
+              "description5": "Discover new technologies"
+            }
+          },
+          "joinContent": {
+            "title": "JOIN ROBOLUTION",
+            "body": "Be part of the robotics revolution and shape the future of technology with us. Register now to get started!",
+            "button": "Register Now",
+            "buttonLink": "/international/register"
+          },
+          "newsContent": {
+            "sectionTitle": "NEWS & UPDATES",
+            "moreNewsLink": {
+              "text": "View all news",
+              "href": "/international/news"
+            }
+          },
+          "FrequentlyAsk": {
+            "Title": "FREQUENTLY ASKED QUESTIONS",
+            "description1": "Have questions? We've got answers. If you can't find what you're looking for, feel free to contact us.",
+            "Question1": "How do I register for an event?",
+            "Answer1": "You can register for any event by navigating to its specific page and filling out the registration form. You will receive a confirmation email upon successful registration.",
+            "Question2": "What are the different competition categories?",
+            "Answer2": "We offer a wide range of categories for different age groups and skill levels, including autonomous robotics, drone competitions, and more. Details can be found on the tournament page.",
+            "Question3": "Are there any training programs for beginners?",
+            "Answer3": "Absolutely! We provide comprehensive training programs and workshops for beginners to help them get started with robotics. Check our trainings page for more information."
+          }
+        },
+        "Navbar": {
+          "Content": {
+            "links": [
+              {
+                "name": "Home",
+                "path": "/international"
+              },
+              {
+                "name": "News",
+                "path": "/international/news"
+              },
+              {
+                "name": "Trainings",
+                "path": "/international/trainings"
+              },
+              {
+                "name": "Tournament",
+                "path": "/international/tournament"
+              }
+            ],
+            "button": {
+              "buttonText": "Register Now",
+              "buttonLink": "/international/register",
+              "image": "/images/logo.png"
+            }
+          }
+        },
+        "Footer": {
+          "logo": "/images/logo.png",
+          "about": "Robolution Dubai is at the forefront of robotics innovation.",
+          "quickLinks": [
+            {
+              "text": "Home",
+              "url": "/international"
+            },
+            {
+              "text": "News",
+              "url": "/international/news"
+            },
+            {
+              "text": "Trainings",
+              "url": "/international/trainings"
+            }
+          ],
+          "address": "Dubai, United Arab Emirates",
+          "email": "contact@robolutiondubai.com",
+          "phone": "+971 123 456789",
+          "socialLinks": [
+            {
+              "name": "Facebook",
+              "icon": "/images/icons/facebook.png",
+              "url": "https://facebook.com"
+            },
+            {
+              "name": "Twitter",
+              "icon": "/images/icons/twitter.png",
+              "url": "https://twitter.com"
+            }
+          ]
+        },
+        "Banner": {
+          "message": "Welcome to Robolution Dubai!",
+          "bannerContent": {
+            "message": "Register now for upcoming events!",
+            "backgroundColor": "#4B0082",
+            "buttonText": "Register",
+            "buttonHref": "/international/register",
+            "buttonBackground": "#6441A5"
+          }
+        },
+        "News": {
+          "latest-news": [
+            {
+              "NewsCard": {
+                "link": "/international/news/1",
+                "image": "/images/news1.jpg",
+                "alt": "Robotics Competition 2025",
+                "date": "June 10, 2025",
+                "title": "Annual Robotics Competition Announced",
+                "description": "The 2025 Annual Robotics Competition is now open for registration. Teams from all over the world are invited to participate."
+              }
+            },
+            {
+              "NewsCard": {
+                "link": "/international/news/2",
+                "image": "/images/news2.jpg",
+                "alt": "AI Workshop",
+                "date": "June 5, 2025",
+                "title": "New Workshop on AI and Machine Learning",
+                "description": "We are excited to launch a new workshop focused on Artificial Intelligence and its applications in robotics."
+              }
+            },
+            {
+              "NewsCard": {
+                "link": "/international/news/3",
+                "image": "/images/news3.jpg",
+                "alt": "Partnership Announcement",
+                "date": "May 28, 2025",
+                "title": "Erovoutika Partners with Tech Corp",
+                "description": "A new strategic partnership to foster innovation and provide more opportunities for young engineers."
+              }
+            }
+          ]
+        },
+        "Trainings": {},
+        "Tournament": {},
+        "Login": {},
+        "Admin": {}
+      }
+    }
+  },
+  {
+    "_id": "News",
+    "Content": {
+      "title": "Latest News & Updates",
+      "description": "Stay informed about our events and announcements",
+      "latest_news": [
+        {
+          "title": "Dubai Robotics Championship 2023",
+          "date": "2023-09-15",
+          "image": "/images/news/championship.jpg",
+          "summary": "The annual Dubai Robotics Championship was a massive success with over 200 participants.",
+          "content": "The event showcased the latest in robotics innovation with teams from around the world competing for the grand prize."
+        },
+        {
+          "title": "New Training Programs Launch",
+          "date": "2023-10-20",
+          "image": "/images/news/training.jpg",
+          "summary": "We're launching new training programs for all skill levels.",
+          "content": "Our new programs cover everything from basic robotics concepts to advanced AI integration."
+        },
+        {
+          "title": "Partnership with Tech Innovators",
+          "date": "2023-11-05",
+          "image": "/images/news/partnership.jpg",
+          "summary": "Robolution Dubai announces partnership with leading tech companies.",
+          "content": "This collaboration will bring new resources and opportunities to our robotics community."
+        }
+      ],
+      "banner": {
+        "title": "News & Updates",
+        "subtitle": "Stay up-to-date with the latest in robotics innovation"
+      }
+    }
+  },
+  {
+    "_id": "Trainings",
+    "Content": {
+      "title": "Robotics Training Programs",
+      "description": "Comprehensive training programs for all skill levels",
+      "programs": [
+        {
+          "name": "Beginner Robotics",
+          "description": "An introduction to robotics principles and basic programming",
+          "duration": "4 weeks",
+          "image": "/images/trainings/beginner.jpg",
+          "schedule": "Weekends, 10am-1pm",
+          "price": "500 AED",
+          "highlights": [
+            "No prior experience needed",
+            "Hands-on projects",
+            "Certificate of completion"
+          ]
+        },
+        {
+          "name": "Intermediate Programming",
+          "description": "Advanced programming techniques for robotics applications",
+          "duration": "6 weeks",
+          "image": "/images/trainings/intermediate.jpg",
+          "schedule": "Weekdays, 5pm-8pm",
+          "price": "750 AED",
+          "highlights": [
+            "Prior programming experience required",
+            "Complex project development",
+            "Industry mentorship"
+          ]
+        },
+        {
+          "name": "AI Integration Workshop",
+          "description": "Learn to integrate artificial intelligence with robotic systems",
+          "duration": "2 weeks intensive",
+          "image": "/images/trainings/ai.jpg",
+          "schedule": "Full-time, 9am-3pm",
+          "price": "1200 AED",
+          "highlights": [
+            "Advanced concepts",
+            "Real-world applications",
+            "Career guidance"
+          ]
+        }
+      ],
+      "banner": {
+        "title": "Training Programs",
+        "subtitle": "Develop your skills with our expert-led courses"
+      },
+      "registration": {
+        "buttonText": "Register Now",
+        "link": "/international/register"
+      }
+    }
+  },
+  {
+    "_id": "Tournament",
+    "Content": {
+      "title": "Robotics Tournaments",
+      "description": "Showcase your skills in our competitive tournaments",
+      "upcoming": [
+        {
+          "name": "Dubai Robotics Challenge",
+          "date": "December 15-17, 2023",
+          "location": "Dubai Innovation Hub",
+          "description": "The premier robotics competition in the region featuring teams from around the world.",
+          "categories": [
+            "Junior (8-14)",
+            "Youth (15-18)",
+            "Open Category"
+          ],
+          "image": "/images/tournaments/challenge.jpg",
+          "registration": {
+            "deadline": "November 30, 2023",
+            "link": "/international/tournament/register"
+          }
+        },
+        {
+          "name": "Innovation Showcase",
+          "date": "January 20-22, 2024",
+          "location": "Dubai Science Park",
+          "description": "Present your innovative robotics solutions to industry leaders and potential investors.",
+          "categories": [
+            "Automation",
+            "Healthcare",
+            "Environmental"
+          ],
+          "image": "/images/tournaments/innovation.jpg",
+          "registration": {
+            "deadline": "January 5, 2024",
+            "link": "/international/tournament/register"
+          }
+        }
+      ],
+      "past_events": [
+        {
+          "name": "STEM Robotics Cup",
+          "date": "August 10-12, 2023",
+          "winners": [
+            {
+              "category": "Junior Division",
+              "team": "Tech Wizards",
+              "project": "Recycling Sorter Robot"
+            },
+            {
+              "category": "Senior Division",
+              "team": "AI Innovators",
+              "project": "Autonomous Navigation System"
+            }
+          ],
+          "gallery": "/international/tournament/gallery/2023-cup"
+        }
+      ],
+      "banner": {
+        "title": "Tournaments & Competitions",
+        "subtitle": "Challenge yourself and compete with the best"
+      }
+    }
+  },
+  {
+    "_id": "Nominations_Tab",
+    "Content": {
+      "title": "Award Nominations",
+      "description": "Recognizing excellence in robotics innovation",
+      "categories": [
+        {
+          "name": "Innovation Award",
+          "description": "Celebrating groundbreaking approaches to robotics challenges",
+          "criteria": [
+            "Originality",
+            "Technical complexity",
+            "Real-world impact"
+          ],
+          "image": "/images/awards/innovation.jpg"
+        },
+        {
+          "name": "Young Achiever Award",
+          "description": "Recognizing exceptional talent in robotics from participants under 18",
+          "criteria": [
+            "Technical skill",
+            "Creative approach",
+            "Future potential"
+          ],
+          "image": "/images/awards/young.jpg"
+        },
+        {
+          "name": "Industry Application Award",
+          "description": "Honoring robotics solutions with practical industry applications",
+          "criteria": [
+            "Functionality",
+            "Scalability",
+            "Market potential"
+          ],
+          "image": "/images/awards/industry.jpg"
+        }
+      ],
+      "nomination_process": {
+        "steps": [
+          "Submit the nomination form",
+          "Upload supporting materials (photos, videos, technical documents)",
+          "Nominations reviewed by expert panel",
+          "Finalists announced two weeks before award ceremony"
+        ],
+        "deadline": "November 30, 2023",
+        "form_link": "/international/nominations/submit"
+      },
+      "banner": {
+        "title": "Award Nominations",
+        "subtitle": "Excellence deserves recognition"
+      }
+    }
+  },
+  {
+    "_id": "Home",
+    "Content": {
+      "hero": {
+        "mainText": "ROBOLUTION DUBAI",
+        "subText": "Welcome to Robolution Dubai! This is a default template.",
+        "buttonText": "Explore Packages",
+        "videoDirectory": "/images/videos/hero-video.mp4"
+      },
+      "Robolution": {
+        "title1": {
+          "intro": "INNOVATION",
+          "sub": "Embracing cutting-edge technology",
+          "textColor1": "#000000",
+          "textColor2": "#666666",
+          "containerColor1": "#f5f5f5",
+          "image1": "/images/innovation.jpg"
+        },
+        "title2": {
+          "intro2": "EXCELLENCE",
+          "sub2": "Striving for the highest quality in robotics",
+          "textColor1": "#000000",
+          "textColor2": "#666666",
+          "containerColor2": "#e9e9e9",
+          "image2": "/images/excellence.jpg"
+        }
+      }
+    },
+    "Partners": {
+      "title": "Our Partners",
+      "subtitle": "We are proud to partner with:",
+      "src": [
+        {
+          "image": "/assets/images/partners/1.png"
+        },
+        {
+          "image": "/assets/images/partners/2.png"
+        },
+        {
+          "image": "/assets/images/partners/3.png"
+        },
+        {
+          "image": "/assets/images/partners/4.png"
+        },
+        {
+          "image": "/assets/images/partners/5.png"
+        }
+      ]
+    },
+    "package": [
+      {
+        "title": "OUR PACKAGES",
+        "packages": [
+          {
+            "name": "COMPETITION PACKAGE",
+            "description": "Join our robotics competitions and showcase your skills on an international stage",
+            "color": "#ffffff",
+            "containerColor": "#5E17EB",
+            "titleColor": "#AAAFF",
+            "display": "flex",
+            "image": "/images/competition.jpg",
+            "buttonText": "Learn More",
+            "buttonLink": "/international/competition"
+          },
+          {
+            "name": "TRAINING PACKAGE",
+            "description": "Comprehensive robotics training programs for all skill levels",
+            "color": "#ffffff",
+            "containerColor": "#5E17EB",
+            "titleColor": "#ffffff",
+            "display": "flex",
+            "image": "/images/training.jpg",
+            "buttonText": "Learn More",
+            "buttonLink": "/international/training"
+          }
+        ]
+      }
+    ],
+    "Highlights": {
+      "Title": "EVENT HIGHLIGHTS",
+      "Highlight1": {
+        "Icon1": "/images/icons/icon1.png",
+        "highlight1": "Championships",
+        "description1": "Annual robotics championships"
+      },
+      "Highlight2": {
+        "Icon2": "/images/icons/icon2.png",
+        "highlight2": "Workshops",
+        "description2": "Hands-on learning experiences"
+      },
+      "Highlight3": {
+        "Icon3": "/images/icons/icon3.png",
+        "highlight3": "Summits",
+        "description3": "Connect with industry leaders"
+      },
+      "Highlight4": {
+        "Icon4": "/images/icons/icon4.png",
+        "highlight4": "Competitions",
+        "description4": "Showcase your skills"
+      },
+      "Highlight5": {
+        "Icon5": "/images/icons/icon5.png",
+        "highlight5": "Exhibitions",
+        "description5": "Discover new technologies"
+      }
+    },
+    "joinContent": {
+      "title": "JOIN ROBOLUTION",
+      "body": "Be part of the robotics revolution and shape the future of technology",
+      "button": "Register Now",
+      "buttonLink": "/international/register"
+    },
+    "newsContent": {
+      "sectionTitle": "NEWS & UPDATES",
+      "moreNewsLink": {
+        "text": "View all news",
+        "href": "/international/news"
+      }
+    },
+    "FrequentlyAsk": {
+      "Title": "FREQUENTLY ASKED QUESTIONS",
+      "description1": "Have questions? We've got answers. If you can't find what you're looking for, please contact us.",
+      "Question1": "How do I register for an event?",
+      "Answer1": "You can register for any event by navigating to its specific page and clicking on the registration button.",
+      "Question2": "What are the different competition categories?",
+      "Answer2": "We offer a wide range of categories for different age groups and skill levels.",
+      "Question3": "Are there any training programs for beginners?",
+      "Answer3": "Absolutely! We provide comprehensive training programs and workshops for all skill levels."
+    },
+    "Navbar": {
+      "Content": {
+        "links": [
+          {
+            "path": "/news",
+            "name": "News"
+          },
+          {
+            "path": "/trainings",
+            "name": "Trainings"
+          },
+          {
+            "path": "/tournament",
+            "name": "Tournament"
+          },
+          {
+            "path": "/nominations",
+            "name": "Award Nominations"
+          }
+        ],
+        "button": {
+          "image": "/images/logo.png",
+          "buttonText": "Register Now",
+          "buttonLink": "/international/register"
+        }
+      }
+    },
+    "Footer": {
+      "logo": "/images/logo.png",
+      "about": "Robolution Dubai is at the forefront of robotics innovation.",
+      "quickLinks": [
+        {
+          "text": "Home",
+          "url": "/international"
+        },
+        {
+          "text": "News",
+          "url": "/international/news"
+        },
+        {
+          "text": "Trainings",
+          "url": "/international/trainings"
+        }
+      ],
+      "address": "Dubai, United Arab Emirates",
+      "email": "contact@robolutiondubai.com",
+      "phone": "+971 123 456789",
+      "socialLinks": [
+        {
+          "name": "Facebook",
+          "icon": "/images/icons/facebook.png",
+          "url": "https://facebook.com"
+        },
+        {
+          "name": "Twitter",
+          "icon": "/images/icons/twitter.png",
+          "url": "https://twitter.com"
+        }
+      ]
+    },
+    "Banner": {
+      "message": "Welcome to Robolution Dubai!",
+      "bannerContent": {
+        "message": "Register now for upcoming events!",
+        "backgroundColor": "#4B0082",
+        "buttonText": "Register",
+        "buttonHref": "/international/register",
+        "buttonBackground": "#6441A5"
+      }
+    },
+    "hero": {
+      "mainText": "ROBOLUTION DUBAI",
+      "subText": "Welcome to Robolution Dubai! This is a default template.",
+      "buttonText": "Explore Packages",
+      "videoDirectory": "/images/videos/hero-video.mp4"
+    },
+    "Robolution": {
+      "title1": {
+        "intro": "INNOVATION",
+        "sub": "Embracing cutting-edge technology",
+        "textColor1": "#000000",
+        "textColor2": "#666666",
+        "containerColor1": "#f5f5f5",
+        "image1": "/images/innovation.jpg"
+      },
+      "title2": {
+        "intro2": "EXCELLENCE",
+        "sub2": "Striving for the highest quality in robotics",
+        "textColor1": "#000000",
+        "textColor2": "#666666",
+        "containerColor2": "#e9e9e9",
+        "image2": "/images/excellence.jpg"
+      }
+    }
+  },
+  {
+    "_id": "Banner",
+    "bannerContent": {
+      "message": "Register now for upcoming events!",
+      "backgroundColor": "#4B0082",
+      "buttonText": "Register",
+      "buttonHref": "/international/register",
+      "buttonBackground": "#6441A5"
+    }
+  },
+  {
+    "_id": "Navbar",
+    "Content": {
+      "links": [
+        {
+          "path": "/news",
+          "name": "News"
+        },
+        {
+          "path": "/trainings",
+          "name": "Trainings"
+        },
+        {
+          "path": "/tournament",
+          "name": "Tournament"
+        },
+        {
+          "path": "/nominations",
+          "name": "Award Nominations"
+        }
+      ],
+      "button": {
+        "image": "/images/logo.png",
+        "buttonText": "Register Now",
+        "buttonLink": "/international/register"
+      }
+    }
+  },
+  {
+    "_id": "Nomination",
+    "Content": {
+      "title": "Award Nominations",
+      "description": "Recognizing excellence in robotics innovation",
+      "categories": [
+        {
+          "name": "Innovation Award",
+          "description": "Celebrating groundbreaking approaches to robotics challenges",
+          "criteria": [
+            "Originality",
+            "Technical complexity",
+            "Real-world impact"
+          ],
+          "image": "/images/awards/innovation.jpg"
+        },
+        {
+          "name": "Young Achiever Award",
+          "description": "Recognizing exceptional talent in robotics from participants under 18",
+          "criteria": [
+            "Technical skill",
+            "Creative approach",
+            "Future potential"
+          ],
+          "image": "/images/awards/young.jpg"
+        },
+        {
+          "name": "Industry Application Award",
+          "description": "Honoring robotics solutions with practical industry applications",
+          "criteria": [
+            "Functionality",
+            "Scalability",
+            "Market potential"
+          ],
+          "image": "/images/awards/industry.jpg"
+        }
+      ],
+      "nomination_process": {
+        "steps": [
+          "Submit the nomination form",
+          "Upload supporting materials (photos, videos, technical documents)",
+          "Nominations reviewed by expert panel",
+          "Finalists announced two weeks before award ceremony"
+        ],
+        "deadline": "November 30, 2023",
+        "form_link": "/international/nominations/submit"
+      },
+      "banner": {
+        "title": "Award Nominations",
+        "subtitle": "Excellence deserves recognition"
+      }
+    }
+  },
+  {
+    "_id": "Training",
+    "Content": {
+      "title": "Robotics Training Programs",
+      "description": "Comprehensive training programs for all skill levels",
+      "programs": [
+        {
+          "name": "Beginner Robotics",
+          "description": "An introduction to robotics principles and basic programming",
+          "duration": "4 weeks",
+          "image": "/images/trainings/beginner.jpg",
+          "schedule": "Weekends, 10am-1pm",
+          "price": "500 AED",
+          "highlights": [
+            "No prior experience needed",
+            "Hands-on projects",
+            "Certificate of completion"
+          ]
+        },
+        {
+          "name": "Intermediate Programming",
+          "description": "Advanced programming techniques for robotics applications",
+          "duration": "6 weeks",
+          "image": "/images/trainings/intermediate.jpg",
+          "schedule": "Weekdays, 5pm-8pm",
+          "price": "750 AED",
+          "highlights": [
+            "Prior programming experience required",
+            "Complex project development",
+            "Industry mentorship"
+          ]
+        },
+        {
+          "name": "AI Integration Workshop",
+          "description": "Learn to integrate artificial intelligence with robotic systems",
+          "duration": "2 weeks intensive",
+          "image": "/images/trainings/ai.jpg",
+          "schedule": "Full-time, 9am-3pm",
+          "price": "1200 AED",
+          "highlights": [
+            "Advanced concepts",
+            "Real-world applications",
+            "Career guidance"
+          ]
+        }
+      ],
+      "banner": {
+        "title": "Training Programs",
+        "subtitle": "Develop your skills with our expert-led courses"
+      },
+      "registration": {
+        "buttonText": "Register Now",
+        "link": "/international/register"
+      }
+    }
+  },
+  {
+    "_id": "685ca7211ac506c905aa6618",
+    "name": "default",
+    "slug": "default",
+    "flagUrl": "/images/flags/uae.png",
+    "description": "Default Robolution Site Template",
+    "active": true,
+    "config": {
+      "Contents": {
+        "News": {
+          "Hero": {
+            "title": "Latest <span class='underline'>Updates</span>",
+            "subtitle": "Stay informed with the latest news, events, and advancements in robotics."
+          },
+          "latest-news": [
+            {
+              "NewsCard": {
+                "link": "/international/news/1",
+                "image": "/images/news1.jpg",
+                "alt": "Robotics Competition 2025",
+                "date": "June 10, 2025",
+                "title": "Annual Robotics Competition Announced",
+                "description": "The 2025 Annual Robotics Competition is now open for registration. Teams from around the world are invited to participate."
+              }
+            },
+            {
+              "NewsCard": {
+                "link": "/international/news/2",
+                "image": "/images/news2.jpg",
+                "alt": "Educational Partnership",
+                "date": "May 22, 2025",
+                "title": "Educational Partnership with Leading Universities",
+                "description": "Robolution has formed partnerships with leading universities to advance robotics education."
+              }
+            },
+            {
+              "NewsCard": {
+                "link": "/international/news/3",
+                "image": "/images/news3.jpg",
+                "alt": "Innovation Award",
+                "date": "April 15, 2025",
+                "title": "Robolution Wins Innovation Award",
+                "description": "Our organization has been recognized for pioneering work in educational robotics."
+              }
+            }
+          ],
+          "latest-events": [
+            {
+              "NewsCard": {
+                "link": "/international/events/1",
+                "image": "/images/event1.jpg",
+                "alt": "Summer Robotics Camp",
+                "date": "July 5-15, 2025",
+                "title": "Summer Robotics Camp",
+                "description": "Join our intensive summer program to learn robotics fundamentals and advanced techniques."
+              }
+            },
+            {
+              "NewsCard": {
+                "link": "/international/events/2",
+                "image": "/images/event2.jpg",
+                "alt": "Robotics Expo",
+                "date": "August 20-22, 2025",
+                "title": "International Robotics Expo",
+                "description": "Witness the latest innovations in robotics technology at this premier event."
+              }
+            }
+          ],
+          "latest-webinar": [
+            {
+              "NewsCard": {
+                "link": "/international/webinar/1",
+                "image": "/images/webinar1.jpg",
+                "alt": "AI in Robotics",
+                "date": "September 5, 2025",
+                "title": "AI in Robotics: Present and Future",
+                "description": "Learn how artificial intelligence is transforming the field of robotics from leading experts."
+              }
+            }
+          ],
+          "latest-cards": [
+            {
+              "image": "/images/card1.jpg",
+              "icon": "fa-calendar",
+              "text": "Upcoming Events",
+              "source": "View all upcoming robotics events and competitions.",
+              "link": "/international/events",
+              "date": ""
+            },
+            {
+              "image": "/images/card2.jpg",
+              "icon": "fa-graduation-cap",
+              "text": "Training Programs",
+              "source": "Explore our comprehensive robotics training programs.",
+              "link": "/international/trainings",
+              "date": ""
+            },
+            {
+              "image": "/images/card3.jpg",
+              "icon": "fa-trophy",
+              "text": "Tournaments",
+              "source": "Register for our competitive robotics tournaments.",
+              "link": "/international/tournament",
+              "date": ""
+            }
+          ]
+        },
+        "Tournament": {
+          "Hero": {
+            "title": "Robotics <span class='underline'>Tournament</span>",
+            "subtitle": "Showcase your skills in our prestigious robotics competitions."
+          },
+          "Overview": {
+            "subheadings": "WHAT TO EXPECT",
+            "Headings": "Robotics <span class='underline'>Competition</span> Categories",
+            "info": "Our tournaments feature various competition categories designed to challenge participants of all skill levels. Select a category to learn more about the rules, requirements, and objectives."
+          },
+          "Pictures": {
+            "erobot": "/images/tournaments/erobot.jpg",
+            "eromath": "/images/tournaments/eromath.jpg",
+            "freestyle": "/images/tournaments/freestyle.jpg",
+            "cybersecurity": "/images/tournaments/cybersecurity.jpg"
+          }
+        },
+        "Trainings": {
+          "Hero": {
+            "title": "Robotics <span class='underline'>Training</span> Programs",
+            "subtitle": "Comprehensive courses for all skill levels",
+            "buttonText": "Learn More",
+            "background": "/images/trainings/hero-bg.jpg"
+          },
+          "Introduction": {
+            "title": "Develop Your <span class='underline'>Skills</span>",
+            "subtitle": "Our training programs are designed to provide hands-on experience and theoretical knowledge in various aspects of robotics and automation."
+          },
+          "Content_1": {
+            "title": "Robotics & Automation",
+            "subtitle": "Learn the fundamentals of robotics including design, construction, and programming of autonomous systems.",
+            "minititle": "OUR PROGRAMS",
+            "ImageDirectory": "/images/trainings/robotics.jpg"
+          },
+          "Content_2": {
+            "title": "Cybersecurity",
+            "subtitle": "Understand the critical aspects of securing robotic systems and protecting them from cyber threats.",
+            "ImageDirectory": "/images/trainings/cybersecurity.jpg"
+          },
+          "Content_3": {
+            "title": "Research & Development",
+            "subtitle": "Participate in cutting-edge research projects and develop innovative solutions for real-world problems.",
+            "ImageDirectory": "/images/trainings/research.jpg"
+          },
+          "Content_4": {
+            "title": "Ready to <span class='underline'>Learn?</span>",
+            "subtitle": "Join our comprehensive training programs and take your robotics skills to the next level.",
+            "buttonText": "Register Now",
+            "buttonLink": "/registration"
+          }
+        }
+      }
+    }
+  }
+]

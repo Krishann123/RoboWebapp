@@ -1,0 +1,64 @@
+[
+  {
+    "_id": "6842cfa3ab51c666d07ad7c0",
+    "userId": "68369820ae58ae54d334a82e",
+    "fullname": "Carl krishann J Millares",
+    "teamMembers": "",
+    "category": "College/Post-Graduate/Industry",
+    "school": "Umak",
+    "address": "Test address",
+    "email": "krishannmillares@gmail.com",
+    "competition": [
+      "EROVOUTHON"
+    ],
+    "workshop": [
+      "SEMINAR"
+    ],
+    "other_competition": "",
+    "other_workshop": "",
+    "code": "",
+    "paymentProofUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1749208992/robolution/payments/dk3qkos7iivdtmmldvtw.jpg",
+    "payment_details": "12345",
+    "verified": false,
+    "denied": true,
+    "registeredAt": {
+      "$date": "2025-06-06T11:23:15.293Z"
+    },
+    "__v": 0,
+    "deniedAt": {
+      "$date": "2025-06-28T06:04:11.713Z"
+    },
+    "deniedBy": "Admin_account",
+    "deniedMessage": "",
+    "deniedReason": "Invalid payment receipt"
+  },
+  {
+    "_id": "6842cfedab51c666d07ad7cc",
+    "userId": "6835af61b524723ca8a433af",
+    "fullname": "Carl krishann J Millares",
+    "teamMembers": "",
+    "category": "College/Post-Graduate/Industry",
+    "school": "",
+    "address": "Test address",
+    "email": "krishanncfacc@gmail.com",
+    "competition": [],
+    "workshop": [
+      "PROFESSIONAL"
+    ],
+    "other_competition": "",
+    "other_workshop": "",
+    "code": "",
+    "paymentProofUrl": "https://res.cloudinary.com/dji4cktex/image/upload/v1749209066/robolution/payments/piy49rqc7pwyaj2bsn4n.jpg",
+    "payment_details": "",
+    "verified": true,
+    "denied": false,
+    "registeredAt": {
+      "$date": "2025-06-06T11:24:29.317Z"
+    },
+    "__v": 0,
+    "verifiedAt": {
+      "$date": "2025-06-27T10:15:55.386Z"
+    },
+    "verifiedBy": "Admin_account"
+  }
+]
