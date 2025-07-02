@@ -1,15 +1,13 @@
-import { a0 as ROUTE_TYPE_HEADER, w as REROUTE_DIRECTIVE_HEADER, D as DEFAULT_404_COMPONENT, A as AstroError, aj as ActionNotFoundError, a6 as clientAddressSymbol, ak as LocalsNotAnObject, al as REROUTABLE_STATUS_CODES, aa as responseSentSymbol } from './astro/server_6Vm7kAO5.mjs';
+import { a1 as ROUTE_TYPE_HEADER, x as REROUTE_DIRECTIVE_HEADER, D as DEFAULT_404_COMPONENT, A as AstroError, al as ActionNotFoundError, a8 as clientAddressSymbol, am as LocalsNotAnObject, an as REROUTABLE_STATUS_CODES, ac as responseSentSymbol } from './astro/server_BGP9d7Zh.mjs';
 import { bold, red, yellow, dim, blue } from 'kleur/colors';
 import 'clsx';
-import 'cookie';
-import { D as DEFAULT_404_ROUTE, c as default404Instance, e as ensure404Route } from './astro-designed-error-pages_yujpce03.mjs';
-import 'es-module-lexer';
+import { D as DEFAULT_404_ROUTE, f as default404Instance, h as ensure404Route } from './astro-designed-error-pages_4-jZJ4fL.mjs';
 import buffer from 'node:buffer';
 import crypto from 'node:crypto';
 import { Http2ServerResponse } from 'node:http2';
-import { f as fileExtension, j as joinPaths, s as slash, p as prependForwardSlash$1, r as removeTrailingForwardSlash, a as appendForwardSlash$1, c as collapseDuplicateTrailingSlashes, h as hasFileExtension } from './path_DxtI3bsB.mjs';
-import { r as requestIs404Or500, i as isRequestServerIsland, n as notFound, a as redirectToFallback, b as redirectToDefaultLocale, c as requestHasLocale, e as normalizeTheLocale, d as defineMiddleware, S as SERVER_ISLAND_COMPONENT, f as SERVER_ISLAND_ROUTE, g as createEndpoint, R as RouteCache, s as sequence, h as findRouteToRewrite, m as matchRoute, j as RenderContext, P as PERSIST_SYMBOL, k as getSetCookiesFromResponse } from './index_BmLyhbER.mjs';
-import { N as NOOP_MIDDLEWARE_FN } from './noop-middleware_B2R67dTW.mjs';
+import { f as fileExtension, j as joinPaths, s as slash, p as prependForwardSlash$1, r as removeTrailingForwardSlash, a as appendForwardSlash$1, c as collapseDuplicateTrailingSlashes, h as hasFileExtension } from './path_BuZodYwm.mjs';
+import { r as requestIs404Or500, i as isRequestServerIsland, n as notFound, a as redirectToFallback, b as redirectToDefaultLocale, c as requestHasLocale, e as normalizeTheLocale, d as defineMiddleware, S as SERVER_ISLAND_COMPONENT, f as SERVER_ISLAND_ROUTE, g as createEndpoint, R as RouteCache, s as sequence, h as findRouteToRewrite, m as matchRoute, j as RenderContext, P as PERSIST_SYMBOL, k as getSetCookiesFromResponse } from './index_kari2xUG.mjs';
+import { N as NOOP_MIDDLEWARE_FN } from './noop-middleware_D4vTzZ_n.mjs';
 import { AsyncLocalStorage } from 'node:async_hooks';
 import fs from 'node:fs';
 import http from 'node:http';
@@ -428,7 +426,7 @@ const consoleLogDestination = {
   write(event) {
     let dest = console.error;
     if (levels[event.level] < levels["error"]) {
-      dest = console.log;
+      dest = console.info;
     }
     if (event.label === "SKIP_FORMAT") {
       dest(event.message);
@@ -580,7 +578,8 @@ class AppPipeline extends Pipeline {
       routes: this.manifest?.routes.map((r) => r.routeData),
       trailingSlash: this.manifest.trailingSlash,
       buildFormat: this.manifest.buildFormat,
-      base: this.manifest.base
+      base: this.manifest.base,
+      outDir: this.manifest.outDir
     });
     const componentInstance = await this.getComponentByRoute(routeData);
     return { newUrl, pathname, componentInstance, routeData };

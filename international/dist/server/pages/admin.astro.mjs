@@ -1,5 +1,5 @@
 /* empty css                                  */
-import { e as createComponent, r as renderTemplate, m as maybeRenderHead, f as createAstro, k as renderComponent } from '../chunks/astro/server_6Vm7kAO5.mjs';
+import { e as createComponent, r as renderTemplate, m as maybeRenderHead, f as createAstro, k as renderComponent } from '../chunks/astro/server_BGP9d7Zh.mjs';
 import 'kleur/colors';
 import { jsx, jsxs } from 'react/jsx-runtime';
 import { useState } from 'react';
@@ -8,7 +8,7 @@ import { ChevronDownIcon, XIcon } from 'lucide-react';
 import { c as cn } from '../chunks/utils_B05Dmz_H.mjs';
 import { Slot } from '@radix-ui/react-slot';
 import { cva } from 'class-variance-authority';
-import { $ as $$Layout } from '../chunks/Layout_BALE1YAg.mjs';
+import { $ as $$Layout } from '../chunks/Layout_CFUiTUra.mjs';
 import { a as getPageDetails, f as fetchPageContent, b as getData, c as getSelectedIndex } from '../chunks/db_BgTuE01l.mjs';
 import 'clsx';
 /* empty css                                 */
