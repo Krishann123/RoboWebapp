@@ -12,10 +12,8 @@ const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 const ASTRO_DEV_PORT = 4321; // Default Astro dev port
 
 // Set a consistent domain for cookie sharing
-// In production, use the hostname provided by Render; for local dev, use localhost.
-// This ensures session cookies are set for the correct domain.
-process.env.COOKIE_DOMAIN = process.env.RENDER_EXTERNAL_HOSTNAME || 'localhost';
-
+// Make sure cookie domain is set correctly for localhost
+process.env.COOKIE_DOMAIN = 'localhost'; // Always use localhost for local development
 // Add SESSION_SECRET for consistent session management
 process.env.SESSION_SECRET = fs.existsSync('./.jwt_secret') 
   ? fs.readFileSync('./.jwt_secret', 'utf8').trim()

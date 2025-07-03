@@ -340,24 +340,4 @@ router.get('/country/:slug/gallery', async (req, res) => {
   }
 });
 
-// New endpoint to get all available template slugs
-router.get('/templates', async (req, res) => {
-    try {
-        const testDb = req.app.locals.testDb; // Access the 'test' database connection
-        if (!testDb) {
-            return res.status(500).json({ error: 'Database connection for templates not found.' });
-        }
-        
-        const templatesCollection = testDb.collection('templates');
-        const templates = await templatesCollection.find({}, { projection: { Name: 1, _id: 0 } }).toArray();
-        
-        const slugs = templates.map(t => t.Name).filter(Boolean); // Extract 'Name' field and filter out any null/empty values
-        
-        res.json(slugs);
-    } catch (error) {
-        console.error('Error fetching template slugs:', error);
-        res.status(500).json({ error: 'Failed to fetch template slugs' });
-    }
-});
-
 module.exports = router; 

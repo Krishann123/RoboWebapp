@@ -113,7 +113,6 @@ if (!uri) {
 // Define variables for database access
 let db; // For adminDB access
 let robolutionDb; // For direct robolution database access
-let testDb; // For template data access
 
 // Define international app integration
 let internationalHandler;
@@ -123,28 +122,9 @@ const isLocalhost = process.env.COOKIE_DOMAIN === 'localhost';
 
 app.set('trust proxy', 1); // Trust first proxy. Important for reverse proxies (like the one in start.js)
 
-// Define allowed origins for CORS
-const allowedOrigins = [
-    'http://localhost:3000', 
-    'http://localhost:4321', 
-    'http://127.0.0.1:3000', 
-    'http://127.0.0.1:4321'
-];
-if (process.env.RENDER_EXTERNAL_URL) {
-    allowedOrigins.push(process.env.RENDER_EXTERNAL_URL);
-}
-
-// Configure CORS to allow cookies and credentials from allowed origins
+// Configure CORS to allow cookies and credentials
 app.use(cors({
-    origin: function (origin, callback) {
-        // allow requests with no origin (like mobile apps or curl requests)
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.indexOf(origin) === -1) {
-            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-            return callback(new Error(msg), false);
-        }
-        return callback(null, true);
-    },
+    origin: ['http://localhost:3000', 'http://localhost:4321', 'http://127.0.0.1:3000', 'http://127.0.0.1:4321'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
@@ -168,8 +148,7 @@ app.use(session({
         }
     }),
     cookie: { 
-        // Use secure cookies in production (on Render), but not in local HTTP development
-        secure: !!process.env.RENDER_EXTERNAL_HOSTNAME,
+        secure: false, // Set to false to work on both HTTP and HTTPS
         httpOnly: true,
         maxAge: 3 * 60 * 60 * 1000, // 3 hours in milliseconds
         sameSite: 'lax', // Use lax for better compatibility
@@ -630,11 +609,6 @@ mongoose.connect(uri, { dbName: 'robolution' })
     db = client.db('adminDB');
     console.log('MongoDB client connected to adminDB for admin operations');
     
-    // Set the testDb variable to access template data
-    testDb = client.db('test');
-    app.locals.testDb = testDb; // Make it available to routers
-    console.log('MongoDB client connected to test database for templates');
-
     // Also access the robolution database for direct operations if needed
     robolutionDb = client.db('robolution');
     console.log('MongoDB client can also access robolution database');
@@ -908,13 +882,13 @@ app.use('/:countrySlug', async (req, res, next) => {
       slug === 'public' || 
       slug === 'admin' || 
       slug === 'api' ||
-      slug === 'login' || 
-      slug === 'home' || 
-      slug === 'videos' || 
-      slug === 'dubai' || 
-      slug === 'password-reset' || 
-      slug === 'favicon.ico' || 
-      slug === 'robots.txt' || 
+      slug === 'login' ||
+      slug === 'home' ||
+      slug === 'videos' ||
+      slug === 'dubai' ||
+      slug === 'password-reset' ||
+      slug === 'favicon.ico' ||
+      slug === 'robots.txt' ||
       slug.startsWith('_') ||
       slug.includes('.')) {
     return next();

@@ -1,0 +1,301 @@
+{
+  "_id": "684a7569e852ba5115cb3535",
+  "Name": "default",
+  "config": {
+    "Contents": {
+      "Home": {
+        "hero": {
+          "mainText": "Welcome to Erovoutika Dubai",
+          "subText": "JOIN US FOR AN INTERNATIONAL TRAINING & TOURNAMENT CAMP IN ROBOTICS & AUTOMATION AND CYBERSECURITY WITH CERTIFICATION!",
+          "buttonText": "Learn More",
+          "videoDirectory": "/src/assets/images/backgrounds/Herobg.png"
+        },
+        "Robolution": {
+          "title1": {
+            "intro1": "What is ROBOLUTION DUBAI 2025?",
+            "sub1": "Robolution, Erovoutika’s premier robotics competition, fosters global innovation in robotics, cybersecurity, and automation. Established in 2019, it now spans regional to international levels. Robolution Dubai 2025 features competitions, training, awards, and networking.",
+            "textColor1": "#000000",
+            "textColor2": "#666666",
+            "containerColor1": "#f5f5f5",
+            "image1": "/src/assets/bot1.jpg"
+          },
+          "title2": {
+            "intro2": "Join Our Community!",
+            "sub2": "Robolution Dubai 2025 is open to teachers, faculty, robotics coaches, government employees, students, industry partners, and awardees from around the world.",
+            "textColor1": "#000000",
+            "textColor2": "#666666",
+            "containerColor2": "#e9e9e9",
+            "image2": "/src/assets/joinus.jpg"
+          }
+        },
+        "Partners": {
+          "src": [
+            {
+              "image": "/src/assets/images/partners/1.png"
+            },
+            {
+              "image": "/src/assets/images/partners/2.png"
+            }
+          ]
+        }
+      },
+      "Navbar": {
+        "Content": {
+          "links": [
+            {
+              "name": "Home",
+              "path": "/international"
+            },
+            {
+              "name": "News",
+              "path": "/international/News"
+            },
+            {
+              "name": "Seminars & Workshops",
+              "path": "/international/Trainings"
+            },
+            {
+              "name": "Tournament",
+              "path": "/international/Tournament"
+            },
+            {
+              "name": "Awards",
+              "path": "/international/Awards"
+            }
+          ],
+          "button": {
+            "buttonText": "Register Now",
+            "buttonLink": "https://docs.google.com/forms/d/e/1FAIpQLSeA3hMoa5hTtlIxKPBtUNVeHtplqIaXtiNPcvIkIAlTgnFmEQ/viewform",
+            "image": "/international/src/assets/images/Erovoutika Dubai logo.png"
+          }
+        }
+      },
+      "Footer": {
+        "logo": "/src/assets/ci_qr.png",
+        "about": "Robolution Dubai is at the forefront of robotics innovation.",
+        "quickLinks": [
+          {
+            "text": "Home",
+            "url": "/international"
+          },
+          {
+            "text": "News",
+            "url": "/international/News"
+          },
+          {
+            "text": "Seminars & Workshops",
+            "url": "/international/Trainings"
+          },
+          {
+            "text": "Tournaments",
+            "url": "/international/Tournament"
+          },
+          {
+            "text": "Awards",
+            "url": "/international/Awards"
+          }
+        ],
+        "address": "Dubai, United Arab Emirates",
+        "email": "erovoutika@gmail.com",
+        "phone": "+63 9653546415",
+        "socialLinks": [
+          {
+            "name": "Facebook",
+            "icon": "/src/assets/facebook_icon.png",
+            "url": "https://www.facebook.com/erovoutika/"
+          },
+          {
+            "name": "Linkedin",
+            "icon": "/src/assets/linkedin_icon.png",
+            "url": "https://ph.linkedin.com/company/erovoutika"
+          },
+          {
+            "name": "",
+            "icon": "/src/assets/ig_icon.png",
+            "url": "https://www.instagram.com/erovoutikainternational/"
+          }
+        ]
+      },
+      "Banner": {
+        "message": "Welcome to Robolution Dubai!",
+        "bannerContent": {
+          "message": "Nominate the Bright Minds of Tomorrow!",
+          "backgroundColor": "#FFB366",
+          "buttonText": "Nominate",
+          "buttonHref": "/international/Nominations_Tab",
+          "buttonBackground": "#0075FF"
+        }
+      },
+      "News": {
+        "Hero": {
+          "title": "News"
+        },
+        "latest-news": [
+          {
+            "id": "3f80ea1d-3f39-43ab-9ee8-a2ddf8103030",
+            "NewsCard": {
+              "title": "ROBOLUTION DUBAI 2025",
+              "date": "2025-06-26",
+              "link": "https://www.facebook.com/erovoutika/posts/pfbid02HB84Ek6FPqpMV67Dn5hEQPh35y9rQzH6G1Z77M6EQRBWZN7z4ZZoKTcX7bGvQvuZl?rdid=6HoNHZwqOEvfnKAO",
+              "image": "/src/assets/images/NewsUpdateImages/default-newsImage-1750936745044-867712117.png",
+              "alt": "ROBOLUTION DUBAI 2025"
+            }
+          }
+        ]
+      },
+      "Trainings": {},
+      "Tournament": {
+        "categories": [
+          {
+            "id": "5bcf4e97-603a-40e4-b94b-21c892c95e9d",
+            "title": "Robotics & AI",
+            "image": "/images/tournaments/default-tournament-1751012545235-839893527.png",
+            "mechanics": [
+              "Platform: RoboSim – a simulation environment designed to control modular robots using C programming.",
+              "Objective: Participants will write C code to control virtual robots within RoboSim. The same code can be directly used on actual hardware with no modification, allowing for seamless transition from simulation to real-world robotics.",
+              "Challenge: Complete a set of robotic tasks within the simulated environment, focusing on logic, accuracy, and efficiency of code."
+            ]
+          },
+          {
+            "id": "a544becb-51fc-4a41-bedb-d92e84a90e33",
+            "title": "Python Programming",
+            "image": "/images/tournaments/default-tournament-1751012570131-848405618.png",
+            "mechanics": [
+              "Level: High School",
+              "Challenge Format: Scenario-based and time-bound programming tasks.",
+              "Objective: Solve real-world problems using Python within a set time frame.",
+              "Assessment Criteria: Logic, code efficiency, problem-solving approach, and output correctness.",
+              "Time Limit: 1 hour per session."
+            ]
+          },
+          {
+            "id": "83945630-7e0d-4e9f-8034-c9591c9bb9e8",
+            "title": "Mathematics Exam",
+            "image": "/images/tournaments/default-tournament-1751012589784-900868524.png",
+            "mechanics": [
+              "Format: Multiple Choice",
+              "Items: 20 questions",
+              "Time Limit: 1 hour",
+              "Objective: To assess the knowledge and problem-solving skills in Mathematics among elementary and high school students.",
+              "Categories:",
+              "Category 1: Grades 3-4",
+              "Category 2: Grades 5-6",
+              "Category 3: Grades 7-8",
+              "Category 4: Grades 9-10",
+              "Category 5: Grades 11-12"
+            ]
+          },
+          {
+            "id": "5d7afc46-118b-418e-a63b-59096b5fc379",
+            "title": " Physics Exam",
+            "image": "/images/tournaments/default-tournament-1751012616622-692204780.png",
+            "mechanics": [
+              "Format: Multiple Choice",
+              "Items: 20 questions",
+              "Time Limit: 1 hour",
+              "Objective: To test conceptual understanding and application of Physics principles.",
+              "Categories:",
+              "Category 1: Grades 3-4",
+              "Category 2: Grades 5-6",
+              "Category 3: Grades 7-8",
+              "Category 4: Grades 9-10",
+              "Category 5: Grades 11-12"
+            ]
+          }
+        ]
+      },
+      "Login": {},
+      "Admin": {},
+      "FrequentlyAsk": {
+        "Title": "Frequently Asked Questions",
+        "description1": "Find answers to common questions about Robolution.",
+        "items": [
+          {
+            "question": "Who can participate?",
+            "answer": "Students, educators, and professionals from all over the world."
+          },
+          {
+            "id": "30c4559c-dbb7-4b6b-af2b-7a4450ca3090",
+            "question": "What to expect?",
+            "answer": "Enhance your knowledge, experience and connect with people who have the same interest as you! Join us in our ROBOLUTION!"
+          },
+          {
+            "id": "4f5c7d71-3ac6-47f1-96ce-2de6835b2da0",
+            "question": "What will be the outline of the event? ",
+            "answer": "Most of the outlines of the event of Erovoutika will be posted weeks prior to the said event, so stay tuned! Additional info shall also be given to your respective email once successfully registered."
+          }
+        ]
+      },
+      "Highlights": {
+        "Title": "Event Highlights",
+        "items": [
+          {
+            "icon": "/src/assets/images/icons/icon1.png",
+            "title": "Global Reach",
+            "description": "Connecting robotics enthusiasts from over 20 countries."
+          },
+          {
+            "icon": "/src/assets/images/icons/icon2.png",
+            "title": "Expert-Led Training",
+            "description": "Hands-on workshops led by industry professionals."
+          }
+        ]
+      },
+      "Package": {
+        "TourGallery": [
+          {
+            "image": "/images/gallery/default-gallery-1751358329822-543245053.avif"
+          },
+          {
+            "image": "/images/gallery/default-gallery-1751358329825-532491748.avif"
+          },
+          {
+            "image": "/images/gallery/default-gallery-1751358329838-388606951.avif"
+          },
+          {
+            "image": "/images/gallery/default-gallery-1751358329842-397872991.avif"
+          },
+          {
+            "image": "/images/gallery/default-gallery-1751358329853-533708042.avif"
+          },
+          {
+            "image": "/images/gallery/default-gallery-1751358329868-412542643.avif"
+          },
+          {
+            "image": "/images/gallery/default-gallery-1751358329885-827427173.avif"
+          },
+          {
+            "image": "/images/gallery/default-gallery-1751358329885-535574460.avif"
+          },
+          {
+            "image": "/images/gallery/default-gallery-1751358329886-745661723.avif"
+          },
+          {
+            "image": "/images/gallery/default-gallery-1751358329892-103874943.avif"
+          },
+          {
+            "image": "/images/gallery/default-gallery-1751358329898-128960910.avif"
+          },
+          {
+            "image": "/images/gallery/default-gallery-1751358329908-179636370.avif"
+          },
+          {
+            "image": "/images/gallery/default-gallery-1751358329929-566710665.avif"
+          },
+          {
+            "image": "/images/gallery/default-gallery-1751358329934-874336289.avif"
+          },
+          {
+            "image": "/images/gallery/default-gallery-1751358329946-866136739.avif"
+          },
+          {
+            "image": "/images/gallery/default-gallery-1751358329954-253109129.avif"
+          }
+        ]
+      },
+      "Flag": {
+        "image": "/images/flags/default-flag-1751015794021-652492132.svg"
+      }
+    }
+  }
+}

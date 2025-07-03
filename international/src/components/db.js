@@ -37,52 +37,34 @@ const connectionInfo = {
 };
 
 /**
- * Fetches the template configuration for a specific country from the central Node.js backend.
- * This is the single source of truth for all international site content.
- *
- * @param {string} countrySlug The URL slug of the country (e.g., "indonesia"). This should match the 'Name' field in the 'test.templates' MongoDB collection.
- * @returns {Promise<object|null>} The template configuration object, or null if not found.
+ * Get country-specific content based on the country slug
+ * @param {string} countrySlug - The URL slug for the country (e.g., "singapore")
+ * @returns {Promise<Object|null>} - The country data or null if not found
  */
-export async function getCountryContent(countrySlug) {
-  // Determine the base URL for the API call.
-  // In a server-side Astro environment, we need the full URL.
-  // On the client, a relative URL is fine.
-  const isServer = import.meta.env.SSR;
-  
-  // In production on Render, the backend and frontend are on the same domain.
-  // Locally, the backend is on port 3000.
-  const apiBaseUrl = isServer 
-    ? (process.env.RENDER_INTERNAL_HOSTNAME ? `http://${process.env.RENDER_INTERNAL_HOSTNAME}:${process.env.PORT}` : 'http://localhost:3000')
-    : '';
-
-  const apiUrl = `${apiBaseUrl}/api/template/${countrySlug || 'default'}`;
-
-  console.log(`[getCountryContent] Fetching template from: ${apiUrl}`);
-
+async function getCountryContent(countrySlug) {
   try {
-    const response = await fetch(apiUrl);
-
-    if (!response.ok) {
-      console.error(`[getCountryContent] Failed to fetch template for "${countrySlug}". Status: ${response.status}`);
-      // Try fetching the default template as a fallback
-      if (countrySlug !== 'default') {
-        console.log('[getCountryContent] Falling back to default template.');
-        return await getCountryContent('default');
+    // For SSR mode, use Astro.locals if available
+    if (import.meta.env.SSR) {
+      // Pull the countryData from Astro.locals if it was passed by Express middleware
+      const response = await fetch(`/api/country/${countrySlug}`);
+      if (!response.ok) {
+        console.error(`Failed to fetch country data: ${response.status}`);
+        return null;
       }
-      return null;
+      
+      return await response.json();
+    } else {
+      // Client-side, make API call to fetch country data
+      const response = await fetch(`/api/country/${countrySlug}`);
+      if (!response.ok) {
+        console.error(`Failed to fetch country data: ${response.status}`);
+        return null;
+      }
+      
+      return await response.json();
     }
-
-    const data = await response.json();
-    console.log(`[getCountryContent] Successfully fetched template for "${countrySlug}".`);
-    return data;
-
   } catch (error) {
-    console.error(`[getCountryContent] An error occurred while fetching the template for "${countrySlug}":`, error);
-    // Try fetching the default template as a fallback
-    if (countrySlug !== 'default') {
-        console.log('[getCountryContent] Falling back to default template on error.');
-        return await getCountryContent('default');
-    }
+    console.error('Error fetching country data:', error);
     return null;
   }
 }
