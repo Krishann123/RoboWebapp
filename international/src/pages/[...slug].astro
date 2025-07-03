@@ -1,52 +1,8 @@
-import Jumbotron from "../components/Home/Jumbotron.astro";
 import Layout from "../layouts/Layout.astro";
-import Join from "../components/Home/Joinrobo.astro";
-import Package from "../components/Home/Package.astro";
-import Robolution from "@/components/Home/Robolution.astro";
-import Highlights from "@/components/Home/Highlights.astro";
-import FrequentlyAsk from "@/components/Home/FrequentlyAsk.astro";
-import Partners from "@/components/Home/Partners";
-import NewsAndUpdate from "@/components/Home/NewsAndUpdate.astro";
+import CountryPage from "../components/CountryPage.jsx";
 
-// The middleware has already fetched the country data for us.
-const { countryData, countrySlug } = Astro.locals;
-
-// If the middleware didn't find data for the slug, it's not a valid country page.
-if (!countryData) {
-  return Astro.redirect('/404');
-}
-
-// The template is an object, but the page components expect props from it.
-const template = countryData; 
-const pageTitle = template.Navbar?.Content?.links[0]?.name || "Robolution";
-
-<Layout title={pageTitle}>
-    <Jumbotron 
-        mainText={template.Home?.hero?.mainText}
-        subText={template.Home?.hero?.subText}
-        buttonText={template.Home?.hero?.buttonText}
-        videoDirectory={template.Home?.hero?.videoDirectory}
-    />
-    <Robolution 
-        roboIntro={template.Home?.Robolution?.title1?.intro1}
-        roboSub={template.Home?.Robolution?.title1?.sub1}
-        joinIntro={template.Home?.Robolution?.title2?.intro2}
-        joinSub={template.Home?.Robolution?.title2?.sub2}
-    />
-    <Package tourGallery={template.Package?.TourGallery} />
-    <Highlights 
-        title={template.Highlights?.Title}
-        items={template.Highlights?.items}
-    />
-    <Join />
-    <NewsAndUpdate 
-        countrySlug={countrySlug} 
-        news={template.News?.[`latest-news`]} 
-    />
-    <FrequentlyAsk 
-        title={template.FrequentlyAsk?.Title}
-        description={template.FrequentlyAsk?.description1}
-        items={template.FrequentlyAsk?.items}
-    />
-    <Partners partners={template.Home?.Partners?.src} />
+<Layout title="Robolution">
+  <main>
+    <CountryPage client:load />
+  </main>
 </Layout> 
