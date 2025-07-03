@@ -113,6 +113,7 @@ if (!uri) {
 // Define variables for database access
 let db; // For adminDB access
 let robolutionDb; // For direct robolution database access
+let testDb; // For template data access
 
 // Define international app integration
 let internationalHandler;
@@ -629,6 +630,11 @@ mongoose.connect(uri, { dbName: 'robolution' })
     db = client.db('adminDB');
     console.log('MongoDB client connected to adminDB for admin operations');
     
+    // Set the testDb variable to access template data
+    testDb = client.db('test');
+    app.locals.testDb = testDb; // Make it available to routers
+    console.log('MongoDB client connected to test database for templates');
+
     // Also access the robolution database for direct operations if needed
     robolutionDb = client.db('robolution');
     console.log('MongoDB client can also access robolution database');
