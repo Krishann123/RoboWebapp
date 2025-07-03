@@ -1,7 +1,8 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
-import node from '@astrojs/node';
+// node adapter is not needed for static builds
+// import node from '@astrojs/node';
 
 // Import the dotenv plugin to handle environment variables
 import dotenv from 'dotenv';
@@ -11,13 +12,15 @@ dotenv.config(); // Load .env variables
 const isProd = process.env.NODE_ENV === 'production';
 
 export default defineConfig({
-  // Set base path for production mode to '/dubai'
-  base: '/dubai',
+  // Set the base path to '/international' so all asset links are generated correctly
+  // when served from the '/international' subfolder.
+  base: '/international',
+
+  // Generate a static site (HTML, CSS, JS) instead of a server.
+  output: 'static',
+
   integrations: [react(), tailwind()],
-  output: 'server',
-  adapter: node({
-    mode: 'standalone',
-  }),
+  
   vite: {
     define: {
       'process.env.PUBLIC_SUPABASE_URL': JSON.stringify(process.env.PUBLIC_SUPABASE_URL),

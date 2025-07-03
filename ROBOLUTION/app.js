@@ -122,9 +122,28 @@ const isLocalhost = process.env.COOKIE_DOMAIN === 'localhost';
 
 app.set('trust proxy', 1); // Trust first proxy. Important for reverse proxies (like the one in start.js)
 
-// Configure CORS to allow cookies and credentials
+// Define allowed origins for CORS
+const allowedOrigins = [
+    'http://localhost:3000', 
+    'http://localhost:4321', 
+    'http://127.0.0.1:3000', 
+    'http://127.0.0.1:4321'
+];
+if (process.env.RENDER_EXTERNAL_URL) {
+    allowedOrigins.push(process.env.RENDER_EXTERNAL_URL);
+}
+
+// Configure CORS to allow cookies and credentials from allowed origins
 app.use(cors({
-    origin: ['http://localhost:3000', 'http://localhost:4321', 'http://127.0.0.1:3000', 'http://127.0.0.1:4321'],
+    origin: function (origin, callback) {
+        // allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
@@ -148,7 +167,8 @@ app.use(session({
         }
     }),
     cookie: { 
-        secure: false, // Set to false to work on both HTTP and HTTPS
+        // Use secure cookies in production (on Render), but not in local HTTP development
+        secure: !!process.env.RENDER_EXTERNAL_HOSTNAME,
         httpOnly: true,
         maxAge: 3 * 60 * 60 * 1000, // 3 hours in milliseconds
         sameSite: 'lax', // Use lax for better compatibility
@@ -882,13 +902,13 @@ app.use('/:countrySlug', async (req, res, next) => {
       slug === 'public' || 
       slug === 'admin' || 
       slug === 'api' ||
-      slug === 'login' ||
-      slug === 'home' ||
-      slug === 'videos' ||
-      slug === 'dubai' ||
-      slug === 'password-reset' ||
-      slug === 'favicon.ico' ||
-      slug === 'robots.txt' ||
+      slug === 'login' || 
+      slug === 'home' || 
+      slug === 'videos' || 
+      slug === 'dubai' || 
+      slug === 'password-reset' || 
+      slug === 'favicon.ico' || 
+      slug === 'robots.txt' || 
       slug.startsWith('_') ||
       slug.includes('.')) {
     return next();
