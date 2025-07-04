@@ -120,7 +120,8 @@ let internationalHandler;
 const isProduction = process.env.NODE_ENV === 'production';
 const isLocalhost = process.env.COOKIE_DOMAIN === 'localhost';
 
-app.set('trust proxy', 1); // Trust first proxy. Important for reverse proxies (like the one in start.js)
+// Configure Express to trust proxies (important for Render's forwarded headers)
+app.set('trust proxy', isProduction ? 'loopback, linklocal, uniquelocal' : 1); // Trust first proxy. Important for reverse proxies (like the one in start.js)
 
 // Configure CORS to allow cookies and credentials
 app.use(cors({
@@ -129,6 +130,24 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+// Add cookie parser middleware with special handling for Render and production environments
+app.use((req, res, next) => {
+  // Add helper to check for cookies by name
+  req.hasCookie = (name) => {
+    return req.headers.cookie && req.headers.cookie.split(';').some(c => c.trim().startsWith(`${name}=`));
+  };
+  
+  // Add debug information to response headers
+  if (isProduction) {
+    res.setHeader('X-Cookie-Domain', process.env.COOKIE_DOMAIN || 'not-set');
+    res.setHeader('X-Environment', process.env.NODE_ENV || 'unknown');
+    res.setHeader('X-Is-Render', process.env.RENDER === 'true' ? 'true' : 'false');
+  }
+  
+  // Continue with request
+  next();
+});
 
 // Set up session middleware before routes
 app.use(session({
@@ -148,11 +167,11 @@ app.use(session({
         }
     }),
     cookie: { 
-        secure: false, // Set to false to work on both HTTP and HTTPS
+        secure: isProduction ? true : false, // Set to true in production for HTTPS
         httpOnly: true,
         maxAge: 3 * 60 * 60 * 1000, // 3 hours in milliseconds
         sameSite: 'lax', // Use lax for better compatibility
-        domain: process.env.COOKIE_DOMAIN || undefined, // Use environment variable or default to undefined for localhost
+        domain: isProduction ? process.env.COOKIE_DOMAIN || undefined : undefined, // Only set domain in production
         path: '/' // Ensure cookie is available on all paths
     },
     name: 'robolution_session',
@@ -2455,7 +2474,13 @@ app.post('/login', async (req, res) => {
                     console.log('Admin login successful - Session saved:', {
                         sessionID: req.sessionID,
                         user: req.session.user,
-                        cookie: req.session.cookie
+                        cookie: req.session.cookie,
+                        env: {
+                            NODE_ENV: process.env.NODE_ENV,
+                            COOKIE_DOMAIN: process.env.COOKIE_DOMAIN,
+                            RENDER: process.env.RENDER,
+                            RENDER_EXTERNAL_HOSTNAME: process.env.RENDER_EXTERNAL_HOSTNAME
+                        }
                     });
                     
                     // Force save the session again to ensure it's stored
@@ -2464,6 +2489,13 @@ app.post('/login', async (req, res) => {
                     // Add localStorage configuration
                     const redirectUrl = redirect || '/admin-dashboard'; // Changed from /index
                     
+                    // Get cookie configuration based on environment
+                    const cookieConfig = {
+                        domain: process.env.COOKIE_DOMAIN || undefined,
+                        secure: isProduction ? true : false,
+                        sameSite: 'lax'
+                    };
+                    
                     return res.json({ 
                         success: true,
                         redirectUrl: redirectUrl,
@@ -2471,11 +2503,7 @@ app.post('/login', async (req, res) => {
                         message: 'Login successful! Welcome back, ' + adminUser.username,
                         setLocalStorage: true,  // Signal client to set localStorage
                         sessionID: req.sessionID, // Send session ID to client for debugging
-                        cookieConfig: {
-                            domain: process.env.COOKIE_DOMAIN || undefined,
-                            secure: false,
-                            sameSite: 'lax'
-                        }
+                        cookieConfig: cookieConfig
                     });
                 });
             });
@@ -2656,7 +2684,13 @@ app.post('/login', async (req, res) => {
                     
                     console.log('User login successful - Session saved:', {
                         sessionID: req.sessionID,
-                        user: req.session.user
+                        user: req.session.user,
+                        env: {
+                            NODE_ENV: process.env.NODE_ENV,
+                            COOKIE_DOMAIN: process.env.COOKIE_DOMAIN,
+                            RENDER: process.env.RENDER,
+                            RENDER_EXTERNAL_HOSTNAME: process.env.RENDER_EXTERNAL_HOSTNAME
+                        }
                     });
                     
                     // Force save the session again to ensure it's stored
@@ -2665,6 +2699,13 @@ app.post('/login', async (req, res) => {
                     // Get redirect URL from request or use default
                     const redirectUrl = redirect || '/home'; // User redirect remains the same
                     
+                    // Get cookie configuration based on environment
+                    const cookieConfig = {
+                        domain: process.env.COOKIE_DOMAIN || undefined,
+                        secure: isProduction ? true : false,
+                        sameSite: 'lax'
+                    };
+                    
                     return res.json({ 
                         success: true,
                         redirectUrl: redirectUrl,
@@ -2672,11 +2713,7 @@ app.post('/login', async (req, res) => {
                         message: 'Login successful! Welcome back, ' + regularUser.username,
                         setLocalStorage: true,  // Signal client to set localStorage
                         sessionID: req.sessionID, // Send session ID to client for debugging
-                        cookieConfig: {
-                            domain: process.env.COOKIE_DOMAIN || undefined,
-                            secure: false,
-                            sameSite: 'lax'
-                        }
+                        cookieConfig: cookieConfig
                     });
                 });
             });
@@ -3513,13 +3550,26 @@ app.get('/api/check-session', (req, res) => {
     username: req.session?.user?.username,
     cookieDomain: process.env.COOKIE_DOMAIN,
     isProduction: isProduction,
-    isLocalhost: isLocalhost
+    isLocalhost: isLocalhost,
+    env: {
+      NODE_ENV: process.env.NODE_ENV,
+      COOKIE_DOMAIN: process.env.COOKIE_DOMAIN,
+      RENDER: process.env.RENDER,
+      RENDER_EXTERNAL_HOSTNAME: process.env.RENDER_EXTERNAL_HOSTNAME
+    }
   });
   
   // Touch the session to keep it alive
   if (req.session) {
     req.session.touch();
   }
+  
+  // Get cookie configuration based on environment
+  const cookieConfig = {
+    domain: process.env.COOKIE_DOMAIN || undefined,
+    secure: isProduction ? true : false,
+    sameSite: 'lax'
+  };
   
   // Simple check to see if user is in session
   if (req.session && req.session.user && req.session.user.id) {
@@ -3539,21 +3589,13 @@ app.get('/api/check-session', (req, res) => {
         isAdmin: req.session.user.isAdmin
       },
       sessionID: req.sessionID,
-      cookieConfig: {
-        domain: process.env.COOKIE_DOMAIN || undefined,
-        secure: false,
-        sameSite: 'lax'
-      }
+      cookieConfig: cookieConfig
     });
   } else {
     return res.json({ 
       authenticated: false,
       sessionID: req.sessionID,
-      cookieConfig: {
-        domain: process.env.COOKIE_DOMAIN || undefined,
-        secure: false,
-        sameSite: 'lax'
-      }
+      cookieConfig: cookieConfig
     });
   }
 });

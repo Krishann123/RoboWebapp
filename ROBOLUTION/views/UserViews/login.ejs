@@ -375,10 +375,33 @@
                         }
                     }
                     showMessage('Login successful! Redirecting...', 'success');
-                    // Add a small delay before redirecting to ensure cookie is set
-                    setTimeout(() => {
-                        window.location.href = result.redirectUrl || '/';
-                    }, 500); // 500ms delay
+                    
+                    // Verify session was set before redirecting
+                    fetch('/api/check-session', {
+                        credentials: 'include',
+                        headers: { 'Cache-Control': 'no-cache' }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Session check after login:', data);
+                        if (data.authenticated) {
+                            // Session is confirmed, proceed with redirect
+                            window.location.href = result.redirectUrl || '/';
+                        } else {
+                            // Session wasn't properly set - try once more with a longer delay
+                            console.warn('Session not found on first check - retrying in 1 second...');
+                            setTimeout(() => {
+                                window.location.href = result.redirectUrl || '/';
+                            }, 1000);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error checking session:', error);
+                        // Fallback to direct redirect if API call fails
+                        setTimeout(() => {
+                            window.location.href = result.redirectUrl || '/';
+                        }, 1000);
+                    });
                 } else if (result.requireTwoFactor) {
                     if (result.needs2FASetup) {
                         showMessage('Redirecting to 2FA setup...', 'info');

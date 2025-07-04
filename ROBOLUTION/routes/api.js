@@ -185,6 +185,35 @@ router.delete('/international/news/:category/:index', ensureAuthenticated, ensur
     }
 });
 
+// Add debug endpoint to check environment variables
+router.get('/debug-env', (req, res) => {
+  // Only return non-sensitive information
+  res.json({
+    environment: {
+      NODE_ENV: process.env.NODE_ENV,
+      isProduction: process.env.NODE_ENV === 'production',
+      RENDER: process.env.RENDER === 'true',
+      RENDER_EXTERNAL_URL: process.env.RENDER_EXTERNAL_URL ? 'set' : 'not set',
+      RENDER_EXTERNAL_HOSTNAME: process.env.RENDER_EXTERNAL_HOSTNAME ? 'set' : 'not set',
+      COOKIE_DOMAIN: process.env.COOKIE_DOMAIN || 'not set',
+    },
+    session: {
+      exists: !!req.session,
+      authenticated: !!(req.session && req.session.user),
+      cookieHeader: req.headers.cookie ? 'present' : 'absent',
+      sessionID: req.sessionID,
+    },
+    headers: {
+      host: req.headers.host,
+      'x-forwarded-host': req.headers['x-forwarded-host'],
+      'x-forwarded-proto': req.headers['x-forwarded-proto'],
+      referer: req.headers.referer,
+      origin: req.headers.origin,
+      'user-agent': req.headers['user-agent']
+    }
+  });
+});
+
 // Get active country sites
 router.get('/country-sites', async (req, res) => {
   try {

@@ -11,9 +11,22 @@ const MAIN_APP_DIR = path.join(__dirname, 'ROBOLUTION');
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 const ASTRO_DEV_PORT = 4321; // Default Astro dev port
 
-// Set a consistent domain for cookie sharing
-// Make sure cookie domain is set correctly for localhost
-process.env.COOKIE_DOMAIN = 'localhost'; // Always use localhost for local development
+// Check if running on Render
+const isRender = process.env.RENDER === 'true';
+
+// Set cookie domain based on environment
+if (isRender) {
+  // If on Render, use the RENDER_EXTERNAL_HOSTNAME as the cookie domain
+  // This is provided by Render automatically for all services
+  process.env.COOKIE_DOMAIN = process.env.RENDER_EXTERNAL_HOSTNAME || 
+                              process.env.RENDER_EXTERNAL_URL || 
+                              undefined;
+  console.log(`Running on Render with domain: ${process.env.COOKIE_DOMAIN}`);
+} else {
+  // In local development, use localhost
+  process.env.COOKIE_DOMAIN = 'localhost'; 
+}
+
 // Add SESSION_SECRET for consistent session management
 process.env.SESSION_SECRET = fs.existsSync('./.jwt_secret') 
   ? fs.readFileSync('./.jwt_secret', 'utf8').trim()
