@@ -7,7 +7,6 @@ const CountrySite = require('../models/CountrySite');
 const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
 const cloudinary = require('cloudinary').v2;
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 // Configure Cloudinary
 cloudinary.config({ 
@@ -16,21 +15,8 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET 
 });
 
-// Generic Cloudinary storage engine
-const createCloudinaryStorage = (folder) => {
-  return new CloudinaryStorage({
-    cloudinary: cloudinary,
-    params: {
-      folder: `robolution/international-sites/${folder}`,
-      format: async (req, file) => 'png', // supports promises as well
-      public_id: (req, file) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        const baseName = path.basename(file.originalname, path.extname(file.originalname));
-        return `${req.params.slug}-${baseName}-${uniqueSuffix}`;
-      },
-    },
-  });
-};
+// Use memory storage for multer
+const storage = multer.memoryStorage();
 
 // File filter for images
 const fileFilter = (req, file, cb) => {
@@ -41,30 +27,35 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-// Create separate upload instances for different types
 const upload = multer({ 
-  storage: createCloudinaryStorage('general'),
+  storage: storage,
   fileFilter: fileFilter,
   limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
 });
 
-const uploadGallery = multer({ 
-  storage: createCloudinaryStorage('gallery'),
-  fileFilter: fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 }
-});
+// Helper to upload a buffer to Cloudinary
+const uploadToCloudinary = (fileBuffer, folder, slug, originalName) => {
+  return new Promise((resolve, reject) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const baseName = path.basename(originalName, path.extname(originalName));
+    const public_id = `${slug}-${baseName}-${uniqueSuffix}`;
 
-const uploadTournament = multer({ 
-  storage: createCloudinaryStorage('tournaments'),
-  fileFilter: fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 }
-});
-
-const uploadFlag = multer({ 
-  storage: createCloudinaryStorage('flags'),
-  fileFilter: fileFilter,
-  limits: { fileSize: 1 * 1024 * 1024 } // 1MB limit for flags
-});
+    const stream = cloudinary.uploader.upload_stream(
+      {
+        folder: `robolution/international-sites/${folder}`,
+        public_id: public_id,
+        resource_type: 'auto'
+      },
+      (error, result) => {
+        if (error) {
+          return reject(error);
+        }
+        resolve(result);
+      }
+    );
+    stream.end(fileBuffer);
+  });
+};
 
 // Helper function to delete from Cloudinary
 const deleteFromCloudinary = async (imageUrl) => {
@@ -80,7 +71,6 @@ const deleteFromCloudinary = async (imageUrl) => {
         console.error(`Failed to delete image from Cloudinary: ${imageUrl}`, error);
     }
 };
-
 
 // Set the database and collection to use
 const DB_NAME = 'test';
@@ -533,20 +523,22 @@ router.post('/:slug/update', upload.fields([
 
         // Handle Hero Image Upload
         if (req.files && req.files.heroImage) {
-            // Delete old image if it exists
             const oldHeroImage = existingTemplate.config.Contents.Home.hero.videoDirectory;
             await deleteFromCloudinary(oldHeroImage);
-
-            updateFields['config.Contents.Home.hero.videoDirectory'] = req.files.heroImage[0].path;
+            
+            const heroFile = req.files.heroImage[0];
+            const result = await uploadToCloudinary(heroFile.buffer, 'general', slug, heroFile.originalname);
+            updateFields['config.Contents.Home.hero.videoDirectory'] = result.secure_url;
         }
 
         // Handle Navbar Logo Upload
         if (req.files && req.files.navbarImage) {
-            // Delete old image if it exists
             const oldLogoImage = existingTemplate.config.Contents.Navbar.Content.button.image;
             await deleteFromCloudinary(oldLogoImage);
-            
-            updateFields['config.Contents.Navbar.Content.button.image'] = req.files.navbarImage[0].path;
+
+            const navbarFile = req.files.navbarImage[0];
+            const result = await uploadToCloudinary(navbarFile.buffer, 'general', slug, navbarFile.originalname);
+            updateFields['config.Contents.Navbar.Content.button.image'] = result.secure_url;
         }
 
         await Templates.updateOne({ Name: slug }, { $set: updateFields });
@@ -673,7 +665,7 @@ router.post('/:slug/delete', async (req, res) => {
 });
 
 // Add images to the tour gallery
-router.post('/:slug/gallery/add', uploadGallery.array('galleryImages', 10), async (req, res) => {
+router.post('/:slug/gallery/add', upload.array('galleryImages', 10), async (req, res) => {
     if (!req.session.user || !req.session.user.isAdmin) {
         req.flash('error', 'You are not authorized to perform this action.');
         return res.redirect('/country');
@@ -689,9 +681,14 @@ router.post('/:slug/gallery/add', uploadGallery.array('galleryImages', 10), asyn
         const testDb = CountrySite.db.useDb(DB_NAME);
         const Templates = testDb.collection(TEMPLATES_COLLECTION);
         
-        const newImages = req.files.map(file => ({
+        const uploadPromises = req.files.map(file => 
+            uploadToCloudinary(file.buffer, 'gallery', slug, file.originalname)
+        );
+        const results = await Promise.all(uploadPromises);
+
+        const newImages = results.map(result => ({
             id: uuidv4(),
-            image: file.path,
+            image: result.secure_url,
         }));
 
         await Templates.updateOne(
@@ -838,7 +835,7 @@ router.post('/:slug/faq/delete', async (req, res) => {
 });
 
 // Add a new tournament category
-router.post('/:slug/tournament/add', uploadTournament.single('tournamentImage'), async (req, res) => {
+router.post('/:slug/tournament/add', upload.single('tournamentImage'), async (req, res) => {
     if (!req.session.user || !req.session.user.isAdmin) {
         req.flash('error', 'You are not authorized to perform this action.');
         return res.redirect('/country');
@@ -856,10 +853,12 @@ router.post('/:slug/tournament/add', uploadTournament.single('tournamentImage'),
         const testDb = CountrySite.db.useDb(DB_NAME);
         const Templates = testDb.collection(TEMPLATES_COLLECTION);
         
+        const result = await uploadToCloudinary(req.file.buffer, 'tournaments', slug, req.file.originalname);
+
         const newCategory = {
             id: uuidv4(),
             title: tournamentTitle,
-            image: req.file.path, // Use Cloudinary path
+            image: result.secure_url,
             mechanics: tournamentMechanics.split('\n').map(line => line.trim()).filter(line => line)
         };
 
@@ -912,7 +911,7 @@ router.post('/:slug/tournament/delete', async (req, res) => {
 });
 
 // Update country flag
-router.post('/:name/update-flag', uploadFlag.single('flagImage'), async (req, res) => {
+router.post('/:name/update-flag', upload.single('flagImage'), async (req, res) => {
     if (!req.session.user || !req.session.user.isAdmin) {
         req.flash('error', 'You are not authorized to perform this action.');
         return res.redirect('/country');
@@ -930,13 +929,14 @@ router.post('/:name/update-flag', uploadFlag.single('flagImage'), async (req, re
         const existingTemplate = await Templates.findOne({ Name: slug });
         
         if (existingTemplate && existingTemplate.config?.Contents?.Flag?.image) {
-            // Delete the old flag from Cloudinary
             await deleteFromCloudinary(existingTemplate.config.Contents.Flag.image);
         }
+
+        const result = await uploadToCloudinary(req.file.buffer, 'flags', slug, req.file.originalname);
         
         await Templates.updateOne(
             { Name: slug },
-            { $set: { 'config.Contents.Flag.image': req.file.path } }
+            { $set: { 'config.Contents.Flag.image': result.secure_url } }
         );
 
         req.flash('success', 'Flag updated successfully.');
