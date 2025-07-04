@@ -149,6 +149,72 @@ app.use((req, res, next) => {
   next();
 });
 
+// Utility function to get country template data
+async function getCountryTemplate(req) {
+  try {
+    // Get slug from session or query parameter, default to 'default' (Dubai)
+    const slug = req.query.country || req.session?.selectedCountry || 'default';
+    
+    // If a query parameter is provided, update the session
+    if (req.query.country && req.session) {
+      req.session.selectedCountry = req.query.country;
+      console.log(`[Template] Updated session country to: ${req.query.country}`);
+      
+      // Save the session if needed
+      if (req.session.save) {
+        await new Promise((resolve, reject) => {
+          req.session.save(err => {
+            if (err) {
+              console.error('[Template] Error saving session:', err);
+              reject(err);
+            } else {
+              resolve();
+            }
+          });
+        });
+      }
+    }
+    
+    console.log(`[Template] Looking up template for: ${slug}`);
+    
+    // Get template from database
+    const testDb = mongoose.connection.useDb('test');
+    const Templates = testDb.collection('templates');
+    const template = await Templates.findOne({ Name: slug });
+    
+    if (template) {
+      const countryData = {
+        name: template.Name === 'default' ? 'Dubai' : template.Name,
+        slug: template.Name,
+        templateName: template.Name,
+        flagUrl: template.config?.Contents?.Navbar?.Content?.button?.image || '',
+        description: template.config?.Contents?.Home?.hero?.subText || ''
+      };
+      console.log(`[Template] Found template data for: ${countryData.name}`);
+      return countryData;
+    } else {
+      console.error(`[Template] Template not found for slug: ${slug}`);
+      return null;
+    }
+  } catch (error) {
+    console.error('[Template] Error retrieving template:', error);
+    return null;
+  }
+}
+
+// Add environment debug logging for production (Render)
+if (process.env.NODE_ENV === 'production' || process.env.RENDER === 'true') {
+  console.log('=== PRODUCTION ENVIRONMENT INFO ===');
+  console.log('NODE_ENV:', process.env.NODE_ENV);
+  console.log('RENDER:', process.env.RENDER === 'true' ? 'true' : 'false');
+  console.log('RENDER_EXTERNAL_HOSTNAME:', process.env.RENDER_EXTERNAL_HOSTNAME || 'not set');
+  console.log('RENDER_EXTERNAL_URL:', process.env.RENDER_EXTERNAL_URL || 'not set');
+  console.log('COOKIE_DOMAIN:', process.env.COOKIE_DOMAIN || 'not set');
+  console.log('isProduction:', isProduction);
+  console.log('isLocalhost:', isLocalhost);
+  console.log('==================================');
+}
+
 // Set up session middleware before routes
 app.use(session({
     secret: process.env.SESSION_SECRET || 'your-secure-admin-key',
@@ -901,13 +967,13 @@ app.use('/:countrySlug', async (req, res, next) => {
       slug === 'public' || 
       slug === 'admin' || 
       slug === 'api' ||
-      slug === 'login' ||
-      slug === 'home' ||
-      slug === 'videos' ||
-      slug === 'dubai' ||
-      slug === 'password-reset' ||
-      slug === 'favicon.ico' ||
-      slug === 'robots.txt' ||
+      slug === 'login' || 
+      slug === 'home' || 
+      slug === 'videos' || 
+      slug === 'dubai' || 
+      slug === 'password-reset' || 
+      slug === 'favicon.ico' || 
+      slug === 'robots.txt' || 
       slug.startsWith('_') ||
       slug.includes('.')) {
     return next();
@@ -1019,50 +1085,162 @@ app.post('/api/set-country/:slug', (req, res) => {
   }
 });
 
-// New route for /international
-const { createProxyMiddleware } = require('http-proxy-middleware');
-app.use('/international', async (req, res, next) => {
+// API endpoint to switch country templates
+app.get('/api/switch-country/:country', async (req, res) => {
   try {
-    // Check if the country is provided in the query parameters
-    if (req.query.country) {
-      // Set the selected country in the session
-      req.session.selectedCountry = req.query.country;
-      
-      // Save the session
+    const country = req.params.country;
+    
+    // Update the session with the selected country
+    if (req.session) {
+      req.session.selectedCountry = country;
       await new Promise((resolve, reject) => {
         req.session.save(err => {
           if (err) {
-            console.error('[International] Error saving session for country switch:', err);
+            console.error(`[API] Error saving country selection to session:`, err);
             reject(err);
           } else {
-            console.log(`[International] Session updated with country: ${req.query.country}`);
             resolve();
           }
         });
       });
     }
     
-    const slug = req.session.selectedCountry || 'default';
-    console.log(`[International Page] Looking up template for slug: ${slug}`);
-
+    // Get the template details
     const testDb = mongoose.connection.useDb('test');
     const Templates = testDb.collection('templates');
-    const template = await Templates.findOne({ Name: slug });
-
-    let countryData = null;
+    const template = await Templates.findOne({ Name: country });
+    
     if (template) {
-      countryData = {
-        name: template.Name === 'default' ? 'Dubai' : template.Name,
-        slug: template.Name,
-        templateName: template.Name,
-        flagUrl: template.config?.Contents?.Navbar?.Content?.button?.image || '',
-        description: template.config?.Contents?.Home?.hero?.subText || ''
-      };
-      console.log(`[International Page] Found template data for: ${countryData.name}`);
+      console.log(`[API] Switched country to: ${country}`);
+      return res.json({ 
+        success: true, 
+        message: `Switched to ${country}`,
+        country: {
+          name: template.Name === 'default' ? 'Dubai' : template.Name,
+          slug: template.Name
+        }
+      });
     } else {
-      console.error(`[International Page] Template not found in DB for slug: ${slug}`);
+      console.error(`[API] Country template not found: ${country}`);
+      return res.status(404).json({ 
+        success: false, 
+        message: `Country template "${country}" not found` 
+      });
+    }
+  } catch (error) {
+    console.error(`[API] Error switching country:`, error);
+    return res.status(500).json({ 
+      success: false, 
+      message: 'An error occurred while switching countries'
+    });
+  }
+});
+
+// API endpoint to list available country templates
+app.get('/api/countries', async (req, res) => {
+  try {
+    const testDb = mongoose.connection.useDb('test');
+    const Templates = testDb.collection('templates');
+    const templates = await Templates.find({}).toArray();
+    
+    const countries = templates.map(template => ({
+      name: template.Name === 'default' ? 'Dubai' : template.Name,
+      slug: template.Name,
+      flagUrl: template.config?.Contents?.Flag?.image || null
+    }));
+    
+    return res.json({ 
+      success: true,
+      countries,
+      current: req.session?.selectedCountry || 'default'
+    });
+  } catch (error) {
+    console.error(`[API] Error listing countries:`, error);
+    return res.status(500).json({ 
+      success: false, 
+      message: 'An error occurred while retrieving country list'
+    });
+  }
+});
+
+// New route for /international
+const { createProxyMiddleware } = require('http-proxy-middleware');
+app.use('/international', async (req, res, next) => {
+  try {
+    // Get country template data using our utility function
+    const countryData = await getCountryTemplate(req);
+    
+    // Log the result for debugging
+    if (countryData) {
+      console.log(`[International] Using template: ${countryData.name}`);
+    } else {
+      console.log(`[International] No template found, using defaults`);
     }
 
+    // In production, we use the built Astro app or fallback
+    if (process.env.NODE_ENV === 'production' || process.env.RENDER === 'true') {
+      console.log('[International] Production mode detected, using SSR handler');
+      
+      if (internationalHandler) {
+        // Use the internationalHandler directly with the original request
+        // Preserve the country data for the template system
+        req.headers['X-Country-Site'] = countryData ? JSON.stringify(countryData) : '';
+        
+        // Strip /international prefix from URL but keep remaining path
+        const originalUrl = req.originalUrl;
+        req.url = originalUrl.replace(/^\/international/, '');
+        if (req.url === '') req.url = '/';
+        
+        console.log(`[International] Processing with SSR handler: ${req.url}`);
+        
+        return internationalHandler(req, res, next);
+      } else {
+        // If handler not available, serve static files
+        console.log('[International] SSR handler not available, serving static files');
+        
+        // Check if we can serve from the static files
+        const staticPath = path.join(__dirname, 'public/international', req.path);
+        if (fs.existsSync(staticPath) && !fs.statSync(staticPath).isDirectory()) {
+          return res.sendFile(staticPath);
+        }
+        
+        // If no static file, serve the index.html with the country data
+        const indexPath = path.join(__dirname, 'public/international/index.html');
+        if (fs.existsSync(indexPath)) {
+          return res.sendFile(indexPath);
+        }
+        
+        // Last resort fallback
+        return res.send(`
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <title>International Site</title>
+              <style>
+                body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; text-align: center; }
+                h1 { color: #00008b; }
+                .message { background: #f8f9fa; padding: 20px; border-radius: 5px; margin: 20px 0; }
+                .links { margin-top: 30px; }
+                .links a { display: inline-block; margin: 0 10px; color: #00008b; text-decoration: none; }
+                .links a:hover { text-decoration: underline; }
+              </style>
+            </head>
+            <body>
+              <h1>International Site</h1>
+              <div class="message">
+                <p>This part of the site is currently being updated.</p>
+                <p>${countryData ? `You selected: ${countryData.name}` : 'No country selected'}</p>
+              </div>
+              <div class="links">
+                <a href="/">Return to Main Site</a>
+              </div>
+            </body>
+          </html>
+        `);
+      }
+    }
+    
+    // Development mode - use proxy to local Astro dev server
     const proxy = createProxyMiddleware({
       target: 'http://localhost:4321', // Astro dev server
       changeOrigin: true,
@@ -3603,11 +3781,29 @@ app.get('/api/check-session', (req, res) => {
 // Function to setup the international Astro app
 async function setupInternationalApp() {
   try {
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === 'production' || process.env.RENDER === 'true') {
       console.log('Setting up international app in production mode');
+      
+      // Check if the built files exist
+      const entryPath = path.join(__dirname, '../international/dist/server/entry.mjs');
+      if (!fs.existsSync(entryPath)) {
+        console.error('International app build not found at:', entryPath);
+        console.log('Will attempt to use fallback mechanism for international pages');
+        return;
+      }
+      
       // In production, import the built Astro app server
-      const { handler } = await import('../international/dist/server/entry.mjs');
-      internationalHandler = handler;
+      try {
+        // Convert to proper file:// URL for ESM imports (fix for Windows paths)
+        const entryUrl = `file://${entryPath.replace(/\\/g, '/')}`;
+        console.log('Loading international app from:', entryUrl);
+        
+        const astroModule = await import(entryUrl);
+        internationalHandler = astroModule.handler;
+        console.log('Successfully loaded international app handler');
+      } catch (importError) {
+        console.error('Failed to import international app:', importError);
+      }
     } else {
       console.log('Setting up international app in development mode');
       // In development, we will use the proxy in dubai.js
@@ -3625,28 +3821,107 @@ if (require.main === module) {
         // Import Dubai routes
         const dubaiRoutes = require('./routes/dubai');
         
-        // Set up routes for Dubai app
-        app.use('/dubai', dubaiRoutes);
+        // Special middleware for production mode to use the built Astro app
+        if ((process.env.NODE_ENV === 'production' || process.env.RENDER === 'true') && internationalHandler) {
+            console.log('Setting up production handler for /dubai routes');
+            
+            app.use('/dubai', async (req, res, next) => {
+                try {
+                    // Log the request for debugging
+                    console.log(`[Dubai Production] Processing: ${req.method} ${req.originalUrl}`);
+                    
+                    // Get country template data using our utility function
+                    const countryData = await getCountryTemplate(req);
+                    
+                    // Log the result
+                    if (countryData) {
+                      console.log(`[Dubai Route] Using template: ${countryData.name}`);
+                    } else {
+                      console.log(`[Dubai Route] No template found, using defaults`);
+                    }
+                    
+                    // Strip /dubai prefix
+                    const originalUrl = req.originalUrl;
+                    req.url = originalUrl.replace(/^\/dubai/, '');
+                    if (req.url === '') req.url = '/';
+                    
+                    console.log(`[Dubai Production] Modified URL: ${req.url}`);
+                    
+                    // Add user authentication headers
+                    if (req.session && req.session.user) {
+                        req.headers['x-user-id'] = req.session.user.id || '';
+                        req.headers['x-user-name'] = req.session.user.username || '';
+                        req.headers['x-user-auth'] = 'true';
+                    }
+                    
+                    // Add country data header for the template system
+                    if (countryData) {
+                        req.headers['X-Country-Site'] = JSON.stringify(countryData);
+                        console.log(`[Dubai Production] Using template: ${countryData.name}`);
+                    }
+                    
+                    return internationalHandler(req, res, next);
+                } catch (error) {
+                    console.error('[Dubai Production] Error handling request:', error);
+                    next(error);
+                }
+            });
+        } else {
+            // Set up routes for Dubai app in development mode
+            console.log('Setting up development proxy for /dubai routes');
+            app.use('/dubai', dubaiRoutes);
+        }
         
         // Add redirect from old path to new path
         app.get('/international', (req, res) => {
+            console.log('Redirecting /international to /dubai');
             res.redirect('/dubai');
         });
         
         app.get('/international/*', (req, res) => {
             const newPath = req.originalUrl.replace('/international', '/dubai');
+            console.log(`Redirecting ${req.originalUrl} to ${newPath}`);
             res.redirect(newPath);
         });
         
-        // Special middleware for production mode to use the built Astro app
-        if (process.env.NODE_ENV === 'production' && internationalHandler) {
-            app.use('/dubai', (req, res, next) => {
-                // Strip /dubai prefix
-                req.url = req.originalUrl.replace(/^\/dubai/, '');
-                if (req.url === '') req.url = '/';
-                return internationalHandler(req, res, next);
-            });
-        }
+        // Add a fallback handler for Dubai routes in production if Astro fails to load
+        app.use('/dubai', (req, res, next) => {
+          // Only act as fallback in production when the handler is not available
+          if ((process.env.NODE_ENV === 'production' || process.env.RENDER === 'true') && !internationalHandler) {
+            console.log('[Dubai Fallback] No handler available, serving fallback page');
+            
+            // Show a friendly message
+            return res.send(`
+              <!DOCTYPE html>
+              <html>
+                <head>
+                  <title>International Site Maintenance</title>
+                  <style>
+                    body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; text-align: center; }
+                    h1 { color: #00008b; }
+                    .message { background: #f8f9fa; padding: 20px; border-radius: 5px; margin: 20px 0; }
+                    .links { margin-top: 30px; }
+                    .links a { display: inline-block; margin: 0 10px; color: #00008b; text-decoration: none; }
+                    .links a:hover { text-decoration: underline; }
+                  </style>
+                </head>
+                <body>
+                  <h1>International Site Under Maintenance</h1>
+                  <div class="message">
+                    <p>Our international site is currently being updated. Please check back soon or visit our main site.</p>
+                    <p>We apologize for any inconvenience.</p>
+                  </div>
+                  <div class="links">
+                    <a href="/">Return to Main Site</a>
+                  </div>
+                </body>
+              </html>
+            `);
+          }
+          
+          // Continue to the next handler if not in production or if handler is available
+          next();
+        });
         
         app.listen(port, () => {
             console.log(`Robolution site running at http://localhost:${port}`);

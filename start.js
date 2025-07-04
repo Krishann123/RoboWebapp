@@ -145,38 +145,58 @@ async function start() {
 
     if (IS_PRODUCTION) {
         log('Running in PRODUCTION mode');
+        
+        // Build the international app if we're on Render
+        if (isRender) {
+            log('Detected Render environment - building international app...');
+            
+            try {
+                // Build the international app directly (synchronous)
+                log('Building international app...');
+                require('child_process').execSync('npm run build', {
+                    cwd: INTERNATIONAL_APP_DIR,
+                    stdio: 'inherit'
+                });
+                log('International app built successfully');
+            } catch (error) {
+                log(`Error building international app: ${error.message}`);
+                log('Will continue with main app startup');
+            }
+        } else {
+            log('Not on Render - assuming international app is pre-built');
+        }
+        
+        // Copy necessary files whether build succeeded or not
+        log('Copying necessary files...');
 
-        // Removed: Building international app...
-        // Removed: runCommand('npm', ['run', 'build'], { cwd: INTERNATIONAL_APP_DIR, name: 'International build' })
-
-        // *** Directly proceed to copying built files and starting main app ***
-        log('International app assumed built by Render. Copying necessary files...');
-
-        // Copy default.json to ROBOLUTION directory (if it's part of the built output or needed)
+        // Copy default.json to ROBOLUTION directory
         log('Copying default.json for direct access...');
-        const defaultJsonSrc = path.join(INTERNATIONAL_APP_DIR, 'default.json'); // This should likely be INTERNATIONAL_APP_DIR/dist/default.json or similar
+        const defaultJsonSrc = path.join(INTERNATIONAL_APP_DIR, 'default.json');
         const defaultJsonDest = path.join(MAIN_APP_DIR, 'default.json');
 
         if (fs.existsSync(defaultJsonSrc)) {
             fs.copyFileSync(defaultJsonSrc, defaultJsonDest);
             log('Successfully copied default.json file');
         } else {
-            log('Warning: default.json file not found in Astro source. Verify path if it should exist in build.');
+            log('Warning: default.json file not found in Astro source.');
         }
 
         // Copy public directory contents from Astro's build output
-        // Astro's build output is typically in 'dist' (or configured `outDir`)
-        const astroBuiltOutputDir = path.join(INTERNATIONAL_APP_DIR, 'dist'); // Assuming Astro builds to 'dist'
+        const astroBuiltOutputDir = path.join(INTERNATIONAL_APP_DIR, 'dist');
         log(`Copying built Astro content from ${astroBuiltOutputDir} to ROBOLUTION/public/international...`);
         const publicDestDir = path.join(MAIN_APP_DIR, 'public/international');
 
         if (fs.existsSync(astroBuiltOutputDir)) {
             ensureDirExists(publicDestDir);
-            copyDirSync(astroBuiltOutputDir, publicDestDir); // Copy the *built* output
-            log('Successfully copied built Astro content to ROBOLUTION/public/international');
+            try {
+                copyDirSync(astroBuiltOutputDir, publicDestDir);
+                log('Successfully copied built Astro content to ROBOLUTION/public/international');
+            } catch (error) {
+                log(`Error copying Astro build output: ${error.message}`);
+            }
         } else {
-            log(`ERROR: Astro built output directory not found at ${astroBuiltOutputDir}. Build might have failed or path is wrong.`);
-            process.exit(1); // Exit if the built directory isn't there
+            log(`Warning: Astro built output directory not found at ${astroBuiltOutputDir}.`);
+            log('Main app will still start but international pages may use fallback.');
         }
 
         // Start main app after ensuring files are copied
