@@ -723,9 +723,9 @@
             
             <div class="form-group">
               <label for="logo-image" class="form-label">Logo Image</label>
-              <% if (template.config.Contents.Navbar.Content.button.image && template.config.Contents.Navbar.Content.button.image.startsWith('/')) { %>
+              <% if (template.config.Contents.Navbar.Content.button.image) { %>
                 <div class="current-image-container">
-                  <img src="<%= template.config.Contents.Navbar.Content.button.image %>" alt="Current Logo" class="current-image">
+                  <img src="<%= template.config.Contents.Navbar.Content.button.image %>" alt="Current Logo" class="current-image" style="max-width: 200px; max-height: 100px; border-radius: 4px; margin-bottom: 10px;">
                 </div>
               <% } %>
               <input type="file" id="logo-image" name="navbarImage" class="form-control" accept="image/*">

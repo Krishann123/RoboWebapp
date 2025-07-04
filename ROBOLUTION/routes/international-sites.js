@@ -665,7 +665,22 @@ router.post('/:slug/delete', async (req, res) => {
 });
 
 // Add images to the tour gallery
-router.post('/:slug/gallery/add', upload.array('galleryImages', 10), async (req, res) => {
+router.post('/:slug/gallery/add', (req, res, next) => {
+    upload.array('galleryImages', 50)(req, res, function (err) {
+        if (err instanceof multer.MulterError) {
+            if (err.code === 'LIMIT_UNEXPECTED_FILE') {
+                req.flash('error', `Too many files. Please upload a maximum of 50 images at a time.`);
+                return res.redirect(`/country/${req.params.slug}/edit`);
+            }
+            req.flash('error', `Multer error: ${err.message}`);
+            return res.redirect(`/country/${req.params.slug}/edit`);
+        } else if (err) {
+            req.flash('error', `An unknown error occurred during upload: ${err.message}`);
+            return res.redirect(`/country/${req.params.slug}/edit`);
+        }
+        next();
+    });
+}, async (req, res) => {
     if (!req.session.user || !req.session.user.isAdmin) {
         req.flash('error', 'You are not authorized to perform this action.');
         return res.redirect('/country');
