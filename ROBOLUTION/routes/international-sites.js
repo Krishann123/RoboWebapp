@@ -6,29 +6,34 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const CountrySite = require('../models/CountrySite');
 const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
-// Set up multer for handling file uploads
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    // Set path for country site images to the Astro assets folder
-    const uploadDir = path.join(__dirname, '../../international/src/assets/images/NewsUpdateImages');
-    // Ensure directory exists
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
-    }
-    cb(null, uploadDir);
-  },
-  filename: function (req, file, cb) {
-    // Set unique filename with timestamp
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    const ext = path.extname(file.originalname);
-    cb(null, req.params.slug + '-' + file.fieldname + '-' + uniqueSuffix + ext);
-  }
+// Configure Cloudinary
+cloudinary.config({ 
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+  api_key: process.env.CLOUDINARY_API_KEY, 
+  api_secret: process.env.CLOUDINARY_API_SECRET 
 });
+
+// Generic Cloudinary storage engine
+const createCloudinaryStorage = (folder) => {
+  return new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+      folder: `robolution/international-sites/${folder}`,
+      format: async (req, file) => 'png', // supports promises as well
+      public_id: (req, file) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const baseName = path.basename(file.originalname, path.extname(file.originalname));
+        return `${req.params.slug}-${baseName}-${uniqueSuffix}`;
+      },
+    },
+  });
+};
 
 // File filter for images
 const fileFilter = (req, file, cb) => {
-  // Accept only image files
   if (file.mimetype.startsWith('image/')) {
     cb(null, true);
   } else {
@@ -36,79 +41,46 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
+// Create separate upload instances for different types
 const upload = multer({ 
-  storage: storage,
+  storage: createCloudinaryStorage('general'),
   fileFilter: fileFilter,
-  limits: {
-    fileSize: 5 * 1024 * 1024 // 5MB limit
-  }
-});
-
-// Set up multer for the tour gallery
-const galleryStorage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        const uploadDir = path.join(__dirname, '../../international/public/images/gallery');
-        if (!fs.existsSync(uploadDir)) {
-            fs.mkdirSync(uploadDir, { recursive: true });
-        }
-        cb(null, uploadDir);
-    },
-    filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        const ext = path.extname(file.originalname);
-        cb(null, `${req.params.slug}-gallery-${uniqueSuffix}${ext}`);
-    }
+  limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
 });
 
 const uploadGallery = multer({ 
-    storage: galleryStorage, 
-    fileFilter: fileFilter,
-    limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit per file
-});
-
-// Set up multer for the tournament category images
-const tournamentStorage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        const uploadDir = path.join(__dirname, '../../international/public/images/tournaments');
-        if (!fs.existsSync(uploadDir)) {
-            fs.mkdirSync(uploadDir, { recursive: true });
-        }
-        cb(null, uploadDir);
-    },
-    filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        const ext = path.extname(file.originalname);
-        cb(null, `${req.params.slug}-tournament-${uniqueSuffix}${ext}`);
-    }
+  storage: createCloudinaryStorage('gallery'),
+  fileFilter: fileFilter,
+  limits: { fileSize: 5 * 1024 * 1024 }
 });
 
 const uploadTournament = multer({ 
-    storage: tournamentStorage, 
-    fileFilter: fileFilter,
-    limits: { fileSize: 5 * 1024 * 1024 }
-});
-
-// Set up multer for flag images
-const flagStorage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        const uploadDir = path.join(__dirname, '../../international/public/images/flags');
-        if (!fs.existsSync(uploadDir)) {
-            fs.mkdirSync(uploadDir, { recursive: true });
-        }
-        cb(null, uploadDir);
-    },
-    filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        const ext = path.extname(file.originalname);
-        cb(null, `${req.params.slug}-flag-${uniqueSuffix}${ext}`);
-    }
+  storage: createCloudinaryStorage('tournaments'),
+  fileFilter: fileFilter,
+  limits: { fileSize: 5 * 1024 * 1024 }
 });
 
 const uploadFlag = multer({ 
-    storage: flagStorage, 
-    fileFilter: fileFilter,
-    limits: { fileSize: 1 * 1024 * 1024 } // 1MB limit for flags
+  storage: createCloudinaryStorage('flags'),
+  fileFilter: fileFilter,
+  limits: { fileSize: 1 * 1024 * 1024 } // 1MB limit for flags
 });
+
+// Helper function to delete from Cloudinary
+const deleteFromCloudinary = async (imageUrl) => {
+    if (!imageUrl || !imageUrl.includes('cloudinary')) {
+        console.log('Skipping deletion for non-Cloudinary URL:', imageUrl);
+        return;
+    }
+    try {
+        const publicIdWithFolder = imageUrl.split('/').slice(-4).join('/').split('.')[0];
+        console.log(`Attempting to delete Cloudinary image with public_id: ${publicIdWithFolder}`);
+        await cloudinary.uploader.destroy(publicIdWithFolder);
+    } catch (error) {
+        console.error(`Failed to delete image from Cloudinary: ${imageUrl}`, error);
+    }
+};
+
 
 // Set the database and collection to use
 const DB_NAME = 'test';
@@ -526,74 +498,67 @@ router.post('/:slug/webinars/delete/:id', async (req, res) => {
     }
 });
 
-// Update country template
+// Update country site content
 router.post('/:slug/update', upload.fields([
-  { name: 'heroImage', maxCount: 1 },
-  { name: 'navbarImage', maxCount: 1 }
+    { name: 'heroImage', maxCount: 1 },
+    { name: 'navbarImage', maxCount: 1 }
 ]), async (req, res) => {
-  if (!req.session.user || !req.session.user.isAdmin) {
-    req.flash('error', 'You are not authorized to perform this action.');
-    return res.redirect('/country');
-  }
+    if (!req.session.user || !req.session.user.isAdmin) {
+        req.flash('error', 'You are not authorized to perform this action.');
+        return res.redirect('/country');
+    }
 
-  try {
     const { slug } = req.params;
-    const testDb = CountrySite.db.useDb(DB_NAME);
-    const Templates = testDb.collection(TEMPLATES_COLLECTION);
-    
-    // Get the existing template first
-    const existingTemplate = await Templates.findOne({ Name: slug });
-    if (!existingTemplate) {
-      req.flash('error', 'Country site not found.');
-      return res.redirect('/country');
+    const { heroMainText, heroSubText, heroButtonText, footerAbout, footerAddress, footerEmail, footerPhone } = req.body;
+
+    try {
+        const testDb = CountrySite.db.useDb(DB_NAME);
+        const Templates = testDb.collection(TEMPLATES_COLLECTION);
+        const existingTemplate = await Templates.findOne({ Name: slug });
+
+        if (!existingTemplate) {
+            req.flash('error', 'Country site not found.');
+            return res.redirect('/country');
+        }
+
+        const updateFields = {
+            'config.Contents.Home.hero.mainText': heroMainText,
+            'config.Contents.Home.hero.subText': heroSubText,
+            'config.Contents.Home.hero.buttonText': heroButtonText,
+            'config.Contents.Footer.about': footerAbout,
+            'config.Contents.Footer.address': footerAddress,
+            'config.Contents.Footer.email': footerEmail,
+            'config.Contents.Footer.phone': footerPhone,
+        };
+
+        // Handle Hero Image Upload
+        if (req.files && req.files.heroImage) {
+            // Delete old image if it exists
+            const oldHeroImage = existingTemplate.config.Contents.Home.hero.videoDirectory;
+            await deleteFromCloudinary(oldHeroImage);
+
+            updateFields['config.Contents.Home.hero.videoDirectory'] = req.files.heroImage[0].path;
+        }
+
+        // Handle Navbar Logo Upload
+        if (req.files && req.files.navbarImage) {
+            // Delete old image if it exists
+            const oldLogoImage = existingTemplate.config.Contents.Navbar.Content.button.image;
+            await deleteFromCloudinary(oldLogoImage);
+            
+            updateFields['config.Contents.Navbar.Content.button.image'] = req.files.navbarImage[0].path;
+        }
+
+        await Templates.updateOne({ Name: slug }, { $set: updateFields });
+
+        req.flash('success', `${slug} site updated successfully.`);
+        res.redirect(`/country/${slug}/edit`);
+
+    } catch (error) {
+        console.error(`Error updating ${slug} site:`, error);
+        req.flash('error', 'An error occurred while updating the site.');
+        res.redirect(`/country/${slug}/edit`);
     }
-    
-    // Create an updated template object based on form data
-    const updatedTemplate = JSON.parse(JSON.stringify(existingTemplate));
-    delete updatedTemplate._id;
-    
-    // Handle file uploads - get file paths if files were uploaded
-    const uploadedFiles = req.files;
-    const heroImagePath = uploadedFiles?.heroImage ? 
-      `/src/assets/images/NewsUpdateImages/${uploadedFiles.heroImage[0].filename}` : 
-      existingTemplate.config.Contents.Home.hero.videoDirectory;
-      
-    const navbarImagePath = uploadedFiles?.navbarImage ? 
-      `/src/assets/images/NewsUpdateImages/${uploadedFiles.navbarImage[0].filename}` : 
-      existingTemplate.config.Contents.Navbar.Content.button.image;
-    
-    // Update the fields based on form data
-    updatedTemplate.config.Contents.Home.hero.mainText = req.body.heroMainText || existingTemplate.config.Contents.Home.hero.mainText;
-    updatedTemplate.config.Contents.Home.hero.subText = req.body.heroSubText || existingTemplate.config.Contents.Home.hero.subText;
-    updatedTemplate.config.Contents.Home.hero.buttonText = req.body.heroButtonText || existingTemplate.config.Contents.Home.hero.buttonText;
-    updatedTemplate.config.Contents.Home.hero.videoDirectory = heroImagePath;
-    
-    // Update Navbar and Footer
-    if (updatedTemplate.config.Contents.Navbar?.Content?.button) {
-      updatedTemplate.config.Contents.Navbar.Content.button.image = navbarImagePath;
-      updatedTemplate.config.Contents.Navbar.Content.button.buttonText = req.body.navbarButtonText || existingTemplate.config.Contents.Navbar.Content.button.buttonText;
-    }
-    
-    if (updatedTemplate.config.Contents.Footer) {
-      updatedTemplate.config.Contents.Footer.about = req.body.footerAbout || existingTemplate.config.Contents.Footer.about;
-      updatedTemplate.config.Contents.Footer.address = req.body.footerAddress || existingTemplate.config.Contents.Footer.address;
-      updatedTemplate.config.Contents.Footer.email = req.body.footerEmail || existingTemplate.config.Contents.Footer.email;
-      updatedTemplate.config.Contents.Footer.phone = req.body.footerPhone || existingTemplate.config.Contents.Footer.phone;
-    }
-    
-    // Update the document in the database
-    await Templates.updateOne(
-      { Name: slug },
-      { $set: updatedTemplate }
-    );
-    
-    req.flash('success', `Country site '${slug === 'default' ? 'Dubai' : slug}' updated successfully.`);
-    res.redirect('/country');
-  } catch (error) {
-    console.error('Error updating country site:', error);
-    req.flash('error', 'An error occurred while updating the country site.');
-    res.redirect(`/country/${req.params.slug}/edit`);
-  }
 });
 
 // Route to CREATE a new country site by cloning 'default'
@@ -707,25 +672,26 @@ router.post('/:slug/delete', async (req, res) => {
   }
 });
 
-// Route to add gallery images
-router.post('/:slug/gallery/add', uploadGallery.array('galleryImages', 50), async (req, res) => {
+// Add images to the tour gallery
+router.post('/:slug/gallery/add', uploadGallery.array('galleryImages', 10), async (req, res) => {
     if (!req.session.user || !req.session.user.isAdmin) {
         req.flash('error', 'You are not authorized to perform this action.');
-        return res.redirect(`/country/${req.params.slug}/edit`);
+        return res.redirect('/country');
+    }
+
+    const { slug } = req.params;
+    if (!req.files || req.files.length === 0) {
+        req.flash('error', 'No images were uploaded.');
+        return res.redirect(`/country/${slug}/edit`);
     }
 
     try {
-        const { slug } = req.params;
         const testDb = CountrySite.db.useDb(DB_NAME);
         const Templates = testDb.collection(TEMPLATES_COLLECTION);
-
-        if (!req.files || req.files.length === 0) {
-            req.flash('error', 'No images were uploaded.');
-            return res.redirect(`/country/${slug}/edit`);
-        }
-
+        
         const newImages = req.files.map(file => ({
-            image: `/images/gallery/${file.filename}`
+            id: uuidv4(),
+            image: file.path,
         }));
 
         await Templates.updateOne(
@@ -738,47 +704,57 @@ router.post('/:slug/gallery/add', uploadGallery.array('galleryImages', 50), asyn
 
     } catch (error) {
         console.error('Error adding gallery images:', error);
-        req.flash('error', 'An error occurred while adding gallery images.');
-        res.redirect(`/country/${req.params.slug}/edit`);
+        req.flash('error', 'An error occurred while adding images.');
+        res.redirect(`/country/${slug}/edit`);
     }
 });
 
-// Route to delete a gallery image
+
+// Delete a gallery image
 router.post('/:slug/gallery/delete', async (req, res) => {
     if (!req.session.user || !req.session.user.isAdmin) {
-        req.flash('error', 'You are not authorized to perform this action.');
-        return res.redirect(`/country/${req.params.slug}/edit`);
+        return res.status(403).send('Unauthorized');
     }
-    
+
+    const { slug } = req.params;
+    const { imageUrl } = req.body;
+
+    if (!imageUrl) {
+        return res.status(400).send('Image URL is required.');
+    }
+
     try {
-        const { slug } = req.params;
-        const { imageUrl } = req.body;
+        // Delete image from Cloudinary first
+        await deleteFromCloudinary(imageUrl);
+
         const testDb = CountrySite.db.useDb(DB_NAME);
         const Templates = testDb.collection(TEMPLATES_COLLECTION);
-
-        // Remove from database
+        
         await Templates.updateOne(
             { Name: slug },
             { $pull: { 'config.Contents.Package.TourGallery': { image: imageUrl } } }
         );
 
-        // Remove from filesystem
-        const imagePath = path.join(__dirname, '../../international/public', imageUrl);
-        if (fs.existsSync(imagePath)) {
-            fs.unlinkSync(imagePath);
+        // Check if called from AJAX or form submission
+        if (req.xhr || req.headers.accept.indexOf('json') > -1) {
+            res.status(200).send('Image deleted successfully.');
+        } else {
+            req.flash('success', 'Gallery image deleted successfully.');
+            res.redirect(`/country/${slug}/edit`);
         }
-
-        req.flash('success', 'Gallery image deleted successfully.');
-        res.redirect(`/country/${slug}/edit`);
 
     } catch (error) {
         console.error('Error deleting gallery image:', error);
-        req.flash('error', 'An error occurred while deleting the gallery image.');
-        res.redirect(`/country/${req.params.slug}/edit`);
+        if (req.xhr || req.headers.accept.indexOf('json') > -1) {
+            res.status(500).send('Error deleting image.');
+        } else {
+            req.flash('error', 'An error occurred while deleting the image.');
+            res.redirect(`/country/${slug}/edit`);
+        }
     }
 });
 
-// Route to add an FAQ item
+// Add a new FAQ
 router.post('/:slug/faq/add', async (req, res) => {
     if (!req.session.user || !req.session.user.isAdmin) {
         req.flash('error', 'You are not authorized to perform this action.');
@@ -812,7 +788,7 @@ router.post('/:slug/faq/add', async (req, res) => {
     }
 });
 
-// Route to delete an FAQ item
+// Delete an FAQ
 router.post('/:slug/faq/delete', async (req, res) => {
     if (!req.session.user || !req.session.user.isAdmin) {
         req.flash('error', 'You are not authorized to perform this action.');
@@ -861,35 +837,35 @@ router.post('/:slug/faq/delete', async (req, res) => {
     }
 });
 
-// Route to add a new tournament category
+// Add a new tournament category
 router.post('/:slug/tournament/add', uploadTournament.single('tournamentImage'), async (req, res) => {
     if (!req.session.user || !req.session.user.isAdmin) {
         req.flash('error', 'You are not authorized to perform this action.');
-        return res.redirect(`/country/${req.params.slug}/edit`);
+        return res.redirect('/country');
+    }
+
+    const { slug } = req.params;
+    const { tournamentTitle, tournamentMechanics } = req.body;
+
+    if (!req.file) {
+        req.flash('error', 'An image is required for the tournament category.');
+        return res.redirect(`/country/${slug}/edit`);
     }
 
     try {
-        const { slug } = req.params;
-        const { tournamentTitle, tournamentMechanics } = req.body;
         const testDb = CountrySite.db.useDb(DB_NAME);
         const Templates = testDb.collection(TEMPLATES_COLLECTION);
-
-        if (!req.file) {
-            req.flash('error', 'Tournament image is required.');
-            return res.redirect(`/country/${slug}/edit`);
-        }
-
-        const newTournament = {
+        
+        const newCategory = {
             id: uuidv4(),
             title: tournamentTitle,
-            image: `/images/tournaments/${req.file.filename}`,
+            image: req.file.path, // Use Cloudinary path
             mechanics: tournamentMechanics.split('\n').map(line => line.trim()).filter(line => line)
         };
 
-        // Use $push to add the new tournament to the 'categories' array
         await Templates.updateOne(
             { Name: slug },
-            { $push: { 'config.Contents.Tournament.categories': newTournament } }
+            { $push: { 'config.Contents.Tournament.categories': newCategory } }
         );
 
         req.flash('success', 'Tournament category added successfully.');
@@ -897,216 +873,71 @@ router.post('/:slug/tournament/add', uploadTournament.single('tournamentImage'),
 
     } catch (error) {
         console.error('Error adding tournament category:', error);
-        req.flash('error', 'An error occurred while adding the tournament category.');
-        res.redirect(`/country/${req.params.slug}/edit`);
-    }
-});
-
-// Route to delete a tournament category
-router.post('/:slug/tournament/delete', async (req, res) => {
-    if (!req.session.user || !req.session.user.isAdmin) {
-        req.flash('error', 'You are not authorized to perform this action.');
-        return res.redirect(`/country/${req.params.slug}/edit`);
-    }
-    
-    try {
-        const { slug } = req.params;
-        const { tournamentId, imageUrl } = req.body;
-        const testDb = CountrySite.db.useDb(DB_NAME);
-        const Templates = testDb.collection(TEMPLATES_COLLECTION);
-
-        // Remove from database
-        await Templates.updateOne(
-            { Name: slug },
-            { $pull: { 'config.Contents.Tournament.categories': { id: tournamentId } } }
-        );
-
-        // Remove image from filesystem
-        if (imageUrl) {
-            const imagePath = path.join(__dirname, '../../international/public', imageUrl);
-            if (fs.existsSync(imagePath)) {
-                fs.unlinkSync(imagePath);
-            }
-        }
-
-        req.flash('success', 'Tournament category deleted successfully.');
+        req.flash('error', 'An error occurred while adding the category.');
         res.redirect(`/country/${slug}/edit`);
-
-    } catch (error) {
-        console.error('Error deleting tournament category:', error);
-        req.flash('error', 'An error occurred while deleting the tournament category.');
-        res.redirect(`/country/${req.params.slug}/edit`);
-  }
+    }
 });
 
-// For production mode
-if (process.env.NODE_ENV === 'production') {
-  console.log('Running in production mode with static country site assets');
-  
-  // Serve the built Astro client assets for all country sites
-  router.use('/:slug', express.static(path.join(__dirname, '../../international/dist/client')));
-  
-  // Dynamic path handler for country sites - needs to be after static files
-  router.get('/:slug', async (req, res, next) => {
-    try {
-    const countrySite = req.countrySite;
-    if (!countrySite) return next();
-    
-      // Forward to the Astro SSR entry point to render the page
-      const astroServerDir = path.join(__dirname, '../../international/dist/server');
-      
-      // Check if the Astro entry point exists
-      if (fs.existsSync(path.join(astroServerDir, 'entry.mjs'))) {
-        // Use a proxy to the running Astro SSR server
-        console.log(`[International Sites] Forwarding to Astro SSR for ${countrySite.name}`);
-        
-        // Set header for the Astro middleware to know which country site to render
-        res.set('X-Country-Site', JSON.stringify({
-          name: countrySite.name,
-          slug: countrySite.slug,
-          templateIndex: countrySite.templateIndex || 0,
-          templateName: countrySite.templateName || 'Default',
-          flagUrl: countrySite.flagUrl || '',
-          description: countrySite.description || ''
-        }));
-      
-        // Pass to the next middleware which will route to the Astro SSR server
-        next();
-      } else {
-        console.error(`[International Sites] Astro SSR entry point not found at ${astroServerDir}/entry.mjs`);
-        // If we can't find the Astro entry point, send a helpful error
-        res.status(500).send('Astro SSR entry point not found. Please check that the international app is built correctly.');
-      }
-    } catch (error) {
-      console.error(`Error in country site route handler:`, error);
-      res.status(500).send('Error loading country site: ' + error.message);
-    }
-  });
-  
-  // Handle deep paths for country sites
-  router.get('/:slug/*', (req, res, next) => {
-    // Forward to the Astro SSR entry point for all paths
-    next();
-  });
-} 
-// For development mode
-else {
-  console.log('Running in development mode with country site proxy');
-  
-  router.use('/:slug', (req, res, next) => {
-    // Get the country site info from the request
-    const countrySite = req.countrySite;
-    if (!countrySite) return next();
-    
-    // Use proxy middleware to forward requests to the Astro dev server
-    const proxyOptions = {
-      target: 'http://localhost:4321', // Default Astro dev server port
-      changeOrigin: true,
-      ws: true, // Support WebSocket
-      cookieDomainRewrite: {
-        '*': process.env.COOKIE_DOMAIN || 'localhost'
-      },
-      onProxyReq: (proxyReq, req, res) => {
-        // Forward session data if available
-        if (req.session && req.session.user) {
-          proxyReq.setHeader('X-User-ID', req.session.user.id || '');
-          proxyReq.setHeader('X-User-Name', req.session.user.username || '');
-          proxyReq.setHeader('X-User-Auth', 'true');
-        }
-        
-        // Forward country site data
-        proxyReq.setHeader('X-Country-Site', JSON.stringify({
-          name: countrySite.name,
-          slug: countrySite.slug,
-          templateIndex: countrySite.templateIndex,
-          templateName: countrySite.templateName
-        }));
-        
-        console.log(`[International Sites] Proxying country site request: ${req.method} ${req.url}`);
-      },
-      pathRewrite: (path, req) => {
-        // Strip the country slug from the URL to match the Astro routes
-        const stripped = path.replace(new RegExp(`^/country/${countrySite.slug}/?`), '/');
-        const finalPath = stripped || '/';
-        console.log(`[International Sites] Proxy rewriting path: ${path} -> ${finalPath}`);
-        return finalPath;
-      },
-      onProxyRes: (proxyRes, req, res) => {
-        console.log(`[International Sites] Proxy response for ${req.countrySite?.name || 'unknown'}: ${proxyRes.statusCode}`);
-        
-        // Handle cookies
-        const cookies = proxyRes.headers['set-cookie'];
-        if (cookies) {
-          const rewrittenCookies = cookies.map(cookie => {
-            return cookie
-              .replace(/Path=\/;/g, 'Path=/;')
-              .replace(/Domain=[^;]+;/g, `Domain=${process.env.COOKIE_DOMAIN || 'localhost'};`);
-          });
-          proxyRes.headers['set-cookie'] = rewrittenCookies;
-        }
-      },
-      logLevel: 'debug'
-    };
-    
-    createProxyMiddleware(proxyOptions)(req, res, next);
-  });
-}
 
-// Route for handling template selection
-router.post('/:slug/template', async (req, res) => {
-  try {
-    // This route can be used to change the template for a country site
-    // It would require admin authentication
-    if (!req.session.user || !req.session.user.isAdmin) {
-      return res.status(403).json({ success: false, message: 'Admin access required' });
-    }
-    
-    const { templateIndex } = req.body;
-    const countrySite = req.countrySite;
-    
-    if (!countrySite) {
-      return res.status(404).json({ success: false, message: 'Country site not found' });
-    }
-    
-    countrySite.templateIndex = parseInt(templateIndex, 10);
-    await countrySite.save();
-    
-    res.json({ success: true, message: 'Template updated successfully' });
-  } catch (error) {
-    console.error('Error updating country template:', error);
-    res.status(500).json({ success: false, message: 'Error updating template' });
-  }
-});
-
-// Handle flag update
-router.post('/:slug/update-flag', uploadFlag.single('flagImage'), async (req, res) => {
+// Delete a tournament category
+router.post('/:slug/tournament/delete', async (req, res) => {
     if (!req.session.user || !req.session.user.isAdmin) {
         req.flash('error', 'You are not authorized to perform this action.');
         return res.redirect('/country');
     }
-
+    
     const { slug } = req.params;
+    const { tournamentId, imageUrl } = req.body;
     
     try {
-        if (!req.file) {
-            req.flash('error', 'No image file was uploaded.');
-            return res.redirect(`/country/${slug}/edit`);
-        }
-
-        const imagePath = `/images/flags/${req.file.filename}`;
-
+        // Delete the image from Cloudinary
+        await deleteFromCloudinary(imageUrl);
+        
         const testDb = CountrySite.db.useDb(DB_NAME);
         const Templates = testDb.collection(TEMPLATES_COLLECTION);
         
-        const result = await Templates.updateOne(
+        await Templates.updateOne(
             { Name: slug },
-            { $set: { "config.Contents.Flag.image": imagePath } }
+            { $pull: { 'config.Contents.Tournament.categories': { id: tournamentId } } }
         );
+        
+        req.flash('success', 'Tournament category deleted successfully.');
+        res.redirect(`/country/${slug}/edit`);
+        
+    } catch (error) {
+        console.error('Error deleting tournament category:', error);
+        req.flash('error', 'An error occurred while deleting the category.');
+        res.redirect(`/country/${slug}/edit`);
+    }
+});
 
-        if (result.matchedCount === 0) {
-            req.flash('error', 'Country site not found.');
-            return res.redirect('/country');
+// Update country flag
+router.post('/:name/update-flag', uploadFlag.single('flagImage'), async (req, res) => {
+    if (!req.session.user || !req.session.user.isAdmin) {
+        req.flash('error', 'You are not authorized to perform this action.');
+        return res.redirect('/country');
+    }
+    const { name: slug } = req.params;
+
+    if (!req.file) {
+        req.flash('error', 'No flag image was uploaded.');
+        return res.redirect(`/country/${slug}/edit`);
+    }
+
+    try {
+        const testDb = CountrySite.db.useDb(DB_NAME);
+        const Templates = testDb.collection(TEMPLATES_COLLECTION);
+        const existingTemplate = await Templates.findOne({ Name: slug });
+        
+        if (existingTemplate && existingTemplate.config?.Contents?.Flag?.image) {
+            // Delete the old flag from Cloudinary
+            await deleteFromCloudinary(existingTemplate.config.Contents.Flag.image);
         }
+        
+        await Templates.updateOne(
+            { Name: slug },
+            { $set: { 'config.Contents.Flag.image': req.file.path } }
+        );
 
         req.flash('success', 'Flag updated successfully.');
         res.redirect(`/country/${slug}/edit`);
