@@ -124,11 +124,36 @@ const isLocalhost = process.env.COOKIE_DOMAIN === 'localhost';
 app.set('trust proxy', isProduction ? 'loopback, linklocal, uniquelocal' : 1); // Trust first proxy. Important for reverse proxies (like the one in start.js)
 
 // Configure CORS to allow cookies and credentials
+// Define allowed origins for CORS
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:4321',
+  'http://127.0.0.1:3000',
+  'http://127.0.0.1:4321'
+];
+
+if (isProduction) {
+  // Add production domains
+  if (process.env.RENDER_EXTERNAL_URL) {
+      allowedOrigins.push(process.env.RENDER_EXTERNAL_URL); // e.g., https://robowebapp.onrender.com
+  }
+  allowedOrigins.push('https://robolution.erovoutika.ph'); // Custom domain
+}
+
+// Configure CORS to allow cookies and credentials
 app.use(cors({
-    origin: ['http://localhost:3000', 'http://localhost:4321', 'http://127.0.0.1:3000', 'http://127.0.0.1:4321'],
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+  origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps or curl requests) or from whitelisted domains
+      if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true);
+      } else {
+          console.error(`CORS Error: Origin ${origin} not allowed.`);
+          callback(new Error('Not allowed by CORS'));
+      }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 // Add cookie parser middleware with special handling for Render and production environments
