@@ -733,4 +733,18 @@ const content = {
         );
         sections.forEach((section) => observer.observe(section));
     });
+
+    const heroContent = document.querySelector('.hero-content');
+if (heroContent) {
+  const heroTitle = heroContent.querySelector('h1.hero-title');
+  const heroSubtitle = heroContent.querySelector('p.hero-subtitle');
+
+  if (heroTitle) {
+    heroTitle.textContent = 'test';
+  }
+
+  if (heroSubtitle) {
+    heroSubtitle.textContent = 'test';
+  }
+}
 </script> 
