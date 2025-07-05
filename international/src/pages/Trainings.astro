@@ -746,4 +746,20 @@ const content = {
         );
         sections.forEach((section) => observer.observe(section));
     });
+
+    //hardcode hero under navbar
+    const heroContent = document.querySelector('.hero-content');
+if (heroContent) {
+  const heroTitle = heroContent.querySelector('h1.hero-title');
+  const heroSubtitle = heroContent.querySelector('p.hero-subtitle');
+
+  if (heroTitle) {
+    heroTitle.textContent = 'BE PART OF THE
+FUTURE!';
+  }
+
+  if (heroSubtitle) {
+    heroSubtitle.textContent = 'Join us for an International Seminars & Workshops!';
+  }
+}
 </script>

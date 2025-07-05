@@ -35,7 +35,7 @@ const content = {
     Content_2: {
         title: "Innovative Exhibits",
         subtitle:
-            "Experience technology firsthand with interactive exhibits from top companies and startups. See the latest products and solutions in action and network with industry leaders.",
+            "See the latest products and solutions in action and network with industry leaders.",
         ImageDirectory: "/images/training/rob1.jpg",
     },
     Content_3: {
@@ -734,17 +734,18 @@ const content = {
         sections.forEach((section) => observer.observe(section));
     });
 
+    //hardcode hero under navbar
     const heroContent = document.querySelector('.hero-content');
 if (heroContent) {
   const heroTitle = heroContent.querySelector('h1.hero-title');
   const heroSubtitle = heroContent.querySelector('p.hero-subtitle');
 
   if (heroTitle) {
-    heroTitle.textContent = 'test';
+    heroTitle.textContent = 'RESEARCH & EXHIBITS';
   }
 
   if (heroSubtitle) {
-    heroSubtitle.textContent = 'test';
+    heroSubtitle.textContent = 'Take a look at what type of gadgets and technology Erovoutika creates!';
   }
 }
 </script> 
