@@ -1,10 +1,10 @@
 /* empty css                                  */
-import { e as createComponent, f as createAstro, k as renderComponent, l as renderScript, r as renderTemplate, m as maybeRenderHead, h as addAttribute } from '../chunks/astro/server_BGP9d7Zh.mjs';
+import { e as createComponent, f as createAstro, k as renderComponent, l as renderScript, r as renderTemplate, m as maybeRenderHead, h as addAttribute } from '../chunks/astro/server_DtLrBLte.mjs';
 import 'kleur/colors';
 import { g as getTemplate } from '../chunks/mongodb_DJrNPHw-.mjs';
-import { $ as $$Layout, g as getImageUrl } from '../chunks/Layout_CFUiTUra.mjs';
-/* empty css                                      */
-import { $ as $$Hero } from '../chunks/Hero_CFIrno4a.mjs';
+import { $ as $$Layout, g as getImageUrl } from '../chunks/Layout_BrCK3NfS.mjs';
+/* empty css                                             */
+import { $ as $$Hero } from '../chunks/Hero_95mUN3k6.mjs';
 /* empty css                                      */
 export { renderers } from '../renderers.mjs';
 
@@ -42,7 +42,7 @@ const $$Tournament = createComponent(async ($$result, $$props, $$slots) => {
     header: "Ready to Compete?",
     subtext: "Join a global community of innovators and problem-solvers. Register your team today and be part of the robotics revolution!",
     buttonText: "Register Now",
-    buttonLink: "/international/registration"
+    buttonLink: "https://docs.google.com/forms/d/e/1FAIpQLSeA3hMoa5hTtlIxKPBtUNVeHtplqIaXtiNPcvIkIAlTgnFmEQ/viewform"
   };
   return renderTemplate`${renderComponent($$result, "Layout", $$Layout, { "title": "Erovoutika International - Tournament", "content": layoutContent, "data-astro-cid-q3alncq5": true }, { "default": async ($$result2) => renderTemplate` ${renderComponent($$result2, "Hero", $$Hero, { "data-astro-cid-q3alncq5": true })} ${maybeRenderHead()}<div class="overview" id="OverView" data-astro-cid-q3alncq5> <div data-astro-cid-q3alncq5> <h1 class="subhead" data-astro-cid-q3alncq5> ${tournamentContent.Overview.subheadings || "CATEGORIES"} </h1> <h1 class="head tracking-wider" data-astro-cid-q3alncq5> ${tournamentContent.Overview.Headings || "Explore Our Competitions"} </h1> <p class="info max-w-3xl mx-auto" data-astro-cid-q3alncq5>
 Robolution features dynamic tracks designed to challenge participants in

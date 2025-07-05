@@ -145,7 +145,7 @@ async function start() {
 
     if (IS_PRODUCTION) {
         log('Running in PRODUCTION mode');
-        
+
         // Build the international app if we're on Render
         if (isRender) {
             log('Detected Render environment - building international app...');
@@ -190,7 +190,7 @@ async function start() {
             ensureDirExists(publicDestDir);
             try {
                 copyDirSync(astroBuiltOutputDir, publicDestDir);
-                log('Successfully copied built Astro content to ROBOLUTION/public/international');
+            log('Successfully copied built Astro content to ROBOLUTION/public/international');
             } catch (error) {
                 log(`Error copying Astro build output: ${error.message}`);
             }

@@ -37,10 +37,10 @@ const isLoggedIn = cookies.has('robolution_session');
         </div>
 
         <!-- Navigation Links -->
-        <div class="flex items-center gap-x-4">
-            <ul class="hidden md:flex space-x-4 text-white font-medium items-center">
+        <div class="flex items-center gap-x-2">
+            <ul class="hidden md:flex flex-nowrap space-x-3 text-white font-medium items-center">
                 <li>
-                    <a href="/home" class="flex items-center text-yellow-300 hover:text-yellow-100 transition">
+                    <a href="/home" class="text-sm flex items-center text-yellow-300 hover:text-yellow-100 transition">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>
@@ -50,7 +50,7 @@ const isLoggedIn = cookies.has('robolution_session');
                 
                 {links.map((item) => (
                             <li>
-                        <a href={getPath(item.path)} class=" hover:text-[#C084FC] transition">
+                        <a href={getPath(item.path)} class="text-sm hover:text-[#C084FC] transition">
                                     {item.name}
                                 </a>
                             </li>
@@ -59,7 +59,7 @@ const isLoggedIn = cookies.has('robolution_session');
                 <!-- Country Switcher Dropdown -->
                 <li>
                     <div class="relative" id="country-switcher">
-                        <button class="flex items-center hover:text-[#C084FC] transition">
+                        <button class="text-sm flex items-center hover:text-[#C084FC] transition">
                             <span>Countries</span>
                              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
@@ -75,7 +75,7 @@ const isLoggedIn = cookies.has('robolution_session');
                 <div class="flex sm:gap-4">
                     <a
                         href="/profile"
-                        class="bg-blue-500 text-white text-center text-xs lg:text-lg font-medium rounded-full px-4 py-2 hover:bg-blue-600 shadow-2xl transition"
+                        class="bg-blue-500 text-white text-center text-sm font-medium rounded-full px-3 py-2 hover:bg-blue-600 shadow-2xl transition"
                         id="profile-button"
                         style="display: none;"
                     >
@@ -83,7 +83,7 @@ const isLoggedIn = cookies.has('robolution_session');
                     </a>
                     <a
                         href="/login"
-                        class="bg-gray-200 text-gray-800 text-center text-xs lg:text-lg font-medium rounded-full px-4 py-2 hover:bg-gray-300 shadow-lg transition"
+                        class="bg-gray-200 text-gray-800 text-center text-sm font-medium rounded-full px-3 py-2 hover:bg-gray-300 shadow-lg transition"
                         id="login-button"
                         style="display: none;"
                     >
@@ -91,7 +91,7 @@ const isLoggedIn = cookies.has('robolution_session');
                     </a>
                     <a
                         href={getPath(button.buttonLink)}
-                        class="bg-white text-blue-900 text-center text-xs lg:text-lg font-medium rounded-full px-4 py-2 hover:bg-indigo-400 hover:text-white shadow-2xl transition"
+                        class="bg-white text-blue-900 text-center text-sm font-medium rounded-full px-3 py-2 hover:bg-indigo-400 hover:text-white shadow-2xl transition"
                     >
                         {button.buttonText || 'Register Now'}
                     </a>

@@ -1,9 +1,11 @@
-import { d as defineMiddleware, s as sequence } from './chunks/index_kari2xUG.mjs';
+import { d as defineMiddleware, s as sequence } from './chunks/index_iatTYc1U.mjs';
 import { g as getCountryContent } from './chunks/db_BgTuE01l.mjs';
-import './chunks/astro-designed-error-pages_4-jZJ4fL.mjs';
+import 'es-module-lexer';
+import './chunks/astro-designed-error-pages_B5UQuT3H.mjs';
 import 'kleur/colors';
-import './chunks/astro/server_BGP9d7Zh.mjs';
+import './chunks/astro/server_DtLrBLte.mjs';
 import 'clsx';
+import 'cookie';
 
 const onRequest$1 = defineMiddleware(async ({ request, locals, redirect }, next) => {
   const url = new URL(request.url);

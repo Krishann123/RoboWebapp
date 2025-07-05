@@ -1,7 +1,7 @@
 /* empty css                                        */
-import { e as createComponent, f as createAstro, r as renderTemplate, n as defineScriptVars, k as renderComponent, m as maybeRenderHead, h as addAttribute } from '../../../chunks/astro/server_BGP9d7Zh.mjs';
+import { e as createComponent, f as createAstro, r as renderTemplate, n as defineScriptVars, k as renderComponent, m as maybeRenderHead, h as addAttribute } from '../../../chunks/astro/server_DtLrBLte.mjs';
 import 'kleur/colors';
-import { $ as $$Layout } from '../../../chunks/Layout_CFUiTUra.mjs';
+import { $ as $$Layout } from '../../../chunks/Layout_BrCK3NfS.mjs';
 import { s as supabase } from '../../../chunks/supabase-client_BrwR6F9D.mjs';
 import { g as getCountryContent } from '../../../chunks/db_BgTuE01l.mjs';
 export { renderers } from '../../../renderers.mjs';

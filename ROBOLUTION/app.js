@@ -152,8 +152,15 @@ app.use((req, res, next) => {
 // Utility function to get country template data
 async function getCountryTemplate(req) {
   try {
+    // Log session data for debugging
+    console.log(`[Template Debug] Session data:`, {
+      sessionID: req.sessionID,
+      hasSession: !!req.session,
+      selectedCountry: req.session?.selectedCountry || 'none set'
+    });
+    
     // Get slug from session or query parameter, default to 'default' (Dubai)
-    const slug = req.query.country || req.session?.selectedCountry || 'default';
+    const slug = req.query.country || (req.session && req.session.selectedCountry) || 'default';
     
     // If a query parameter is provided, update the session
     if (req.query.country && req.session) {
@@ -193,7 +200,20 @@ async function getCountryTemplate(req) {
       console.log(`[Template] Found template data for: ${countryData.name}`);
       return countryData;
     } else {
-      console.error(`[Template] Template not found for slug: ${slug}`);
+      console.error(`[Template] Template not found for slug: ${slug}, falling back to default`);
+      // Try to get the default template as fallback
+      const defaultTemplate = await Templates.findOne({ Name: 'default' });
+      if (defaultTemplate) {
+        const defaultData = {
+          name: 'Dubai',
+          slug: 'default',
+          templateName: 'default',
+          flagUrl: defaultTemplate.config?.Contents?.Navbar?.Content?.button?.image || '',
+          description: defaultTemplate.config?.Contents?.Home?.hero?.subText || ''
+        };
+        console.log(`[Template] Using default template as fallback`);
+        return defaultData;
+      }
       return null;
     }
   } catch (error) {
@@ -217,30 +237,30 @@ if (process.env.NODE_ENV === 'production' || process.env.RENDER === 'true') {
 
 // Set up session middleware before routes
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'your-secure-admin-key',
-    resave: true, // Changed from false to true to ensure session is saved on each request
-    saveUninitialized: false, // Do not create session until something is stored
-    store: MongoStore.create({
-        mongoUrl: process.env.MONGODB_URI,
-        dbName: 'robolution',
-        collectionName: 'sessions',
-        ttl: 3 * 60 * 60, // Session TTL in seconds (3 hours)
-        touchAfter: 60, // Only update the session every 1 minute if no changes (reduced from 5 minutes)
-        stringify: false, // Store as native MongoDB documents
-        autoRemove: 'native', // Use MongoDB's TTL index
-        crypto: {
-            secret: process.env.SESSION_SECRET || 'your-secure-admin-key'
-        }
-    }),
-    cookie: { 
-        secure: isProduction ? true : false, // Set to true in production for HTTPS
-        httpOnly: true,
-        maxAge: 3 * 60 * 60 * 1000, // 3 hours in milliseconds
-        sameSite: 'lax', // Use lax for better compatibility
-        domain: isProduction ? process.env.COOKIE_DOMAIN || undefined : undefined, // Only set domain in production
-        path: '/' // Ensure cookie is available on all paths
-    },
-    name: 'robolution_session',
+  secret: process.env.SESSION_SECRET || 'your-secure-admin-key',
+  resave: false, // Don't save session if unmodified
+  saveUninitialized: false, // Do not create session until something is stored
+  store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI,
+      dbName: 'robolution',
+      collectionName: 'sessions',
+      ttl: 3 * 60 * 60, // Session TTL in seconds (3 hours)
+      touchAfter: 60, // Only update the session every 1 minute if no changes (reduced from 5 minutes)
+      stringify: false, // Store as native MongoDB documents
+      autoRemove: 'native', // Use MongoDB's TTL index
+      crypto: {
+          secret: process.env.SESSION_SECRET || 'your-secure-admin-key'
+      }
+  }),
+  cookie: { 
+      secure: isProduction && !isLocalhost, // Use secure cookies only in production and not on localhost
+      httpOnly: true,
+      maxAge: 3 * 60 * 60 * 1000, // 3 hours in milliseconds
+      sameSite: 'lax', // Use lax for better compatibility
+      domain: isProduction ? process.env.COOKIE_DOMAIN || undefined : undefined, // Only set domain in production
+      path: '/' // Ensure cookie is available on all paths
+  },
+  name: 'robolution_session',
 }));
 
 // Set up flash middleware after session if available
@@ -967,13 +987,13 @@ app.use('/:countrySlug', async (req, res, next) => {
       slug === 'public' || 
       slug === 'admin' || 
       slug === 'api' ||
-      slug === 'login' || 
-      slug === 'home' || 
-      slug === 'videos' || 
-      slug === 'dubai' || 
-      slug === 'password-reset' || 
-      slug === 'favicon.ico' || 
-      slug === 'robots.txt' || 
+      slug === 'login' ||
+      slug === 'home' ||
+      slug === 'videos' ||
+      slug === 'dubai' ||
+      slug === 'password-reset' ||
+      slug === 'favicon.ico' ||
+      slug === 'robots.txt' ||
       slug.startsWith('_') ||
       slug.includes('.')) {
     return next();
@@ -1071,13 +1091,28 @@ app.use('/admin', tourGalleryAdminRoutes); // Mount tour gallery admin routes
 app.post('/api/set-country/:slug', (req, res) => {
   const { slug } = req.params;
   if (slug) {
+    // Ensure session exists
+    if (!req.session) {
+      console.error('[Session] No session available for setting country');
+      return res.status(500).json({ success: false, message: 'No session available' });
+    }
+    
+    // Set the selected country in the session
     req.session.selectedCountry = slug;
     console.log(`[Session] Selected country set to: ${slug}`);
+    console.log(`[Session Debug] Session before save:`, {
+      id: req.sessionID,
+      selectedCountry: req.session.selectedCountry
+    });
+    
+    // Force save the session
     req.session.save(err => {
       if (err) {
         console.error('[Session] Error saving session:', err);
         return res.status(500).json({ success: false, message: 'Error saving session' });
       }
+      
+      console.log(`[Session] Session saved successfully with country: ${slug}`);
       return res.json({ success: true, message: `Country set to ${slug}` });
     });
   } else {
@@ -1089,7 +1124,7 @@ app.post('/api/set-country/:slug', (req, res) => {
 app.get('/api/switch-country/:country', async (req, res) => {
   try {
     const country = req.params.country;
-    
+      
     // Update the session with the selected country
     if (req.session) {
       req.session.selectedCountry = country;
@@ -1109,7 +1144,7 @@ app.get('/api/switch-country/:country', async (req, res) => {
     const testDb = mongoose.connection.useDb('test');
     const Templates = testDb.collection('templates');
     const template = await Templates.findOne({ Name: country });
-    
+
     if (template) {
       console.log(`[API] Switched country to: ${country}`);
       return res.json({ 
@@ -1144,8 +1179,8 @@ app.get('/api/countries', async (req, res) => {
     const templates = await Templates.find({}).toArray();
     
     const countries = templates.map(template => ({
-      name: template.Name === 'default' ? 'Dubai' : template.Name,
-      slug: template.Name,
+        name: template.Name === 'default' ? 'Dubai' : template.Name,
+        slug: template.Name,
       flagUrl: template.config?.Contents?.Flag?.image || null
     }));
     
@@ -1184,7 +1219,14 @@ app.use('/international', async (req, res, next) => {
       if (internationalHandler) {
         // Use the internationalHandler directly with the original request
         // Preserve the country data for the template system
-        req.headers['X-Country-Site'] = countryData ? JSON.stringify(countryData) : '';
+        if (countryData) {
+          // Ensure we're using the correct country data from session
+          console.log(`[International] Setting X-Country-Site header with data:`, countryData);
+          req.headers['X-Country-Site'] = JSON.stringify(countryData);
+        } else {
+          console.warn('[International] No country data available for template');
+          req.headers['X-Country-Site'] = '';
+        }
         
         // Strip /international prefix from URL but keep remaining path
         const originalUrl = req.originalUrl;
@@ -1237,7 +1279,7 @@ app.use('/international', async (req, res, next) => {
             </body>
           </html>
         `);
-      }
+    }
     }
     
     // Development mode - use proxy to local Astro dev server
@@ -3869,7 +3911,7 @@ if (require.main === module) {
         } else {
             // Set up routes for Dubai app in development mode
             console.log('Setting up development proxy for /dubai routes');
-            app.use('/dubai', dubaiRoutes);
+        app.use('/dubai', dubaiRoutes);
         }
         
         // Add redirect from old path to new path
@@ -3885,7 +3927,7 @@ if (require.main === module) {
         });
         
         // Add a fallback handler for Dubai routes in production if Astro fails to load
-        app.use('/dubai', (req, res, next) => {
+            app.use('/dubai', (req, res, next) => {
           // Only act as fallback in production when the handler is not available
           if ((process.env.NODE_ENV === 'production' || process.env.RENDER === 'true') && !internationalHandler) {
             console.log('[Dubai Fallback] No handler available, serving fallback page');
@@ -3921,7 +3963,7 @@ if (require.main === module) {
           
           // Continue to the next handler if not in production or if handler is available
           next();
-        });
+            });
         
         app.listen(port, () => {
             console.log(`Robolution site running at http://localhost:${port}`);

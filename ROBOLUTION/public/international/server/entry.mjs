@@ -1,6 +1,6 @@
 import { renderers } from './renderers.mjs';
-import { c as createExports, s as serverEntrypointModule } from './chunks/_@astrojs-ssr-adapter_BfRcbALH.mjs';
-import { manifest } from './manifest_BwLmDYK9.mjs';
+import { c as createExports, s as serverEntrypointModule } from './chunks/_@astrojs-ssr-adapter_CcpIVUsQ.mjs';
+import { manifest } from './manifest_CBRHSQdd.mjs';
 
 const serverIslandMap = new Map();;
 
@@ -35,9 +35,10 @@ const _page27 = () => import('./pages/news.astro.mjs');
 const _page28 = () => import('./pages/nominations_tab.astro.mjs');
 const _page29 = () => import('./pages/registration.astro.mjs');
 const _page30 = () => import('./pages/registration-success.astro.mjs');
-const _page31 = () => import('./pages/tournament.astro.mjs');
-const _page32 = () => import('./pages/trainings.astro.mjs');
-const _page33 = () => import('./pages/index.astro.mjs');
+const _page31 = () => import('./pages/research&exhibits.astro.mjs');
+const _page32 = () => import('./pages/tournament.astro.mjs');
+const _page33 = () => import('./pages/trainings.astro.mjs');
+const _page34 = () => import('./pages/index.astro.mjs');
 const pageMap = new Map([
     ["node_modules/astro/dist/assets/endpoint/node.js", _page0],
     ["src/pages/admin/country-sites.astro", _page1],
@@ -70,9 +71,10 @@ const pageMap = new Map([
     ["src/pages/Nominations_Tab.astro", _page28],
     ["src/pages/registration.astro", _page29],
     ["src/pages/registration-success.astro", _page30],
-    ["src/pages/Tournament.astro", _page31],
-    ["src/pages/Trainings.astro", _page32],
-    ["src/pages/index.astro", _page33]
+    ["src/pages/Research&Exhibits.astro", _page31],
+    ["src/pages/Tournament.astro", _page32],
+    ["src/pages/Trainings.astro", _page33],
+    ["src/pages/index.astro", _page34]
 ]);
 
 const _manifest = Object.assign(manifest, {
