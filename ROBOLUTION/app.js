@@ -282,7 +282,6 @@ app.use(session({
       httpOnly: true,
       maxAge: 3 * 60 * 60 * 1000, // 3 hours in milliseconds
       sameSite: 'lax', // Use lax for better compatibility
-      domain: isProduction ? process.env.COOKIE_DOMAIN || undefined : undefined, // Only set domain in production
       path: '/' // Ensure cookie is available on all paths
   },
   name: 'robolution_session',
