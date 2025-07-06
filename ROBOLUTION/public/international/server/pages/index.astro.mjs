@@ -2,8 +2,8 @@
 import { e as createComponent, f as createAstro, k as renderComponent, r as renderTemplate } from '../chunks/astro/server_DtLrBLte.mjs';
 import 'kleur/colors';
 import { g as getTemplate, a as getInternationalPartners } from '../chunks/mongodb_DJrNPHw-.mjs';
-import { $ as $$Jumbotron, c as $$Robolution, d as $$Package, e as $$Joinrobo, f as $$FrequentlyAsk, P as Partners } from '../chunks/Partners_Dfj-qCC6.mjs';
-import { $ as $$Layout } from '../chunks/Layout_BrCK3NfS.mjs';
+import { $ as $$Jumbotron, c as $$Robolution, d as $$Package, e as $$Joinrobo, f as $$FrequentlyAsk, P as Partners } from '../chunks/Partners_D49IURAV.mjs';
+import { $ as $$Layout } from '../chunks/Layout_tTLm-7Qx.mjs';
 /* empty css                                 */
 export { renderers } from '../renderers.mjs';
 

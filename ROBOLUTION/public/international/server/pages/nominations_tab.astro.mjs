@@ -3,7 +3,7 @@ import { e as createComponent, r as renderTemplate, m as maybeRenderHead, f as c
 import 'kleur/colors';
 import 'clsx';
 /* empty css                                           */
-import { $ as $$Layout } from '../chunks/Layout_BrCK3NfS.mjs';
+import { $ as $$Layout } from '../chunks/Layout_tTLm-7Qx.mjs';
 import { g as getTemplate } from '../chunks/mongodb_DJrNPHw-.mjs';
 export { renderers } from '../renderers.mjs';
 

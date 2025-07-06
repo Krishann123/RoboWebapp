@@ -1,7 +1,7 @@
 /* empty css                                  */
 import { e as createComponent, f as createAstro, k as renderComponent, r as renderTemplate, m as maybeRenderHead, u as unescapeHTML, l as renderScript, h as addAttribute } from '../chunks/astro/server_DtLrBLte.mjs';
 import 'kleur/colors';
-import { $ as $$Layout } from '../chunks/Layout_BrCK3NfS.mjs';
+import { $ as $$Layout } from '../chunks/Layout_tTLm-7Qx.mjs';
 import { s as supabase } from '../chunks/supabase-client_BrwR6F9D.mjs';
 import { g as getTemplate } from '../chunks/mongodb_DJrNPHw-.mjs';
 /* empty css                                        */

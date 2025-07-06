@@ -1,7 +1,7 @@
 /* empty css                                     */
 import { e as createComponent, k as renderComponent, l as renderScript, r as renderTemplate, m as maybeRenderHead, h as addAttribute } from '../../chunks/astro/server_DtLrBLte.mjs';
 import 'kleur/colors';
-import { $ as $$Layout } from '../../chunks/Layout_BrCK3NfS.mjs';
+import { $ as $$Layout } from '../../chunks/Layout_tTLm-7Qx.mjs';
 import { s as supabase } from '../../chunks/supabase-client_BrwR6F9D.mjs';
 export { renderers } from '../../renderers.mjs';
 

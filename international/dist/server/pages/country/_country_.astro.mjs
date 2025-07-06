@@ -1,8 +1,8 @@
 /* empty css                                     */
 import { e as createComponent, r as renderTemplate, k as renderComponent, u as unescapeHTML, m as maybeRenderHead, h as addAttribute, f as createAstro, n as defineScriptVars } from '../../chunks/astro/server_DtLrBLte.mjs';
 import 'kleur/colors';
-import { C as Card, a as CardHeader, b as CardContent, $ as $$Jumbotron, c as $$Robolution, d as $$Package, e as $$Joinrobo, f as $$FrequentlyAsk, P as Partners } from '../../chunks/Partners_Dfj-qCC6.mjs';
-import { $ as $$Layout } from '../../chunks/Layout_BrCK3NfS.mjs';
+import { C as Card, a as CardHeader, b as CardContent, $ as $$Jumbotron, c as $$Robolution, d as $$Package, e as $$Joinrobo, f as $$FrequentlyAsk, P as Partners } from '../../chunks/Partners_D49IURAV.mjs';
+import { $ as $$Layout } from '../../chunks/Layout_tTLm-7Qx.mjs';
 import { f as fetchPageContent } from '../../chunks/db_BgTuE01l.mjs';
 /* empty css                                        */
 import 'clsx';

@@ -2,7 +2,7 @@ import { e as createComponent, f as createAstro, m as maybeRenderHead, h as addA
 import 'kleur/colors';
 import 'clsx';
 /* empty css                             */
-import { g as getImageUrl } from './Layout_BrCK3NfS.mjs';
+import { g as getImageUrl } from './Layout_tTLm-7Qx.mjs';
 import { jsx, jsxs } from 'react/jsx-runtime';
 import 'react';
 import { c as cn } from './utils_B05Dmz_H.mjs';
@@ -41,7 +41,7 @@ const $$Package = createComponent(($$result, $$props, $$slots) => {
   const tourGallery = content?.TourGallery || [];
   return renderTemplate`${maybeRenderHead()}<section id="packages" class="align-center flex flex-col justify-center items-center w-full h-fit p-10 bg-[#F3F4F6]"> <h1 class="font-bold text-5xl lg:text-[96px] p-5 text-center font-bebas tracking-wider text-[#212529]">
 Gallery
-</h1> <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-5 w-full max-w-7xl"> ${tourGallery.map((item) => renderTemplate`<div class="aspect-square"> <img${addAttribute(getImageUrl(item.image), "src")} alt="Tour Gallery Image" class="object-cover w-full h-full rounded-lg shadow-md"> </div>`)} </div> </section>`;
+</h1> <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-5 w-full max-w-7xl"> ${tourGallery.map((item) => renderTemplate`<div class="aspect-square transition-transform ease-in-out duration-300 hover:scale-105 hover:z-10 relative cursor-pointer"> <img${addAttribute(getImageUrl(item.image), "src")} alt="Tour Gallery Image" class="object-cover w-full h-full rounded-lg shadow-md"> </div>`)} </div> </section>`;
 }, "C:/Users/Krishann/Desktop/RoboWebapp/international/src/components/Home/Package.astro", void 0);
 
 var __freeze$1 = Object.freeze;

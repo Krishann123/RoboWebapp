@@ -18,7 +18,7 @@ const tourGallery = content?.TourGallery || [];
     >
         {
             tourGallery.map((item) => (
-                <div class="aspect-square">
+                <div class="aspect-square transition-transform ease-in-out duration-300 hover:scale-105 hover:z-10 relative cursor-pointer">
                     <img
                         src={getImageUrl(item.image)}
                         alt="Tour Gallery Image"

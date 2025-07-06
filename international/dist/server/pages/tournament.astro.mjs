@@ -2,7 +2,7 @@
 import { e as createComponent, f as createAstro, k as renderComponent, l as renderScript, r as renderTemplate, m as maybeRenderHead, h as addAttribute } from '../chunks/astro/server_DtLrBLte.mjs';
 import 'kleur/colors';
 import { g as getTemplate } from '../chunks/mongodb_DJrNPHw-.mjs';
-import { $ as $$Layout, g as getImageUrl } from '../chunks/Layout_BrCK3NfS.mjs';
+import { $ as $$Layout, g as getImageUrl } from '../chunks/Layout_tTLm-7Qx.mjs';
 /* empty css                                             */
 import { $ as $$Hero } from '../chunks/Hero_95mUN3k6.mjs';
 /* empty css                                      */
