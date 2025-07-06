@@ -4,6 +4,7 @@ const CategorySchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: String,
   imageUrl: String,
+  imagePublicId: String,
   mechanics: [String],
   generalConduct: [String],
   generalRules: [String],

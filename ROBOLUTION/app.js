@@ -2074,16 +2074,20 @@ app.post('/manage-categories/add', upload.single('image'), async (req, res) => {
     } = req.body;
 
     let imageUrl = '';
+    let imagePublicId = '';
     
     if (req.file) {
       const filePath = path.join(__dirname, 'public', 'uploads', 'temp', req.file.filename);
-      imageUrl = await uploadToCloudinary(filePath, 'robolution/categories');
+      const result = await uploadToCloudinary(filePath, 'robolution/categories');
+      imageUrl = result.secure_url;
+      imagePublicId = result.public_id;
     }
 
     await Category.create({
       title,
       description,
       imageUrl,
+      imagePublicId,
       mechanics: showMechanics ? (mechanics ? mechanics.split('\n').map(m => m.trim()).filter(Boolean) : []) : [],
       generalConduct: showGeneralConduct ? (generalConduct ? generalConduct.split('\n').map(m => m.trim()).filter(Boolean) : []) : [],
       generalRules: showGeneralRules ? (generalRules ? generalRules.split('\n').map(m => m.trim()).filter(Boolean) : []) : [],
@@ -2111,17 +2115,29 @@ app.post('/manage-categories/edit/:id', upload.single('image'), async (req, res)
       showMechanics, showGeneralConduct, showGeneralRules, showParticipantsRequirement, showTeamRequirement
     } = req.body;
 
-    let imageUrl = currentImageUrl;
+    const category = await Category.findById(req.params.id);
+    if (!category) {
+      return res.status(404).send('Category not found');
+    }
+
+    let imageUrl = category.imageUrl;
+    let imagePublicId = category.imagePublicId;
 
     if (req.file) {
+      if (category.imagePublicId) {
+        await cloudinary.uploader.destroy(category.imagePublicId);
+      }
       const filePath = path.join(__dirname, 'public', 'uploads', 'temp', req.file.filename);
-      imageUrl = await uploadToCloudinary(filePath, 'robolution/categories');
+      const result = await uploadToCloudinary(filePath, 'robolution/categories');
+      imageUrl = result.secure_url;
+      imagePublicId = result.public_id;
     }
 
     const update = {
       title,
       description,
       imageUrl,
+      imagePublicId,
       mechanics: showMechanics ? (mechanics ? mechanics.split('\n').map(m => m.trim()).filter(Boolean) : []) : [],
       generalConduct: showGeneralConduct ? (generalConduct ? generalConduct.split('\n').map(m => m.trim()).filter(Boolean) : []) : [],
       generalRules: showGeneralRules ? (generalRules ? generalRules.split('\n').map(m => m.trim()).filter(Boolean) : []) : [],
@@ -2146,16 +2162,15 @@ app.post('/manage-categories/edit/:id', upload.single('image'), async (req, res)
 app.post('/manage-categories/delete/:id', async (req, res) => {
   try {
     const category = await Category.findById(req.params.id);
-    if (category && category.imageUrl) {
-      const filePath = path.join(__dirname, 'public', category.imageUrl);
+    if (category && category.imagePublicId) {
       // Check if any other category is using this image
       const otherCategories = await Category.find({
         _id: { $ne: req.params.id },
-        imageUrl: category.imageUrl
+        imagePublicId: category.imagePublicId
       });
       
-      if (otherCategories.length === 0 && fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
+      if (otherCategories.length === 0) {
+        await cloudinary.uploader.destroy(category.imagePublicId);
       }
     }
     await Category.findByIdAndDelete(req.params.id);
